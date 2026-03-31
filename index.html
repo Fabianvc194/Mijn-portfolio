@@ -6,12 +6,12 @@
     <title>Mijn IT Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Alles wat eerst in style.css stond, staat nu hier */
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
             --text-color: #f1f5f9;
             --accent-color: #38bdf8;
+            --gamer-red: #ff4655;
         }
 
         body {
@@ -21,7 +21,10 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            cursor: none; 
         }
+
+        a, button, input, .card, .skill-chip { cursor: none !important; }
 
         nav {
             display: flex;
@@ -35,20 +38,8 @@
             z-index: 1000;
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-            margin: 0;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
+        nav ul { display: flex; list-style: none; gap: 25px; margin: 0; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s; }
         nav a:hover { color: var(--accent-color); }
 
         .hero {
@@ -71,31 +62,16 @@
             border: 1px solid rgba(74, 222, 128, 0.2);
         }
 
-	#status-dot {
-            animation: pulse 2s infinite; /* Dit vertelt de stip dat hij moet pulseren */
-            display: inline-block;
-            margin-right: 5px;
-        }
+        #status-dot { animation: pulse 2s infinite; display: inline-block; margin-right: 5px; }
 
-        /* Dit definieert wat het 'pulse' effect precies doet (groter/kleiner en lichter/donkerder) */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.5; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+        .container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
 
         .card {
             background: var(--card-bg);
@@ -110,103 +86,106 @@
             border-color: var(--accent-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-	#status-dot {
-    		animation: pulse 2s infinite;
-    		display: inline-block;
-    		margin-right: 5px;
-	}
 
-	@keyframes pulse {
-    		0% { transform: scale(1); opacity: 1; }
-    		50% { transform: scale(1.3); opacity: 0.5; }
-    	100% { transform: scale(1); opacity: 1; }
-}
         h2 { border-left: 4px solid var(--accent-color); padding-left: 15px; }
-.skills-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 20px;
-}
 
-.skill-chip {
-    background: #1e293b;
-    border: 1px solid #334155;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: default;
-}
+        .skills-wrapper { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
 
-/* De 'Neon-glow' wanneer je er met de muis overheen gaat */
-.skill-chip:hover {
-    background: rgba(56, 189, 248, 0.1);
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-    transform: translateY(-3px);
-}
-.terminal-window {
-    background: #000;
-    border-radius: 8px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    overflow: hidden;
-    border: 1px solid #334155;
-    font-family: 'Courier New', Courier, monospace;
-}
+        .skill-chip {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.terminal-header {
-    background: #1e293b;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .skill-chip:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transform: translateY(-3px);
+        }
 
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.red { background: #ff5f56; }
-.yellow { background: #ffbd2e; }
-.green { background: #27c93f; }
-.terminal-title { margin-left: 10px; font-size: 0.8rem; opacity: 0.7; }
+        .terminal-window {
+            background: #000;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #334155;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-.terminal-body {
-    padding: 20px;
-    height: 200px;
-    overflow-y: auto;
-    color: #4ade80; /* Matrix groen */
-    font-size: 0.9rem;
-}
+        .terminal-header { background: #1e293b; padding: 10px; display: flex; align-items: center; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
 
-.terminal-input-line {
-    padding: 10px 20px;
-    background: #000;
-    display: flex;
-    gap: 10px;
-    border-top: 1px solid #1e293b;
-}
+        .terminal-body {
+            padding: 20px;
+            height: 250px;
+            overflow-y: auto;
+            color: #4ade80;
+            font-size: 0.9rem;
+        }
 
-.prompt { color: var(--accent-color); font-weight: bold; }
+        .terminal-input-line {
+            padding: 10px 20px;
+            background: #000;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #1e293b;
+        }
 
-#terminal-input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    outline: none;
-    flex: 1;
-    font-family: inherit;
-}
+        .prompt { color: var(--accent-color); font-weight: bold; }
+        #terminal-input { background: transparent; border: none; color: #fff; outline: none; flex: 1; font-family: inherit; }
+
+        .cursor-main {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-outline {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease-out;
+        }
+
+        body.target-locked .cursor-main { background: var(--gamer-red); }
+        body.target-locked .cursor-outline {
+            width: 45px; height: 45px;
+            border-color: var(--gamer-red);
+            border-radius: 4px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
     </style>
 </head>
 <body>
+
+    <div class="cursor-main"></div>
+    <div class="cursor-outline"></div>
 
     <nav>
         <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: 1px;">IT<span class="highlighted">_</span>DEV</div>
         <ul>
             <li><a href="#about">Over mij</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#hobby">Hobby's</a></li>
+            <li><a href="#terminal-section">Terminal</a></li>
         </ul>
     </nav>
 
@@ -214,7 +193,8 @@
         <h1>Hallo, ik ben <span class="highlighted">Fabian van Caspel</span></h1>
         <p style="font-size: 1.2rem; opacity: 0.8;">IT Specialist | Fotograaf | Gamer</p>
         <div class="status-badge">
-    	<span id="status-dot">●</span> <span id="status-text">Laden...</span>
+            <span id="status-dot">●</span> <span id="status-text">Laden...</span>
+        </div>
     </header>
 
     <section id="about" class="container">
@@ -231,101 +211,121 @@
                 <p>Strategisch inzicht en snelle reflexen. Gaming is voor mij meer dan ontspanning; het is een manier om analytisch te blijven denken.</p>
             </div>
         </div>
-<section id="skills" class="container">
-    <h2>Tech Stack & Skills</h2>
-    <div class="skills-wrapper">
-        <span class="skill-chip">Python</span>
-        <span class="skill-chip">Linux</span>
-        <span class="skill-chip">Docker</span>
-        <span class="skill-chip">Networking</span>
-        <span class="skill-chip">Cybersecurity</span>
-        <span class="skill-chip">Cloud Architect</span>
-    </div>
-</section>
-<section id="terminal-section" class="container">
-    <h2>System Terminal</h2>
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="terminal-title">bash — user@it-dev</span>
+    </section>
+
+    <section id="skills" class="container">
+        <h2>Tech Stack & Skills</h2>
+        <div class="skills-wrapper">
+            <span class="skill-chip">SQL</span>
+            <span class="skill-chip">Power BI</span>
+            <span class="skill-chip">Python</span>
+            <span class="skill-chip">Linux</span>
+            <span class="skill-chip">Networking</span>
+            <span class="skill-chip">Cybersecurity</span>
+            <span class="skill-chip">Powershell</span>
         </div>
-        <div class="terminal-body" id="terminal-content">
-            <div class="line">Welkom bij de IT_DEV terminal v1.0.0</div>
-            <div class="line">Typ <span class="highlighted">'help'</span> voor een lijst met commando's.</div>
+    </section>
+
+    <section id="terminal-section" class="container">
+        <h2>System Terminal</h2>
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="dot red" onclick="document.getElementById('terminal-content').innerHTML = ''"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span style="margin-left:10px; font-size:0.8rem; opacity:0.7">guest — visitor@it-dev-terminal</span>
+            </div>
+            <div class="terminal-body" id="terminal-content">
+                <div class="line">Welkom <span class="highlighted">Bezoeker</span>.</div>
+                <div class="line">Typ <span class="highlighted">'help'</span> om de mogelijkheden te verkennen.</div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="prompt">visitor@it-dev:~$</span>
+                <input type="text" id="terminal-input" autofocus autocomplete="off">
+            </div>
         </div>
-        <div class="terminal-input-line">
-            <span class="prompt">user@it-dev:~$</span>
-            <input type="text" id="terminal-input" autofocus autocomplete="off">
-        </div>
-    </div>
-</section>
-</body>
-</html>
-<script>
-    const statuses = [
-        "Bezig met een Deep Dive in Python",
-        "Aan het levelen in Elden Ring",
-        "Lichtinval aan het bestuderen voor een nieuwe foto",
-        "Koffie-level: Kritiek laag",
-        "Systeem-architectuur aan het uittekenen",
-        "Aan het experimenteren met AI-coding",
-        "In-game: Counter-Strike (nog één potje dan...)"
-    ];
+    </section>
 
-    function updateStatus() {
-        const statusText = document.getElementById('status-text');
-        const statusDot = document.getElementById('status-dot');
-        
-        // Kies een willekeurige status uit de lijst
-        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-        
-        // Update de tekst
-        statusText.innerText = randomStatus;
+    <script>
+        const statuses = [
+            "Bezig met support @ CBS",
+            "SQL queries aan het optimaliseren",
+            "Aan het levelen in Elden Ring",
+            "Koffie-level: Kritiek laag",
+            "Systeem-architectuur aan het uittekenen",
+            "In-game: Counter-Strike (nog één potje dan...)"
+        ];
 
-        // Een klein pulse-effect toevoegen aan de stip
-        statusDot.style.opacity = "0.5";
-        setTimeout(() => { statusDot.style.opacity = "1"; }, 500);
-    }
-
-    // Start de status en verander deze elke 10 seconden
-    updateStatus();
-    setInterval(updateStatus, 10000);
-const terminalInput = document.getElementById('terminal-input');
-const terminalContent = document.getElementById('terminal-content');
-
-terminalInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        const command = this.value.toLowerCase().trim();
-        const line = document.createElement('div');
-        line.innerHTML = `<span style="color: #38bdf8">user@it-dev:~$</span> ${this.value}`;
-        terminalContent.appendChild(line);
-
-        let response = "";
-        if (command === 'help') {
-            response = "Beschikbare commando's: about, skills, contact, clear";
-        } else if (command === 'about') {
-            response = "IT Specialist met een passie voor gaming en fotografie.";
-        } else if (command === 'skills') {
-            response = "Python, Linux, Docker, Networking, Cloud.";
-        } else if (command === 'contact') {
-            response = "Stuur een mail naar: hello@yourdomain.com";
-        } else if (command === 'clear') {
-            terminalContent.innerHTML = '';
-            this.value = '';
-            return;
-        } else {
-            response = `Command not found: ${command}. Typ 'help' voor assistentie.`;
+        function updateStatus() {
+            const statusText = document.getElementById('status-text');
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            statusText.innerText = randomStatus;
         }
 
-        const resLine = document.createElement('div');
-        resLine.style.color = "#4ade80";
-        resLine.innerText = response;
-        terminalContent.appendChild(resLine);
-        
-        this.value = '';
-        terminalContent.scrollTop = terminalContent.scrollHeight;
-    }
-});
-</script>
+        updateStatus();
+        setInterval(updateStatus, 10000);
+
+        const cursorMain = document.querySelector('.cursor-main');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            cursorMain.style.left = e.clientX + 'px';
+            cursorMain.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                cursorOutline.style.left = e.clientX + 'px';
+                cursorOutline.style.top = e.clientY + 'px';
+            }, 50);
+        });
+
+        const targets = document.querySelectorAll('a, .card, .skill-chip, input');
+        targets.forEach(target => {
+            target.addEventListener('mouseenter', () => document.body.classList.add('target-locked'));
+            target.addEventListener('mouseleave', () => document.body.classList.remove('target-locked'));
+        });
+
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalContent = document.getElementById('terminal-content');
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.toLowerCase().trim();
+                const line = document.createElement('div');
+                line.innerHTML = `<span style="color: #38bdf8">visitor@it-dev:~$</span> ${this.value}`;
+                terminalContent.appendChild(line);
+
+                let response = "";
+                if (command === 'help') {
+                    response = "Commando's: cv, credentials, games, clear, about, skills";
+                } else if (command === 'cv') {
+                    response = "WERKERVARING:\n- 2024-Heden: IT-Support Engineer (CBS)\n- 2021-2024: 24/7 Technical Engineer (VodafoneZiggo)\n- 2021: ICT-Consultant (Data4)\n- 2020: ICT-Consultant (Teqoia)\n- 2019: BI Consultant Stage";
+                } else if (command === 'credentials') {
+                    response = "EDUCATION & CERTIFICATES:\n- HBO ICT Business Intelligence (2016-2019)\n- MBO 4 ICT-Beheerder (2014-2016)\n- MBO 3 Medewerker Beheer ICT (2011-2014)\n- MOS Associate: PowerPoint, Word, Excel, Outlook";
+                } else if (command === 'games') {
+                    response = "AWESOME GAMES:\n- Crimson Desert\n- Witcher 3\n- Expedition 33";
+                } else if (command === 'about') {
+                    response = "Fabian: IT Specialist met passie voor data, fotografie en gaming.";
+                } else if (command === 'skills') {
+                    response = "Core Skills: SQL, Power BI, Python, Linux, Powershell, Networking.";
+                } else if (command === 'clear') {
+                    terminalContent.innerHTML = '<div class="line">Terminal herstart... Welkom Bezoeker.</div>';
+                    this.value = '';
+                    return;
+                } else {
+                    response = `Onbekend commando: ${command}. Typ 'help' voor een lijst met commando's.`;
+                }
+
+                const resLine = document.createElement('pre');
+                resLine.style.color = "#4ade80";
+                resLine.style.margin = "5px 0";
+                resLine.style.fontFamily = "inherit";
+                resLine.style.whiteSpace = "pre-wrap";
+                resLine.innerText = response;
+                terminalContent.appendChild(resLine);
+                
+                this.value = '';
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
