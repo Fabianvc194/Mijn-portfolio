@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn IT Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Alles wat eerst in style.css stond, staat nu hier */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --accent-color: #38bdf8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--accent-color); }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        .highlighted { color: var(--accent-color); }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-top: 25px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+	#status-dot {
+            animation: pulse 2s infinite; /* Dit vertelt de stip dat hij moet pulseren */
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Dit definieert wat het 'pulse' effect precies doet (groter/kleiner en lichter/donkerder) */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+	#status-dot {
+    		animation: pulse 2s infinite;
+    		display: inline-block;
+    		margin-right: 5px;
+	}
+
+	@keyframes pulse {
+    		0% { transform: scale(1); opacity: 1; }
+    		50% { transform: scale(1.3); opacity: 0.5; }
+    	100% { transform: scale(1); opacity: 1; }
+}
+        h2 { border-left: 4px solid var(--accent-color); padding-left: 15px; }
+.skills-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.skill-chip {
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+}
+
+/* De 'Neon-glow' wanneer je er met de muis overheen gaat */
+.skill-chip:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    transform: translateY(-3px);
+}
+.terminal-window {
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    border: 1px solid #334155;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.terminal-header {
+    background: #1e293b;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+.terminal-title { margin-left: 10px; font-size: 0.8rem; opacity: 0.7; }
+
+.terminal-body {
+    padding: 20px;
+    height: 200px;
+    overflow-y: auto;
+    color: #4ade80; /* Matrix groen */
+    font-size: 0.9rem;
+}
+
+.terminal-input-line {
+    padding: 10px 20px;
+    background: #000;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #1e293b;
+}
+
+.prompt { color: var(--accent-color); font-weight: bold; }
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    flex: 1;
+    font-family: inherit;
+}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: 1px;">IT<span class="highlighted">_</span>DEV</div>
+        <ul>
+            <li><a href="#about">Over mij</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#hobby">Hobby's</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Hallo, ik ben <span class="highlighted">Fabian van Caspel</span></h1>
+        <p style="font-size: 1.2rem; opacity: 0.8;">IT Specialist | Fotograaf | Gamer</p>
+        <div class="status-badge">
+    	<span id="status-dot">●</span> <span id="status-text">Laden...</span>
+    </header>
+
+    <section id="about" class="container">
+        <h2>Over Mij</h2>
+        <p>Ik ben een IT-professional met een passie voor schone code en visuele esthetiek. Of ik nu een netwerk optimaliseer, een landschap fotografeer of een eindbaas versla: ik ga voor de hoogste kwaliteit.</p>
+
+        <div class="grid">
+            <div class="card">
+                <h3>📸 Fotografie</h3>
+                <p>Mijn oog voor detail stopt niet bij de monitor. Ik leg graag de wereld vast door mijn lens, met een focus op compositie en lichtinval.</p>
+            </div>
+            <div class="card">
+                <h3>🎮 Gaming</h3>
+                <p>Strategisch inzicht en snelle reflexen. Gaming is voor mij meer dan ontspanning; het is een manier om analytisch te blijven denken.</p>
+            </div>
+        </div>
+<section id="skills" class="container">
+    <h2>Tech Stack & Skills</h2>
+    <div class="skills-wrapper">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">Linux</span>
+        <span class="skill-chip">Docker</span>
+        <span class="skill-chip">Networking</span>
+        <span class="skill-chip">Cybersecurity</span>
+        <span class="skill-chip">Cloud Architect</span>
+    </div>
+</section>
+<section id="terminal-section" class="container">
+    <h2>System Terminal</h2>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">bash — user@it-dev</span>
+        </div>
+        <div class="terminal-body" id="terminal-content">
+            <div class="line">Welkom bij de IT_DEV terminal v1.0.0</div>
+            <div class="line">Typ <span class="highlighted">'help'</span> voor een lijst met commando's.</div>
+        </div>
+        <div class="terminal-input-line">
+            <span class="prompt">user@it-dev:~$</span>
+            <input type="text" id="terminal-input" autofocus autocomplete="off">
+        </div>
+    </div>
+</section>
+</body>
+</html>
+<script>
+    const statuses = [
+        "Bezig met een Deep Dive in Python",
+        "Aan het levelen in Elden Ring",
+        "Lichtinval aan het bestuderen voor een nieuwe foto",
+        "Koffie-level: Kritiek laag",
+        "Systeem-architectuur aan het uittekenen",
+        "Aan het experimenteren met AI-coding",
+        "In-game: Counter-Strike (nog één potje dan...)"
+    ];
+
+    function updateStatus() {
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        
+        // Kies een willekeurige status uit de lijst
+        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+        
+        // Update de tekst
+        statusText.innerText = randomStatus;
+
+        // Een klein pulse-effect toevoegen aan de stip
+        statusDot.style.opacity = "0.5";
+        setTimeout(() => { statusDot.style.opacity = "1"; }, 500);
+    }
+
+    // Start de status en verander deze elke 10 seconden
+    updateStatus();
+    setInterval(updateStatus, 10000);
+const terminalInput = document.getElementById('terminal-input');
+const terminalContent = document.getElementById('terminal-content');
+
+terminalInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        const command = this.value.toLowerCase().trim();
+        const line = document.createElement('div');
+        line.innerHTML = `<span style="color: #38bdf8">user@it-dev:~$</span> ${this.value}`;
+        terminalContent.appendChild(line);
+
+        let response = "";
+        if (command === 'help') {
+            response = "Beschikbare commando's: about, skills, contact, clear";
+        } else if (command === 'about') {
+            response = "IT Specialist met een passie voor gaming en fotografie.";
+        } else if (command === 'skills') {
+            response = "Python, Linux, Docker, Networking, Cloud.";
+        } else if (command === 'contact') {
+            response = "Stuur een mail naar: hello@yourdomain.com";
+        } else if (command === 'clear') {
+            terminalContent.innerHTML = '';
+            this.value = '';
+            return;
+        } else {
+            response = `Command not found: ${command}. Typ 'help' voor assistentie.`;
+        }
+
+        const resLine = document.createElement('div');
+        resLine.style.color = "#4ade80";
+        resLine.innerText = response;
+        terminalContent.appendChild(resLine);
+        
+        this.value = '';
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+    }
+});
+</script>
