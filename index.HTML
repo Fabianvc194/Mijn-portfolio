@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabian van Caspel | IT Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --accent-color: #38bdf8;
+            --gamer-red: #ff4655;
+            --mario-gold: #ffd700;
+        }
+
+        section { scroll-margin-top: 120px; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 0;
+            line-height: 1.6; 
+            cursor: default; 
+            overflow-x: hidden;
+        }
+
+        a, button, input, .card, .skill-chip { cursor: pointer !important; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 25px; margin: 0; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--accent-color); }
+
+        .hero {
+            text-align: center; padding: 120px 20px;
+            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        .highlighted { color: var(--accent-color); }
+
+        .status-badge {
+            display: inline-block; background: rgba(74, 222, 128, 0.1);
+            color: #4ade80; padding: 8px 20px; border-radius: 50px;
+            font-size: 0.85rem; margin-top: 25px; border: 1px solid rgba(74, 222, 128, 0.2);
+            min-width: 250px;
+        }
+        
+        #status-text {
+            transition: opacity 0.5s ease-in-out;
+            display: inline-block;
+        }
+
+        .container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+
+        .card {
+            background: var(--card-bg); padding: 40px; border-radius: 16px;
+            border: 1px solid #334155; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none; color: inherit; display: block; position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h2 { border-left: 4px solid var(--accent-color); padding-left: 15px; margin-bottom: 30px; }
+
+        .flash-card { overflow: hidden; }
+        .flash-card::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.9), transparent);
+            transform: skewX(-25deg); pointer-events: none;
+        }
+        .flash-card:hover::after { left: 150%; transition: all 0.6s ease; }
+
+        .mario-card { overflow: visible !important; }
+        .coin {
+            position: absolute; top: 0; left: 50%; width: 20px; height: 30px;
+            background: var(--mario-gold); border-radius: 50%;
+            border: 3px solid #b8860b; transform: translateX(-50%);
+            opacity: 0; z-index: 100; pointer-events: none;
+        }
+        .mario-card:hover .coin { animation: coinJump 0.6s ease-out forwards; }
+
+        @keyframes coinJump {
+            0% { transform: translate(-50%, 0); opacity: 0; }
+            30% { transform: translate(-50%, -60px); opacity: 1; }
+            100% { transform: translate(-50%, -90px) rotateY(720deg); opacity: 0; }
+        }
+
+        .job-card { overflow: hidden; }
+        .job-card::before {
+            content: '1010110 0110101 1101010'; 
+            position: absolute; bottom: -20px; left: 10px; font-family: monospace; 
+            font-size: 10px; color: var(--accent-color); opacity: 0; transition: 0.3s;
+        }
+        .job-card:hover::before { opacity: 0.3; bottom: 10px; }
+
+        .skills-wrapper { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .skill-chip {
+            background: #1e293b; border: 1px solid #334155; padding: 10px 25px;
+            border-radius: 8px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s;
+            text-decoration: none; display: inline-block; color: white;
+        }
+        .skill-chip:hover {
+            transform: scale(1.1); border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); color: var(--accent-color);
+        }
+
+        .terminal-window { background: #000; border-radius: 8px; border: 1px solid #334155; font-family: 'Courier New', monospace; position: relative; overflow: hidden; }
+        .terminal-header { background: #1e293b; padding: 10px; display: flex; align-items: center; gap: 8px; position: relative; z-index: 10; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        
+        .terminal-body { 
+            padding: 20px; 
+            height: 350px; 
+            overflow-y: auto; 
+            color: #4ade80; 
+            position: relative; 
+            z-index: 5;
+            background: transparent;
+        }
+        
+        #matrix-canvas { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            display: none; 
+            opacity: 0.3; 
+            pointer-events: none; 
+            z-index: 1; 
+        }
+
+        .terminal-input-line { padding: 10px 20px; background: #000; display: flex; gap: 10px; border-top: 1px solid #1e293b; position: relative; z-index: 10; }
+        #terminal-input { background: transparent; border: none; color: #fff; outline: none; flex: 1; font-family: inherit; }
+
+        .cursor-main { position: fixed; width: 10px; height: 10px; background: var(--accent-color); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        .cursor-outline { position: fixed; width: 30px; height: 30px; border: 2px solid var(--accent-color); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.1s ease-out; }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-main"></div>
+    <div class="cursor-outline"></div>
+
+    <nav>
+        <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: 1px;">IT<span class="highlighted">_</span>DEV</div>
+        <ul>
+            <li><a href="#about">Over mij</a></li>
+            <li><a href="#experience">Loopbaan</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#terminal-section">Terminal</a></li>
+            <li><a href="Webpage2.html">Resources</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Hallo, ik ben <span class="highlighted">Fabian van Caspel</span></h1>
+        <p style="font-size: 1.2rem; opacity: 0.8;">IT Specialist | Fotograaf | Gamer</p>
+        <div class="status-badge">
+            <span id="status-dot">●</span> <span id="status-text">System Booting...</span>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>Over Mij</h2>
+        <p>Ik ben een IT-professional met een passie voor schone code en visuele esthetiek. Of ik nu een netwerk optimaliseer, een landschap fotografeer of een eindbaas versla: ik ga voor de hoogste kwaliteit.</p>
+        <div class="grid">
+            <div class="card flash-card">
+                <h3>📸 Fotografie</h3>
+                <p>Mijn oog voor detail stopt niet bij de monitor. Ik leg graag de wereld vast door mijn lens, met een focus op compositie en lichtinval.</p>
+            </div>
+            <div class="card mario-card">
+                <div class="coin"></div>
+                <h3>🎮 Gaming</h3>
+                <p>Strategisch inzicht en snelle reflexen. Gaming is voor mij meer dan ontspanning; het is een manier om analytisch te blijven denken.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="container">
+        <h2>Mijn Loopbaan</h2>
+        <div class="grid">
+            <a href="https://www.cbs.nl" target="_blank" class="card job-card">
+                <h3>CBS</h3>
+                <p><strong>IT-Support Engineer</strong> (2024 - Heden)</p>
+                <p>Ondersteuning van complexe omgevingen en data-optimalisatie.</p>
+            </a>
+            <a href="https://www.vodafoneziggo.nl" target="_blank" class="card job-card">
+                <h3>VodafoneZiggo</h3>
+                <p><strong>24/7 Technical Engineer</strong> (2021 - 2024)</p>
+                <p>Monitoren van kritieke infrastructuren in een dynamische omgeving.</p>
+            </a>
+            <a href="https://www.data4.nl" target="_blank" class="card job-card">
+                <h3>Data4</h3>
+                <p><strong>ICT-Consultant</strong> (2021)</p>
+                <p>Advies en beheer van diverse enterprise ICT-omgevingen.</p>
+            </a>
+            <a href="https://www.teqoia.com" target="_blank" class="card job-card">
+                <h3>Teqoia</h3>
+                <p><strong>ICT-Consultant</strong> (2020)</p>
+                <p>Detachering binnen high-tech ICT projecten.</p>
+            </a>
+            <a href="https://www.politie.nl/onderwerpen/innovation-lab.html" target="_blank" class="card job-card">
+                <h3>Politie Innovatielab</h3>
+                <p><strong>BI Specialist Stage</strong> (2019)</p>
+                <p>Data-analyse en visualisatie binnen het iLab van de politie.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="skills" class="container">
+        <h2>Tech Stack & Skills</h2>
+        <div class="skills-wrapper">
+            <span class="skill-chip">SQL</span><span class="skill-chip">Power BI</span><span class="skill-chip">Python</span>
+            <span class="skill-chip">Linux</span><span class="skill-chip">Networking</span><span class="skill-chip">Powershell</span>
+        </div>
+    </section>
+
+    <section id="terminal-section" class="container">
+        <h2>System Terminal</h2>
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span style="margin-left:10px; font-size:0.8rem; opacity:0.7">guest — visitor@it-dev-terminal</span>
+            </div>
+            <div class="terminal-body" id="terminal-content">
+                <canvas id="matrix-canvas"></canvas>
+                <div id="terminal-output">
+                    <div class="line">Systeem gereed. Typ <span class="highlighted">'help'</span>.</div>
+                </div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="prompt" style="color: var(--accent-color); font-weight: bold;">visitor@it-dev:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="mailto:fvc1994@live.nl" class="skill-chip">📧 fvc1994@live.nl</a>
+            <a href="https://github.com/Fabianvc194" target="_blank" class="skill-chip">🐙 GitHub</a>
+        </div>
+    </section>
+
+    <script>
+        const rawStatuses = [
+            "Working with a view #Bocholtz 🏔️",
+            "Debugging production like a boss 😎 #NoFear",
+            "Building dashboards @CBS #DataViz 📊",
+            "Exploring the Pyerlands in #CrimsonDesert 🏜️",
+            "Vibe coding 🤖✨",
+            "Blue shell incoming! 🐢 #MarioKart8",
+            "Entering the Matrix... #Cyberpunk2077 #NightCity 🌃",
+            "SELECT productivity FROM human WHERE coffee <= 0; — No results found. 🔍 #QueryLife",
+            "Mijn CPU draait op 99%, maar ik sta nog steeds in de lobby. 🎮 #Lag",
+            "Action shots @ de zijlijn 📸⚽️ #SportPhotography",
+            "Lift? Nee, trap! #Gainz 🧗‍♂️",
+            "LinkedIn Learning binge-watching 🎓 #AlwaysLearning",
+            "Automating the boring stuff with PowerShell 🐚",
+            "Experimenting in the Linux Kernel 🐧 #TerminalVibes",
+            "Inception with VirtualBox 💻 #VMWare",
+            "Tweaking the Datawarehouse... 🏗️ #DWH",
+            "SQL Query aan het optimaliseren... 🔥 #SQL",
+            "Wake up Samurai, we have a server to burn 🦾 #JohnnySilverhand",
+            "Koffie-level: Kritiek laag ☕️ #SendHelp"
+        ];
+
+        let statusQueue = [];
+
+        function shuffleStatuses() {
+            statusQueue = [...rawStatuses].sort(() => Math.random() - 0.5);
+        }
+
+        function rotateStatus() {
+            const el = document.getElementById('status-text');
+            if(el) {
+                if (statusQueue.length === 0) shuffleStatuses();
+                const nextStatus = statusQueue.shift();
+                el.style.opacity = 0; 
+                setTimeout(() => {
+                    el.innerText = nextStatus;
+                    el.style.opacity = 1; 
+                }, 500);
+            }
+        }
+        
+        shuffleStatuses();
+        rotateStatus(); 
+        setInterval(rotateStatus, 10000);
+
+        const cursorMain = document.querySelector('.cursor-main');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            cursorMain.style.left = e.clientX + 'px'; 
+            cursorMain.style.top = e.clientY + 'px';
+            setTimeout(() => { 
+                cursorOutline.style.left = e.clientX + 'px'; 
+                cursorOutline.style.top = e.clientY + 'px'; 
+            }, 50);
+        });
+
+        // Terminal Logica
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalContent = document.getElementById('terminal-content');
+        let matrixActive = false;
+
+        async function typeRes(lines) {
+            if (typeof lines === 'string') lines = [lines];
+            for (let text of lines) {
+                const line = document.createElement('div');
+                line.style.marginBottom = "5px";
+                terminalOutput.appendChild(line);
+                for(let char of text) {
+                    line.textContent += char;
+                    await new Promise(r => setTimeout(r, 10));
+                }
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+            }
+        }
+
+        terminalInput.addEventListener('keydown', async function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.toLowerCase().trim();
+                const userLine = document.createElement('div');
+                userLine.innerHTML = `<span style="color:var(--accent-color)">visitor@it-dev:~$</span> ${this.value}`;
+                terminalOutput.appendChild(userLine);
+                this.value = '';
+
+                // Herstart matrix achtergrond positie bij scrollen in terminal
+                if(matrixActive) {
+                    stopMatrix();
+                    startMatrix();
+                }
+
+                switch(cmd) {
+                    case 'help': 
+                        await typeRes(["Opties:", "• whoami", "• cv", "• matrix", "• clear"]); 
+                        break;
+                    case 'whoami': 
+    await typeRes([
+        "NAAM: Fabian van Caspel",
+        "PROFIEL: IT Specialist met passie voor infra, data en strategie.",
+        " ", // Lege regel voor ademruimte
+        "- INFRA: Slaat de brug tussen stabiele systemen en data-gedreven BI-oplossingen.",
+        "- ANALYTISCH: Tweaker-DNA; doorgrondt complexe tech-stacks en data tot op het bot.",
+        "- STRATEGIE: Gebruikt game-mechanics en 'exploits' om het onmogelijke mogelijk te maken."
+    ]); 
+    break;
+                    case 'cv': 
+                        await typeRes([                            
+                            "LOOPBAAN:",
+                            "- CBS: IT-Support Engineer (2024-Heden)", 
+                            "- VodafoneZiggo: 24/7 Technical Engineer (2021-2024)", 
+                            "- Data4: ICT-Consultant (2021)", 
+                            "- Teqoia: ICT-Consultant (2020)", 
+                            "- Politie iLab: BI Specialist Stage (2019)",
+"OPLEIDINGEN & CERTIFICERINGEN:",
+                            "- HBO ICT BI (2018-2021)", 
+                            "- MBO 4 Netwerkbeheer (2015-2018)", 
+                            "- MBO 3 ICT Medewerker beheer (2013-2015)",
+                            "- Microsoft Office Specialist (MOS) Certificaten",
+                        ]); 
+                        break;
+                    case 'matrix': if(!matrixActive) startMatrix(); else stopMatrix(); break;
+                    case 'clear': terminalOutput.innerHTML = ''; stopMatrix(); break;
+                    default: await typeRes("Onbekend commando. Typ 'help'.");
+                }
+            }
+        });
+
+        // Matrix Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        let mInt;
+        let drops = [];
+
+        function startMatrix() {
+            matrixActive = true; 
+            canvas.style.display = 'block';
+            const totalHeight = Math.max(terminalContent.scrollHeight, 350);
+            const totalWidth = terminalContent.offsetWidth;
+            canvas.width = totalWidth;
+            canvas.height = totalHeight;
+            const columns = canvas.width / 20;
+            drops = Array(Math.floor(columns)).fill(1);
+
+            mInt = setInterval(() => {
+                ctx.fillStyle = 'rgba(0,0,0,0.05)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0f0'; 
+                ctx.font = '15px monospace';
+                for(let i = 0; i < drops.length; i++) {
+                    const text = String.fromCharCode(Math.random()*128);
+                    ctx.fillText(text, i*20, drops[i]*20);
+                    if(drops[i]*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }, 33);
+        }
+
+        function stopMatrix() { 
+            matrixActive = false; 
+            clearInterval(mInt); 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'none'; 
+        }
+    </script>
+</body>
+</html>
