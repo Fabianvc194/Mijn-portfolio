@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FVC | Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --terminal-green: #4ade80;
+            --hub-purple: #a855f7;
+            --border: rgba(255, 255, 255, 0.08);
+            --warning: #fbbf24;
+        }
+
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        header h1 { 
+            font-family: 'Fira Code', monospace; 
+            font-size: 1.4rem; 
+            color: var(--accent); 
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .status-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--terminal-green);
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        /* --- LAYOUT CONTAINER --- */
+        .main-container {
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-mail { background: rgba(56, 189, 248, 0.1); color: var(--accent); border-color: var(--accent); }
+        .btn-mail:hover { background: var(--accent); color: var(--bg); transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+        .btn-hub { background: rgba(168, 85, 247, 0.1); color: var(--hub-purple); border-color: var(--hub-purple); }
+        .btn-hub:hover { background: var(--hub-purple); color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3); }
+
+        /* --- SECTIONS --- */
+        .section-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            backdrop-filter: blur(8px);
+        }
+
+        .link-card:hover {
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            transform: scale(1.03);
+            color: var(--accent);
+        }
+
+        /* --- EXPERIMENT & DEV CARDS --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .experiment-btn {
+            display: block;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .experiment-btn:hover {
+            background: var(--warning);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+/* --- Bestaande experiment hover --- */
+        .experiment-btn:hover {
+            background: var(--warning);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- NIEUWE KLASSE VOOR DE LEARN KNOP --- */
+        .learn-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            margin-top: 15px;
+        }
+
+        /* --- HOVER EFFECT VOOR DE LEARN KNOP --- */
+        .learn-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+		
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .github-link:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        @media (max-width: 850px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="animate">
+        <h1>FVC://SYSTEM_CONTROL</h1>
+        <div class="status-badge">STATUS: OPERATIONAL</div>
+    </header>
+
+    <div class="main-container">
+        <main>
+            <div class="btn-group animate delay-1">
+                <a href="mailto:fvc1994@live.nl" class="btn btn-mail">✉ SEND_MAIL(fvc1994)</a>
+                <a href="#" target="_blank" class="btn btn-hub">⚡ CONNECT_HUB_SERVER</a>
+            </div>
+
+            <span class="section-label animate delay-1">Global Shortcuts</span>
+            <div class="link-grid animate delay-1">
+                <a href="https://youtube.com" target="_blank" class="link-card">Youtube</a>
+                <a href="https://tweakers.net" target="_blank" class="link-card">Tweakers</a>
+                <a href="https://google.nl" target="_blank" class="link-card">Google</a>
+                <a href="https://gemini.google.com" target="_blank" class="link-card">Gemini</a>
+                <a href="https://perplexity.ai" target="_blank" class="link-card">Perplexity</a>
+                <a href="https://chat.openai.com" target="_blank" class="link-card">ChatGPT</a>
+            </div>
+
+			<span class="section-label animate delay-2">R&D / Sandbox</span>
+            <div class="card animate delay-2">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">
+                    Toegang tot experimentele features en alternatieve interfaces.
+                </p>
+                
+                <a href="indexv2.html" class="experiment-btn">
+                    🧪 LAUNCH_EXPERIMENT_V2
+                </a>
+
+                <a href="learn.html" class="experiment-btn learn-btn">
+                    🧠 NEURAL_SYNC_PROTOCOL (LEARN)
+                </a>
+            </div>
+        </main>
+
+        <aside class="animate delay-3">
+            <span class="section-label">GitHub Environment</span>
+            <div class="card">
+                <a href="https://github.com/Fabianvc194?tab=repositories" target="_blank" class="github-link">
+                    <span>📂 Mijn Repositories</span>
+                </a>
+                <a href="https://github.com/pulls" target="_blank" class="github-link">
+                    <span>🔀 Pull Requests</span>
+                </a>
+                <a href="https://github.com/gist" target="_blank" class="github-link">
+                    <span>📜 Code Snippets</span>
+                </a>
+                <a href="https://stackoverflow.com" target="_blank" class="github-link">
+                    <span>💬 Stack Overflow</span>
+                </a>
+            </div>
+
+            <span class="section-label">System Stats</span>
+            <div class="card" style="border-left: 3px solid var(--terminal-green);">
+                <div style="font-family: 'Fira Code', monospace; font-size: 0.75rem;">
+                    <p style="margin: 5px 0;">Uptime: <span id="uptime" style="color: var(--terminal-green);">0h 0m</span></p>
+                    <p style="margin: 5px 0;">Host: Localhost</p>
+                    <p style="margin: 5px 0;">Mode: <span style="color: var(--warning);">Dev_v2.1</span></p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Uptime counter
+        let start = new Date();
+        setInterval(() => {
+            let now = new Date();
+            let diff = Math.floor((now - start) / 1000);
+            let m = Math.floor(diff / 60) % 60;
+            let h = Math.floor(diff / 3600);
+            document.getElementById('uptime').innerText = `${h}h ${m}m`;
+        }, 10000);
+    </script>
+
+</body>
+</html>
