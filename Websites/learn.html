@@ -3,823 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FVC | DevVault_SME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>FVC | Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #020617;
-            --card-bg: rgba(15, 23, 42, 0.9);
+            --bg: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
             --accent: #38bdf8;
             --accent-glow: rgba(56, 189, 248, 0.3);
             --text: #f1f5f9;
+            --text-muted: #94a3b8;
             --terminal-green: #4ade80;
-            --border: rgba(56, 189, 248, 0.2);
-            --hub-purple: #a855f7;
+            --border: rgba(255, 255, 255, 0.08);
             --warning: #fbbf24;
-            --danger: #f87171;
+            --danger: #ef4444; /* Rood voor Kinetic */
+            --danger-glow: rgba(239, 68, 68, 0.3);
         }
 
+        /* --- RESET & BASE --- */
         * { box-sizing: border-box; }
-
+        
         body {
-    background-color: var(--bg);
-    background-image: 
-        radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
-        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 50px 50px, 50px 50px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-main {
-    padding: 40px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    min-height: 0;
-}
-
-.accordion-content {
-    padding: 0 20px;
-    max-height: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease;
-    background: rgba(0,0,0,0.2);
-    line-height: 1.7;
-}
-
-.flow-diagram {
-    background: #000;
-    padding: 20px;
-    border-radius: 8px;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.82rem;
-    color: var(--terminal-green);
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: pre-wrap;
-    word-break: break-word;
-    border: 1px dashed var(--border);
-    line-height: 1.5;
-}
-        header {
-            padding: 15px 30px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            background: rgba(2, 6, 23, 0.8);
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .app-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            flex: 1;
-            overflow: hidden;
-            min-height: 0;
-        }
-
-        .sidebar {
-            background: rgba(0, 0, 0, 0.3);
-            border-right: 1px solid var(--border);
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .subject-tab {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid var(--border);
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
             color: var(--text);
-            text-align: left;
-            font-family: 'Fira Code', monospace;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .subject-tab:hover,
-        .subject-tab.active {
-            background: var(--accent);
-            color: var(--bg);
-            box-shadow: 0 0 15px var(--accent-glow);
-            transform: translateY(-1px);
-        }
-
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .accordion {
-            margin-bottom: 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--card-bg);
+        .animate {
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        .accordion-header {
-            padding: 15px 20px;
-            background: rgba(56, 189, 248, 0.1);
-            cursor: pointer;
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 40px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            color: var(--accent);
-            gap: 12px;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
         }
 
-        .accordion.open .accordion-content {
-            max-height: 1800px;
-            padding: 20px;
+        header h1 { 
+            font-family: 'Fira Code', monospace; 
+            font-size: 1.4rem; 
+            color: var(--accent); 
+            margin: 0;
+            letter-spacing: -1px;
         }
 
-        .tip-box {
+        .status-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
             background: rgba(74, 222, 128, 0.1);
-            border-left: 4px solid var(--terminal-green);
-            padding: 15px;
-            margin: 15px 0;
-            font-size: 0.95rem;
+            color: var(--terminal-green);
+            padding: 4px 12px;
             border-radius: 4px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
         }
 
-        .warning-box {
-            background: rgba(251, 191, 36, 0.08);
-            border-left: 4px solid var(--warning);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .vibe-card {
-            border: 1px solid var(--hub-purple);
-            padding: 20px;
-            background: linear-gradient(45deg, rgba(168, 85, 247, 0.1), transparent);
-            border-radius: 10px;
-        }
-
-        .tag {
-            font-size: 0.72rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.08);
-            margin-right: 5px;
-            display: inline-block;
-        }
-
-        .meta-grid {
+        /* --- LAYOUT CONTAINER --- */
+        .main-container {
+            width: 100%;
+            max-width: 1000px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
         }
 
-        .meta-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
             padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        ul, ol {
-            padding-left: 20px;
+        /* Onopvallende stijl voor bovenste knoppen */
+        .btn-neutral { 
+            background: rgba(255, 255, 255, 0.03); 
+            color: var(--text-muted); 
+            border: 1px solid var(--border); 
+        }
+        .btn-neutral:hover { 
+            background: rgba(255, 255, 255, 0.08); 
+            color: var(--text); 
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
         }
 
-        li {
-            margin-bottom: 8px;
+        /* --- SECTIONS --- */
+        .section-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            letter-spacing: 1px;
         }
 
-        .small-heading {
-            margin: 16px 0 8px;
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            backdrop-filter: blur(8px);
+        }
+
+        .link-card:hover {
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            transform: scale(1.03);
             color: var(--accent);
-            font-size: 1rem;
         }
 
-        @media (max-width: 900px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            main {
-                padding: 22px;
-            }
+        /* --- EXPERIMENT & DEV CARDS --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
         }
 
-        /* Styling voor de tekst binnen de accordeons (de prompts) */
-        .accordion-content pre {
-            color: #f8fafc;             /* Bijna wit voor maximaal contrast */
-            font-family: 'Inter', sans-serif; /* Geen 'code' lettertype, leest rustiger */
-            font-size: 1.05rem;         /* Iets groter */
-            line-height: 1.6;           /* Meer ruimte tussen de regels */
-            white-space: pre-wrap;      /* Zorgt dat tekst afbreekt op mobiel */
-            word-wrap: break-word;
-            background: transparent;    /* Geen donker vlak erachter */
+        .experiment-btn {
+            display: block;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
             margin-top: 10px;
-            padding: 0;
         }
 
-        /* Zorg dat de container waarin de tekst staat niet te donker is */
-        .prompt-accordion .accordion-content {
-            background: rgba(15, 23, 42, 0.5); /* Iets lichter blauw/zwart */
-            border-top: 1px solid rgba(168, 85, 247, 0.2);
-}
+        .experiment-btn:hover {
+            background: var(--warning);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
 
-/* Media query voor telefoons */
+        /* LEARN KNOP (Blauw Thema) */
+        .learn-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            margin-top: 15px;
+        }
+
+        .learn-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* NEXT GEN KNOP (Rood Thema) */
+        .nextgen-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            margin-top: 15px;
+        }
+
+        .nextgen-btn:hover {
+            background: var(--danger);
+            color: var(--text);
+            box-shadow: 0 0 20px var(--danger-glow);
+            transform: translateY(-2px);
+        }
+        
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .github-link:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        @media (max-width: 850px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 600px) {
             header {
-                padding: 12px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
-
-            .subject-tab {
-                font-size: 0.9rem;
-            }
-
-            .flow-diagram {
-                font-size: 0.75rem;
-            }
-        } /* <--- Deze miste je waarschijnlijk, waardoor alles eronder kapot ging */
-
-        /* Deze styling moet BUITEN de media query staan zodat het overal werkt */
-        .prompt-accordion {
-            border-color: rgba(168, 85, 247, 0.35);
+            .btn-group { grid-template-columns: 1fr; }
+            .link-grid { grid-template-columns: repeat(2, 1fr); }
+            body { padding: 20px 15px; }
+            header h1 { font-size: 1.1rem; }
         }
-
-        .prompt-accordion .accordion-header {
-            background: rgba(168, 85, 247, 0.12);
-            color: var(--hub-purple);
-            font-family: 'Fira Code', monospace;
-        }
-
-.copy-btn {
-    background: var(--hub-purple);
-    color: white !important;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif !important;
-    line-height: 1.2;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    min-width: 80px;
-    text-align: center;
-}
-
-.copy-btn:hover {
-    background: #9333ea;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
-}
-
-.copy-btn:active {
-    transform: translateY(0);
-}
     </style>
 </head>
 <body>
 
-    <header>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="width: 12px; height: 12px; background: var(--terminal-green); border-radius: 50%; box-shadow: 0 0 10px var(--terminal-green);"></div>
-            <h1 style="font-family: 'Fira Code', monospace; font-size: 1rem; margin: 0;">FVC://KNOWLEDGE_VAULT_2026</h1>
-        </div>
-        <div id="clock" style="font-family: 'Fira Code', monospace; color: var(--accent);">00:00:00</div>
+    <header class="animate">
+        <h1>FVC://SYSTEM_CONTROL</h1>
+        <div class="status-badge">STATUS: OPERATIONAL</div>
     </header>
 
-    <div class="app-container">
-        <aside class="sidebar">
-            <button class="subject-tab active" onclick="showTab('md102', this)">MD-102: Endpoint Admin</button>
-            <button class="subject-tab" onclick="showTab('soc', this)">SOC: Cyber Security</button>
-            <button class="subject-tab" onclick="showTab('vibe', this)">Vibe Coding</button>
-        </aside>
-
+    <div class="main-container">
         <main>
-            <!-- SECTIE MD-102 -->
-            <section id="md102" class="content-section active">
-                <h2 style="color: var(--accent);">MD-102: Microsoft 365 Endpoint Administrator</h2>
-                <p style="opacity: 0.8;">Focus op de "Big Three", troubleshooting, en het examen-denkmodel.</p>
-
-                <div class="accordion open">
-                    <div class="accordion-header">1. De "Big Three" Pijlers <span>+</span></div>
-                    <div class="accordion-content">
-                        <p><strong>Autopilot:</strong> De voordeur. Zorgt dat nieuwe hardware automatisch wordt geadopteerd door Entra ID & Intune.</p>
-                        <p><strong>Compliance Policy:</strong> De thermometer. Meet of een apparaat voldoet aan de security eisen.</p>
-                        <p><strong>Conditional Access (CA):</strong> De uitsmijter. Handhaaft toegang op basis van de compliance status of andere signalen.</p>
-                        <div class="tip-box">Examen-tip: Zie je "Out-of-the-box" of "Geen IT-handelingen"? Denk Autopilot.</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">2. De "Gouden Combinaties" <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Snel veilig configureren?</strong> Gebruik Security Baselines.</li>
-                            <li><strong>Toegang blokkeren bij onveiligheid?</strong> Compliance Policy + Conditional Access.</li>
-                            <li><strong>Helpdesk rechten beperken?</strong> Custom Role + Scope.</li>
-                            <li><strong>Trage opstarttijden of crashes?</strong> Endpoint Analytics.</li>
-                            <li><strong>Malware of gedrag detecteren?</strong> Microsoft Defender for Endpoint.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">3. Het "Master Flow" Schema <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="flow-diagram">[ STAP 1: CONFIG ]       [ STAP 2: COMPLIANCE ]       [ STAP 3: CONDITIONAL ACCESS ]
-      Intune                   Intune                         Entra ID (Cloud)
-        |                        |                                 |
-  "BitLocker AAN" -----> "Check status" ----------------> "Geef/Weiger toegang"
-        |                        |                                 |
-   [ APPARAAT ]         [ COMPLIANCE STATUS ]            [ OFFICE 365 / DATA ]</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">4. Troubleshooting Trechter <span>+</span></div>
-                    <div class="accordion-content">
-                        <ol>
-                            <li><strong>Sync Control:</strong> Forceer een sync op het apparaat.</li>
-                            <li><strong>Report Check:</strong> Controleer status: Succeeded, Failed, of Conflict.</li>
-                            <li><strong>Assignment:</strong> Is het beleid gekoppeld aan de juiste groep?</li>
-                            <li><strong>Detection Rule:</strong> Controleer de app-regels (bestaat bestand X?).</li>
-                        </ol>
-
-                        <div class="warning-box">
-                            Install Pending? Kijk eerst naar sync en assignment voordat je dieper gaat zoeken.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">5. Rollen in één zin <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="meta-grid">
-                            <div class="meta-card"><strong>Entra ID</strong><br>De identiteit: wie ben je?</div>
-                            <div class="meta-card"><strong>Intune</strong><br>De beheerder: welk beleid krijg je?</div>
-                            <div class="meta-card"><strong>Autopilot</strong><br>De logistiek: hoe komt de laptop bij de gebruiker?</div>
-                            <div class="meta-card"><strong>Defender</strong><br>De bewaker: is er gevaar op het apparaat?</div>
-                            <div class="meta-card"><strong>Remote Help</strong><br>Support op afstand binnen Intune Suite.</div>
-                            <div class="meta-card"><strong>AVD / Windows 365</strong><br>De cloud-pc als extra werkplek.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">6. De Gouden Mindset voor het Examen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>Kan niet inschrijven? Kijk naar <strong>Enrollment Restrictions</strong>.</li>
-                            <li>Is ingeschreven maar krijgt geen toegang? Kijk naar <strong>Compliance + Conditional Access</strong>.</li>
-                            <li>"Install Pending"? Eerst <strong>Sync</strong>, dan <strong>Assignment</strong>.</li>
-                            <li>"Failed" status bij een app? Controleer de <strong>Detection Rule</strong>.</li>
-                            <li>Kies waar mogelijk voor de <strong>cloud-native</strong> weg: Intune, Defender en Entra ID.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">7. Windows Autopilot & Win32 App Flow <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="small-heading">Windows Autopilot</div>
-                        <div class="flow-diagram">[ DOOS ] ---> (OOBE start) ---> [ ENTRA ID ]
-                             |
-                             | (Apparaat wordt lid van organisatie)
-                             v
-[ INHOUD ] <--- (Intune stuurt policies/apps) <--- [ INTUNE ]
-                             |
-                             | (Laptop is nu klaar voor gebruik)
-                             v
-                    [ MEDEWERKER LOGT IN ]</div>
-
-                        <div class="small-heading">Win32 App Deployment</div>
-                        <div class="flow-diagram">[ INHOUD ] ---> (Installatie begint) ---> [ BESTAND GEÏNSTALLEERD ]
-                              |
-                              | (Detection Rule checkt: "Bestaat X.exe?")
-                              |
-                 -----------------------------+-----------------------------
-                 |                                                           |
-        [ JA: BESTAND IS ER ]                                   [ NEE: BESTAND NIET GEVONDEN ]
-                 |                                                           |
-           [ STATUS: SUCCESS ]                                    [ STATUS: FAILED ]</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTIE SOC -->
-            <section id="soc" class="content-section">
-                <h2 style="color: var(--terminal-green);">SOC Analist Essentials: Studie-overzicht</h2>
-                <p style="opacity: 0.8;">Kernnotities voor de voorbereiding op een SOC-functie, van architectuur tot dagelijkse operatie.</p>
-
-                <div class="accordion open">
-                    <div class="accordion-header">1. Het Grote Plaatje: SOC Architectuur <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>De moderne verdediging rust op drie pijlers:</p>
-                        <ul>
-                            <li><strong>SIEM (Het Oog):</strong> Centraal platform voor log-verzameling en correlatie, zoals Microsoft Sentinel of Splunk.</li>
-                            <li><strong>EDR (Het Vergrootglas):</strong> Monitort gedrag op endpoints en kan processen stoppen, bijvoorbeeld CrowdStrike of Carbon Black.</li>
-                            <li><strong>SOAR (De Handen):</strong> Automatiseert repetitieve taken via playbooks, zoals automatisch een IP blokkeren bij een detectie.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">2. De Fundering: Technische Basiskennis <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>Zonder deze kennis kun je de logs in de SIEM niet interpreteren.</p>
-                        <ul>
-                            <li><strong>DNS (53):</strong> Vertalen van namen naar IP's. Verdachte domeinen vallen hier op.</li>
-                            <li><strong>HTTP/S (80/443):</strong> Webverkeer. Let op ongebruikelijke User-Agents.</li>
-                            <li><strong>SMB (445):</strong> Bestandsdeling binnen netwerken. Favoriet bij hackers voor lateral movement.</li>
-                            <li><strong>Azure AD / Entra ID:</strong> Logs zijn cruciaal om te zien wie waar vandaan inlogt.</li>
-                            <li><strong>NSG / VPC Flow Logs:</strong> Fungeren als firewalls en verkeerscamera's van de cloud.</li>
-                            <li><strong>Syslog, Windows Events, JSON:</strong> Veelgebruikte logformaten in netwerk, OS en cloud.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">3. De Vijand: MITRE ATT&CK Framework <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>De 14 tactieken worden vaak gegroepeerd in logische fasen van een aanval:</p>
-                        <ul>
-                            <li><strong>Inbraak:</strong> Reconnaissance, Initial Access.</li>
-                            <li><strong>Blijven:</strong> Execution, Persistence, Defense Evasion.</li>
-                            <li><strong>Uitbreiden:</strong> Discovery, Lateral Movement, Privilege Escalation.</li>
-                            <li><strong>Doel:</strong> Collection, Exfiltration, Impact.</li>
-                        </ul>
-                        <div class="tip-box">Voorbeeld: Phishing valt onder Initial Access en wordt vaak gelabeld met ATT&CK-technieken zoals T1566.</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">4. De Operatie: Incident Response <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>Jouw dagelijkse workflow als analist:</p>
-                        <ul>
-                            <li><strong>Triage:</strong> Het filteren van de wachtrij.</li>
-                            <li><strong>False Positive:</strong> Vals alarm, geen actie nodig.</li>
-                            <li><strong>True Positive:</strong> Een echte dreiging, escaleren of afhandelen.</li>
-                        </ul>
-                        <p><strong>NIST-cyclus:</strong></p>
-                        <ol>
-                            <li>Detection & Analysis: Het alarm onderzoeken.</li>
-                            <li>Containment: De dreiging isoleren, bijvoorbeeld een pc van het netwerk halen.</li>
-                            <li>Eradication: De bron van de aanval verwijderen.</li>
-                            <li>Recovery: Systemen veilig online brengen.</li>
-                            <li>Lessons Learned: De gaten dichten voor de toekomst.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">5. Uitgebreid Vocabulaire & Begrippen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>IOC:</strong> Technisch bewijs van een aanval, zoals IP, hash of domein.</li>
-                            <li><strong>TTP's:</strong> De gedragspatronen van een hacker.</li>
-                            <li><strong>Zero-day:</strong> Een kwetsbaarheid waarvoor nog geen patch bestaat.</li>
-                            <li><strong>Threat Intelligence:</strong> Informatie over actuele dreigingen en hackersgroepen.</li>
-                            <li><strong>Defense in Depth:</strong> Beveiliging met meerdere lagen, zoals firewall + EDR + MFA.</li>
-                            <li><strong>Least Privilege:</strong> Gebruikers krijgen alleen de rechten die strikt nodig zijn.</li>
-                            <li><strong>Brute Force:</strong> Duizenden wachtwoorden proberen tot één werkt.</li>
-                            <li><strong>Dwell Time:</strong> Hoe lang een aanvaller onopgemerkt in een netwerk zit.</li>
-                            <li><strong>Phishing / Smishing / Vishing:</strong> Social engineering via e-mail, sms of telefoon.</li>
-                            <li><strong>Sandbox:</strong> Beveiligde, geïsoleerde omgeving om verdachte bestanden veilig te openen.</li>
-                            <li><strong>Asset:</strong> Alles van waarde binnen de IT-omgeving.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">6. SOC Gereedschappen & Vendor Focus <span>+</span></div>
-                    <div class="accordion-content">
-                        <p><span class="tag">SIEM</span> Microsoft Sentinel is cloud-native en gebruikt KQL om data om te zetten in detectieregels en dashboards.</p>
-                        <p><span class="tag">EDR</span> VMware Carbon Black biedt diep inzicht in processen, netwerkverbindingen, registerwijzigingen en bestandsgedrag op endpoints.</p>
-                        <p><span class="tag">SOAR</span> Automatiseert acties zoals account blokkeren, wachtwoord resetten of een IP blokkeren.</p>
-                        <div class="warning-box">
-                            Alert fatigue voorkomen? Laat SOAR de repetitieve acties afhandelen zodat jij je focust op echte dreigingen.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">7. Praktische Werkvloerregels <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Playbook:</strong> Stappenplan voor een specifiek incident.</li>
-                            <li><strong>SLA:</strong> Tijd waarbinnen je moet reageren.</li>
-                            <li><strong>Whitelist:</strong> Veilig gedrag markeren zodat het geen alarm meer geeft.</li>
-                            <li><strong>Incident vs Event:</strong> Een event is een losse gebeurtenis; een incident is een geverifieerde security-case.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">8. Verdieping & Bronnen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>MITRE ATT&CK Navigator</li>
-                            <li>NIST Incident Handling Guide</li>
-                            <li>Pyramid of Pain</li>
-                            <li>Cloud Security Alliance</li>
-                            <li>TryHackMe SOC Level 1 Path</li>
-                        </ul>
-                    </div>
-                </div>
-				
-                <div class="accordion">
-                    <div class="accordion-header">9. Senior SOC Engineer <span>+</span></div>
-                    <div class="accordion-content">Een Senior SOC Engineer focust zich op de strategische en overkoepelende kant van cybersecurity. Je begrijpt niet alleen de knoppen, maar bent de architect van de hele detectiestrategie.</p>
-
-<h3>1. De Architectuur: Het grote plaatje</h3>
-<p>Begrijpen hoe tools communiceren en gaten in de verdediging dichten.</p>
-<ul>
-    <li><strong>MITRE ATT&CK framework:</strong> Zorgen voor volledige dekking (coverage) over alle fases van een cyberaanval.</li>
-    <li><strong>De Gouden Driehoek (EDR, SIEM, SOAR):</strong> 
-        <ul>
-            <li><em>EDR:</em> Lokale bewaking op endpoints (laptops/servers).</li>
-            <li><em>SIEM:</em> De centrale meldkamer voor log-correlatie.</li>
-            <li><em>SOAR:</em> Geautomatiseerde response op SIEM-alerts.</li>
-        </ul>
-    </li>
-    <li><strong>Data Quality over Quantity:</strong> Waarschuwingsmoeheid (alert fatigue) voorkomen door enkel high-fidelity logs te gebruiken.</li>
-</ul>
-
-<h3>2. Automatisering & Schaalbaarheid</h3>
-<p>Van handmatig beheer naar geautomatiseerde processen op schaal.</p>
-<ul>
-    <li><strong>SIEM-as-Code (IaC):</strong> Detectieregels beheren als code via Git/CI-CD voor versiebeheer en veilig uitrollen.</li>
-    <li><strong>Geavanceerde Scripting:</strong> Robuuste integraties bouwen in Python of PowerShell die via API's verschillende security-tools koppelen.</li>
-</ul>
-
-<h3>3. Incident Response & Threat Hunting</h3>
-<p>Optreden als de 'Special Forces' bij grote incidenten.</p>
-<ul>
-    <li><strong>Proactieve Threat Hunting:</strong> Actief zoeken naar ongeziene dreigingen om de <em>dwell time</em> (tijd dat een hacker onopgemerkt binnen is) te verkorten.</li>
-    <li><strong>Zero-day actieplan:</strong> Snel schakelen via Threat Intelligence, vulnerability scanning en het pushen van nieuwe SIEM-detecties.</li>
-    <li><strong>Crisismanagement:</strong> Junioren begeleiden en forensisch bewijs veiligstellen zonder de business te verstoren.</li>
-</ul>
-
-<h3>4. De "Spil"-functie tussen Beheer en Security</h3>
-<p>De brug slaan tussen techniek en de organisatie.</p>
-<ul>
-    <li><strong>Stakeholdermanagement:</strong> Weerstand wegnemen bij andere IT- en Cloud-teams omtrent security-maatregelen (bijv. performance-impact).</li>
-    <li><strong>SOC-CMM:</strong> Meedenken over het Capability Maturity Model van het SOC om de afdeling naar een hoger strategisch niveau te tillen.</li>
-    <li><strong>Communicatie:</strong> Eigenaarschap tonen en in gesprekken de STAR-methode toepassen met een sterke focus op het behaalde <strong>Resultaat</strong>.</li>
-</ul>
-					
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTIE VIBE CODING -->
-    <section id="vibe" class="content-section">
-    <h2 style="color: var(--hub-purple);">Vibe Coding: The Future of Dev</h2>
-    <p style="opacity: 0.8;">Vibe coding gaat over het sturen van AI-tools op basis van intentie en context in plaats van handmatig elke regel code te typen.</p>
-
-    <div class="vibe-card">
-        <div class="tip-box" style="border-color: var(--hub-purple);">
-            "Focus op architectuur en logica, laat de AI de syntax-slaaf zijn."
-        </div>
-
-        <ul style="font-family: 'Fira Code', monospace; font-size: 0.88rem;">
-            <li>Gebruik natural language voor complexe functies.</li>
-            <li>Iteratief bouwen: praten met je code.</li>
-            <li>LLM-gestuurde refactoring.</li>
-        </ul>
-
-        <br>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Onderwerp leren met AI <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
-
-Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
-Gebruik:
-- een korte uitleg in simpele taal,
-- de belangrijkste kernbegrippen,
-- 3 praktijkvoorbeelden,
-- 5 controlevragen,
-- een mini-oefening met antwoord,
-- veelgemaakte fouten,
-- en een compacte samenvatting.
-
-Houd rekening met mijn IT-achtergrond en leg technische termen kort uit.</pre>
-                </div>
+            <div class="btn-group animate delay-1">
+                <a href="mailto:fvc1994@live.nl" class="btn btn-neutral">✉ SEND_MAIL(fvc1994)</a>
+                <a href="#" target="_blank" class="btn btn-neutral">⚡ CONNECT_HUB_SERVER</a>
             </div>
-        </div>
 
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: SQL troubleshooting <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Je bent een ervaren SQL troubleshoot expert.
-
-Analyseer deze SQL-query op:
-- syntaxfouten,
-- foute joins,
-- verkeerde filters,
-- onjuiste kolomnamen,
-- datatype-problemen,
-- logische fouten,
-- en performance-kansen.
-
-Geef daarna:
-1. de oorzaak van het probleem,
-2. de verbeterde query,
-3. een korte uitleg per wijziging,
-4. en tips om dit soort fouten voortaan sneller te herkennen.
-
-SQL-query:
-[plak query hier]
-
-Foutmelding of probleem:
-[plak foutmelding of beschrijving hier]</pre>
-                </div>
+            <span class="section-label animate delay-1">Global Shortcuts</span>
+            <div class="link-grid animate delay-1">
+                <a href="https://youtube.com" target="_blank" class="link-card">Youtube</a>
+                <a href="https://tweakers.net" target="_blank" class="link-card">Tweakers</a>
+                <a href="https://google.nl" target="_blank" class="link-card">Google</a>
+                <a href="https://gemini.google.com" target="_blank" class="link-card">Gemini</a>
+                <a href="https://perplexity.ai" target="_blank" class="link-card">Perplexity</a>
+                <a href="https://chat.openai.com" target="_blank" class="link-card">ChatGPT</a>
             </div>
-        </div>
 
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: SQL code vertalen of herschrijven <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
+            <span class="section-label animate delay-2">R&D / Sandbox</span>
+            <div class="card animate delay-2">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">
+                    Toegang tot experimentele features en alternatieve interfaces.
+                </p>
+                
+                <a href="Experimentv2.html" class="experiment-btn">
+                    🧪 LAUNCH_EXPERIMENT_V2
+                </a>
 
-Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
-Gebruik:
-- een korte uitleg in simpele taal,
-- de belangrijkste kernbegrippen,
-- 3 praktijkvoorbeelden,
-- 5 controlevragen,
-- een mini-oefening met antwoord,
-- veelgemaakte fouten,
-- en een compacte samenvatting.
+                 <a href="Websites/NextGen.html" class="experiment-btn nextgen-btn">
+                    ☄️ KINETIC_NEXTGEN_PREVIEW
+                </a>
 
-Houd rekening met mijn IT-achtergrond en leg technische termen kort uit.Vertaal of herschrijf de volgende code met behoud van functionaliteit.
-Doel:
-- van: [bron, bijvoorbeeld SQL Server]
-- naar: [doeltaal, bijvoorbeeld PostgreSQL / DAX / Python / JavaScript]
+                <a href="learn.html" class="experiment-btn learn-btn">
+                    🧠 NEURAL_SYNC_PROTOCOL (LEARN)
+                </a>
 
-Eisen:
-- behoud dezelfde logica,
-- maak de code leesbaar,
-- gebruik best practices van de doeltaal,
-- leg kort uit welke delen aangepast moesten worden,
-- en geef de uiteindelijke code in één duidelijk blok.
-
-Code:
-[plak code hier]</pre>
-                </div>
             </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Professionele website maken met thema <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Maak een professionele, moderne en geanimeerde website in HTML, CSS en JavaScript.
-
-Onderwerp van de website:
-[plak onderwerp hier]
-
-Thema / stijl:
-[bijvoorbeeld: dark tech, minimal, cyber, glassmorphism, corporate, neon, clean dashboard]
-
-Kleuren:
-[plak kleuren of laat AI voorstellen doen]
-
-Eisen:
-- responsive design,
-- duidelijke secties,
-- professionele typografie,
-- subtiele animaties,
-- nette cards en hover states,
-- dark/light mode of flexibel thema,
-- toegankelijke structuur,
-- en alles in één HTML-bestand.
-
-Geef:
-1. complete HTML,
-2. ingebouwde CSS,
-3. ingebouwde JavaScript,
-4. en korte uitleg waar ik tekst of kleuren zelf kan aanpassen.</pre>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Socratische Tutor <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">
-<strong>Rol:</strong> Socratische Tutor (Mentor-modus)
-<strong>Doel:</strong> Verken het concept <em>[onderwerp]</em>
-
-<strong>Werkwijze:</strong>
-• Stel mij één voor één open vragen.
-• Geef geen directe antwoorden.
-• Laat me mijn eigen aannames bevragen.
-• Leid me stap voor stap naar de diepere logica.
-
-<em>Laten we beginnen: wat is volgens mij de kern van [ONDERWERP]?</em>
-</pre>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
         </main>
+
+        <aside class="animate delay-3">
+            <span class="section-label">GitHub Environment</span>
+            <div class="card">
+                <a href="https://github.com/Fabianvc194?tab=repositories" target="_blank" class="github-link">
+                    <span>📂 Mijn Repositories</span>
+                </a>
+                <a href="https://github.com/pulls" target="_blank" class="github-link">
+                    <span>🔀 Pull Requests</span>
+                </a>
+                <a href="https://github.com/gist" target="_blank" class="github-link">
+                    <span>📜 Code Snippets</span>
+                </a>
+                <a href="https://stackoverflow.com" target="_blank" class="github-link">
+                    <span>💬 Stack Overflow</span>
+                </a>
+            </div>
+
+            <span class="section-label">System Stats</span>
+            <div class="card" style="border-left: 3px solid var(--terminal-green);">
+                <div style="font-family: 'Fira Code', monospace; font-size: 0.75rem;">
+                    <p style="margin: 5px 0;">Uptime: <span id="uptime" style="color: var(--terminal-green);">0h 0m</span></p>
+                    <p style="margin: 5px 0;">Host: Localhost</p>
+                    <p style="margin: 5px 0;">Mode: <span style="color: var(--warning);">Dev_v2.1</span></p>
+                </div>
+            </div>
+        </aside>
     </div>
-<script>
-    function showTab(id, el) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        el.classList.add('active');
-    }
 
-    function copyPrompt(button) {
-        const promptText = button.closest('.prompt-box').querySelector('.prompt-text').innerText;
+    <script>
+        // Uptime counter
+        let start = new Date();
+        setInterval(() => {
+            let now = new Date();
+            let diff = Math.floor((now - start) / 1000);
+            let m = Math.floor(diff / 60) % 60;
+            let h = Math.floor(diff / 3600);
+            document.getElementById('uptime').innerText = `${h}h ${m}m`;
+        }, 10000);
+    </script>
 
-        navigator.clipboard.writeText(promptText).then(() => {
-            const oldText = button.innerText;
-            button.innerText = 'Gekopieerd!';
-            setTimeout(() => {
-                button.innerText = oldText;
-            }, 1200);
-        }).catch(() => {
-            const oldText = button.innerText;
-            button.innerText = 'Mislukt';
-            setTimeout(() => {
-                button.innerText = oldText;
-            }, 1200);
-        });
-    }
-
-    document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-            header.parentElement.classList.toggle('open');
-        });
-    });
-
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleTimeString('nl-NL');
-    }, 1000);
-
-    const firstAccordion = document.querySelector('.accordion');
-    if (firstAccordion) {
-        firstAccordion.classList.add('open');
-    }
-</script>
 </body>
 </html>
