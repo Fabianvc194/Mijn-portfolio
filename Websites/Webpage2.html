@@ -239,6 +239,30 @@
         @media (max-width: 850px) {
             .main-container { grid-template-columns: 1fr; }
         }
+        /* --- Mobiele optimalisatie voor Command Center --- */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .btn-group {
+                grid-template-columns: 1fr; /* Zet de mail en hub knoppen onder elkaar */
+            }
+
+            .link-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 kolommen ipv 1 voor de shortcuts */
+            }
+
+            body {
+                padding: 20px 15px; /* Iets minder witruimte aan de zijkanten */
+            }
+
+            header h1 {
+                font-size: 1.1rem; /* Maak de titel iets kleiner zodat hij niet afbreekt */
+            }
+        }
     </style>
 </head>
 <body>
