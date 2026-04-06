@@ -1,4 +1,4 @@
-# ⚡ System.Initialize(Fabian_van_Caspel);
+# ⚡ System.Initialize;
 
 Welkom in mijn digitale zandbak. Ik ben een **Technical Engineer** met een passie voor data, netwerken en cybersecurity. Momenteel bevind ik me in de "experimentele fase" van mijn reis als developer.
 
