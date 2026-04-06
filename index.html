@@ -166,6 +166,17 @@
 
         .cursor-main { position: fixed; width: 10px; height: 10px; background: var(--accent-color); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
         .cursor-outline { position: fixed; width: 30px; height: 30px; border: 2px solid var(--accent-color); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.1s ease-out; }
+    /* Verberg de custom cursor op mobiel en touch-apparaten */
+        @media (max-width: 1024px), (pointer: coarse) {
+            .cursor-main, 
+            .cursor-outline {
+                display: none !important;
+            }
+            
+            body {
+                cursor: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -187,8 +198,9 @@
     <header class="hero">
         <h1>Hallo, ik ben <span class="highlighted">Fabian van Caspel</span></h1>
         <p style="font-size: 1.2rem; opacity: 0.8;">IT Specialist | Fotograaf | Gamer</p>
-        <div class="status-badge">
-            <span id="status-dot">●</span> <span id="status-text">System Booting...</span>
+        <div class="status-badge" style="display: inline-flex; align-items: center; gap: 10px; text-align: left;">
+            <span id="status-dot" style="flex-shrink: 0;">●</span> 
+            <span id="status-text">System Booting...</span>
         </div>
     </header>
 
