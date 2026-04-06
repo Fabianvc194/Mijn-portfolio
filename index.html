@@ -40,23 +40,34 @@
         nav a:hover { color: var(--accent-color); }
 
         /* --- Fix voor mobiele navigatie --- */
-    @media (max-width: 768px) {
-        nav {
-            flex-direction: column; /* Zet logo en menu onder elkaar */
-            padding: 15px 5%;
-        }
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column; 
+                padding: 15px 10px; /* Minder zij-ruimte */
+                width: 100%;
+                align-items: center;
+            }
 
-        nav ul {
-            flex-wrap: wrap; /* Zorgt dat de items naar de volgende regel verspringen */
-            justify-content: center; /* Centreer de knoppen */
-            gap: 10px 15px; /* Ruimte tussen de knoppen */
-            margin-top: 15px;
-        }
+            nav ul {
+                display: flex;
+                flex-wrap: wrap; 
+                justify-content: center; 
+                padding: 0;
+                margin: 10px 0 0 0; 
+                gap: 8px 12px; /* Iets compacter voor kleine schermen */
+                width: 100%;
+                list-style: none;
+            }
 
-        nav a {
-            font-size: 0.9rem; /* Iets kleiner om meer ruimte te winnen */
+            nav li {
+                display: inline-block;
+            }
+
+            nav a {
+                font-size: 0.85rem; /* Iets kleiner om wrap te voorkomen op smalle schermen */
+                white-space: nowrap; /* Voorkomt dat één woord van een link afbreekt */
+            }
         }
-    }
         .hero {
             text-align: center; padding: 120px 20px;
             background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
@@ -176,6 +187,9 @@
             body {
                 cursor: auto !important;
             }
+        }
+        * {
+                box-sizing: border-box;
         }
     </style>
 </head>
