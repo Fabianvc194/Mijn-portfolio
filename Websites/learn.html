@@ -235,6 +235,26 @@ main {
             }
         }
 
+        /* Styling voor de tekst binnen de accordeons (de prompts) */
+        .accordion-content pre {
+            color: #f8fafc;             /* Bijna wit voor maximaal contrast */
+            font-family: 'Inter', sans-serif; /* Geen 'code' lettertype, leest rustiger */
+            font-size: 1.05rem;         /* Iets groter */
+            line-height: 1.6;           /* Meer ruimte tussen de regels */
+            white-space: pre-wrap;      /* Zorgt dat tekst afbreekt op mobiel */
+            word-wrap: break-word;
+            background: transparent;    /* Geen donker vlak erachter */
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        /* Zorg dat de container waarin de tekst staat niet te donker is */
+        .prompt-accordion .accordion-content {
+            background: rgba(15, 23, 42, 0.5); /* Iets lichter blauw/zwart */
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+/* Media query voor telefoons */
         @media (max-width: 600px) {
             header {
                 padding: 12px 16px;
@@ -247,21 +267,18 @@ main {
             .flow-diagram {
                 font-size: 0.75rem;
             }
-			.prompt-accordion {
-    border-color: rgba(168, 85, 247, 0.35);
-}
+        } /* <--- Deze miste je waarschijnlijk, waardoor alles eronder kapot ging */
 
-.prompt-accordion .accordion-header {
-    background: rgba(168, 85, 247, 0.12);
-    color: var(--hub-purple);
-    font-family: 'Fira Code', monospace;
-}
+        /* Deze styling moet BUITEN de media query staan zodat het overal werkt */
+        .prompt-accordion {
+            border-color: rgba(168, 85, 247, 0.35);
+        }
 
-.prompt-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 12px;
-}
+        .prompt-accordion .accordion-header {
+            background: rgba(168, 85, 247, 0.12);
+            color: var(--hub-purple);
+            font-family: 'Fira Code', monospace;
+        }
 
 .copy-btn {
     background: var(--hub-purple);
@@ -289,7 +306,6 @@ main {
 .copy-btn:active {
     transform: translateY(0);
 }
-        }
     </style>
 </head>
 <body>
@@ -589,7 +605,7 @@ main {
             </section>
 
             <!-- SECTIE VIBE CODING -->
- <section id="vibe" class="content-section">
+    <section id="vibe" class="content-section">
     <h2 style="color: var(--hub-purple);">Vibe Coding: The Future of Dev</h2>
     <p style="opacity: 0.8;">Vibe coding gaat over het sturen van AI-tools op basis van intentie en context in plaats van handmatig elke regel code te typen.</p>
 
@@ -613,7 +629,7 @@ main {
                     <div class="prompt-actions">
                         <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
                     </div>
-                    <pre style="white-space: pre-wrap; word-wrap: break-word; width: 100%; display: block;">Ik wil dit onderwerp leren: [onderwerp].
+                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
 
 Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
 Gebruik:
@@ -670,7 +686,19 @@ Foutmelding of probleem:
                     <div class="prompt-actions">
                         <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
                     </div>
-                    <pre style="white-space: pre-wrap; word-wrap: break-word; width: 100%; display: block;">Vertaal of herschrijf de volgende code met behoud van functionaliteit.
+                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
+
+Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
+Gebruik:
+- een korte uitleg in simpele taal,
+- de belangrijkste kernbegrippen,
+- 3 praktijkvoorbeelden,
+- 5 controlevragen,
+- een mini-oefening met antwoord,
+- veelgemaakte fouten,
+- en een compacte samenvatting.
+
+Houd rekening met mijn IT-achtergrond en leg technische termen kort uit.Vertaal of herschrijf de volgende code met behoud van functionaliteit.
 Doel:
 - van: [bron, bijvoorbeeld SQL Server]
 - naar: [doeltaal, bijvoorbeeld PostgreSQL / DAX / Python / JavaScript]
@@ -695,7 +723,7 @@ Code:
                     <div class="prompt-actions">
                         <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
                     </div>
-                    <pre style="white-space: pre-wrap; word-wrap: break-word; width: 100%; display: block;">Maak een professionele, moderne en geanimeerde website in HTML, CSS en JavaScript.
+                    <pre class="prompt-text">Maak een professionele, moderne en geanimeerde website in HTML, CSS en JavaScript.
 
 Onderwerp van de website:
 [plak onderwerp hier]
@@ -732,9 +760,18 @@ Geef:
                     <div class="prompt-actions">
                         <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
                     </div>
-                    <pre style="white-space: pre-wrap; word-wrap: break-word; width: 100%; display: block;">Spreek je uit als een socratische tutor.
-Help me het concept [onderwerp] te verkennen door me èèn voor èèn open vragen te stellen.
-Geef mij geen directe antwoorden, maar leid me naar mijn eigen conclusies door mijn aannames ter discussie te stellen.</pre>
+                    <pre class="prompt-text">
+<strong>Rol:</strong> Socratische Tutor (Mentor-modus)
+<strong>Doel:</strong> Verken het concept <em>[onderwerp]</em>
+
+<strong>Werkwijze:</strong>
+• Stel mij één voor één open vragen.
+• Geef geen directe antwoorden.
+• Laat me mijn eigen aannames bevragen.
+• Leid me stap voor stap naar de diepere logica.
+
+<em>Laten we beginnen: wat is volgens mij de kern van [ONDERWERP]?</em>
+</pre>
                 </div>
             </div>
         </div>
