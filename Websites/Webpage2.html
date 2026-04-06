@@ -14,9 +14,10 @@
             --text: #f1f5f9;
             --text-muted: #94a3b8;
             --terminal-green: #4ade80;
-            --hub-purple: #a855f7;
             --border: rgba(255, 255, 255, 0.08);
             --warning: #fbbf24;
+            --danger: #ef4444; /* Rood voor Kinetic */
+            --danger-glow: rgba(239, 68, 68, 0.3);
         }
 
         /* --- RESET & BASE --- */
@@ -115,11 +116,18 @@
             gap: 8px;
         }
 
-        .btn-mail { background: rgba(56, 189, 248, 0.1); color: var(--accent); border-color: var(--accent); }
-        .btn-mail:hover { background: var(--accent); color: var(--bg); transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
-
-        .btn-hub { background: rgba(168, 85, 247, 0.1); color: var(--hub-purple); border-color: var(--hub-purple); }
-        .btn-hub:hover { background: var(--hub-purple); color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3); }
+        /* Onopvallende stijl voor bovenste knoppen */
+        .btn-neutral { 
+            background: rgba(255, 255, 255, 0.03); 
+            color: var(--text-muted); 
+            border: 1px solid var(--border); 
+        }
+        .btn-neutral:hover { 
+            background: rgba(255, 255, 255, 0.08); 
+            color: var(--text); 
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
 
         /* --- SECTIONS --- */
         .section-label {
@@ -192,15 +200,7 @@
             transform: translateY(-2px);
         }
 
-/* --- Bestaande experiment hover --- */
-        .experiment-btn:hover {
-            background: var(--warning);
-            color: var(--bg);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* --- NIEUWE KLASSE VOOR DE LEARN KNOP --- */
+        /* LEARN KNOP (Blauw Thema) */
         .learn-btn {
             background: rgba(56, 189, 248, 0.1);
             border: 1px solid var(--accent);
@@ -208,14 +208,28 @@
             margin-top: 15px;
         }
 
-        /* --- HOVER EFFECT VOOR DE LEARN KNOP --- */
         .learn-btn:hover {
             background: var(--accent);
             color: var(--bg);
             box-shadow: 0 0 20px var(--accent-glow);
             transform: translateY(-2px);
         }
-		
+
+        /* NEXT GEN KNOP (Rood Thema) */
+        .nextgen-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            margin-top: 15px;
+        }
+
+        .nextgen-btn:hover {
+            background: var(--danger);
+            color: var(--text);
+            box-shadow: 0 0 20px var(--danger-glow);
+            transform: translateY(-2px);
+        }
+        
         .github-link {
             display: flex;
             align-items: center;
@@ -239,29 +253,17 @@
         @media (max-width: 850px) {
             .main-container { grid-template-columns: 1fr; }
         }
-        /* --- Mobiele optimalisatie voor Command Center --- */
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
             }
-
-            .btn-group {
-                grid-template-columns: 1fr; /* Zet de mail en hub knoppen onder elkaar */
-            }
-
-            .link-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 kolommen ipv 1 voor de shortcuts */
-            }
-
-            body {
-                padding: 20px 15px; /* Iets minder witruimte aan de zijkanten */
-            }
-
-            header h1 {
-                font-size: 1.1rem; /* Maak de titel iets kleiner zodat hij niet afbreekt */
-            }
+            .btn-group { grid-template-columns: 1fr; }
+            .link-grid { grid-template-columns: repeat(2, 1fr); }
+            body { padding: 20px 15px; }
+            header h1 { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -275,8 +277,8 @@
     <div class="main-container">
         <main>
             <div class="btn-group animate delay-1">
-                <a href="mailto:fvc1994@live.nl" class="btn btn-mail">✉ SEND_MAIL(fvc1994)</a>
-                <a href="#" target="_blank" class="btn btn-hub">⚡ CONNECT_HUB_SERVER</a>
+                <a href="mailto:fvc1994@live.nl" class="btn btn-neutral">✉ SEND_MAIL(fvc1994)</a>
+                <a href="#" target="_blank" class="btn btn-neutral">⚡ CONNECT_HUB_SERVER</a>
             </div>
 
             <span class="section-label animate delay-1">Global Shortcuts</span>
@@ -289,7 +291,7 @@
                 <a href="https://chat.openai.com" target="_blank" class="link-card">ChatGPT</a>
             </div>
 
-			<span class="section-label animate delay-2">R&D / Sandbox</span>
+            <span class="section-label animate delay-2">R&D / Sandbox</span>
             <div class="card animate delay-2">
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">
                     Toegang tot experimentele features en alternatieve interfaces.
@@ -299,9 +301,14 @@
                     🧪 LAUNCH_EXPERIMENT_V2
                 </a>
 
+                 <a href="NextGen.html" class="experiment-btn nextgen-btn">
+                    ☄️ KINETIC_NEXTGEN_PREVIEW
+                </a>
+
                 <a href="learn.html" class="experiment-btn learn-btn">
                     🧠 NEURAL_SYNC_PROTOCOL (LEARN)
                 </a>
+
             </div>
         </main>
 
