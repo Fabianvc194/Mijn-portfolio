@@ -1,0 +1,24 @@
+Claude:
+
+Act as a world-class Creative Developer. Build a high-end, immersive React component that demonstrates "AAA-grade" web design, specifically optimized for the Claude Artifacts preview.
+INSPIRATION & VIBE:
+- Visuals: Cyberpunk 2077 & The Witcher (Dark, high-contrast, neon-accents, film grain).
+- Motion: Crimson Desert (Cinematic scroll-zoom) and Einvigi (Skewed image transitions).
+- Layout: Modern, bold, and minimalist.
+TECHNICAL STACK (Pre-installed in Artifacts):
+- React (Functional Components)
+- Tailwind CSS
+- Lucide React (for icons)
+- Framer Motion (for high-performance animations instead of GSAP, to ensure compatibility with Artifacts)
+SPECIFIC ANIMATION REQUIREMENTS:
+1. SMOOTH SCROLL SIMULATION: Create 4 full-height sections (100vh).
+2. CINEMATIC HERO (Crimson Desert Style): A background image container that subtly scales down (Zoom Out) as I scroll, creating a 'camera dolly' effect.
+3. SKEWED GRID (Einvigi Style): In the 'Gallery' section, create cards that are tilted/skewed. As they enter the viewport, they should straighten and scale up smoothly.
+4. TEXT REVEAL: Use a 'staggered' fade-in effect for all headings.
+5. GLASSMORPHISM: Use heavy backdrop-blurs and subtle borders for all UI elements to create a premium 'gaming' feel.
+CONTENT STRATEGY:
+- SECTION 1: "NEURAL_LINK". Large Hero title with a glitch effect. 
+- SECTION 2: "THE_PROTOCOL". A split-screen mission statement.
+- SECTION 3: "DATA_ARCHIVE". The skewed image gallery.
+- SECTION 4: "TERMINAL". A high-tech contact footer.
+Apply a subtle 'Film Grain' CSS animation over the entire viewport to give it a cinematic texture. Provide the code in a single React artifact.
