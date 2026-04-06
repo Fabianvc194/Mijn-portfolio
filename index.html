@@ -39,6 +39,24 @@
         nav a { color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s; }
         nav a:hover { color: var(--accent-color); }
 
+        /* --- Fix voor mobiele navigatie --- */
+    @media (max-width: 768px) {
+        nav {
+            flex-direction: column; /* Zet logo en menu onder elkaar */
+            padding: 15px 5%;
+        }
+
+        nav ul {
+            flex-wrap: wrap; /* Zorgt dat de items naar de volgende regel verspringen */
+            justify-content: center; /* Centreer de knoppen */
+            gap: 10px 15px; /* Ruimte tussen de knoppen */
+            margin-top: 15px;
+        }
+
+        nav a {
+            font-size: 0.9rem; /* Iets kleiner om meer ruimte te winnen */
+        }
+    }
         .hero {
             text-align: center; padding: 120px 20px;
             background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
