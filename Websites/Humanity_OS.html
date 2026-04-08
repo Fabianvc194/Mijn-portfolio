@@ -230,11 +230,10 @@ main{flex:1;overflow-y:auto;position:relative;}
 }
 /* Bold highlights binnen prose — matcht screenshot 1 */
 .prose strong, .prose b {
-  color:#e8f4f8;
-  font-weight:700;
-  text-decoration:underline;
-  text-underline-offset:3px;
-  text-decoration-thickness:1px;
+  color: #e8f4f8;
+  font-weight: 700;
+  /* De onderstaande regels zijn aangepast/verwijderd */
+  text-decoration: none;
 }
 .prose-sub{
   font-family:'Cormorant Garamond',serif;
@@ -350,9 +349,21 @@ main{flex:1;overflow-y:auto;position:relative;}
   min-height:100vh;position:relative;overflow:hidden;
   background:#020408;display:flex;align-items:center;justify-content:center;
 }
+
+.hero-bg {
+  position: absolute;
+  inset: -5%; /* Jouw originele waarde voor de extra ruimte */
+  width: 110%;  /* Omdat je inset -5% hebt, moet hij iets groter zijn dan 100% */
+  height: 110%; 
+  background-image: linear-gradient(rgba(2,4,8,0.65), rgba(2,4,8,0.65)), url(Images/hero.jpg);
+  background-size: cover;
+  background-position: center 20%;
+  background-repeat: no-repeat;
+}/*
 .hero-bg{
   position:absolute;inset:-5%;
   background-size:cover;background-position:center top;
+  background-image: url('images/hero.jpg');
   /* ════════════════════════════════════════════════════════
      HERO ACHTERGROND FOTO
      Optie A — base64 JPEG:
@@ -360,8 +371,8 @@ main{flex:1;overflow-y:auto;position:relative;}
      Optie B — lokaal pad of URL:
        background-image: url('./images/hero.jpg');
        background-image: url('https://example.com/hero.jpg');
-     ════════════════════════════════════════════════════════ */
-}
+     ════════════════════════════════════════════════════════ }*/
+
 .hero-vignette{
   position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(2,4,8,.5) 0%,rgba(2,4,8,.12) 28%,rgba(2,4,8,.18) 62%,rgba(2,4,8,.93) 100%);
@@ -430,8 +441,9 @@ main{flex:1;overflow-y:auto;position:relative;}
 /* ── UTOPIA ───────────────────────────────────────────────── */
 #utopia{min-height:100vh;position:relative;overflow:hidden;background:#0a1a0f;}
 .utopia-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center;
-  filter:brightness(.18) saturate(1.35);
+  position:absolute;inset:0;background-size:cover;background-position:center top;
+  filter:brightness(.50) saturate(1.35);
+  background-image: url('images/utopia.jpg');
   /* ════════════════════════════════════════════════════════
      UTOPIA ACHTERGROND FOTO (subtiele achtergrond toning)
      Optie A — base64 JPEG:
@@ -453,6 +465,7 @@ main{flex:1;overflow-y:auto;position:relative;}
 .dystopia-bg{
   position:absolute;inset:0;background-size:cover;background-position:center;
   filter:brightness(.22) saturate(1.25);
+   background-image: url('images/dystopia.jpg');
   /* ════════════════════════════════════════════════════════
      DYSTOPIA ACHTERGROND FOTO
      Optie A — base64 JPEG:
@@ -474,8 +487,9 @@ main{flex:1;overflow-y:auto;position:relative;}
 /* ── FUTURE ───────────────────────────────────────────────── */
 #future{min-height:100vh;position:relative;overflow:hidden;background:#060c14;}
 .future-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center;
+  position:absolute;inset:0;background-size:cover;background-position:center bottom;
   filter:brightness(.22) saturate(1.5);
+  background-image: url('images/future.jpg');
   /* ════════════════════════════════════════════════════════
      FUTURE ACHTERGROND FOTO
      Optie A — base64 JPEG:
@@ -494,8 +508,9 @@ main{flex:1;overflow-y:auto;position:relative;}
 /* ── CYBER ────────────────────────────────────────────────── */
 #cyber{min-height:100vh;position:relative;overflow:hidden;background:#020408;}
 .cyber-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center top;
+  position:absolute;inset:0;background-size:cover;background-position:bottom;
   filter:brightness(.18) saturate(1.9) hue-rotate(-15deg);
+  background-image: url('images/cyber.jpg');
   /* ════════════════════════════════════════════════════════
      CYBERPUNK ACHTERGROND FOTO
      Optie A — base64 JPEG:
@@ -744,8 +759,8 @@ footer{
           <span class="t1 hgx" data-t="HUMANITY" data-lang-t1='{"en":"HUMANITY","nl":"MENSHEID"}'>HUMANITY</span>
           <span class="t2">_OS</span>
         </h1>
-        <p class="hero-sub sr" data-lang='{"en":"Four visions of the human condition. Each a possible tomorrow. Scroll to choose your future.","nl":"Vier visies op de menselijke conditie. Elk een mogelijke morgen. Scroll om je toekomst te kiezen."}'>
-          Four visions of the human condition. Each a possible tomorrow. Scroll to choose your future.
+        <p class="hero-sub sr" data-lang='{"en":"Four visions of the human condition. Each a possible tomorrow. Scroll to choose your future.","nl":"Vier visies op de menselijke conditie. Elk een mogelijke morgen. Welke toekomst wordt werkelijkheid?"}'>
+          Four visions of the human condition. Each a possible tomorrow. Which version will become reality?
         </p>
         <div class="hero-cta">
           <button class="cta-btn mn" style="border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.1);"
@@ -862,6 +877,7 @@ footer{
         <div class="rr photo-col" data-obs-reveal="utopia-img">
           <!-- FOTO FRAME -->
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(45,212,191,.1);">
+            <img src="images/utopia.jpg" alt="Utopia"/>
             <!-- ══════════════════════════════════════════════════
                  UTOPIA — TOEGEVOEGDE FOTO (groot, rechter kolom)
                  Optie A — base64 JPEG, vervang de src waarde:
@@ -988,6 +1004,7 @@ footer{
         <!-- FOTO KOLOM — rechts -->
         <div class="rr photo-col" data-obs-reveal="dystopia-img">
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(255,34,68,.1);">
+            <img src="images/dystopia.jpg" alt="Dystopia"/>
             <!-- ══════════════════════════════════════════════════
                  DYSTOPIA — TOEGEVOEGDE FOTO (groot, rechter kolom)
                  Optie A — base64 JPEG:
@@ -1038,6 +1055,7 @@ footer{
         <!-- FOTO KOLOM — links op desktop -->
         <div class="rl photo-col" data-obs-reveal="future-img" style="order:1;">
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(0,245,255,.1);">
+            <img src="images/future.jpg" alt="Future"/>
             <!-- ══════════════════════════════════════════════════
                  FUTURE — TOEGEVOEGDE FOTO (groot, linker kolom)
                  Optie A — base64 JPEG:
@@ -1163,6 +1181,7 @@ footer{
         <!-- FOTO KOLOM — links op desktop -->
         <div class="rl photo-col" data-obs-reveal="cyber-img" style="order:1;">
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(255,0,170,.1);">
+            <img src="images/cyber.jpg" alt="Cyber"/>
             <!-- ══════════════════════════════════════════════════
                  CYBER — TOEGEVOEGDE FOTO (groot, linker kolom)
                  Optie A — base64 JPEG:
@@ -1280,6 +1299,7 @@ footer{
         <div class="gallery-item" style="border-color:transparent;"
           onmouseenter="this.style.borderColor='rgba(255,0,170,.28)'"
           onmouseleave="this.style.borderColor='transparent'">
+          <img src="Images/hero.jpg" alt="Visor Protocol"/>
           <!-- ══════════════════════════════════════════════
                GALLERY FOTO 1
                Vervang de DataCorrupt placeholder met:
@@ -1299,6 +1319,7 @@ footer{
         <div class="gallery-item"
           onmouseenter="this.style.borderColor='rgba(0,245,255,.28)'"
           onmouseleave="this.style.borderColor='transparent'">
+          <img src="Images/neonmirror.jpg" alt="Neon Mirror"/>
           <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
             <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(0,245,255,.4)">G2_CORRUPT</div>
           </div>
@@ -1312,6 +1333,7 @@ footer{
         <div class="gallery-item"
           onmouseenter="this.style.borderColor='rgba(255,34,68,.28)'"
           onmouseleave="this.style.borderColor='transparent'">
+          <img src="Images/nofuturehead.jpg" alt="No Future Head"/>
           <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
             <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(255,34,68,.4)">G3_CORRUPT</div>
           </div>
@@ -1325,6 +1347,7 @@ footer{
         <div class="gallery-item"
           onmouseenter="this.style.borderColor='rgba(0,245,255,.28)'"
           onmouseleave="this.style.borderColor='transparent'">
+          <img src="Images/future.jpg" alt="Future"/>
           <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
             <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(0,245,255,.4)">G4_CORRUPT</div>
           </div>
@@ -1338,6 +1361,7 @@ footer{
         <div class="gallery-item"
           onmouseenter="this.style.borderColor='rgba(34,197,94,.28)'"
           onmouseleave="this.style.borderColor='transparent'">
+          <img src="Images/cyber.jpg" alt="Cybercop"/>
           <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
             <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(34,197,94,.4)">G5_CORRUPT</div>
           </div>
