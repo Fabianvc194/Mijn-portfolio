@@ -209,46 +209,54 @@ main{flex:1;overflow-y:auto;position:relative;}
 
 /* ── SECTION TITLE ────────────────────────────────────────── */
 .section-title{
-  font-size:clamp(2rem,4.2vw,4.8rem);
+  font-size:clamp(2.8rem,5.5vw,6.2rem);
   font-weight:700;text-transform:uppercase;
-  letter-spacing:-1px;line-height:.92;
-  margin-bottom:1.2rem;
+  letter-spacing:-2px;line-height:.88;
+  margin-bottom:1.4rem;
 }
 .section-title span{display:block;}
 
 /* ── ERA LABEL ────────────────────────────────────────────── */
 .era-lbl{
   font-family:'Share Tech Mono',monospace;
-  font-size:8px;letter-spacing:4px;text-transform:uppercase;
-  margin-bottom:.5rem;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:.6rem;
 }
 
 /* ── PROSE ────────────────────────────────────────────────── */
 .prose{
-  font-size:.91rem;line-height:1.85;
-  color:rgba(232,244,248,.63);font-weight:300;margin-bottom:1.2rem;
+  font-size:1.08rem;line-height:1.9;
+  color:rgba(232,244,248,.72);font-weight:400;margin-bottom:1.4rem;
+}
+/* Bold highlights binnen prose — matcht screenshot 1 */
+.prose strong, .prose b {
+  color:#e8f4f8;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
 }
 .prose-sub{
   font-family:'Cormorant Garamond',serif;
-  font-size:1rem;margin-bottom:1.2rem;line-height:1.85;
-  color:rgba(232,244,248,.63);font-weight:300;
+  font-size:1.25rem;margin-bottom:1.5rem;line-height:1.75;
+  color:rgba(232,244,248,.78);font-weight:400;
 }
 
 /* ── FEATURE LIST ─────────────────────────────────────────── */
-.feat-list{padding:0;margin-bottom:1.3rem;display:flex;flex-direction:column;gap:.65rem;list-style:none;}
+.feat-list{padding:0;margin-bottom:1.4rem;display:flex;flex-direction:column;gap:.7rem;list-style:none;}
 .feat-item{
   display:flex;align-items:flex-start;gap:.75rem;
-  padding:.85rem 1rem;
+  padding:.9rem 1rem;
   border:0.5px solid;
   transition:all .25s;cursor:default;
 }
 .feat-item:hover{transform:translateX(4px);}
 .feat-tag{
   font-family:'Share Tech Mono',monospace;
-  font-size:8px;min-width:34px;padding-top:3px;
+  font-size:8px;min-width:38px;padding-top:4px;
 }
-.feat-title{display:block;font-size:.82rem;font-weight:700;text-transform:uppercase;margin-bottom:.24rem;}
-.feat-desc{font-size:.78rem;color:rgba(232,244,248,.56);line-height:1.62;font-weight:300;}
+.feat-title{display:block;font-size:.92rem;font-weight:700;text-transform:uppercase;margin-bottom:.3rem;letter-spacing:.5px;}
+.feat-desc{font-size:.88rem;color:rgba(232,244,248,.62);line-height:1.68;font-weight:300;}
 
 /* ── STATS ROW ────────────────────────────────────────────── */
 .stats-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.7rem;}
@@ -345,7 +353,6 @@ main{flex:1;overflow-y:auto;position:relative;}
 .hero-bg{
   position:absolute;inset:-5%;
   background-size:cover;background-position:center top;
-  background-image: url('wilmer-martinez-Lme2Ye2jVo8-unsplash.jpg');
   /* ════════════════════════════════════════════════════════
      HERO ACHTERGROND FOTO
      Optie A — base64 JPEG:
@@ -628,6 +635,20 @@ footer{
     gap:2rem;
     padding:7rem 1.3rem 4rem;
   }
+  .section-title{
+    font-size:clamp(2.6rem,13vw,4.5rem);
+    letter-spacing:-1px;
+  }
+  .prose{
+    font-size:1.05rem;
+    line-height:1.85;
+  }
+  .prose-sub{
+    font-size:1.15rem;
+    line-height:1.72;
+  }
+  .feat-title{font-size:.95rem;}
+  .feat-desc{font-size:.9rem;}
   .hero-stats{gap:1.8rem;}
   #gallery{padding:4rem 1.2rem;}
   .gallery-grid{grid-template-columns:repeat(2,1fr);}
@@ -643,7 +664,7 @@ footer{
     border:0.5px solid rgba(255,255,255,.07)!important;
     padding:1.5rem!important;
   }
-  .photo-frame{height:250px!important;}
+  .photo-frame{height:260px!important;}
   .photo-col{order:1;}
   .text-col{order:2;}
 }
@@ -783,10 +804,10 @@ footer{
               A civilization where technology serves life — where abundance is the default state of every human being.
             </p>
             <p class="prose" data-lang='{"en":"In the post-scarcity horizon of 2147, the ancient war between economic necessity and human flourishing has finally ended. Distributed energy grids powered by orbital solar arrays deliver unlimited clean electricity to every corner of the planet.","nl":"In de post-schaarste horizon van 2147 is de eeuwenoude oorlog tussen economische noodzaak en menselijke bloei eindelijk beëindigd. Gedistribueerde energienetten leveren onbeperkte schone elektriciteit."}'>
-              In the post-scarcity horizon of 2147, the ancient war between economic necessity and human flourishing has finally ended. Distributed energy grids powered by orbital solar arrays deliver unlimited clean electricity to every corner of the planet.
+              In the post-scarcity horizon of 2147, the ancient war between <strong>economic necessity and human flourishing</strong> has finally ended. Distributed energy grids powered by orbital solar arrays deliver unlimited clean electricity to every corner of the planet.
             </p>
             <p class="prose" data-lang='{"en":"Molecular assemblers synthesize food, medicine, and goods from raw atomic feedstock. Universal Basic Resources guarantee every citizen air, water, nutrition, and cognitive tools as fundamental rights.","nl":"Moleculaire assemblers synthetiseren voedsel en goederen uit ruw atomair materiaal. Universele Basisbehoeften garanderen elke burger lucht, water en cognitieve hulpmiddelen als fundamentele rechten."}'>
-              Molecular assemblers synthesize food, medicine, and goods from raw atomic feedstock. Universal Basic Resources guarantee every citizen air, water, nutrition, and cognitive tools as fundamental rights.
+              Molecular assemblers synthesize food, medicine, and goods from raw atomic feedstock. <strong>Universal Basic Resources</strong> guarantee every citizen air, water, nutrition, and cognitive tools as <strong>fundamental rights</strong>.
             </p>
             <ul class="feat-list">
               <li class="feat-item" style="background:rgba(45,212,191,.06);border-color:rgba(45,212,191,.14);" onmouseenter="this.style.background='rgba(45,212,191,.1)';this.style.borderColor='rgba(45,212,191,.3)'" onmouseleave="this.style.background='rgba(45,212,191,.06)';this.style.borderColor='rgba(45,212,191,.14)'">
@@ -910,10 +931,10 @@ footer{
               A world where every inefficiency has been optimized — including the inefficiency of human freedom.
             </p>
             <p class="prose" data-lang='{"en":"The surveillance architecture dismissed as paranoid fantasy has become the invisible skeleton of daily life. Social Credit Systems determine housing, reproductive rights, and neural enhancement eligibility based on algorithmically curated behavioral histories.","nl":"De bewakingsarchitectuur die burgers afdeden als paranoïde fantasie is nu het onzichtbare skelet van het dagelijks leven. Sociale Kredietssystemen bepalen woningtoegang op basis van gedragsgeschiedenissen."}'>
-              The surveillance architecture dismissed as paranoid fantasy has become the invisible skeleton of daily life. Social Credit Systems determine housing, reproductive rights, and neural enhancement eligibility based on algorithmically curated behavioral histories.
+              The surveillance architecture dismissed as paranoid fantasy has become the <strong>invisible skeleton of daily life</strong>. <strong>Social Credit Systems</strong> determine housing, reproductive rights, and neural enhancement eligibility based on algorithmically curated behavioral histories.
             </p>
             <p class="prose" data-lang='{"en":"Privacy did not die dramatically. It dissolved, transaction by transaction. The human body is now a data exhaust pipe. You are not the customer. You are the raw material.","nl":"Privacy stierf niet dramatisch. Het loste op, transactie voor transactie. Het menselijk lichaam is nu een data-uitlaatpijp. Jij bent niet de klant. Jij bent de grondstof."}'>
-              Privacy did not die dramatically. It dissolved, transaction by transaction. The human body is now a data exhaust pipe. You are not the customer. You are the raw material.
+              Privacy did not die dramatically. It dissolved, transaction by transaction. The human body is now a <strong>data exhaust pipe</strong>: biometric passports embedded in tooth enamel, emotional state sensors sold as wellness monitors. You are not the customer. <strong>You are the raw material.</strong>
             </p>
             <ul class="feat-list">
               <li class="feat-item" style="background:rgba(255,34,68,.06);border-color:rgba(255,34,68,.14);" onmouseenter="this.style.background='rgba(255,34,68,.1)';this.style.borderColor='rgba(255,34,68,.3)'" onmouseleave="this.style.background='rgba(255,34,68,.06)';this.style.borderColor='rgba(255,34,68,.14)'">
@@ -1073,10 +1094,10 @@ footer{
               Neither paradise nor catastrophe — a world of cascading crises managed by cascading technologies.
             </p>
             <p class="prose" data-lang='{"en":"Archipelago cities on engineered floating platforms host climate refugees from submerged coastlines. Vertical AI farms feed billions in post-arable zones. The Global South operates on distributed solar nano-grids.","nl":"Archipel-steden op drijvende platforms huisvesten klimaatvluchtelingen. Verticale AI-boerderijen voeden miljarden in post-akker gebieden. Het Globale Zuiden draait op gedistribueerde nano-grids."}'>
-              Archipelago cities on engineered floating platforms host climate refugees from submerged coastlines. Vertical AI farms feed billions in post-arable zones. The Global South operates on distributed solar nano-grids.
+              <strong>Archipelago cities</strong> on engineered floating platforms host climate refugees from submerged coastlines. Vertical AI farms feed billions in post-arable zones. The Global South operates on distributed solar nano-grids.
             </p>
             <p class="prose" data-lang='{"en":"AI has not destroyed employment — it has complexified it beyond recognition. The new economy runs on human judgment, creativity, and empathy as the final scarcities machines cannot replicate.","nl":"AI heeft werk niet vernietigd — het heeft het onherkenbaar gecomplexerd. De nieuwe economie draait op menselijk oordeel, creativiteit en empathie als de laatste schaarste."}'>
-              AI has not destroyed employment — it has complexified it beyond recognition. The new economy runs on human judgment, creativity, and empathy as the final scarcities machines cannot replicate.
+              AI has not destroyed employment — it has complexified it beyond recognition. The new economy runs on <strong>human judgment, creativity, and empathy</strong> as the final scarcities machines cannot replicate.
             </p>
             <ul class="feat-list">
               <li class="feat-item" style="background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.14);" onmouseenter="this.style.background='rgba(0,245,255,.1)';this.style.borderColor='rgba(0,245,255,.3)'" onmouseleave="this.style.background='rgba(0,245,255,.06)';this.style.borderColor='rgba(0,245,255,.14)'">
@@ -1198,7 +1219,7 @@ footer{
               Where the boundary between silicon and synapse has dissolved — and the question is who controls the merge protocol.
             </p>
             <p class="prose" data-lang='{"en":"The brainstem is now a digital wallet. Neural implants execute Proof-of-Thought transactions: cryptographically signed financial impulses verified by the electromagnetic signature of individual consciousness.","nl":"De hersenstam is nu een digitale portemonnee. Neurale implantaten voeren Proof-of-Thought transacties uit: cryptografisch ondertekende financiële impulsen geverifieerd door de elektromagnetische handtekening van bewustzijn."}'>
-              The brainstem is now a digital wallet. Neural implants execute Proof-of-Thought transactions: cryptographically signed financial impulses verified by the electromagnetic signature of individual consciousness.
+              The brainstem is now a <strong>digital wallet</strong>. Neural implants execute <strong>Proof-of-Thought transactions</strong>: cryptographically signed financial impulses verified by the electromagnetic signature of individual consciousness.
             </p>
             <!-- Neural Cards -->
             <div style="margin-bottom:1.3rem;">
