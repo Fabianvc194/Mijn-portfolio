@@ -1,825 +1,613 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FVC | DevVault_SME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root {
-            --bg: #020617;
-            --card-bg: rgba(15, 23, 42, 0.9);
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --text: #f1f5f9;
-            --terminal-green: #4ade80;
-            --border: rgba(56, 189, 248, 0.2);
-            --hub-purple: #a855f7;
-            --warning: #fbbf24;
-            --danger: #f87171;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-    background-color: var(--bg);
-    background-image: 
-        radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
-        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 50px 50px, 50px 50px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-main {
-    padding: 40px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    min-height: 0;
-}
-
-.accordion-content {
-    padding: 0 20px;
-    max-height: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease;
-    background: rgba(0,0,0,0.2);
-    line-height: 1.7;
-}
-
-.flow-diagram {
-    background: #000;
-    padding: 20px;
-    border-radius: 8px;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.82rem;
-    color: var(--terminal-green);
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: pre-wrap;
-    word-break: break-word;
-    border: 1px dashed var(--border);
-    line-height: 1.5;
-}
-        header {
-            padding: 15px 30px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            background: rgba(2, 6, 23, 0.8);
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .app-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            flex: 1;
-            overflow: hidden;
-            min-height: 0;
-        }
-
-        .sidebar {
-            background: rgba(0, 0, 0, 0.3);
-            border-right: 1px solid var(--border);
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .subject-tab {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid var(--border);
-            color: var(--text);
-            text-align: left;
-            font-family: 'Fira Code', monospace;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s ease;
-        }
-
-        .subject-tab:hover,
-        .subject-tab.active {
-            background: var(--accent);
-            color: var(--bg);
-            box-shadow: 0 0 15px var(--accent-glow);
-            transform: translateY(-1px);
-        }
-
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .accordion {
-            margin-bottom: 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--card-bg);
-        }
-
-        .accordion-header {
-            padding: 15px 20px;
-            background: rgba(56, 189, 248, 0.1);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            color: var(--accent);
-            gap: 12px;
-        }
-
-        .accordion.open .accordion-content {
-            max-height: 1800px;
-            padding: 20px;
-        }
-
-        .tip-box {
-            background: rgba(74, 222, 128, 0.1);
-            border-left: 4px solid var(--terminal-green);
-            padding: 15px;
-            margin: 15px 0;
-            font-size: 0.95rem;
-            border-radius: 4px;
-        }
-
-        .warning-box {
-            background: rgba(251, 191, 36, 0.08);
-            border-left: 4px solid var(--warning);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .vibe-card {
-            border: 1px solid var(--hub-purple);
-            padding: 20px;
-            background: linear-gradient(45deg, rgba(168, 85, 247, 0.1), transparent);
-            border-radius: 10px;
-        }
-
-        .tag {
-            font-size: 0.72rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.08);
-            margin-right: 5px;
-            display: inline-block;
-        }
-
-        .meta-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .meta-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-        }
-
-        ul, ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .small-heading {
-            margin: 16px 0 8px;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        @media (max-width: 900px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            main {
-                padding: 22px;
-            }
-        }
-
-        /* Styling voor de tekst binnen de accordeons (de prompts) */
-        .accordion-content pre {
-            color: #f8fafc;             /* Bijna wit voor maximaal contrast */
-            font-family: 'Inter', sans-serif; /* Geen 'code' lettertype, leest rustiger */
-            font-size: 1.05rem;         /* Iets groter */
-            line-height: 1.6;           /* Meer ruimte tussen de regels */
-            white-space: pre-wrap;      /* Zorgt dat tekst afbreekt op mobiel */
-            word-wrap: break-word;
-            background: transparent;    /* Geen donker vlak erachter */
-            margin-top: 10px;
-            padding: 0;
-        }
-
-        /* Zorg dat de container waarin de tekst staat niet te donker is */
-        .prompt-accordion .accordion-content {
-            background: rgba(15, 23, 42, 0.5); /* Iets lichter blauw/zwart */
-            border-top: 1px solid rgba(168, 85, 247, 0.2);
-}
-
-/* Media query voor telefoons */
-        @media (max-width: 600px) {
-            header {
-                padding: 12px 16px;
-            }
-
-            .subject-tab {
-                font-size: 0.9rem;
-            }
-
-            .flow-diagram {
-                font-size: 0.75rem;
-            }
-        } /* <--- Deze miste je waarschijnlijk, waardoor alles eronder kapot ging */
-
-        /* Deze styling moet BUITEN de media query staan zodat het overal werkt */
-        .prompt-accordion {
-            border-color: rgba(168, 85, 247, 0.35);
-        }
-
-        .prompt-accordion .accordion-header {
-            background: rgba(168, 85, 247, 0.12);
-            color: var(--hub-purple);
-            font-family: 'Fira Code', monospace;
-        }
-
-.copy-btn {
-    background: var(--hub-purple);
-    color: white !important;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif !important;
-    line-height: 1.2;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    min-width: 80px;
-    text-align: center;
-}
-
-.copy-btn:hover {
-    background: #9333ea;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
-}
-
-.copy-btn:active {
-    transform: translateY(0);
-}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
+:root{--bg:#f4f6f9;--bg2:#fff;--bg3:#eef1f6;--text:#1a1d23;--muted:#6b7280;--border:rgba(0,0,0,0.09);--borderm:rgba(0,0,0,0.15);--navbg:#fff;--togglebg:#e8ecf2;--inputbg:#fff}
+body.dark{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#f0f0f0;--muted:#777;--border:rgba(255,255,255,0.08);--borderm:rgba(255,255,255,0.14);--navbg:#000;--togglebg:#111;--inputbg:#0a0a0a}
+.header{padding:12px 14px 0;border-bottom:.5px solid var(--border);background:var(--navbg);position:sticky;top:0;z-index:20}
+.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logo{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--tc)}
+.logo-text{font-size:15px;font-weight:500}
+.logo-sub{font-size:11px;color:var(--muted)}
+.toggles{display:flex;gap:6px}
+.toggle{display:flex;align-items:center;background:var(--togglebg);border:.5px solid var(--border);border-radius:20px;padding:3px;cursor:pointer;gap:2px}
+.toggle span{padding:3px 10px;border-radius:16px;font-size:11px;font-weight:400;color:var(--muted);transition:all .15s}
+.toggle span.on{background:var(--bg2);color:var(--text);font-weight:500}
+.tabs{display:flex;overflow-x:auto;gap:0}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:8px 11px;font-size:12px;font-weight:400;border:none;background:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
+.tab-btn.active{color:var(--tc);border-bottom-color:var(--tc);font-weight:500}
+.topicbar{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-bottom:.5px solid var(--border);background:var(--navbg)}
+.topicbar::-webkit-scrollbar{display:none}
+.topic-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;border:.5px solid var(--border);background:var(--bg2);cursor:pointer;font-size:12px;font-weight:400;color:var(--muted);font-family:inherit;white-space:nowrap;transition:all .15s}
+.topic-btn.active{font-weight:500}
+.topic-icon{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.add-btn{padding:5px 12px;border-radius:20px;border:.5px dashed var(--border);background:transparent;cursor:pointer;font-size:12px;color:var(--muted);font-family:inherit;white-space:nowrap}
+.section{display:none;padding:4px 0}
+.section.active{display:block}
+.card{margin:8px 12px;padding:16px;border-radius:12px;border:.5px solid var(--border);background:var(--bg2)}
+.card-accent{border-left:3px solid var(--tc);border-radius:0 12px 12px 0;margin:8px 12px 8px 14px;padding:14px 16px;background:var(--bg2);border-top:.5px solid var(--border);border-right:.5px solid var(--border);border-bottom:.5px solid var(--border)}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.home-btn{padding:8px 12px;border-radius:8px;border:.5px solid var(--border);background:transparent;color:var(--tc);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;text-align:left}
+.label-sm{font-size:11px;color:var(--muted);padding:8px 14px 4px}
+.fc-card{margin:0 12px;padding:20px;border-radius:12px;border:.5px solid var(--border);background:var(--bg2);min-height:190px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:border-color .2s}
+.fc-label{font-size:10px;font-weight:500;color:var(--tc);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.fc-text{font-size:15px;line-height:1.7}
+.fc-nav{display:flex;gap:8px;padding:10px 12px}
+.dots{display:flex;gap:4px;padding:0 14px;flex-wrap:wrap}
+.dot-sm{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s;border:none}
+.dot-sm.active{background:var(--tc)}
+.btn{padding:10px 18px;border-radius:8px;border:.5px solid var(--borderm);background:transparent;color:var(--text);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
+.btn-accent{border-color:var(--tc);color:var(--tc)}
+.btn-full{width:100%}
+.quiz-q{font-size:14px;line-height:1.6;font-weight:500}
+.opt{margin:0 12px 8px;padding:12px 16px;border-radius:8px;border:.5px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;transition:all .15s;font-family:inherit;text-align:left;width:calc(100% - 24px)}
+.opt.correct{border:1.5px solid var(--tc);color:var(--tc)}
+.opt.wrong{border:1.5px solid #dc2626;color:#dc2626;background:#fef2f2}
+body.dark .opt.wrong{background:#1a0000}
+.quiz-score{font-size:22px;font-weight:500;color:var(--tc);text-align:center;margin-bottom:4px}
+.quiz-msg{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px}
+.prompt-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filter-btn{padding:4px 12px;border-radius:20px;border:.5px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit}
+.filter-btn.active{border-color:var(--purple);background:var(--purplebg);color:var(--purpletext);font-weight:500}
+.prompt-item{margin:0 12px 8px;border-radius:12px;border:.5px solid var(--promptborder);background:var(--promptbg);overflow:hidden}
+.prompt-header{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:8px}
+.prompt-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--purplebg);color:var(--purpletext);font-weight:500}
+.prompt-title{font-size:13px;font-weight:500}
+.prompt-toggle{color:var(--purple);font-size:16px}
+.prompt-body{border-top:.5px solid var(--promptborder);padding:12px 16px;background:var(--promptbodybg);display:none}
+.prompt-body.open{display:block}
+.prompt-text{font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:system-ui;background:transparent;color:var(--text)}
+.copy-btn{background:var(--purple);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:10px;float:right}
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:380px}
+.chat-label{padding:8px 14px;font-size:12px;color:var(--muted);border-bottom:.5px solid var(--border)}
+.chat-msgs{flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:8px}
+.chat-msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.7;border:.5px solid var(--border)}
+.chat-msg.user{align-self:flex-end;background:var(--tcbg);border-color:var(--tc);color:var(--tc)}
+.chat-msg.ai{align-self:flex-start;background:var(--bg2);color:var(--text)}
+.chat-input-row{padding:8px 12px;display:flex;gap:8px;border-top:.5px solid var(--border);background:var(--navbg)}
+.chat-input{flex:1;padding:10px 14px;border-radius:8px;border:.5px solid var(--borderm);font-size:13px;background:var(--inputbg);color:var(--text);font-family:inherit;outline:none}
+.flow-wrap{margin:0 12px;border-radius:12px;border:.5px solid var(--border);background:var(--bg2);overflow:auto;-webkit-overflow-scrolling:touch;max-height:340px}
+.flow-info{margin:10px 12px 0;padding:14px 16px;border-radius:12px;font-size:13px;line-height:1.7;display:none}
+.flow-info.open{display:block}
+.flow-hint{margin:10px 12px 0;padding:12px 16px;border-radius:12px;border:.5px dashed var(--border);text-align:center;font-size:12px;color:var(--muted)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);align-items:flex-end;z-index:100}
+.modal-overlay.open{display:flex}
+.modal{width:100%;background:var(--bg2);border-radius:16px 16px 0 0;padding:24px;border:.5px solid var(--border);max-width:480px;margin:0 auto}
+.modal-title{font-size:15px;font-weight:500;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.modal-input{width:100%;padding:10px 14px;border-radius:8px;border:.5px solid var(--borderm);font-size:13px;margin-bottom:12px;background:var(--inputbg);color:var(--text);font-family:inherit;outline:none}
+.modal-btns{display:flex;gap:8px}
+:root{--tc:#185FA5;--tcbg:#E6F1FB;--purple:#533AB7;--purplebg:#EEEDFE;--purpletext:#3C3489;--promptborder:rgba(83,58,183,0.18);--promptbg:rgba(83,58,183,0.03);--promptbodybg:rgba(255,255,255,0.6)}
+body.dark{--purplebg:rgba(83,58,183,0.2);--purpletext:#AFA9EC;--promptborder:rgba(175,169,236,0.2);--promptbg:rgba(83,58,183,0.06);--promptbodybg:rgba(0,0,0,0.3)}
+svg text{user-select:none}
+.chat-suggest{display:block;width:100%;margin-bottom:8px;padding:10px 14px;border-radius:8px;border:.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;text-align:left}
+</style>
 </head>
 <body>
 
-    <header>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="width: 12px; height: 12px; background: var(--terminal-green); border-radius: 50%; box-shadow: 0 0 10px var(--terminal-green);"></div>
-            <h1 style="font-family: 'Fira Code', monospace; font-size: 1rem; margin: 0;">FVC://KNOWLEDGE_VAULT_2026</h1>
-        </div>
-        <div id="clock" style="font-family: 'Fira Code', monospace; color: var(--accent);">00:00:00</div>
-    </header>
-
-    <div class="app-container">
-        <aside class="sidebar">
-            <button class="subject-tab active" onclick="showTab('md102', this)">MD-102: Endpoint Admin</button>
-            <button class="subject-tab" onclick="showTab('soc', this)">SOC: Cyber Security</button>
-            <button class="subject-tab" onclick="showTab('vibe', this)">Vibe Coding</button>
-        </aside>
-
-        <main>
-            <!-- SECTIE MD-102 -->
-            <section id="md102" class="content-section active">
-                <h2 style="color: var(--accent);">MD-102: Microsoft 365 Endpoint Administrator</h2>
-                <p style="opacity: 0.8;">Focus op de "Big Three", troubleshooting, en het examen-denkmodel.</p>
-
-                <div class="accordion open">
-                    <div class="accordion-header">1. De "Big Three" Pijlers <span>+</span></div>
-                    <div class="accordion-content">
-                        <p><strong>Autopilot:</strong> De voordeur. Zorgt dat nieuwe hardware automatisch wordt geadopteerd door Entra ID & Intune.</p>
-                        <p><strong>Compliance Policy:</strong> De thermometer. Meet of een apparaat voldoet aan de security eisen.</p>
-                        <p><strong>Conditional Access (CA):</strong> De uitsmijter. Handhaaft toegang op basis van de compliance status of andere signalen.</p>
-                        <div class="tip-box">Examen-tip: Zie je "Out-of-the-box" of "Geen IT-handelingen"? Denk Autopilot.</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">2. De "Gouden Combinaties" <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Snel veilig configureren?</strong> Gebruik Security Baselines.</li>
-                            <li><strong>Toegang blokkeren bij onveiligheid?</strong> Compliance Policy + Conditional Access.</li>
-                            <li><strong>Helpdesk rechten beperken?</strong> Custom Role + Scope.</li>
-                            <li><strong>Trage opstarttijden of crashes?</strong> Endpoint Analytics.</li>
-                            <li><strong>Malware of gedrag detecteren?</strong> Microsoft Defender for Endpoint.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">3. Het "Master Flow" Schema <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="flow-diagram">[ STAP 1: CONFIG ]       [ STAP 2: COMPLIANCE ]       [ STAP 3: CONDITIONAL ACCESS ]
-      Intune                   Intune                         Entra ID (Cloud)
-        |                        |                                 |
-  "BitLocker AAN" -----> "Check status" ----------------> "Geef/Weiger toegang"
-        |                        |                                 |
-   [ APPARAAT ]         [ COMPLIANCE STATUS ]            [ OFFICE 365 / DATA ]</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">4. Troubleshooting Trechter <span>+</span></div>
-                    <div class="accordion-content">
-                        <ol>
-                            <li><strong>Sync Control:</strong> Forceer een sync op het apparaat.</li>
-                            <li><strong>Report Check:</strong> Controleer status: Succeeded, Failed, of Conflict.</li>
-                            <li><strong>Assignment:</strong> Is het beleid gekoppeld aan de juiste groep?</li>
-                            <li><strong>Detection Rule:</strong> Controleer de app-regels (bestaat bestand X?).</li>
-                        </ol>
-
-                        <div class="warning-box">
-                            Install Pending? Kijk eerst naar sync en assignment voordat je dieper gaat zoeken.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">5. Rollen in één zin <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="meta-grid">
-                            <div class="meta-card"><strong>Entra ID</strong><br>De identiteit: wie ben je?</div>
-                            <div class="meta-card"><strong>Intune</strong><br>De beheerder: welk beleid krijg je?</div>
-                            <div class="meta-card"><strong>Autopilot</strong><br>De logistiek: hoe komt de laptop bij de gebruiker?</div>
-                            <div class="meta-card"><strong>Defender</strong><br>De bewaker: is er gevaar op het apparaat?</div>
-                            <div class="meta-card"><strong>Remote Help</strong><br>Support op afstand binnen Intune Suite.</div>
-                            <div class="meta-card"><strong>AVD / Windows 365</strong><br>De cloud-pc als extra werkplek.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">6. De Gouden Mindset voor het Examen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>Kan niet inschrijven? Kijk naar <strong>Enrollment Restrictions</strong>.</li>
-                            <li>Is ingeschreven maar krijgt geen toegang? Kijk naar <strong>Compliance + Conditional Access</strong>.</li>
-                            <li>"Install Pending"? Eerst <strong>Sync</strong>, dan <strong>Assignment</strong>.</li>
-                            <li>"Failed" status bij een app? Controleer de <strong>Detection Rule</strong>.</li>
-                            <li>Kies waar mogelijk voor de <strong>cloud-native</strong> weg: Intune, Defender en Entra ID.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">7. Windows Autopilot & Win32 App Flow <span>+</span></div>
-                    <div class="accordion-content">
-                        <div class="small-heading">Windows Autopilot</div>
-                        <div class="flow-diagram">[ DOOS ] ---> (OOBE start) ---> [ ENTRA ID ]
-                             |
-                             | (Apparaat wordt lid van organisatie)
-                             v
-[ INHOUD ] <--- (Intune stuurt policies/apps) <--- [ INTUNE ]
-                             |
-                             | (Laptop is nu klaar voor gebruik)
-                             v
-                    [ MEDEWERKER LOGT IN ]</div>
-
-                        <div class="small-heading">Win32 App Deployment</div>
-                        <div class="flow-diagram">[ INHOUD ] ---> (Installatie begint) ---> [ BESTAND GEÏNSTALLEERD ]
-                              |
-                              | (Detection Rule checkt: "Bestaat X.exe?")
-                              |
-                 -----------------------------+-----------------------------
-                 |                                                           |
-        [ JA: BESTAND IS ER ]                                   [ NEE: BESTAND NIET GEVONDEN ]
-                 |                                                           |
-           [ STATUS: SUCCESS ]                                    [ STATUS: FAILED ]</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTIE SOC -->
-            <section id="soc" class="content-section">
-                <h2 style="color: var(--terminal-green);">SOC Analist Essentials: Studie-overzicht</h2>
-                <p style="opacity: 0.8;">Kernnotities voor de voorbereiding op een SOC-functie, van architectuur tot dagelijkse operatie.</p>
-
-                <div class="accordion open">
-                    <div class="accordion-header">1. Het Grote Plaatje: SOC Architectuur <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>De moderne verdediging rust op drie pijlers:</p>
-                        <ul>
-                            <li><strong>SIEM (Het Oog):</strong> Centraal platform voor log-verzameling en correlatie, zoals Microsoft Sentinel of Splunk.</li>
-                            <li><strong>EDR (Het Vergrootglas):</strong> Monitort gedrag op endpoints en kan processen stoppen, bijvoorbeeld CrowdStrike of Carbon Black.</li>
-                            <li><strong>SOAR (De Handen):</strong> Automatiseert repetitieve taken via playbooks, zoals automatisch een IP blokkeren bij een detectie.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">2. De Fundering: Technische Basiskennis <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>Zonder deze kennis kun je de logs in de SIEM niet interpreteren.</p>
-                        <ul>
-                            <li><strong>DNS (53):</strong> Vertalen van namen naar IP's. Verdachte domeinen vallen hier op.</li>
-                            <li><strong>HTTP/S (80/443):</strong> Webverkeer. Let op ongebruikelijke User-Agents.</li>
-                            <li><strong>SMB (445):</strong> Bestandsdeling binnen netwerken. Favoriet bij hackers voor lateral movement.</li>
-                            <li><strong>Azure AD / Entra ID:</strong> Logs zijn cruciaal om te zien wie waar vandaan inlogt.</li>
-                            <li><strong>NSG / VPC Flow Logs:</strong> Fungeren als firewalls en verkeerscamera's van de cloud.</li>
-                            <li><strong>Syslog, Windows Events, JSON:</strong> Veelgebruikte logformaten in netwerk, OS en cloud.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">3. De Vijand: MITRE ATT&CK Framework <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>De 14 tactieken worden vaak gegroepeerd in logische fasen van een aanval:</p>
-                        <ul>
-                            <li><strong>Inbraak:</strong> Reconnaissance, Initial Access.</li>
-                            <li><strong>Blijven:</strong> Execution, Persistence, Defense Evasion.</li>
-                            <li><strong>Uitbreiden:</strong> Discovery, Lateral Movement, Privilege Escalation.</li>
-                            <li><strong>Doel:</strong> Collection, Exfiltration, Impact.</li>
-                        </ul>
-                        <div class="tip-box">Voorbeeld: Phishing valt onder Initial Access en wordt vaak gelabeld met ATT&CK-technieken zoals T1566.</div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">4. De Operatie: Incident Response <span>+</span></div>
-                    <div class="accordion-content">
-                        <p>Jouw dagelijkse workflow als analist:</p>
-                        <ul>
-                            <li><strong>Triage:</strong> Het filteren van de wachtrij.</li>
-                            <li><strong>False Positive:</strong> Vals alarm, geen actie nodig.</li>
-                            <li><strong>True Positive:</strong> Een echte dreiging, escaleren of afhandelen.</li>
-                        </ul>
-                        <p><strong>NIST-cyclus:</strong></p>
-                        <ol>
-                            <li>Detection & Analysis: Het alarm onderzoeken.</li>
-                            <li>Containment: De dreiging isoleren, bijvoorbeeld een pc van het netwerk halen.</li>
-                            <li>Eradication: De bron van de aanval verwijderen.</li>
-                            <li>Recovery: Systemen veilig online brengen.</li>
-                            <li>Lessons Learned: De gaten dichten voor de toekomst.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">5. Uitgebreid Vocabulaire & Begrippen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>IOC:</strong> Technisch bewijs van een aanval, zoals IP, hash of domein.</li>
-                            <li><strong>TTP's:</strong> De gedragspatronen van een hacker.</li>
-                            <li><strong>Zero-day:</strong> Een kwetsbaarheid waarvoor nog geen patch bestaat.</li>
-                            <li><strong>Threat Intelligence:</strong> Informatie over actuele dreigingen en hackersgroepen.</li>
-                            <li><strong>Defense in Depth:</strong> Beveiliging met meerdere lagen, zoals firewall + EDR + MFA.</li>
-                            <li><strong>Least Privilege:</strong> Gebruikers krijgen alleen de rechten die strikt nodig zijn.</li>
-                            <li><strong>Brute Force:</strong> Duizenden wachtwoorden proberen tot één werkt.</li>
-                            <li><strong>Dwell Time:</strong> Hoe lang een aanvaller onopgemerkt in een netwerk zit.</li>
-                            <li><strong>Phishing / Smishing / Vishing:</strong> Social engineering via e-mail, sms of telefoon.</li>
-                            <li><strong>Sandbox:</strong> Beveiligde, geïsoleerde omgeving om verdachte bestanden veilig te openen.</li>
-                            <li><strong>Asset:</strong> Alles van waarde binnen de IT-omgeving.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">6. SOC Gereedschappen & Vendor Focus <span>+</span></div>
-                    <div class="accordion-content">
-                        <p><span class="tag">SIEM</span> Microsoft Sentinel is cloud-native en gebruikt KQL om data om te zetten in detectieregels en dashboards.</p>
-                        <p><span class="tag">EDR</span> VMware Carbon Black biedt diep inzicht in processen, netwerkverbindingen, registerwijzigingen en bestandsgedrag op endpoints.</p>
-                        <p><span class="tag">SOAR</span> Automatiseert acties zoals account blokkeren, wachtwoord resetten of een IP blokkeren.</p>
-                        <div class="warning-box">
-                            Alert fatigue voorkomen? Laat SOAR de repetitieve acties afhandelen zodat jij je focust op echte dreigingen.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">7. Praktische Werkvloerregels <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Playbook:</strong> Stappenplan voor een specifiek incident.</li>
-                            <li><strong>SLA:</strong> Tijd waarbinnen je moet reageren.</li>
-                            <li><strong>Whitelist:</strong> Veilig gedrag markeren zodat het geen alarm meer geeft.</li>
-                            <li><strong>Incident vs Event:</strong> Een event is een losse gebeurtenis; een incident is een geverifieerde security-case.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="accordion">
-                    <div class="accordion-header">8. Verdieping & Bronnen <span>+</span></div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>MITRE ATT&CK Navigator</li>
-                            <li>NIST Incident Handling Guide</li>
-                            <li>Pyramid of Pain</li>
-                            <li>Cloud Security Alliance</li>
-                            <li>TryHackMe SOC Level 1 Path</li>
-                        </ul>
-                    </div>
-                </div>
-				
-                <div class="accordion">
-                    <div class="accordion-header">9. Senior SOC Engineer <span>+</span></div>
-                    <div class="accordion-content">Een Senior SOC Engineer focust zich op de strategische en overkoepelende kant van cybersecurity. Je begrijpt niet alleen de knoppen, maar bent de architect van de hele detectiestrategie.</p>
-
-<h3>1. De Architectuur: Het grote plaatje</h3>
-<p>Begrijpen hoe tools communiceren en gaten in de verdediging dichten.</p>
-<ul>
-    <li><strong>MITRE ATT&CK framework:</strong> Zorgen voor volledige dekking (coverage) over alle fases van een cyberaanval.</li>
-    <li><strong>De Gouden Driehoek (EDR, SIEM, SOAR):</strong> 
-        <ul>
-            <li><em>EDR:</em> Lokale bewaking op endpoints (laptops/servers).</li>
-            <li><em>SIEM:</em> De centrale meldkamer voor log-correlatie.</li>
-            <li><em>SOAR:</em> Geautomatiseerde response op SIEM-alerts.</li>
-        </ul>
-    </li>
-    <li><strong>Data Quality over Quantity:</strong> Waarschuwingsmoeheid (alert fatigue) voorkomen door enkel high-fidelity logs te gebruiken.</li>
-</ul>
-
-<h3>2. Automatisering & Schaalbaarheid</h3>
-<p>Van handmatig beheer naar geautomatiseerde processen op schaal.</p>
-<ul>
-    <li><strong>SIEM-as-Code (IaC):</strong> Detectieregels beheren als code via Git/CI-CD voor versiebeheer en veilig uitrollen.</li>
-    <li><strong>Geavanceerde Scripting:</strong> Robuuste integraties bouwen in Python of PowerShell die via API's verschillende security-tools koppelen.</li>
-</ul>
-
-<h3>3. Incident Response & Threat Hunting</h3>
-<p>Optreden als de 'Special Forces' bij grote incidenten.</p>
-<ul>
-    <li><strong>Proactieve Threat Hunting:</strong> Actief zoeken naar ongeziene dreigingen om de <em>dwell time</em> (tijd dat een hacker onopgemerkt binnen is) te verkorten.</li>
-    <li><strong>Zero-day actieplan:</strong> Snel schakelen via Threat Intelligence, vulnerability scanning en het pushen van nieuwe SIEM-detecties.</li>
-    <li><strong>Crisismanagement:</strong> Junioren begeleiden en forensisch bewijs veiligstellen zonder de business te verstoren.</li>
-</ul>
-
-<h3>4. De "Spil"-functie tussen Beheer en Security</h3>
-<p>De brug slaan tussen techniek en de organisatie.</p>
-<ul>
-    <li><strong>Stakeholdermanagement:</strong> Weerstand wegnemen bij andere IT- en Cloud-teams omtrent security-maatregelen (bijv. performance-impact).</li>
-    <li><strong>SOC-CMM:</strong> Meedenken over het Capability Maturity Model van het SOC om de afdeling naar een hoger strategisch niveau te tillen.</li>
-    <li><strong>Communicatie:</strong> Eigenaarschap tonen en in gesprekken de STAR-methode toepassen met een sterke focus op het behaalde <strong>Resultaat</strong>.</li>
-</ul>
-					
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTIE VIBE CODING -->
-    <section id="vibe" class="content-section">
-    <h2 style="color: var(--hub-purple);">Vibe Coding: The Future of Dev</h2>
-    <p style="opacity: 0.8;">Vibe coding gaat over het sturen van AI-tools op basis van intentie en context in plaats van handmatig elke regel code te typen.</p>
-
-    <div class="vibe-card">
-        <div class="tip-box" style="border-color: var(--hub-purple);">
-            "Focus op architectuur en logica, laat de AI de syntax-slaaf zijn."
-        </div>
-
-        <ul style="font-family: 'Fira Code', monospace; font-size: 0.88rem;">
-            <li>Gebruik natural language voor complexe functies.</li>
-            <li>Iteratief bouwen: praten met je code.</li>
-            <li>LLM-gestuurde refactoring.</li>
-        </ul>
-
-        <br>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Onderwerp leren met AI <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
-
-Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
-Gebruik:
-- een korte uitleg in simpele taal,
-- de belangrijkste kernbegrippen,
-- 3 praktijkvoorbeelden,
-- 5 controlevragen,
-- een mini-oefening met antwoord,
-- veelgemaakte fouten,
-- en een compacte samenvatting.
-
-Houd rekening met mijn IT-achtergrond en leg technische termen kort uit.</pre>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: SQL troubleshooting <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Je bent een ervaren SQL troubleshoot expert.
-
-Analyseer deze SQL-query op:
-- syntaxfouten,
-- foute joins,
-- verkeerde filters,
-- onjuiste kolomnamen,
-- datatype-problemen,
-- logische fouten,
-- en performance-kansen.
-
-Geef daarna:
-1. de oorzaak van het probleem,
-2. de verbeterde query,
-3. een korte uitleg per wijziging,
-4. en tips om dit soort fouten voortaan sneller te herkennen.
-
-SQL-query:
-[plak query hier]
-
-Foutmelding of probleem:
-[plak foutmelding of beschrijving hier]</pre>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: SQL code vertalen of herschrijven <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Ik wil dit onderwerp leren: [onderwerp].
-
-Leg het uit op beginner- tot medior-niveau in duidelijke stappen.
-Gebruik:
-- een korte uitleg in simpele taal,
-- de belangrijkste kernbegrippen,
-- 3 praktijkvoorbeelden,
-- 5 controlevragen,
-- een mini-oefening met antwoord,
-- veelgemaakte fouten,
-- en een compacte samenvatting.
-
-Houd rekening met mijn IT-achtergrond en leg technische termen kort uit.Vertaal of herschrijf de volgende code met behoud van functionaliteit.
-Doel:
-- van: [bron, bijvoorbeeld SQL Server]
-- naar: [doeltaal, bijvoorbeeld PostgreSQL / DAX / Python / JavaScript]
-
-Eisen:
-- behoud dezelfde logica,
-- maak de code leesbaar,
-- gebruik best practices van de doeltaal,
-- leg kort uit welke delen aangepast moesten worden,
-- en geef de uiteindelijke code in één duidelijk blok.
-
-Code:
-[plak code hier]</pre>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Professionele website maken met thema <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">Maak een professionele, moderne en geanimeerde website in HTML, CSS en JavaScript.
-
-Onderwerp van de website:
-[plak onderwerp hier]
-
-Thema / stijl:
-[bijvoorbeeld: dark tech, minimal, cyber, glassmorphism, corporate, neon, clean dashboard]
-
-Kleuren:
-[plak kleuren of laat AI voorstellen doen]
-
-Eisen:
-- responsive design,
-- duidelijke secties,
-- professionele typografie,
-- subtiele animaties,
-- nette cards en hover states,
-- dark/light mode of flexibel thema,
-- toegankelijke structuur,
-- en alles in één HTML-bestand.
-
-Geef:
-1. complete HTML,
-2. ingebouwde CSS,
-3. ingebouwde JavaScript,
-4. en korte uitleg waar ik tekst of kleuren zelf kan aanpassen.</pre>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion prompt-accordion">
-            <div class="accordion-header">Prompt: Socratische Tutor <span>+</span></div>
-            <div class="accordion-content">
-                <div class="prompt-box">
-                    <div class="prompt-actions">
-                        <button type="button" class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
-                    </div>
-                    <pre class="prompt-text">
-<strong>Rol:</strong> Socratische Tutor (Mentor-modus)
-<strong>Doel:</strong> Verken het concept <em>[onderwerp]</em>
-
-<strong>Werkwijze:</strong>
-• Stel mij één voor één open vragen.
-• Geef geen directe antwoorden.
-• Laat me mijn eigen aannames bevragen.
-• Leid me stap voor stap naar de diepere logica.
-
-<em>Laten we beginnen: wat is volgens mij de kern van [ONDERWERP]?</em>
-</pre>
-                </div>
-            </div>
-        </div>
+<div class="header">
+  <div class="header-row">
+    <div class="logo">
+      <div class="dot" id="logoDot"></div>
+      <div>
+        <div class="logo-text">StudyHub</div>
+        <div class="logo-sub" id="appSub">IT Examenvoorbereiding</div>
+      </div>
     </div>
-</section>
-        </main>
+    <div class="toggles">
+      <button class="toggle" id="themeToggle" onclick="toggleTheme()">
+        <span id="tLight" class="on">Light</span>
+        <span id="tDark">Dark</span>
+      </button>
+      <button class="toggle" id="langToggle" onclick="toggleLang()">
+        <span id="tNL" class="on">NL</span>
+        <span id="tEN">EN</span>
+      </button>
     </div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</div>
+
+<div class="topicbar" id="topicBar"></div>
+<div id="sections"></div>
+
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-title" id="mTitle">Onderwerp toevoegen</div>
+    <div class="modal-sub" id="mSub">Typ een onderwerp en bestudeer het via AI Tutor.</div>
+    <input class="modal-input" id="newTopicInput" placeholder="bijv. AZ-900, Docker, Security+">
+    <div class="modal-btns">
+      <button class="btn btn-full" onclick="closeModal()" id="mCancel">Annuleren</button>
+      <button class="btn btn-accent btn-full" onclick="confirmAdd()" id="mConfirm">Toevoegen</button>
+    </div>
+  </div>
+</div>
+
 <script>
-    function showTab(id, el) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        el.classList.add('active');
+const TOPICS = {
+  "MD-102": {
+    icon:"M", color:"#185FA5", bg:"#E6F1FB", darkColor:"#60b4f0", darkBg:"#0c1e30",
+    desc:{en:"Microsoft Endpoint Administrator",nl:"Microsoft Endpoint Beheerder"},
+    cheatsheet:[
+      {title:{en:"Intune Enrollment",nl:"Intune Inschrijving"},content:{en:"MDM enrollment via Azure AD join, Autopilot, or Company Portal. Supports Windows, iOS, Android, macOS.",nl:"MDM-inschrijving via Azure AD-koppeling, Autopilot of Bedrijfsportal. Ondersteunt Windows, iOS, Android, macOS."}},
+      {title:{en:"Compliance Policies",nl:"Nalevingsbeleid"},content:{en:"Define rules devices must meet. Non-compliant = blocked access via Conditional Access.",nl:"Regels waaraan apparaten moeten voldoen. Niet-conform = geblokkeerde toegang via Voorwaardelijke Toegang."}},
+      {title:{en:"Configuration Profiles",nl:"Configuratieprofielen"},content:{en:"Push settings (Wi-Fi, VPN, email, restrictions) to devices via Intune profiles.",nl:"Instellingen (Wi-Fi, VPN, e-mail) pushen naar apparaten via Intune-profielen."}},
+      {title:{en:"Windows Autopilot",nl:"Windows Autopilot"},content:{en:"Zero-touch deployment. Device ships directly to user, auto-configures via Azure AD + Intune.",nl:"Implementatie zonder aanraking. Apparaat gaat direct naar gebruiker, configureert automatisch via Azure AD + Intune."}},
+      {title:{en:"Conditional Access",nl:"Voorwaardelijke Toegang"},content:{en:"Azure AD policy: grant/block access based on user, device compliance, location, MFA.",nl:"Azure AD-beleid: toegang verlenen/blokkeren op basis van gebruiker, apparaatnaleving, locatie, MFA."}},
+      {title:{en:"App Deployment",nl:"App-implementatie"},content:{en:"Deploy via Intune: required, available, or uninstall. Supports Win32, MSI, MSIX, web apps.",nl:"Implementeren via Intune: verplicht, beschikbaar of verwijderen. Ondersteunt Win32, MSI, MSIX, webapps."}},
+    ],
+    flashcards:[
+      {q:{en:"What is Microsoft Intune?",nl:"Wat is Microsoft Intune?"},a:{en:"A cloud-based MDM/MAM solution to manage devices and apps across platforms.",nl:"Een cloudgebaseerde MDM/MAM-oplossing voor het beheren van apparaten en apps op verschillende platforms."}},
+      {q:{en:"What does MDM stand for?",nl:"Waar staat MDM voor?"},a:{en:"Mobile Device Management – manages the entire device.",nl:"Mobile Device Management – beheert het gehele apparaat."}},
+      {q:{en:"What does MAM stand for?",nl:"Waar staat MAM voor?"},a:{en:"Mobile Application Management – manages apps without enrolling the device.",nl:"Mobile Application Management – beheert apps zonder het apparaat in te schrijven."}},
+      {q:{en:"What is Windows Autopilot?",nl:"Wat is Windows Autopilot?"},a:{en:"A zero-touch deployment tool that auto-configures devices using Azure AD and Intune.",nl:"Een implementatietool zonder aanraking die apparaten automatisch configureert via Azure AD en Intune."}},
+      {q:{en:"What is a Compliance Policy?",nl:"Wat is een Nalevingsbeleid?"},a:{en:"A set of rules a device must meet to gain access to resources.",nl:"Een reeks regels waaraan een apparaat moet voldoen om toegang te krijgen tot bronnen."}},
+      {q:{en:"What is Conditional Access?",nl:"Wat is Voorwaardelijke Toegang?"},a:{en:"Azure AD feature that grants or blocks access based on conditions like device compliance.",nl:"Azure AD-functie die toegang verleent of blokkeert op basis van voorwaarden zoals apparaatnaleving."}},
+      {q:{en:"What is Azure AD Join?",nl:"Wat is Azure AD-koppeling?"},a:{en:"Connects a device directly to Azure AD (cloud-only). Replaces traditional domain join.",nl:"Verbindt een apparaat direct met Azure AD (alleen cloud). Vervangt traditionele domeinverbinding."}},
+      {q:{en:"What is a Configuration Profile?",nl:"Wat is een Configuratieprofiel?"},a:{en:"Used in Intune to push device settings like Wi-Fi, VPN, and email.",nl:"Wordt gebruikt in Intune om apparaatinstellingen zoals Wi-Fi, VPN en e-mail te pushen."}},
+    ],
+    quiz:[
+      {q:{en:"Which feature allows zero-touch Windows device setup?",nl:"Welke functie maakt zero-touch Windows-instelling mogelijk?"},options:{en:["Autopilot","SCCM","WDS","Sysprep"],nl:["Autopilot","SCCM","WDS","Sysprep"]},answer:0},
+      {q:{en:"What does Conditional Access use to grant or deny access?",nl:"Wat gebruikt Voorwaardelijke Toegang om toegang te verlenen of weigeren?"},options:{en:["Device name","Signals like compliance, location, MFA","Job title","IP only"],nl:["Apparaatnaam","Signalen zoals naleving, locatie, MFA","Functietitel","Alleen IP"]},answer:1},
+      {q:{en:"Which Intune policy enforces device health rules?",nl:"Welk Intune-beleid handhaaft gezondheidsregels?"},options:{en:["Config Profile","App Protection","Compliance Policy","Update Ring"],nl:["Configuratieprofiel","App-beveiliging","Nalevingsbeleid","Updatering"]},answer:2},
+      {q:{en:"Primary role of MAM?",nl:"Primaire rol van MAM?"},options:{en:["Manage whole device","Manage apps without enrollment","Deploy updates","Monitor network"],nl:["Volledig apparaat","Apps zonder inschrijving","Updates","Netwerk"]},answer:1},
+      {q:{en:"Which enrollment method ships directly to end user?",nl:"Welke methode gaat direct naar eindgebruiker?"},options:{en:["Company Portal","Autopilot","Manual MDM","SCCM"],nl:["Bedrijfsportal","Autopilot","Handmatige MDM","SCCM"]},answer:1},
+    ]
+  },
+  "CCNA": {
+    icon:"C", color:"#0F6E56", bg:"#E1F5EE", darkColor:"#4ade80", darkBg:"#0a1f18",
+    desc:{en:"Cisco Certified Network Associate",nl:"Cisco Gecertificeerd Netwerkmedewerker"},
+    cheatsheet:[
+      {title:{en:"OSI Model",nl:"OSI-model"},content:{en:"7 layers: Physical, Data Link, Network, Transport, Session, Presentation, Application.",nl:"7 lagen: Fysiek, Datalink, Netwerk, Transport, Sessie, Presentatie, Applicatie."}},
+      {title:{en:"Subnetting",nl:"Subnetten"},content:{en:"/24=254 usable, /25=126, /26=62, /27=30. Formula: 2^(32-prefix)-2",nl:"/24=254 bruikbaar, /25=126, /26=62, /27=30. Formule: 2^(32-prefix)-2"}},
+      {title:{en:"VLANs",nl:"VLAN's"},content:{en:"Logical segmentation. Access port = one VLAN. Trunk port = multiple VLANs (802.1Q).",nl:"Logische segmentatie. Toegangspoort = één VLAN. Trunkpoort = meerdere VLAN's (802.1Q)."}},
+      {title:{en:"Spanning Tree",nl:"Spanning Tree"},content:{en:"Prevents Layer 2 loops. Root bridge = lowest Bridge ID. Blocked ports stop loops.",nl:"Voorkomt laag-2-lussen. Rootbrug = laagste Bridge ID. Geblokkeerde poorten stoppen lussen."}},
+      {title:{en:"OSPF",nl:"OSPF"},content:{en:"Link-state protocol. Area 0 = backbone. Hello packets maintain adjacency.",nl:"Link-state protocol. Gebied 0 = backbone. Hello-pakketten onderhouden buren."}},
+      {title:{en:"NAT / PAT",nl:"NAT / PAT"},content:{en:"Maps private to public IPs. PAT overloads one public IP using port numbers.",nl:"Koppelt privé aan openbaar IP. PAT overloadt één openbaar IP via poortnummers."}},
+    ],
+    flashcards:[
+      {q:{en:"What does VLAN stand for?",nl:"Waar staat VLAN voor?"},a:{en:"Virtual Local Area Network – logical Layer 2 segmentation.",nl:"Virtual Local Area Network – logische laag-2-segmentatie."}},
+      {q:{en:"Default VLAN on a Cisco switch?",nl:"Standaard VLAN op een Cisco-switch?"},a:{en:"VLAN 1",nl:"VLAN 1"}},
+      {q:{en:"What layer does a router operate at?",nl:"Op welke laag werkt een router?"},a:{en:"Layer 3 – Network Layer",nl:"Laag 3 – Netwerklaag"}},
+      {q:{en:"What prevents Layer 2 loops?",nl:"Wat voorkomt laag-2-lussen?"},a:{en:"Spanning Tree Protocol (STP)",nl:"Spanning Tree Protocol (STP)"}},
+      {q:{en:"What is a trunk port?",nl:"Wat is een trunkpoort?"},a:{en:"Carries multiple VLANs using 802.1Q tagging.",nl:"Draagt meerdere VLAN's via 802.1Q-tagging."}},
+      {q:{en:"What does OSPF stand for?",nl:"Waar staat OSPF voor?"},a:{en:"Open Shortest Path First – link-state routing.",nl:"Open Shortest Path First – link-state routering."}},
+    ],
+    quiz:[
+      {q:{en:"Which OSI layer handles IP addressing?",nl:"Welke OSI-laag verwerkt IP-adressering?"},options:{en:["Layer 1","Layer 2","Layer 3","Layer 4"],nl:["Laag 1","Laag 2","Laag 3","Laag 4"]},answer:2},
+      {q:{en:"Usable hosts in /26?",nl:"Bruikbare hosts in /26?"},options:{en:["30","62","126","254"],nl:["30","62","126","254"]},answer:1},
+      {q:{en:"What elects Root Bridge in STP?",nl:"Wat kiest rootbrug in STP?"},options:{en:["Highest IP","Lowest Bridge ID","Fastest port","Admin"],nl:["Hoogste IP","Laagste Bridge ID","Snelste poort","Beheer"]},answer:1},
+      {q:{en:"Routing table command on Cisco?",nl:"Routeringstabel commando op Cisco?"},options:{en:["show ip arp","show int","show ip route","show ver"],nl:["show ip arp","show int","show ip route","show ver"]},answer:2},
+      {q:{en:"What does 802.1Q define?",nl:"Wat definieert 802.1Q?"},options:{en:["Wi-Fi","VLAN tagging","Spanning tree","OSPF"],nl:["Wi-Fi","VLAN-tagging","Spanning tree","OSPF"]},answer:1},
+    ]
+  },
+  "IT Architecture": {
+    icon:"A", color:"#533AB7", bg:"#EEEDFE", darkColor:"#AFA9EC", darkBg:"#16102e",
+    desc:{en:"Core IT Architecture Concepts",nl:"Kern IT-Architectuurconcepten"},
+    cheatsheet:[
+      {title:{en:"High Availability",nl:"Hoge Beschikbaarheid"},content:{en:"Redundancy to minimize downtime. 99.9% = ~8.7h/yr. Clustering, load balancing, failover.",nl:"Redundantie om uitvaltijd te minimaliseren. 99,9% = ~8,7u/jaar. Clustering, taakverdeling, failover."}},
+      {title:{en:"CAP Theorem",nl:"CAP-stelling"},content:{en:"Guarantee only 2 of 3: Consistency, Availability, Partition Tolerance.",nl:"Garandeer slechts 2 van 3: Consistentie, Beschikbaarheid, Partitietolerantie."}},
+      {title:{en:"Microservices",nl:"Microservices"},content:{en:"Independent services deployed separately, communicating via APIs.",nl:"Onafhankelijke services, elk apart geïmplementeerd, communiceert via API's."}},
+      {title:{en:"Load Balancing",nl:"Taakverdeling"},content:{en:"Distributes traffic. Algorithms: Round Robin, Least Connections, IP Hash.",nl:"Verdeelt verkeer. Algoritmen: Round Robin, Minste verbindingen, IP Hash."}},
+      {title:{en:"Zero Trust",nl:"Zero Trust"},content:{en:"Never trust, always verify. No implicit trust by network location.",nl:"Nooit vertrouwen, altijd verifiëren. Geen impliciete vertrouwensrelatie op basis van netwerk."}},
+      {title:{en:"CI/CD",nl:"CI/CD"},content:{en:"Auto build/test on commit. Auto release to production on success.",nl:"Automatisch bouwen/testen bij commit. Automatisch uitrollen bij succes."}},
+    ],
+    flashcards:[
+      {q:{en:"What is RPO?",nl:"Wat is RPO?"},a:{en:"Recovery Point Objective – max acceptable data loss after failure.",nl:"Recovery Point Objective – maximaal acceptabeel gegevensverlies na storing."}},
+      {q:{en:"What is RTO?",nl:"Wat is RTO?"},a:{en:"Recovery Time Objective – max time to restore service after failure.",nl:"Recovery Time Objective – maximale hersteltijd na een storing."}},
+      {q:{en:"What is horizontal scaling?",nl:"Wat is horizontale schaling?"},a:{en:"Adding more instances/machines to handle load.",nl:"Meer instanties/machines toevoegen om belasting te verwerken."}},
+      {q:{en:"What is a single point of failure?",nl:"Wat is een enkel storingspunt?"},a:{en:"A component whose failure brings down the whole system.",nl:"Een component waarvan uitval het hele systeem platgooit."}},
+      {q:{en:"What does CI/CD automate?",nl:"Wat automatiseert CI/CD?"},a:{en:"Build, test and deploy pipeline from commit to production.",nl:"Bouw-, test- en implementatiepijplijn van commit tot productie."}},
+      {q:{en:"What is Zero Trust?",nl:"Wat is Zero Trust?"},a:{en:"Never trust, always verify — no implicit trust from network position.",nl:"Nooit vertrouwen, altijd verifiëren — geen impliciete vertrouwensrelatie."}},
+    ],
+    quiz:[
+      {q:{en:"What does RTO measure?",nl:"Wat meet RTO?"},options:{en:["Data loss","Recovery time","Replication","Timeout"],nl:["Gegevensverlies","Hersteltijd","Replicatie","Time-out"]},answer:1},
+      {q:{en:"CAP: system guarantees at most:",nl:"CAP: systeem garandeert maximaal:"},options:{en:["1 of 3","2 of 3","All 3","None"],nl:["1 van 3","2 van 3","Alle 3","Geen"]},answer:1},
+      {q:{en:"Which scaling adds more servers?",nl:"Welke schaling voegt servers toe?"},options:{en:["Vertical","Horizontal","Diagonal","Cluster"],nl:["Verticaal","Horizontaal","Diagonaal","Cluster"]},answer:1},
+      {q:{en:"Zero Trust assumes:",nl:"Zero Trust gaat ervan uit:"},options:{en:["Internal is safe","No implicit trust","VPN trusted","Firewall blocks all"],nl:["Intern is veilig","Geen impliciete vertrouwensrelatie","VPN vertrouwd","Firewall blokkeert alles"]},answer:1},
+      {q:{en:"CI stands for:",nl:"CI staat voor:"},options:{en:["Cloud Infra","Continuous Integration","Core Interface","Central Index"],nl:["Cloud Infra","Continue Integratie","Kerninterface","Centrale Index"]},answer:1},
+    ]
+  }
+};
+
+const FLOW_NODES = {
+  "MD-102":[
+    {id:"entra",label:"Entra ID",x:130,y:30,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The identity layer. Manages who users are, authenticates them and issues tokens. Every device and user must exist here first.",nl:"De identiteitslaag. Beheert wie gebruikers zijn, authenticeert hen en geeft tokens uit. Elk apparaat en gebruiker moet hier eerst bestaan."}},
+    {id:"autopilot",label:"Autopilot",x:20,y:130,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Zero-touch deployment. Registers the device in Entra ID and triggers Intune enrollment automatically on first sign-in.",nl:"Zero-touch implementatie. Registreert het apparaat in Entra ID en activeert automatisch Intune-inschrijving bij eerste aanmelding."}},
+    {id:"intune",label:"Intune",x:130,y:130,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The management engine. Pushes configuration profiles, deploys apps and runs compliance checks on every enrolled device.",nl:"De beheermotor. Pusht configuratieprofielen, implementeert apps en voert nalevingscontroles uit op elk ingeschreven apparaat."}},
+    {id:"compliance",label:"Compliance policy",x:240,y:130,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"The health check. Defines rules (BitLocker on, OS version, antivirus). Intune stamps each device Compliant or Non-compliant.",nl:"De gezondheidscheck. Definieert regels (BitLocker aan, OS-versie, antivirus). Intune stempelt elk apparaat als Conform of Niet-conform."}},
+    {id:"ca",label:"Conditional Access",x:130,y:230,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"The gatekeeper. Reads compliance status and signals (location, MFA, risk) and grants or blocks access to Office 365 and corporate data.",nl:"De poortwachter. Leest nalevingsstatus en signalen (locatie, MFA, risico) en verleent of blokkeert toegang tot Office 365 en bedrijfsdata."}},
+    {id:"defender",label:"Defender",x:20,y:230,color:"#A32D2D",bg:"#FCEBEB",darkBg:"#1f0a0a",darkColor:"#f87171",desc:{en:"The on-device guard. Detects malware and suspicious behaviour, feeding a risk score into Conditional Access dynamically.",nl:"De bewaker op het apparaat. Detecteert malware en verdacht gedrag, en geeft een risicoscore door aan Conditional Access."}},
+    {id:"data",label:"Office 365 / Data",x:240,y:230,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"The protected resource. Only reachable when Conditional Access grants access — based on identity, device compliance and Defender risk.",nl:"De beschermde bron. Alleen bereikbaar als Conditional Access toegang verleent — op basis van identiteit, naleving en Defender-risico."}},
+  ],
+  "CCNA":[
+    {id:"host",label:"Host / PC",x:20,y:30,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"End device on the LAN. Has an IP (Layer 3) and MAC (Layer 2). Uses default gateway to route traffic off-network.",nl:"Eindapparaat op het LAN. Heeft een IP (laag 3) en MAC (laag 2). Gebruikt standaardgateway om verkeer buiten het netwerk te routeren."}},
+    {id:"switch",label:"Switch",x:150,y:30,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Layer 2 device. Forwards frames by MAC address within a VLAN. STP prevents loops. Trunk ports carry multiple VLANs.",nl:"Laag-2-apparaat. Stuurt frames door op MAC-adres binnen een VLAN. STP voorkomt lussen. Trunkpoorten dragen meerdere VLAN's."}},
+    {id:"vlan",label:"VLAN",x:270,y:30,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"Virtual segmentation on a switch. Isolates broadcast domains. Access ports: one VLAN. Trunk ports: many with 802.1Q tagging.",nl:"Virtuele segmentatie op een switch. Isoleert broadcast-domeinen. Toegangspoorten: één VLAN. Trunkpoorten: meerdere met 802.1Q."}},
+    {id:"router",label:"Router",x:150,y:150,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"Layer 3 device. Routes packets between networks using the routing table. Runs OSPF to learn paths dynamically.",nl:"Laag-3-apparaat. Routeert pakketten tussen netwerken via de routeringstabel. Gebruikt OSPF om paden dynamisch te leren."}},
+    {id:"ospf",label:"OSPF",x:20,y:150,color:"#533AB7",bg:"#EEEDFE",darkBg:"#16102e",darkColor:"#AFA9EC",desc:{en:"Link-state routing protocol. Routers exchange LSAs to build a complete network map. Shortest path via Dijkstra's algorithm.",nl:"Link-state routeringsprotocol. Routers wisselen LSA's uit voor een complete netwerkkaart. Kortste pad via Dijkstra."}},
+    {id:"nat",label:"NAT / PAT",x:270,y:150,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"Translates private IPs to public. PAT lets many hosts share one public IP using unique port numbers.",nl:"Vertaalt privé-IP's naar openbaar. PAT laat veel hosts één openbaar IP delen via unieke poortnummers."}},
+    {id:"internet",label:"Internet",x:150,y:260,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"Public network. Traffic arrives after NAT translation. DNS resolves domain names to IPs before connections are established.",nl:"Openbaar netwerk. Verkeer komt aan na NAT-vertaling. DNS vertaalt domeinnamen naar IP's voor de verbinding tot stand komt."}},
+  ],
+  "IT Architecture":[
+    {id:"users",label:"Users / Clients",x:140,y:20,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The consumers. Send requests via browser or app. SLAs define the availability and response time they can expect.",nl:"De consumenten. Versturen verzoeken via browser of app. SLA's definiëren de beschikbaarheid en responstijd."}},
+    {id:"lb",label:"Load Balancer",x:140,y:110,color:"#533AB7",bg:"#EEEDFE",darkBg:"#16102e",darkColor:"#AFA9EC",desc:{en:"Distributes requests across multiple service instances. Enables horizontal scaling and eliminates single points of failure at entry.",nl:"Verdeelt verzoeken over meerdere service-instanties. Maakt horizontale schaalbaarheid mogelijk en elimineert single points of failure."}},
+    {id:"zerotrust",label:"Zero Trust",x:20,y:200,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"Security model through every layer. Never trust, always verify. Enforces MFA, least privilege and micro-segmentation.",nl:"Beveiligingsmodel door elke laag. Nooit vertrouwen, altijd verifiëren. Handhaaft MFA, minimale rechten en micro-segmentatie."}},
+    {id:"microservices",label:"Microservices",x:140,y:200,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Independent services, each owning its domain. Deploy and scale individually. CI/CD pipelines automate testing and release.",nl:"Onafhankelijke services, elk met eigen domein. Afzonderlijk implementeren en schalen. CI/CD automatiseert testen en uitrollen."}},
+    {id:"db",label:"Data / DB",x:260,y:200,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"Persistence layer. Replicated for HA. RPO = max data loss, RTO = max downtime. CAP Theorem governs distributed DB trade-offs.",nl:"Persistentielaag. Gerepliceerd voor HA. RPO = max gegevensverlies, RTO = max uitvaltijd. CAP-stelling bepaalt afwegingen."}},
+    {id:"cicd",label:"CI/CD",x:140,y:290,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"Automates build, test and deploy. CI catches bugs early. CD pushes validated changes to production automatically.",nl:"Automatiseert bouwen, testen en implementeren. CI pakt bugs vroeg op. CD rolt gevalideerde wijzigingen automatisch uit."}},
+  ]
+};
+
+const FLOW_EDGES = {
+  "MD-102":[
+    {from:"autopilot",to:"entra",label:"registers"},{from:"entra",to:"intune",label:"enrolls"},
+    {from:"intune",to:"compliance",label:"runs check"},{from:"intune",to:"defender",label:"manages"},
+    {from:"compliance",to:"ca",label:"status"},{from:"defender",to:"ca",label:"risk score"},
+    {from:"ca",to:"data",label:"grants/blocks"},
+  ],
+  "CCNA":[
+    {from:"host",to:"switch",label:"frame"},{from:"switch",to:"vlan",label:"segments"},
+    {from:"switch",to:"router",label:"inter-VLAN"},{from:"ospf",to:"router",label:"routing table"},
+    {from:"router",to:"nat",label:"packet out"},{from:"nat",to:"internet",label:"public IP"},
+  ],
+  "IT Architecture":[
+    {from:"users",to:"lb",label:"requests"},{from:"lb",to:"microservices",label:"distributes"},
+    {from:"zerotrust",to:"microservices",label:"enforces"},{from:"microservices",to:"db",label:"reads/writes"},
+    {from:"cicd",to:"microservices",label:"deploys"},
+  ]
+};
+
+const PROMPTS = [
+  {tag:"Leren",title:{en:"Learn any topic",nl:"Onderwerp leren"},text:"Ik wil dit onderwerp leren: [onderwerp].\n\nLeg het uit op beginner- tot medior-niveau in duidelijke stappen.\nGebruik:\n- een korte uitleg in simpele taal,\n- de belangrijkste kernbegrippen,\n- 3 praktijkvoorbeelden,\n- 5 controlevragen,\n- een mini-oefening met antwoord,\n- veelgemaakte fouten,\n- en een compacte samenvatting.\n\nHoud rekening met mijn IT-achtergrond."},
+  {tag:"Troubleshoot",title:{en:"SQL troubleshooting",nl:"SQL troubleshooting"},text:"Je bent een ervaren SQL troubleshoot expert.\n\nAnalyseer deze SQL-query op:\n- syntaxfouten, foute joins, verkeerde filters,\n- datatype-problemen, logische fouten,\n- en performance-kansen.\n\nGeef: oorzaak, verbeterde query, uitleg per wijziging, tips.\n\nSQL-query:\n[plak query hier]\n\nFoutmelding:\n[plak foutmelding hier]"},
+  {tag:"Vertalen",title:{en:"Translate / rewrite code",nl:"Code vertalen"},text:"Vertaal de volgende code met behoud van functionaliteit.\n\nVan: [bron, bijv. SQL Server]\nNaar: [doel, bijv. PostgreSQL / DAX / Python]\n\nEisen: zelfde logica, leesbaar, best practices, uitleg per aanpassing, één codeblok.\n\nCode:\n[plak code hier]"},
+  {tag:"Bouwen",title:{en:"Build a professional website",nl:"Website bouwen"},text:"Maak een professionele, moderne website in HTML, CSS en JavaScript.\n\nOnderwerp: [onderwerp]\nThema: [bijv. dark tech, minimal, cyber, glassmorphism]\nKleuren: [of laat AI kiezen]\n\nEisen: responsive, duidelijke secties, subtiele animaties, dark/light mode, alles in één HTML-bestand.\n\nGeef: HTML, CSS, JS en uitleg waar ik aanpassingen kan doen."},
+  {tag:"Tutor",title:{en:"Socratic tutor",nl:"Socratische tutor"},text:"Rol: Socratische Tutor\nDoel: Verken concept [onderwerp]\n\nWerkwijze:\n• Stel mij één voor één open vragen.\n• Geef geen directe antwoorden.\n• Laat me mijn eigen aannames bevragen.\n• Leid me naar de diepere logica.\n\nBegin: wat is volgens mij de kern van [ONDERWERP]?"},
+  {tag:"Review",title:{en:"Code review",nl:"Code review"},text:"Je bent senior software engineer. Voer een grondige code review uit.\n\nAnalyseer op: leesbaarheid, correctheid, edge cases, performance, beveiliging, best practices.\n\nGeef: samenvatting bevindingen, verbeterde code, uitleg per wijziging.\n\nTaal: [bijv. Python / React / SQL]\n\nCode:\n[plak code hier]"},
+  {tag:"Debug",title:{en:"Debug any error",nl:"Fout debuggen"},text:"Je bent expert debugger.\n\n1. Wat betekent deze foutmelding?\n2. Meest voorkomende oorzaken?\n3. Hoe los ik dit stap voor stap op?\n4. Hoe voorkom ik dit?\n\nOmgeving: [bijv. Python 3.11, React 18]\n\nFoutmelding:\n[plak foutmelding hier]\n\nCode:\n[plak code hier]"},
+  {tag:"Prompt",title:{en:"Improve my prompt",nl:"Prompt verbeteren"},text:"Je bent expert in prompt engineering.\n\nVerbeter de prompt zodat hij:\n- duidelijker en specifieker is,\n- de AI beter aanstuurt,\n- rol, context en output-formaat specificeert.\n\nGeef: analyse van het probleem, verbeterde versie, uitleg per aanpassing.\n\nOriginele prompt:\n[plak prompt hier]"},
+  {tag:"Uitleggen",title:{en:"Explain like I'm 10",nl:"Uitleggen voor beginners"},text:"Leg het volgende concept uit alsof ik 10 jaar oud ben.\n\nGebruik: simpele dagelijkse analogieën, korte zinnen, geen jargon.\nEindig met één zin die de kern samenvat.\n\nConcept:\n[bijv. DNS, JWT tokens, containerization, TCP/IP, zero trust]"},
+  {tag:"Plan",title:{en:"Project plan & breakdown",nl:"Projectplan"},text:"Je bent projectmanager en technisch architect.\n\nMaak een plan voor:\nProject: [beschrijf project]\nTech stack: [bijv. React, Python, Azure]\n\nGeef: projectfases + deliverables, taakverdeling, risico's, tijdsinschatting, MVP-definitie."},
+];
+
+const TX = {
+  en:{appSub:"IT Exam Prep",tabs:["Home","Flow","Flashcards","Quiz","Cheat Sheet","Vibe Prompts","AI Tutor"],quickFacts:"Quick facts",cards:"cards",questions:"questions",refs:"refs",cardOf:(a,b)=>"Card "+a+" of "+b+" — tap to flip",question:"Question",answer:"Answer",prev:"Prev",next:"Next",correct:(a,b)=>a+"/"+b+" correct",great:"Great work!",keep:"Keep studying!",retry:"Try again",query:(a,b)=>"Question "+a+" of "+b,seeResults:"See results",nextQ:"Next",refLabel:"Reference",vibeDesc:"Ready-to-use prompts — copy and paste into any AI.",copyBtn:"Copy",copied:"Copied!",addBtn:"+ Add",cancel:"Cancel",confirm:"Add topic",addTitle:"Add a study topic",addDesc:"Type a topic and study it via AI Tutor.",addPh:"e.g. AZ-900, Docker, Security+",askAnything:"Ask me anything about",thinking:"Thinking...",send:"Send",s1:"Explain this topic simply",s2:"Give me a quiz question",s3:"What should I focus on?",clickNode:"Tap a node to see more"},
+  nl:{appSub:"IT Examenvoorbereiding",tabs:["Start","Flow","Flashcards","Quiz","Spiekbrief","Vibe Prompts","AI Tutor"],quickFacts:"Snelle feiten",cards:"kaarten",questions:"vragen",refs:"refs",cardOf:(a,b)=>"Kaart "+a+" van "+b+" — tik om te draaien",question:"Vraag",answer:"Antwoord",prev:"Vorige",next:"Volgende",correct:(a,b)=>a+"/"+b+" correct",great:"Goed gedaan!",keep:"Blijf studeren!",retry:"Opnieuw",query:(a,b)=>"Vraag "+a+" van "+b,seeResults:"Resultaten",nextQ:"Volgende",refLabel:"Referentie",vibeDesc:"Kant-en-klare prompts — kopieer en plak in elke AI.",copyBtn:"Kopieer",copied:"Gekopieerd!",addBtn:"+ Toev.",cancel:"Annuleren",confirm:"Toevoegen",addTitle:"Onderwerp toevoegen",addDesc:"Typ een onderwerp en bestudeer het via AI Tutor.",addPh:"bijv. AZ-900, Docker, Security+",askAnything:"Stel me iets over",thinking:"Aan het denken...",send:"Verzenden",s1:"Leg dit onderwerp eenvoudig uit",s2:"Geef me een quizvraag",s3:"Waar moet ik me op focussen?",clickNode:"Tik op een knoop voor meer info"},
+};
+
+let dark = false, lang = "nl", topic = "MD-102", activeTab = 0;
+let fcIdx = 0, fcFlipped = false;
+let quizIdx = 0, quizAns = null, quizScore = 0, quizDone = false;
+let activeNode = null, promptFilter = "All", expandedPrompt = null;
+let chatMessages = [];
+
+function tc(){return dark?TOPICS[topic].darkColor:TOPICS[topic].color}
+function tbg(){return dark?TOPICS[topic].darkBg:TOPICS[topic].bg}
+
+function applyTheme(){
+  document.body.classList.toggle("dark",dark);
+  document.getElementById("tLight").classList.toggle("on",!dark);
+  document.getElementById("tDark").classList.toggle("on",dark);
+  document.documentElement.style.setProperty("--tc",tc());
+  document.documentElement.style.setProperty("--tcbg",tbg());
+  document.getElementById("logoDot").style.background=tc();
+  renderFlow();
+}
+
+function toggleTheme(){dark=!dark;applyTheme();}
+function toggleLang(){
+  lang=lang==="nl"?"en":"nl";
+  document.getElementById("tNL").classList.toggle("on",lang==="nl");
+  document.getElementById("tEN").classList.toggle("on",lang==="en");
+  renderAll();
+}
+
+function setTopic(k){
+  topic=k;fcIdx=0;fcFlipped=false;
+  quizIdx=0;quizAns=null;quizScore=0;quizDone=false;
+  activeNode=null;chatMessages=[];
+  document.documentElement.style.setProperty("--tc",tc());
+  document.documentElement.style.setProperty("--tcbg",tbg());
+  document.getElementById("logoDot").style.background=tc();
+  renderAll();
+}
+
+function setTab(i){
+  activeTab=i;
+  document.querySelectorAll(".tab-btn").forEach((b,j)=>b.classList.toggle("active",j===i));
+  document.querySelectorAll(".section").forEach((s,j)=>s.classList.toggle("active",j===i));
+  const tb=document.getElementById("topicBar");
+  tb.style.display=i===5?"none":"flex";
+  if(i===1)renderFlow();
+}
+
+function renderAll(){
+  const tx=TX[lang];
+  document.getElementById("appSub").textContent=tx.appSub;
+  document.getElementById("mTitle").textContent=tx.addTitle;
+  document.getElementById("mSub").textContent=tx.addDesc;
+  document.getElementById("newTopicInput").placeholder=tx.addPh;
+  document.getElementById("mCancel").textContent=tx.cancel;
+  document.getElementById("mConfirm").textContent=tx.confirm;
+  renderTabs();
+  renderTopicBar();
+  renderSections();
+}
+
+function renderTabs(){
+  const tx=TX[lang];
+  const bar=document.getElementById("tabBar");
+  bar.innerHTML=tx.tabs.map((t,i)=>`<button class="tab-btn${i===activeTab?" active":""}" onclick="setTab(${i})">${t}</button>`).join("");
+}
+
+function renderTopicBar(){
+  const tx=TX[lang];
+  const bar=document.getElementById("topicBar");
+  bar.innerHTML=Object.keys(TOPICS).map(k=>{
+    const col=dark?TOPICS[k].darkColor:TOPICS[k].color;
+    const bg=dark?TOPICS[k].darkBg:TOPICS[k].bg;
+    const isActive=k===topic;
+    return `<button class="topic-btn${isActive?" active":""}" onclick="setTopic('${k}')" style="${isActive?`border:1.5px solid ${col};background:${bg};color:${col}`:`color:var(--muted)`}">
+      <span class="topic-icon" style="background:${col};color:${dark?"#000":"#fff"}">${TOPICS[k].icon}</span>${k}
+    </button>`;
+  }).join("")+`<button class="add-btn" onclick="openModal()">${TX[lang].addBtn}</button>`;
+}
+
+function renderSections(){
+  const tx=TX[lang];
+  const t=TOPICS[topic];
+  const col=tc();
+  const bg=tbg();
+  const wrap=document.getElementById("sections");
+  wrap.innerHTML="";
+
+  // HOME
+  const home=document.createElement("div");
+  home.className="section"+(activeTab===0?" active":"");
+  home.innerHTML=`<div class="card">
+    <div style="font-size:14px;font-weight:500;color:${col};margin-bottom:4px">${t.desc[lang]}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.flashcards.length} ${tx.cards} &middot; ${t.quiz.length} ${tx.questions} &middot; ${t.cheatsheet.length} ${tx.refs}</div>
+    <div class="home-grid">${TX[lang].tabs.slice(1).map((m,i)=>`<button class="home-btn" onclick="setTab(${i+1})">${m} →</button>`).join("")}</div>
+  </div>
+  <div class="label-sm">${tx.quickFacts}</div>
+  ${t.cheatsheet.slice(0,3).map(item=>`<div class="card"><div style="font-size:13px;font-weight:500;color:${col};margin-bottom:4px">${item.title[lang]}</div><div style="font-size:13px;color:var(--muted);line-height:1.6">${item.content[lang]}</div></div>`).join("")}`;
+  wrap.appendChild(home);
+
+  // FLOW
+  const flow=document.createElement("div");
+  flow.className="section"+(activeTab===1?" active":"");
+  flow.innerHTML=`<div style="padding:4px 14px 10px;font-size:11px;color:var(--muted)">${tx.clickNode}</div>
+  <div class="flow-wrap"><svg id="flowSvg" style="display:block;min-width:390px;min-height:330px" viewBox="0 0 390 330" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="flow-info" id="flowInfo"></div>
+  <div class="flow-hint" id="flowHint">${tx.clickNode}</div>`;
+  wrap.appendChild(flow);
+
+  // FLASHCARDS
+  const fc=document.createElement("div");
+  fc.className="section"+(activeTab===2?" active":"");
+  const card=t.flashcards[fcIdx];
+  fc.innerHTML=`<div style="padding:4px 14px 8px;font-size:12px;color:var(--muted)">${tx.cardOf(fcIdx+1,t.flashcards.length)}</div>
+  <div class="fc-card" id="fcCard" onclick="flipCard()" style="border-color:${fcFlipped?col:"var(--border)"}">
+    <div class="fc-label">${fcFlipped?tx.answer:tx.question}</div>
+    <div class="fc-text">${fcFlipped?card.a[lang]:card.q[lang]}</div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn btn-full" onclick="fcPrev()">${tx.prev}</button>
+    <button class="btn btn-accent btn-full" onclick="fcNext()">${tx.next}</button>
+  </div>
+  <div class="dots">${t.flashcards.map((_,i)=>`<button class="dot-sm${i===fcIdx?" active":""}" onclick="fcGo(${i})"></button>`).join("")}</div>`;
+  wrap.appendChild(fc);
+
+  // QUIZ
+  const quiz=document.createElement("div");
+  quiz.className="section"+(activeTab===3?" active":"");
+  if(quizDone){
+    quiz.innerHTML=`<div class="card" style="text-align:center">
+      <div class="quiz-score">${tx.correct(quizScore,t.quiz.length)}</div>
+      <div class="quiz-msg">${quizScore>=t.quiz.length*0.8?tx.great:tx.keep}</div>
+      <button class="btn btn-accent" onclick="resetQuiz()">${tx.retry}</button>
+    </div>`;
+  } else {
+    const q=t.quiz[quizIdx];
+    quiz.innerHTML=`<div style="padding:4px 14px 8px;font-size:12px;color:var(--muted)">${tx.query(quizIdx+1,t.quiz.length)}</div>
+    <div class="card" style="margin-bottom:8px"><div class="quiz-q">${q.q[lang]}</div></div>
+    ${q.options[lang].map((opt,i)=>{
+      let cls="opt";
+      if(quizAns!==null){if(i===q.answer)cls+=" correct";else if(i===quizAns)cls+=" wrong";}
+      return `<button class="opt${quizAns!==null?" opt":""}" style="${quizAns!==null&&i===q.answer?`background:${bg};color:${col};border:1.5px solid ${col}`:""}${quizAns!==null&&i===quizAns&&i!==q.answer?";background:"+(dark?"#1a0000":"#fef2f2")+";color:#dc2626;border:1.5px solid #dc2626":""}" onclick="answerQuiz(${i})">${opt}</button>`;
+    }).join("")}
+    ${quizAns!==null?`<div style="padding:4px 12px"><button class="btn btn-accent btn-full" onclick="nextQuiz()">${quizIdx+1>=t.quiz.length?tx.seeResults:tx.nextQ}</button></div>`:""}`;
+  }
+  wrap.appendChild(quiz);
+
+  // CHEAT SHEET
+  const cs=document.createElement("div");
+  cs.className="section"+(activeTab===4?" active":"");
+  cs.innerHTML=t.cheatsheet.map(item=>`<div class="card-accent" style="border-left:3px solid ${col}">
+    <div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${item.title[lang]}</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7">${item.content[lang]}</div>
+  </div>`).join("");
+  wrap.appendChild(cs);
+
+  // VIBE PROMPTS
+  const vibe=document.createElement("div");
+  vibe.className="section"+(activeTab===5?" active":"");
+  const allTags=["All",...new Set(PROMPTS.map(p=>p.tag))];
+  const filtered=promptFilter==="All"?PROMPTS:PROMPTS.filter(p=>p.tag===promptFilter);
+  vibe.innerHTML=`<div style="padding:8px 14px 10px">
+    <div style="font-size:13px;color:var(--muted);margin-bottom:10px">${TX[lang].vibeDesc}</div>
+    <div class="prompt-filter">${allTags.map(tag=>`<button class="filter-btn${tag===promptFilter?" active":""}" onclick="setPromptFilter('${tag}')">${tag}</button>`).join("")}</div>
+  </div>
+  ${filtered.map((p,i)=>{
+    const realIdx=PROMPTS.indexOf(p);
+    const open=expandedPrompt===realIdx;
+    return `<div class="prompt-item">
+      <div class="prompt-header" onclick="togglePrompt(${realIdx})">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="prompt-tag">${p.tag}</span>
+          <span class="prompt-title">${p.title[lang]}</span>
+        </div>
+        <span class="prompt-toggle">${open?"−":"+"}</span>
+      </div>
+      <div class="prompt-body${open?" open":""}">
+        <button class="copy-btn" id="copyBtn${realIdx}" onclick="copyPrompt(${realIdx})">${TX[lang].copyBtn}</button>
+        <div style="clear:both"></div>
+        <pre class="prompt-text">${p.text}</pre>
+      </div>
+    </div>`;
+  }).join("")}`;
+  wrap.appendChild(vibe);
+
+  // AI TUTOR
+  const ai=document.createElement("div");
+  ai.className="section"+(activeTab===6?" active":"");
+  ai.innerHTML=`<div class="chat-wrap">
+    <div class="chat-label">${TX[lang].askAnything} ${topic}</div>
+    <div class="chat-msgs" id="chatMsgs">
+      ${chatMessages.length===0?`<div style="text-align:center;padding:32px 0;color:var(--muted)">
+        <div style="font-size:12px;margin-bottom:16px">${TX[lang].askAnything} ${topic}</div>
+        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s1}')">${TX[lang].s1}</button>
+        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s2}')">${TX[lang].s2}</button>
+        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s3}')">${TX[lang].s3}</button>
+      </div>`:chatMessages.map(m=>`<div class="chat-msg ${m.role==="user"?"user":"ai"}">${m.content}</div>`).join("")}
+      ${chatLoading?`<div class="chat-msg ai">${TX[lang].thinking}</div>`:""}
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="btn btn-accent" onclick="sendChat()">${TX[lang].send}</button>
+    </div>
+  </div>`;
+  wrap.appendChild(ai);
+
+  if(activeTab===1)renderFlow();
+  const msgs=document.getElementById("chatMsgs");
+  if(msgs)msgs.scrollTop=msgs.scrollHeight;
+}
+
+function renderFlow(){
+  const svg=document.getElementById("flowSvg");
+  if(!svg)return;
+  const nodes=FLOW_NODES[topic]||[];
+  const edges=FLOW_EDGES[topic]||[];
+  const isDark=dark;
+  const lineColor=isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.12)";
+  const labelColor=isDark?"#444":"#bbb";
+  const arrowColor=isDark?"rgba(255,255,255,0.2)":"rgba(0,0,0,0.2)";
+  const W=96,H=40;
+
+  const getC=id=>{const n=nodes.find(x=>x.id===id);return n?{x:n.x+W/2,y:n.y+H/2}:{x:0,y:0}};
+
+  let html=`<defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="${arrowColor}"/></marker></defs>`;
+
+  edges.forEach(e=>{
+    const f=getC(e.from),t=getC(e.to);
+    const mx=(f.x+t.x)/2,my=(f.y+t.y)/2;
+    html+=`<line x1="${f.x}" y1="${f.y}" x2="${t.x}" y2="${t.y}" stroke="${lineColor}" stroke-width="1" marker-end="url(#arr)"/>`;
+    html+=`<text x="${mx}" y="${my-5}" text-anchor="middle" font-size="9" fill="${labelColor}" font-family="system-ui">${e.label}</text>`;
+  });
+
+  nodes.forEach(n=>{
+    const col=isDark?n.darkColor:n.color;
+    const bg=isDark?n.darkBg:n.bg;
+    const isActive=activeNode===n.id;
+    const stroke=isActive?col:(isDark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.09)");
+    const sw=isActive?1.5:0.5;
+    html+=`<g onclick="clickNode('${n.id}')" style="cursor:pointer">
+      <rect x="${n.x}" y="${n.y}" width="${W}" height="${H}" rx="8" fill="${bg}" stroke="${stroke}" stroke-width="${sw}"/>
+      <text x="${n.x+W/2}" y="${n.y+15}" text-anchor="middle" font-size="11" font-weight="500" fill="${col}" font-family="system-ui">${n.label}</text>
+      <text x="${n.x+W/2}" y="${n.y+29}" text-anchor="middle" font-size="9" fill="${col}88" font-family="system-ui">${isActive?"close":"tap for info"}</text>
+    </g>`;
+  });
+  svg.innerHTML=html;
+
+  const info=document.getElementById("flowInfo");
+  const hint=document.getElementById("flowHint");
+  if(!info||!hint)return;
+  if(activeNode){
+    const n=nodes.find(x=>x.id===activeNode);
+    if(n){
+      const col=isDark?n.darkColor:n.color;
+      const bg=isDark?n.darkBg:n.bg;
+      info.style.display="block";
+      info.style.border="1.5px solid "+col;
+      info.style.background=bg;
+      info.innerHTML=`<div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${n.label}</div><div style="font-size:13px;line-height:1.7;color:var(--text)">${n.desc[lang]}</div>`;
+      hint.style.display="none";
     }
+  } else {
+    info.style.display="none";
+    hint.style.display="block";
+    hint.textContent=TX[lang].clickNode;
+  }
+}
 
-    function copyPrompt(button) {
-        const promptText = button.closest('.prompt-box').querySelector('.prompt-text').innerText;
+function clickNode(id){
+  activeNode=activeNode===id?null:id;
+  renderFlow();
+}
 
-        navigator.clipboard.writeText(promptText).then(() => {
-            const oldText = button.innerText;
-            button.innerText = 'Gekopieerd!';
-            setTimeout(() => {
-                button.innerText = oldText;
-            }, 1200);
-        }).catch(() => {
-            const oldText = button.innerText;
-            button.innerText = 'Mislukt';
-            setTimeout(() => {
-                button.innerText = oldText;
-            }, 1200);
-        });
-    }
+function flipCard(){fcFlipped=!fcFlipped;renderSections();}
+function fcPrev(){if(fcIdx>0){fcIdx--;fcFlipped=false;renderSections();}}
+function fcNext(){fcIdx=(fcIdx+1)%TOPICS[topic].flashcards.length;fcFlipped=false;renderSections();}
+function fcGo(i){fcIdx=i;fcFlipped=false;renderSections();}
 
-    document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-            header.parentElement.classList.toggle('open');
-        });
-    });
+function answerQuiz(i){
+  if(quizAns!==null)return;
+  quizAns=i;
+  if(i===TOPICS[topic].quiz[quizIdx].answer)quizScore++;
+  renderSections();
+}
+function nextQuiz(){
+  if(quizIdx+1>=TOPICS[topic].quiz.length){quizDone=true;}
+  else{quizIdx++;quizAns=null;}
+  renderSections();
+}
+function resetQuiz(){quizIdx=0;quizAns=null;quizScore=0;quizDone=false;renderSections();}
 
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleTimeString('nl-NL');
-    }, 1000);
+function setPromptFilter(f){promptFilter=f;renderSections();}
+function togglePrompt(i){expandedPrompt=expandedPrompt===i?null:i;renderSections();}
+function copyPrompt(i){
+  navigator.clipboard.writeText(PROMPTS[i].text).then(()=>{
+    const btn=document.getElementById("copyBtn"+i);
+    if(btn){btn.textContent=TX[lang].copied;setTimeout(()=>{btn.textContent=TX[lang].copyBtn;},1500);}
+  });
+}
 
-    const firstAccordion = document.querySelector('.accordion');
-    if (firstAccordion) {
-        firstAccordion.classList.add('open');
-    }
+let chatLoading=false;
+function setSuggest(t){const inp=document.getElementById("chatInput");if(inp)inp.value=t;}
+async function sendChat(){
+  const inp=document.getElementById("chatInput");
+  if(!inp||!inp.value.trim()||chatLoading)return;
+  const msg=inp.value.trim();inp.value="";
+  chatMessages.push({role:"user",content:msg});
+  chatLoading=true;renderSections();
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:"You are a focused IT study tutor for "+topic+". Respond in "+(lang==="nl"?"Dutch":"English")+". Be concise, under 200 words.",messages:chatMessages})});
+    const data=await res.json();
+    const reply=data.content?data.content.map(b=>b.text||"").join(""):"Geen antwoord.";
+    chatMessages.push({role:"assistant",content:reply});
+  } catch{chatMessages.push({role:"assistant",content:"Verbindingsfout."});}
+  chatLoading=false;renderSections();
+}
+
+function openModal(){document.getElementById("addModal").classList.add("open");}
+function closeModal(){document.getElementById("addModal").classList.remove("open");}
+function confirmAdd(){
+  const val=document.getElementById("newTopicInput").value.trim();
+  if(val){alert(val+" "+(lang==="nl"?"toegevoegd! Gebruik AI Tutor om het te bestuderen.":"added! Use AI Tutor to study it."));closeModal();document.getElementById("newTopicInput").value="";}
+}
+
+document.getElementById("addModal").addEventListener("click",function(e){if(e.target===this)closeModal();});
+
+renderAll();
 </script>
 </body>
 </html>

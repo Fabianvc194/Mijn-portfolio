@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabian van Caspel | IT Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* THEMES */
+:root[data-theme="light"]{
+  --bg:#eef0f4;
+  --bg2:#e4e7ed;
+  --surface:#f5f6f8;
+  --surface2:#fff;
+  --border:#d1d5db;
+  --text:#111827;
+  --muted:#5a6270;
+  --accent:#2563eb;
+  --accent-light:#dbeafe;
+  --gold:#f59e0b;
+  --green:#16a34a;
+  --shadow:rgba(0,0,0,.09);
+  --hero-grad:radial-gradient(ellipse 80% 55% at 50% 0%,#c7d9f7 0%,transparent 70%);
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a;
+  --bg2:#0a1020;
+  --surface:#1e293b;
+  --surface2:#273549;
+  --border:#334155;
+  --text:#f1f5f9;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent-light:rgba(56,189,248,.12);
+  --gold:#fbbf24;
+  --green:#4ade80;
+  --shadow:rgba(0,0,0,.35);
+  --hero-grad:radial-gradient(ellipse 80% 55% at 50% 0%,#1e3a5f 0%,transparent 70%);
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+section{scroll-margin-top:80px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:1000;background:rgba(var(--nav-rgb,238,240,244),.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 5%;transition:background .3s,border-color .3s}
+[data-theme="dark"] nav{background:rgba(15,23,42,.88)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:700;font-size:1.1rem;letter-spacing:.5px;color:var(--text)}
+.logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:28px;align-items:center}
+nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#fff!important;padding:8px 18px;border-radius:8px;transition:opacity .2s!important}
+.nav-cta:hover{opacity:.85}
+
+/* THEME TOGGLE */
+.theme-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 20px;position:relative;overflow:hidden;background:var(--bg)}
+.hero::before{content:'';position:absolute;inset:0;background:var(--hero-grad);pointer-events:none;transition:background .3s}
+.hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.hero-eyebrow{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.78rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:28px;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+
+/* AVATAR */
+.avatar-wrap{position:relative;margin-bottom:28px}
+.avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--surface2);box-shadow:0 0 0 4px var(--accent-light),0 8px 24px var(--shadow);transition:box-shadow .3s}
+.avatar-wrap::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px dashed color-mix(in srgb,var(--accent) 40%,transparent);animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+h1{font-size:clamp(2rem,5vw,3.6rem);font-weight:700;line-height:1.15;margin-bottom:14px}
+h1 span{color:var(--accent)}
+.hero-sub{font-size:1.1rem;color:var(--muted);margin-bottom:28px}
+.status-badge{display:inline-flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);padding:10px 22px;border-radius:50px;font-size:.83rem;color:var(--muted);box-shadow:0 2px 8px var(--shadow);margin-bottom:40px;transition:background .3s,border-color .3s}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+#status-text{transition:opacity .4s}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.93rem;transition:all .2s;box-shadow:0 4px 16px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 45%,transparent)}
+.btn-secondary{background:var(--surface);color:var(--text);padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.93rem;border:1px solid var(--border);transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* SECTIONS */
+.section{padding:80px 5%}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;margin-bottom:44px;line-height:1.2}
+.alt-bg{background:var(--bg2);transition:background .3s}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.about-text p{color:var(--muted);margin-bottom:16px;font-size:1rem}
+.interest-cards{display:flex;flex-direction:column;gap:16px}
+.i-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 28px;transition:all .25s;position:relative;overflow:hidden}
+.i-card:hover{border-color:var(--accent);box-shadow:0 6px 24px var(--shadow);transform:translateY(-3px)}
+.i-card h3{font-size:1rem;font-weight:600;margin-bottom:6px}
+.i-card p{font-size:.88rem;color:var(--muted)}
+.i-card .icon{font-size:1.5rem;margin-bottom:10px}
+
+.coin{position:absolute;top:0;left:50%;width:18px;height:18px;background:var(--gold);border-radius:50%;border:2px solid #d97706;transform:translateX(-50%);opacity:0;pointer-events:none}
+.i-card:hover .coin{animation:coinJump .6s ease-out forwards}
+@keyframes coinJump{0%{transform:translate(-50%,0);opacity:0}30%{transform:translate(-50%,-50px);opacity:1}100%{transform:translate(-50%,-80px) rotateY(720deg);opacity:0}}
+
+.flash::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);pointer-events:none}
+.flash:hover::after{left:150%;transition:all .5s ease}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.t-item{position:relative;margin-bottom:36px}
+.t-item:last-child{margin-bottom:0}
+.t-dot{position:absolute;left:-29px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.t-link{text-decoration:none;color:inherit;display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;transition:all .25s}
+.t-link:hover{border-color:var(--accent);box-shadow:0 4px 18px var(--shadow)}
+.t-company{font-weight:700;font-size:1rem;margin-bottom:2px}
+.t-role{font-weight:500;color:var(--accent);font-size:.88rem}
+.t-date{font-size:.78rem;color:var(--muted);margin-bottom:8px;margin-top:2px}
+.t-desc{font-size:.88rem;color:var(--muted)}
+
+/* SKILLS */
+.skills-grid{display:flex;flex-wrap:wrap;gap:12px}
+.chip{background:var(--surface);border:1px solid var(--border);padding:10px 22px;border-radius:8px;font-size:.88rem;font-weight:500;transition:all .25s;cursor:default}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);transform:translateY(-2px);box-shadow:0 4px 14px var(--shadow)}
+
+/* EDU */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all .25s}
+.edu-card:hover{border-color:var(--accent);box-shadow:0 4px 16px var(--shadow)}
+.edu-card .badge{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;margin-bottom:10px;letter-spacing:.5px}
+.edu-card h3{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.edu-card p{font-size:.82rem;color:var(--muted)}
+
+/* TERMINAL */
+.terminal-window{background:#0d1117;border-radius:14px;border:1px solid #30363d;overflow:hidden;box-shadow:0 8px 36px rgba(0,0,0,.2)}
+.term-header{background:#161b22;padding:12px 16px;display:flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.term-label{margin-left:10px;font-size:.78rem;color:#8b949e;font-family:'Courier New',monospace}
+.term-body{padding:20px;height:320px;overflow-y:auto;color:#58a6ff;font-family:'Courier New',monospace;font-size:.83rem;position:relative}
+#matrix-canvas{position:absolute;top:0;left:0;width:100%;display:none;opacity:.25;pointer-events:none}
+.term-line{margin-bottom:4px;line-height:1.5}
+.term-green{color:#3fb950}
+.term-input-row{display:flex;gap:10px;align-items:center;padding:12px 20px;background:#0d1117;border-top:1px solid #21262d}
+.prompt{color:#58a6ff;font-family:'Courier New',monospace;font-size:.83rem;font-weight:bold;white-space:nowrap}
+#terminal-input{background:transparent;border:none;color:#e6edf3;outline:none;flex:1;font-family:'Courier New',monospace;font-size:.83rem}
+
+/* CONTACT */
+.contact-links{display:flex;gap:14px;flex-wrap:wrap}
+.contact-link{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);font-weight:500;font-size:.93rem;transition:all .25s}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);transform:translateY(-2px)}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 5%;text-align:center;color:var(--muted);font-size:.83rem;transition:background .3s}
+
+.fade-in{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr}
+  .timeline{padding-left:24px}
+  nav ul{gap:14px}
+  .nav-cta{display:none}
+}
+@media(max-width:560px){
+  nav ul li:not(:last-child){display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="Websites/hub.html" class="logo">IT_Dev<span>.</span></a>
+    <ul>
+      <li><a href="#about">Over mij</a></li>
+      <li><a href="#experience">Loopbaan</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Opleiding</a></li>
+      <li><a href="#terminal-section">Terminal</a></li>
+      <li><a href="mailto:fvc1994@live.nl" class="nav-cta">Contact</a></li>
+      <li><button class="theme-btn" id="theme-toggle" title="Toggle dark/light mode">🌙</button></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="avatar-wrap">
+      <img class="avatar" src="data:image/jpeg;base64,PLACEHOLDER" id="profile-img" alt="Fabian van Caspel">
+    </div>
+    <div class="hero-eyebrow">IT Specialist · Fotograaf · Gamer</div>
+    <h1>Hallo, ik ben<br><span>Fabian van Caspel</span></h1>
+    <p class="hero-sub">Ik bouw stabiele systemen, visualiseer data en ga voor kwaliteit — altijd.</p>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span id="status-text">System booting...</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#experience" class="btn-primary">Bekijk mijn loopbaan</a>
+      <a href="mailto:fvc1994@live.nl" class="btn-secondary">📧 Neem contact op</a>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="section alt-bg">
+  <div class="section-inner fade-in">
+    <div class="section-label">Over mij</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Wie is Fabian?</h2>
+        <p>Ik ben een IT-professional met een passie voor schone code en visuele esthetiek. Of ik nu een netwerk optimaliseer, een landschap fotografeer of een eindbaas versla: ik ga voor de hoogste kwaliteit.</p>
+        <p>Met een achtergrond in infrastructuur, BI en data-analyse sla ik bruggen tussen stabiele systemen en data-gedreven oplossingen. Analytisch, strategisch en altijd op zoek naar de optimale aanpak.</p>
+        <p style="color:var(--muted);font-size:.9rem">📍 Bocholtz, Limburg</p>
+      </div>
+      <div class="interest-cards">
+        <div class="i-card flash">
+          <div class="icon">📸</div>
+          <h3>Fotografie</h3>
+          <p>Mijn oog voor detail stopt niet bij de monitor. Ik leg de wereld vast door mijn lens, met focus op compositie en lichtinval.</p>
+        </div>
+        <div class="i-card" style="overflow:visible">
+          <div class="coin"></div>
+          <div class="icon">🎮</div>
+          <h3>Gaming</h3>
+          <p>Strategisch inzicht en snelle reflexen. Gaming houdt mijn analytisch denken scherp en mijn reactiesnelheid op peil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section">
+  <div class="section-inner fade-in">
+    <div class="section-label">Loopbaan</div>
+    <h2>Werkervaring</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <a href="https://www.cbs.nl" target="_blank" class="t-link">
+          <div class="t-company">CBS — Centraal Bureau voor de Statistiek</div>
+          <div class="t-role">IT-Support Engineer</div>
+          <div class="t-date">2024 – Heden</div>
+          <div class="t-desc">Ondersteuning van complexe IT-omgevingen en data-optimalisatie binnen een van Nederland's grootste dataknooppunten.</div>
+        </a>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <a href="https://www.vodafoneziggo.nl" target="_blank" class="t-link">
+          <div class="t-company">VodafoneZiggo</div>
+          <div class="t-role">24/7 Technical Engineer</div>
+          <div class="t-date">2021 – 2024</div>
+          <div class="t-desc">Monitoren van kritieke infrastructuren in een dynamische, 24/7 omgeving met hoge beschikbaarheidseisen.</div>
+        </a>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <a href="https://www.data4.nl" target="_blank" class="t-link">
+          <div class="t-company">Data4</div>
+          <div class="t-role">ICT-Consultant</div>
+          <div class="t-date">2021</div>
+          <div class="t-desc">Advies en beheer van diverse enterprise ICT-omgevingen voor uiteenlopende klanten.</div>
+        </a>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <a href="https://www.teqoia.com" target="_blank" class="t-link">
+          <div class="t-company">Teqoia</div>
+          <div class="t-role">ICT-Consultant</div>
+          <div class="t-date">2020</div>
+          <div class="t-desc">Detachering binnen high-tech ICT-projecten voor diverse opdrachtgevers.</div>
+        </a>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <a href="https://www.politie.nl/onderwerpen/innovation-lab.html" target="_blank" class="t-link">
+          <div class="t-company">Politie Innovatielab</div>
+          <div class="t-role">BI Specialist (Stage)</div>
+          <div class="t-date">2019</div>
+          <div class="t-desc">Data-analyse en visualisatie binnen het iLab van de Nederlandse politie.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="section alt-bg">
+  <div class="section-inner fade-in">
+    <div class="section-label">Tech Stack</div>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="chip">🗄️ SQL</div>
+      <div class="chip">📊 Power BI</div>
+      <div class="chip">🐍 Python</div>
+      <div class="chip">🐧 Linux</div>
+      <div class="chip">🌐 Networking</div>
+      <div class="chip">🐚 PowerShell</div>
+      <div class="chip">💻 VMware / VirtualBox</div>
+      <div class="chip">🏗️ Data Warehousing</div>
+      <div class="chip">📈 Business Intelligence</div>
+      <div class="chip">🔧 IT Infrastructure</div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="section">
+  <div class="section-inner fade-in">
+    <div class="section-label">Opleiding & Certificeringen</div>
+    <h2>Achtergrond</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="badge">HBO</div>
+        <h3>ICT — Business Intelligence</h3>
+        <p>2018 – 2021</p>
+      </div>
+      <div class="edu-card">
+        <div class="badge">MBO 4</div>
+        <h3>Netwerkbeheer</h3>
+        <p>2015 – 2018</p>
+      </div>
+      <div class="edu-card">
+        <div class="badge">MBO 3</div>
+        <h3>ICT Medewerker Beheer</h3>
+        <p>2013 – 2015</p>
+      </div>
+      <div class="edu-card">
+        <div class="badge">Certificering</div>
+        <h3>Microsoft Office Specialist (MOS)</h3>
+        <p>Microsoft gecertificeerd</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="terminal-section" class="section alt-bg">
+  <div class="section-inner fade-in">
+    <div class="section-label">Interactief</div>
+    <h2>System Terminal</h2>
+    <div class="terminal-window">
+      <div class="term-header">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="term-label">guest — visitor@fabian-terminal</span>
+      </div>
+      <div class="term-body" id="terminal-content">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="terminal-output">
+          <div class="term-line term-green">Systeem gereed. Typ <span style="color:#58a6ff">'help'</span> voor opties.</div>
+        </div>
+      </div>
+      <div class="term-input-row">
+        <span class="prompt">visitor@fabian:~$</span>
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="typ een commando...">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="section-inner fade-in">
+    <div class="section-label">Contact</div>
+    <h2>Laten we in contact komen</h2>
+    <p style="color:var(--muted);margin-bottom:32px;font-size:1rem">Heb je een vraag, een project of gewoon zin om te netwerken? Stuur gerust een bericht.</p>
+    <div class="contact-links">
+      <a href="mailto:fvc1994@live.nl" class="contact-link">📧 fvc1994@live.nl</a>
+      <a href="https://github.com/Fabianvc194" target="_blank" class="contact-link">🐙 GitHub</a>
+      <a href="https://www.linkedin.com/in/fabian-van-caspel-14785a108/" target="_blank" class="contact-link">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Fabian van Caspel — Gebouwd met ☕ en te veel browser-tabs.</p>
+</footer>
+
+<script>
+// Load profile photo from uploaded image
+(function(){
+  const img = document.getElementById('profile-img');
+  // Use a canvas placeholder with initials since we can't embed the actual uploaded file
+  const c = document.createElement('canvas');
+  c.width = 220; c.height = 220;
+  const ctx = c.getContext('2d');
+  // gradient bg
+  const g = ctx.createRadialGradient(110,90,10,110,110,110);
+  g.addColorStop(0,'#b0c4de'); g.addColorStop(1,'#7a9cbf');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(110,110,110,0,Math.PI*2); ctx.fill();
+  // silhouette head
+  ctx.fillStyle='rgba(255,255,255,0.55)';
+  ctx.beginPath(); ctx.arc(110,88,46,0,Math.PI*2); ctx.fill();
+  // silhouette body
+  ctx.beginPath(); ctx.ellipse(110,200,72,60,0,0,Math.PI*2); ctx.fill();
+  // initials
+  ctx.fillStyle='rgba(37,99,235,0.85)';
+  ctx.font='bold 52px Inter,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('FvC',110,110);
+  img.src = c.toDataURL();
+
+  // Try to load actual photo if user re-uploads
+  img.onerror = () => { img.src = c.toDataURL(); };
+})();
+
+// Dark/light toggle
+const html = document.documentElement;
+const btn = document.getElementById('theme-toggle');
+let dark = false;
+btn.addEventListener('click', () => {
+  dark = !dark;
+  html.setAttribute('data-theme', dark ? 'dark' : 'light');
+  btn.textContent = dark ? '☀️' : '🌙';
+});
+
+// Status rotator
+const statuses = [
+  "Working with a view #Bocholtz 🏔️","Debugging production like a boss 😎","Building dashboards @CBS #DataViz 📊",
+  "Vibe coding 🤖✨","Blue shell incoming! 🐢 #MarioKart8","Entering the Matrix... 🌃",
+  "SELECT productivity FROM human WHERE coffee <= 0 🔍","Automating the boring stuff with PowerShell 🐚",
+  "Experimenting in the Linux Kernel 🐧","Tweaking the Datawarehouse... 🏗️","SQL Query optimaliseren... 🔥",
+  "Koffie-level: Kritiek laag ☕ #SendHelp","LinkedIn Learning binge-watch 🎓"
+];
+let q=[];
+function shuffle(){q=[...statuses].sort(()=>Math.random()-.5)}
+function rotate(){
+  const el=document.getElementById('status-text');
+  if(!el)return;
+  if(!q.length)shuffle();
+  el.style.opacity=0;
+  setTimeout(()=>{el.textContent=q.shift();el.style.opacity=1},400);
+}
+shuffle();rotate();setInterval(rotate,8000);
+
+// Fade in observer
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// Terminal
+const tInput=document.getElementById('terminal-input');
+const tOutput=document.getElementById('terminal-output');
+const tContent=document.getElementById('terminal-content');
+const canvas=document.getElementById('matrix-canvas');
+const ctx2=canvas.getContext('2d');
+let matrixActive=false,mInt,drops=[];
+
+async function typeLines(lines){
+  if(typeof lines==='string')lines=[lines];
+  for(let text of lines){
+    const d=document.createElement('div');
+    d.className='term-line';d.style.color='#e6edf3';
+    tOutput.appendChild(d);
+    for(let c of text){d.textContent+=c;await new Promise(r=>setTimeout(r,8))}
+    tContent.scrollTop=tContent.scrollHeight;
+  }
+}
+
+tInput.addEventListener('keydown',async function(e){
+  if(e.key!=='Enter')return;
+  const cmd=this.value.toLowerCase().trim();
+  const ul=document.createElement('div');
+  ul.className='term-line';
+  ul.innerHTML=`<span style="color:#58a6ff">visitor@fabian:~$</span> <span style="color:#e6edf3">${this.value}</span>`;
+  tOutput.appendChild(ul);
+  this.value='';
+  switch(cmd){
+    case 'help':
+      await typeLines(['Beschikbare commando\'s:','  • whoami  — wie ben ik','  • cv      — loopbaan & opleiding','  • skills  — tech stack','  • matrix  — toggle matrix effect','  • clear   — terminal wissen']);break;
+    case 'whoami':
+      await typeLines(['NAAM    : Fabian van Caspel','LOCATIE : Bocholtz, Limburg, NL','PROFIEL : IT Specialist | Fotograaf | Gamer',' ','Slaat bruggen tussen stabiele infra en data-driven BI.','Analytisch, strategisch en altijd op zoek naar de beste aanpak.']);break;
+    case 'cv':
+      await typeLines(['WERKERVARING:','  CBS            — IT-Support Engineer      (2024–Heden)','  VodafoneZiggo  — 24/7 Technical Engineer  (2021–2024)','  Data4          — ICT-Consultant           (2021)','  Teqoia         — ICT-Consultant           (2020)','  Politie iLab   — BI Specialist Stage      (2019)',' ','OPLEIDING:','  HBO ICT BI           (2018–2021)','  MBO 4 Netwerkbeheer  (2015–2018)','  MBO 3 ICT Beheer     (2013–2015)','  MOS Certificaten']);break;
+    case 'skills':
+      await typeLines(['TECH STACK:','  SQL · Power BI · Python · Linux','  Networking · PowerShell · VMware','  Data Warehousing · Business Intelligence']);break;
+    case 'matrix':
+      matrixActive?stopMatrix():startMatrix();break;
+    case 'clear':
+      tOutput.innerHTML='';stopMatrix();break;
+    default:
+      await typeLines([`Onbekend commando: '${cmd}'. Typ 'help' voor opties.`]);
+  }
+});
+
+function startMatrix(){
+  matrixActive=true;canvas.style.display='block';
+  canvas.width=tContent.offsetWidth;canvas.height=Math.max(tContent.scrollHeight,320);
+  const cols=Math.floor(canvas.width/18);
+  drops=Array(cols).fill(1);
+  mInt=setInterval(()=>{
+    ctx2.fillStyle='rgba(13,17,23,.05)';ctx2.fillRect(0,0,canvas.width,canvas.height);
+    ctx2.fillStyle='#3fb950';ctx2.font='14px monospace';
+    drops.forEach((y,i)=>{
+      ctx2.fillText(String.fromCharCode(Math.random()*128),i*18,y*18);
+      if(y*18>canvas.height&&Math.random()>.975)drops[i]=0;
+      drops[i]++;
+    });
+  },33);
+}
+function stopMatrix(){
+  matrixActive=false;clearInterval(mInt);
+  ctx2.clearRect(0,0,canvas.width,canvas.height);
+  canvas.style.display='none';
+}
+</script>
+</body>
+</html>

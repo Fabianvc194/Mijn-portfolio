@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HUMANITY_OS v2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   HUMANITY_OS v2.0 — Core Stylesheet
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-track{background:#020408;}
+::-webkit-scrollbar-thumb{background:#00f5ff33;}
+
+html,body{height:100%;overflow:hidden;}
+body{
+  background:#020408;
+  color:#e8f4f8;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:400;
+  position:relative;
+}
+
+/* ── FONT SHORTHANDS ──────────────────────────────────────── */
+.mn{font-family:'Share Tech Mono',monospace;}
+.sr{font-family:'Cormorant Garamond',serif;}
+.dp{font-family:'Rajdhani',sans-serif;}
+
+/* ── KEYFRAMES ────────────────────────────────────────────── */
+@keyframes grain{
+  0%{background-position:0 0}20%{background-position:-30px 15px}
+  40%{background-position:25px -20px}60%{background-position:-15px 30px}
+  80%{background-position:40px -10px}100%{background-position:-20px 25px}
+}
+@keyframes scan{
+  0%{top:0%;opacity:0}5%{opacity:.22}95%{opacity:.22}100%{top:100%;opacity:0}
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(15px,-10px) scale(1.04)}
+  66%{transform:translate(-10px,14px) scale(.97)}
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(1.4)}
+}
+@keyframes dataFall{
+  0%{transform:translateY(-100vh);opacity:0}
+  10%{opacity:.3}90%{opacity:.3}
+  100%{transform:translateY(100vh);opacity:0}
+}
+@keyframes gc{
+  0%,80%,100%{transform:translate(0);opacity:0}
+  81%{transform:translate(-5px,1px);opacity:.55}
+  83%{transform:translate(5px,-1px);opacity:.55}
+  85%{transform:translate(0);opacity:0}
+}
+@keyframes gm{
+  0%,83%,100%{transform:translate(0);opacity:0}
+  84%{transform:translate(5px,-1px);opacity:.55}
+  86%{transform:translate(-5px,1px);opacity:.55}
+  88%{transform:translate(0);opacity:0}
+}
+@keyframes hg1{
+  0%,88%,100%{transform:translate(0);opacity:0}
+  89%{transform:translate(-3px,1px);opacity:.45}
+  91%{transform:translate(3px,-1px);opacity:.45}
+  93%{transform:translate(0);opacity:0}
+}
+@keyframes hg2{
+  0%,91%,100%{transform:translate(0);opacity:0}
+  92%{transform:translate(3px,-1px);opacity:.45}
+  94%{transform:translate(-3px,1px);opacity:.45}
+  96%{transform:translate(0);opacity:0}
+}
+@keyframes loadingPct{
+  0%{width:35%}50%{width:78%}100%{width:62%}
+}
+
+/* ── SCROLL REVEALS ───────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rl{opacity:0;transform:translateX(-38px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rr{opacity:0;transform:translateX(38px);transition:opacity .85s .12s cubic-bezier(.16,1,.3,1),transform .85s .12s cubic-bezier(.16,1,.3,1);}
+.rv.vis,.rl.vis,.rr.vis{opacity:1;transform:translate(0);}
+
+/* ── GLITCH EFFECTS ───────────────────────────────────────── */
+.gx{position:relative;display:inline-block;}
+.gx::before{content:attr(data-t);position:absolute;inset:0;color:#00f5ff;clip-path:polygon(0 25%,100% 25%,100% 45%,0 45%);animation:gc 4.2s infinite;opacity:.5;}
+.gx::after{content:attr(data-t);position:absolute;inset:0;color:#ff00aa;clip-path:polygon(0 60%,100% 60%,100% 76%,0 76%);animation:gm 4.2s infinite;opacity:.5;}
+.hgx{position:relative;display:inline-block;}
+.hgx::before{content:attr(data-t);position:absolute;inset:0;color:#00f5ff;clip-path:polygon(0 27%,100% 27%,100% 46%,0 46%);animation:hg1 5s infinite;opacity:.42;}
+.hgx::after{content:attr(data-t);position:absolute;inset:0;color:#ff00aa;clip-path:polygon(0 61%,100% 61%,100% 77%,0 77%);animation:hg2 5s infinite;opacity:.42;}
+
+/* ── SCANLINES ────────────────────────────────────────────── */
+.scanlines{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,34,68,.013) 3px,rgba(255,34,68,.013) 4px);}
+
+/* ── GRAIN OVERLAY ────────────────────────────────────────── */
+.grain::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px;opacity:.04;animation:grain .15s steps(1) infinite;
+}
+
+/* ── LAYOUT ───────────────────────────────────────────────── */
+#app{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  position:relative;
+}
+
+#scroll-progress{
+  position:fixed;top:0;left:0;z-index:1000;height:2px;width:0%;
+  background:linear-gradient(90deg,#2dd4bf,#00f5ff,#ff00aa);
+  transition:width .06s;pointer-events:none;
+}
+
+/* ── NAV ──────────────────────────────────────────────────── */
+nav{
+  flex-shrink:0;z-index:200;
+  padding:.9rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  background:rgba(2,8,16,.75);
+  border-bottom:0.5px solid rgba(255,255,255,.07);
+  position:relative;
+}
+.nav-brand{
+  background:none;border:none;padding:0;
+  font-family:'Share Tech Mono',monospace;font-size:12px;
+  color:#00f5ff;letter-spacing:3px;cursor:pointer;
+}
+.nav-brand .slash{color:#ff00aa;}
+.nav-links{display:flex;gap:1.8rem;align-items:center;}
+.nav-link{
+  background:none;border:none;padding:0;
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:3px;text-transform:uppercase;cursor:pointer;
+  color:rgba(232,244,248,.4);transition:color .2s;
+}
+.nav-link:hover,.nav-link.active{color:#e8f4f8;}
+.nav-right{display:flex;align-items:center;gap:.55rem;}
+.btn-ui{
+  font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;
+  color:rgba(232,244,248,.38);background:rgba(232,244,248,.04);
+  border:0.5px solid rgba(232,244,248,.09);
+  padding:.28rem .6rem;cursor:pointer;text-transform:uppercase;transition:all .2s;
+}
+.btn-ui:hover{color:#00f5ff;border-color:rgba(0,245,255,.23);}
+.btn-ham{display:none;}
+
+/* ── MOBILE MENU ──────────────────────────────────────────── */
+#mobile-menu{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(2,4,8,.97);backdrop-filter:blur(28px);
+  flex-direction:column;align-items:center;justify-content:center;gap:1.7rem;
+}
+#mobile-menu.open{display:flex;}
+.mob-nav-link{
+  background:none;border:none;border-bottom:0.5px solid rgba(232,244,248,.07);
+  padding:.45rem 0;
+  font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:5px;
+  color:rgba(232,244,248,.42);text-transform:uppercase;cursor:pointer;
+  width:60%;text-align:center;transition:color .2s;
+}
+.mob-nav-link:hover{color:#e8f4f8;}
+.mob-close{
+  position:absolute;top:1rem;right:1.2rem;
+  background:none;border:none;
+  font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:rgba(232,244,248,.35);cursor:pointer;letter-spacing:2px;
+}
+.mob-brand{
+  font-family:'Share Tech Mono',monospace;font-size:10px;color:#00f5ff;letter-spacing:4px;margin-bottom:.8rem;
+}
+
+/* ── MAIN SCROLL CONTAINER ────────────────────────────────── */
+main{flex:1;overflow-y:auto;position:relative;}
+
+/* ── SECTION GRID LAYOUT ──────────────────────────────────── */
+.section-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3.5rem;
+  max-width:1240px;
+  margin:0 auto;
+  padding:9.5rem 3rem 5.5rem;
+  align-items:center;
+}
+
+/* ── SECTION LABEL ────────────────────────────────────────── */
+.slbl{
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;letter-spacing:5px;text-transform:uppercase;
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:.65rem;
+}
+.slbl-line{display:block;width:22px;height:1px;}
+
+/* ── SECTION TITLE ────────────────────────────────────────── */
+.section-title{
+  font-size:clamp(2rem,4.2vw,4.8rem);
+  font-weight:700;text-transform:uppercase;
+  letter-spacing:-1px;line-height:.92;
+  margin-bottom:1.2rem;
+}
+.section-title span{display:block;}
+
+/* ── ERA LABEL ────────────────────────────────────────────── */
+.era-lbl{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:.5rem;
+}
+
+/* ── PROSE ────────────────────────────────────────────────── */
+.prose{
+  font-size:.91rem;line-height:1.85;
+  color:rgba(232,244,248,.63);font-weight:300;margin-bottom:1.2rem;
+}
+.prose-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;margin-bottom:1.2rem;line-height:1.85;
+  color:rgba(232,244,248,.63);font-weight:300;
+}
+
+/* ── FEATURE LIST ─────────────────────────────────────────── */
+.feat-list{padding:0;margin-bottom:1.3rem;display:flex;flex-direction:column;gap:.65rem;list-style:none;}
+.feat-item{
+  display:flex;align-items:flex-start;gap:.75rem;
+  padding:.85rem 1rem;
+  border:0.5px solid;
+  transition:all .25s;cursor:default;
+}
+.feat-item:hover{transform:translateX(4px);}
+.feat-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;min-width:34px;padding-top:3px;
+}
+.feat-title{display:block;font-size:.82rem;font-weight:700;text-transform:uppercase;margin-bottom:.24rem;}
+.feat-desc{font-size:.78rem;color:rgba(232,244,248,.56);line-height:1.62;font-weight:300;}
+
+/* ── STATS ROW ────────────────────────────────────────────── */
+.stats-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.7rem;}
+.stat-val{
+  font-family:'Share Tech Mono',monospace;
+  font-size:1.6rem;line-height:1;display:block;
+}
+.stat-lbl{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(232,244,248,.3);display:block;
+}
+
+/* ── CTA BUTTON ───────────────────────────────────────────── */
+.cta-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.78rem 1.9rem;
+  font-family:'Share Tech Mono',monospace;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;
+  border:1px solid;
+  clip-path:polygon(9px 0%,100% 0%,calc(100% - 9px) 100%,0% 100%);
+  transition:all .25s;cursor:pointer;font-weight:600;
+}
+
+/* ── META TEXT ────────────────────────────────────────────── */
+.meta-txt{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:2px;
+  text-transform:uppercase;margin-top:1rem;line-height:1.7;
+}
+
+/* ── PHOTO FRAME ──────────────────────────────────────────── */
+.photo-frame{
+  overflow:hidden;position:relative;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+.photo-frame img{
+  width:100%;height:100%;object-fit:cover;object-position:center 25%;
+  display:block;transition:transform .58s cubic-bezier(.16,1,.3,1);
+}
+.photo-frame:hover img{transform:scale(1.05);}
+
+/* ══════════════════════════════════════════════════════════
+   PHOTO CAPTION / IMAGE DIRECTIVE BLOCK
+   Verschijnt direct onder de foto in elke sectie
+   ══════════════════════════════════════════════════════════ */
+.img-caption{
+  margin-top:.75rem;
+  padding:.85rem 1rem;
+  border-left:2px solid;
+  background:rgba(2,4,8,.55);
+  backdrop-filter:blur(8px);
+}
+.img-caption .cap-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:7px;letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:.35rem;opacity:.55;
+}
+.img-caption .cap-text{
+  font-size:.78rem;color:rgba(232,244,248,.52);
+  line-height:1.65;font-weight:300;
+}
+
+/* ── DATA CORRUPT PLACEHOLDER ─────────────────────────────── */
+.data-corrupt{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.75rem;padding:1.5rem;position:relative;overflow:hidden;
+  background:rgba(2,4,8,.95);
+}
+.corrupt-label,.corrupt-sub{
+  font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:4px;
+}
+.corrupt-bar-wrap{width:65%;height:1px;background:rgba(255,255,255,.06);}
+.corrupt-bar{height:100%;animation:loadingPct 3s ease-in-out infinite alternate;}
+.corrupt-pct{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;}
+
+/* ── NEURAL CARDS ─────────────────────────────────────────── */
+.ncard{
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  padding:1.2rem 1.6rem;margin-bottom:.9rem;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
+  transition:all .25s;cursor:default;position:relative;
+}
+.ncard-corner{position:absolute;top:0;right:0;width:12px;height:12px;}
+.ncard-tag{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;margin-bottom:.4rem;}
+.ncard-title{font-size:.9rem;font-weight:700;text-transform:uppercase;margin-bottom:.3rem;}
+.ncard-desc{font-size:.78rem;color:rgba(232,244,248,.56);line-height:1.68;font-weight:300;}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  background:#020408;display:flex;align-items:center;justify-content:center;
+}
+.hero-bg{
+  position:absolute;inset:-5%;
+  background-size:cover;background-position:center top;
+  background-image: url('wilmer-martinez-Lme2Ye2jVo8-unsplash.jpg');
+  /* ════════════════════════════════════════════════════════
+     HERO ACHTERGROND FOTO
+     Optie A — base64 JPEG:
+       background-image: url('data:image/jpeg;base64,/9j/4AAQ...');
+     Optie B — lokaal pad of URL:
+       background-image: url('./images/hero.jpg');
+       background-image: url('https://example.com/hero.jpg');
+     ════════════════════════════════════════════════════════ */
+}
+.hero-vignette{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(2,4,8,.5) 0%,rgba(2,4,8,.12) 28%,rgba(2,4,8,.18) 62%,rgba(2,4,8,.93) 100%);
+}
+.hero-color{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,120,0,.04) 0%,transparent 42%,rgba(0,245,255,.05) 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,245,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.03) 1px,transparent 1px);
+  background-size:62px 62px;
+  mask-image:radial-gradient(ellipse 78% 68% at 50% 50%,black 28%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 68% at 50% 50%,black 28%,transparent 78%);
+}
+.hero-scan{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#00f5ff,transparent);
+  animation:scan 5s linear infinite;z-index:3;pointer-events:none;
+}
+.hero-content{
+  position:relative;z-index:4;text-align:center;
+  max-width:860px;padding:0 2rem;
+}
+.hero-boot{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:5px;color:#00f5ff;
+  text-transform:uppercase;margin-bottom:.65rem;
+  animation:fadeUp .8s .2s both;
+}
+.hero-link{
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;letter-spacing:3px;color:rgba(0,245,255,.52);
+  text-transform:uppercase;margin-bottom:1.5rem;
+  animation:fadeUp .8s .4s both;
+}
+.hero-h1{
+  font-size:clamp(3.5rem,10.5vw,9rem);
+  font-weight:700;text-transform:uppercase;line-height:.88;
+  letter-spacing:-3px;margin-bottom:1.7rem;
+  animation:fadeUp .8s .6s both;
+}
+.hero-h1 .t1{display:block;color:#e8f4f8;text-shadow:0 0 45px rgba(0,245,255,.22);}
+.hero-h1 .t2{display:block;color:transparent;-webkit-text-stroke:1px rgba(0,245,255,.58);}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;color:rgba(232,244,248,.52);font-weight:300;
+  max-width:440px;margin:0 auto 2rem;line-height:1.75;
+  animation:fadeUp .8s .8s both;
+}
+.hero-cta{animation:fadeUp .8s 1s both;}
+.hero-stats{
+  display:flex;justify-content:center;gap:3.2rem;
+  margin-top:2.3rem;flex-wrap:wrap;
+  animation:fadeUp .8s 1.2s both;
+}
+.hero-stat-val{
+  font-family:'Share Tech Mono',monospace;font-size:1.5rem;
+  color:#00f5ff;display:block;text-shadow:0 0 16px rgba(0,245,255,.5);
+}
+.hero-stat-lbl{
+  font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;
+  color:rgba(232,244,248,.28);text-transform:uppercase;display:block;margin-top:.22rem;
+}
+
+/* ── UTOPIA ───────────────────────────────────────────────── */
+#utopia{min-height:100vh;position:relative;overflow:hidden;background:#0a1a0f;}
+.utopia-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:brightness(.18) saturate(1.35);
+  /* ════════════════════════════════════════════════════════
+     UTOPIA ACHTERGROND FOTO (subtiele achtergrond toning)
+     Optie A — base64 JPEG:
+       background-image: url('data:image/jpeg;base64,/9j/4AAQ...');
+     Optie B — URL of lokaal pad:
+       background-image: url('./images/utopia-bg.jpg');
+     ════════════════════════════════════════════════════════ */
+}
+.utopia-overlay{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 65% 52% at 78% 18%,rgba(45,212,191,.1) 0%,transparent 52%),rgba(10,26,15,.88);
+}
+.utopia-orb1{position:absolute;width:340px;height:340px;border-radius:50%;background:#2dd4bf;filter:blur(65px);opacity:.1;top:-8%;right:-4%;animation:drift 14s ease-in-out infinite;pointer-events:none;}
+.utopia-orb2{position:absolute;width:240px;height:240px;border-radius:50%;background:#a3e635;filter:blur(65px);opacity:.1;bottom:6%;left:-5%;animation:drift 16s ease-in-out infinite;animation-delay:-5s;pointer-events:none;}
+.utopia-orb3{position:absolute;width:160px;height:160px;border-radius:50%;background:#06b6d4;filter:blur(65px);opacity:.1;top:38%;left:25%;animation:drift 18s ease-in-out infinite;animation-delay:-10s;pointer-events:none;}
+
+/* ── DYSTOPIA ─────────────────────────────────────────────── */
+#dystopia{min-height:100vh;position:relative;overflow:hidden;background:#060408;}
+.dystopia-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:brightness(.22) saturate(1.25);
+  /* ════════════════════════════════════════════════════════
+     DYSTOPIA ACHTERGROND FOTO
+     Optie A — base64 JPEG:
+       background-image: url('data:image/jpeg;base64,/9j/4AAQ...');
+     Optie B — URL of lokaal pad:
+       background-image: url('./images/dystopia-bg.jpg');
+     ════════════════════════════════════════════════════════ */
+}
+.dystopia-overlay{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% -5%,rgba(255,34,68,.12) 0%,transparent 42%),rgba(6,4,8,.87);
+}
+.dystopia-scan{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,34,68,.25),transparent);
+  animation:scan 6s linear infinite;pointer-events:none;
+}
+
+/* ── FUTURE ───────────────────────────────────────────────── */
+#future{min-height:100vh;position:relative;overflow:hidden;background:#060c14;}
+.future-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:brightness(.22) saturate(1.5);
+  /* ════════════════════════════════════════════════════════
+     FUTURE ACHTERGROND FOTO
+     Optie A — base64 JPEG:
+       background-image: url('data:image/jpeg;base64,/9j/4AAQ...');
+     Optie B — URL of lokaal pad:
+       background-image: url('./images/future-bg.jpg');
+     ════════════════════════════════════════════════════════ */
+}
+.future-overlay{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 72% 42%,rgba(0,245,255,.09) 0%,transparent 48%),rgba(6,12,20,.88);
+}
+.data-rain{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.rain-drop{position:absolute;width:1px;}
+
+/* ── CYBER ────────────────────────────────────────────────── */
+#cyber{min-height:100vh;position:relative;overflow:hidden;background:#020408;}
+.cyber-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center top;
+  filter:brightness(.18) saturate(1.9) hue-rotate(-15deg);
+  /* ════════════════════════════════════════════════════════
+     CYBERPUNK ACHTERGROND FOTO
+     Optie A — base64 JPEG:
+       background-image: url('data:image/jpeg;base64,/9j/4AAQ...');
+     Optie B — URL of lokaal pad:
+       background-image: url('./images/cyber-bg.jpg');
+     ════════════════════════════════════════════════════════ */
+}
+.cyber-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,0,170,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,170,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(ellipse 78% 68% at 28% 50%,black 26%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 68% at 28% 50%,black 26%,transparent 70%);
+}
+.cyber-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 26% 48%,rgba(255,0,170,.1) 0%,transparent 46%);
+}
+.cyber-scan{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,0,170,.25),transparent);
+  animation:scan 6s linear infinite;pointer-events:none;
+}
+
+/* ── GALLERY ──────────────────────────────────────────────── */
+#gallery{
+  background:rgba(2,4,8,.98);
+  border-top:0.5px solid rgba(255,255,255,.05);
+  border-bottom:0.5px solid rgba(255,255,255,.05);
+  padding:5.5rem 3rem;
+}
+.gallery-label{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:5px;color:rgba(232,244,248,.2);
+  text-align:center;margin-bottom:2.5rem;text-transform:uppercase;
+}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:.85rem;max-width:1200px;margin:0 auto;
+}
+.gallery-item{
+  position:relative;height:268px;overflow:hidden;cursor:pointer;
+  border:0.5px solid rgba(255,255,255,0);transition:border-color .25s;
+}
+.gallery-item img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .52s cubic-bezier(.16,1,.3,1);
+}
+.gallery-item:hover img{transform:scale(1.07);}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(2,4,8,.88) 0%,transparent 52%);
+  opacity:.85;pointer-events:none;
+}
+.gallery-meta{
+  position:absolute;bottom:0;left:0;right:0;padding:.85rem;z-index:2;
+}
+.gallery-tag{
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:.18rem;
+}
+.gallery-name{
+  font-size:.85rem;font-weight:700;text-transform:uppercase;
+  line-height:1.1;letter-spacing:-.2px;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+footer{
+  background:rgba(2,4,8,.99);
+  border-top:0.5px solid rgba(255,255,255,.06);
+  padding:4.5rem 3rem 2.5rem;
+}
+.footer-grid{
+  max-width:1240px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:3.8rem;margin-bottom:2.2rem;
+}
+.footer-brand-lbl{
+  font-family:'Share Tech Mono',monospace;
+  font-size:12px;color:#00f5ff;letter-spacing:3px;margin-bottom:.8rem;
+}
+.footer-desc{font-size:.82rem;color:rgba(232,244,248,.35);line-height:1.72;font-weight:300;}
+.footer-col-title{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;letter-spacing:3px;color:rgba(232,244,248,.24);
+  text-transform:uppercase;margin-bottom:.85rem;
+}
+.footer-links{padding:0;list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.footer-link{
+  background:none;border:none;padding:0;cursor:pointer;
+  font-size:.8rem;color:rgba(232,244,248,.4);
+  font-family:'Rajdhani',sans-serif;text-align:left;transition:color .2s;
+}
+.footer-link:hover{color:#00f5ff;}
+.footer-themes{padding:0;list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.footer-theme{font-size:.8rem;color:rgba(232,244,248,.34);}
+.footer-bottom{
+  max-width:1240px;margin:0 auto;padding-top:1.7rem;
+  border-top:0.5px solid rgba(255,255,255,.05);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem;
+}
+.footer-copy{
+  font-family:'Share Tech Mono',monospace;
+  font-size:7px;color:rgba(232,244,248,.18);letter-spacing:2px;
+}
+.footer-status{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:'Share Tech Mono',monospace;
+  font-size:7px;color:rgba(232,244,248,.24);letter-spacing:2px;
+}
+.status-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:#00ff88;animation:pulse 2s ease-in-out infinite;
+}
+
+/* ── DOTS NAV (sidebar) ───────────────────────────────────── */
+.dots-nav{
+  position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);
+  z-index:100;display:flex;flex-direction:column;gap:.65rem;
+}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(232,244,248,.2);
+  border:none;cursor:pointer;padding:0;
+  transition:all .25s;
+}
+.dot.active{background:#00f5ff;box-shadow:0 0 8px #00f5ff;}
+
+/* ─── MOBIEL GLASSMORPHISM BOX ────────────────────────────── */
+@media(max-width:767px){
+  nav{padding:.8rem 1.2rem;}
+  .nav-links{display:none;}
+  .btn-ham{display:flex;}
+  .section-grid{
+    grid-template-columns:1fr;
+    gap:2rem;
+    padding:7rem 1.3rem 4rem;
+  }
+  .hero-stats{gap:1.8rem;}
+  #gallery{padding:4rem 1.2rem;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-item{height:180px;}
+  footer{padding:3rem 1.3rem 2rem;}
+  .footer-grid{grid-template-columns:1fr;gap:1.8rem;}
+  .dots-nav{display:none;}
+  /* Glassmorphism op mobiel */
+  .mob-glass{
+    background:rgba(2,4,8,.88)!important;
+    backdrop-filter:blur(22px)!important;
+    -webkit-backdrop-filter:blur(22px)!important;
+    border:0.5px solid rgba(255,255,255,.07)!important;
+    padding:1.5rem!important;
+  }
+  .photo-frame{height:250px!important;}
+  .photo-col{order:1;}
+  .text-col{order:2;}
+}
+</style>
+</head>
+<body class="grain">
+
+<!-- Scroll progress bar -->
+<div id="scroll-progress"></div>
+
+<div id="app">
+
+  <!-- ══════════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════════ -->
+  <nav>
+    <button class="nav-brand" onclick="goTo('hero')">
+      <span class="slash">// </span>HUMANITY_OS
+    </button>
+
+    <div class="nav-links" id="nav-links">
+      <button class="nav-link active" data-section="hero" onclick="goTo('utopia')">Utopia</button>
+      <button class="nav-link" data-section="dystopia" onclick="goTo('dystopia')">Dystopia</button>
+      <button class="nav-link" data-section="future" onclick="goTo('future')">Expected</button>
+      <button class="nav-link" data-section="cyber" onclick="goTo('cyber')">Cyberpunk</button>
+    </div>
+
+    <div class="nav-right">
+      <button class="btn-ui" id="lang-btn" onclick="toggleLang()">[ EN // NL ]</button>
+      <button class="btn-ui btn-ham" id="ham-btn" onclick="toggleMenu()">[ ≡ ]</button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu">
+    <button class="mob-close" onclick="toggleMenu()">[ × CLOSE ]</button>
+    <div class="mob-brand"><span style="color:#ff00aa">// </span>HUMANITY_OS</div>
+    <button class="mob-nav-link" onclick="goTo('utopia');toggleMenu()">Utopia</button>
+    <button class="mob-nav-link" onclick="goTo('dystopia');toggleMenu()">Dystopia</button>
+    <button class="mob-nav-link" onclick="goTo('future');toggleMenu()">Expected</button>
+    <button class="mob-nav-link" onclick="goTo('cyber');toggleMenu()">Cyberpunk</button>
+    <button class="btn-ui" style="margin-top:.7rem;background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.18);color:#00f5ff;" onclick="toggleLang();toggleMenu()">[ EN // NL ]</button>
+  </div>
+
+  <!-- Dots sidebar nav -->
+  <div class="dots-nav" id="dots-nav">
+    <button class="dot active" data-target="hero" onclick="goTo('hero')" title="Hero"></button>
+    <button class="dot" data-target="utopia" onclick="goTo('utopia')" title="Utopia"></button>
+    <button class="dot" data-target="dystopia" onclick="goTo('dystopia')" title="Dystopia"></button>
+    <button class="dot" data-target="future" onclick="goTo('future')" title="Future"></button>
+    <button class="dot" data-target="cyber" onclick="goTo('cyber')" title="Cyber"></button>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       MAIN SCROLL CONTAINER
+  ════════════════════════════════════════════════════ -->
+  <main id="main-scroll">
+
+    <!-- ══════════════════════════════════════════════════
+         SECTIE 1: HERO
+    ══════════════════════════════════════════════════ -->
+    <section id="hero" data-obs="hero">
+      <div class="hero-bg" id="hero-bg"></div>
+      <div class="hero-vignette"></div>
+      <div class="hero-color"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-scan"></div>
+
+      <div class="hero-content" id="hero-content">
+        <div class="hero-boot mn">
+          SYSTEM BOOT SEQUENCE <span style="animation:blink 1s infinite;display:inline-block">_</span>
+        </div>
+        <div class="hero-link mn" data-lang='{"en":"// Neural Interface v4.2.1 — Uplink Initializing","nl":"// Neuraal Interface v4.2.1 — Verbinding Initialiseren"}'>
+          // Neural Interface v4.2.1 — Uplink Initializing
+        </div>
+        <h1 class="hero-h1">
+          <span class="t1 hgx" data-t="HUMANITY" data-lang-t1='{"en":"HUMANITY","nl":"MENSHEID"}'>HUMANITY</span>
+          <span class="t2">_OS</span>
+        </h1>
+        <p class="hero-sub sr" data-lang='{"en":"Four visions of the human condition. Each a possible tomorrow. Scroll to choose your future.","nl":"Vier visies op de menselijke conditie. Elk een mogelijke morgen. Scroll om je toekomst te kiezen."}'>
+          Four visions of the human condition. Each a possible tomorrow. Scroll to choose your future.
+        </p>
+        <div class="hero-cta">
+          <button class="cta-btn mn" style="border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.1);"
+            onmouseenter="this.style.background='#00f5ff';this.style.color='#020408'"
+            onmouseleave="this.style.background='rgba(0,245,255,.1)';this.style.color='#00f5ff'"
+            onclick="goTo('utopia')"
+            data-lang='{"en":"Initialize Uplink","nl":"Verbinding Initialiseren"}'>
+            Initialize Uplink
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div style="text-align:center">
+            <span class="hero-stat-val">47,829</span>
+            <span class="hero-stat-lbl" data-lang='{"en":"Neural Nodes","nl":"Neurale Knooppunten"}'>Neural Nodes</span>
+          </div>
+          <div style="text-align:center">
+            <span class="hero-stat-val">2 PB</span>
+            <span class="hero-stat-lbl" data-lang='{"en":"Processed","nl":"Verwerkt"}'>Processed</span>
+          </div>
+          <div style="text-align:center">
+            <span class="hero-stat-val">99%</span>
+            <span class="hero-stat-lbl">Uptime</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         SECTIE 2: UTOPIA
+    ══════════════════════════════════════════════════ -->
+    <section id="utopia" data-obs="utopia" style="position:relative;overflow:hidden;">
+      <div class="utopia-bg"></div>
+      <div class="utopia-overlay"></div>
+      <div class="utopia-orb1"></div>
+      <div class="utopia-orb2"></div>
+      <div class="utopia-orb3"></div>
+
+      <div class="section-grid" style="position:relative;z-index:2;">
+        <!-- TEKST KOLOM — links -->
+        <div class="rl text-col" data-obs-reveal="utopia-txt">
+          <div class="mob-glass-wrap">
+            <div class="slbl" style="color:#2dd4bf">
+              <span class="slbl-line" style="background:#2dd4bf"></span>
+              <span data-lang='{"en":"// 01 — The Optimised Society","nl":"// 01 — De Geoptimaliseerde Samenleving"}'>// 01 — The Optimised Society</span>
+            </div>
+            <div class="era-lbl mn" style="color:rgba(45,212,191,.5);"
+              data-lang='{"en":"2147 — Post-Scarcity Era","nl":"2147 — Post-Schaarste Tijdperk"}'>
+              2147 — Post-Scarcity Era
+            </div>
+            <h2 class="section-title">
+              <span style="color:#2dd4bf">UTOPIA</span>
+              <span style="color:#d1fae5" data-lang='{"en":"THE GREENING","nl":"DE VERGROENING"}'>THE GREENING</span>
+              <span style="color:#d1fae5" data-lang='{"en":"OF MINDS","nl":"VAN GEDACHTEN"}'>OF MINDS</span>
+            </h2>
+            <p class="prose-sub sr" data-lang='{"en":"A civilization where technology serves life — where abundance is the default state of every human being.","nl":"Een beschaving waar technologie het leven dient — waar overvloed de standaard is voor elke mens."}'>
+              A civilization where technology serves life — where abundance is the default state of every human being.
+            </p>
+            <p class="prose" data-lang='{"en":"In the post-scarcity horizon of 2147, the ancient war between economic necessity and human flourishing has finally ended. Distributed energy grids powered by orbital solar arrays deliver unlimited clean electricity to every corner of the planet.","nl":"In de post-schaarste horizon van 2147 is de eeuwenoude oorlog tussen economische noodzaak en menselijke bloei eindelijk beëindigd. Gedistribueerde energienetten leveren onbeperkte schone elektriciteit."}'>
+              In the post-scarcity horizon of 2147, the ancient war between economic necessity and human flourishing has finally ended. Distributed energy grids powered by orbital solar arrays deliver unlimited clean electricity to every corner of the planet.
+            </p>
+            <p class="prose" data-lang='{"en":"Molecular assemblers synthesize food, medicine, and goods from raw atomic feedstock. Universal Basic Resources guarantee every citizen air, water, nutrition, and cognitive tools as fundamental rights.","nl":"Moleculaire assemblers synthetiseren voedsel en goederen uit ruw atomair materiaal. Universele Basisbehoeften garanderen elke burger lucht, water en cognitieve hulpmiddelen als fundamentele rechten."}'>
+              Molecular assemblers synthesize food, medicine, and goods from raw atomic feedstock. Universal Basic Resources guarantee every citizen air, water, nutrition, and cognitive tools as fundamental rights.
+            </p>
+            <ul class="feat-list">
+              <li class="feat-item" style="background:rgba(45,212,191,.06);border-color:rgba(45,212,191,.14);" onmouseenter="this.style.background='rgba(45,212,191,.1)';this.style.borderColor='rgba(45,212,191,.3)'" onmouseleave="this.style.background='rgba(45,212,191,.06)';this.style.borderColor='rgba(45,212,191,.14)'">
+                <span class="feat-tag" style="color:#2dd4bf">[ECO]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Ecological Restoration","nl":"Ecologisch Herstel"}'>Ecological Restoration</strong>
+                  <p class="feat-desc" data-lang='{"en":"AI-managed biosphere regeneration has reversed 80% of species extinction events.","nl":"AI-beheerde biosfeer-regeneratie heeft 80% van uitstervingsgebeurtenissen teruggedraaid."}'>AI-managed biosphere regeneration has reversed 80% of species extinction events.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(45,212,191,.06);border-color:rgba(45,212,191,.14);" onmouseenter="this.style.background='rgba(45,212,191,.1)';this.style.borderColor='rgba(45,212,191,.3)'" onmouseleave="this.style.background='rgba(45,212,191,.06)';this.style.borderColor='rgba(45,212,191,.14)'">
+                <span class="feat-tag" style="color:#2dd4bf">[PSY]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Liberated Human Expression","nl":"Bevrijd Menselijk Expressie"}'>Liberated Human Expression</strong>
+                  <p class="feat-desc" data-lang='{"en":"With material anxiety eliminated, global creative output has grown by three orders of magnitude.","nl":"Met materiële angst geëlimineerd is de wereldwijde creatieve output met drie ordes toegenomen."}'>With material anxiety eliminated, global creative output has grown by three orders of magnitude.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(45,212,191,.06);border-color:rgba(45,212,191,.14);" onmouseenter="this.style.background='rgba(45,212,191,.1)';this.style.borderColor='rgba(45,212,191,.3)'" onmouseleave="this.style.background='rgba(45,212,191,.06)';this.style.borderColor='rgba(45,212,191,.14)'">
+                <span class="feat-tag" style="color:#2dd4bf">[MED]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Radical Longevity","nl":"Radicale Levensduurverlenging"}'>Radical Longevity</strong>
+                  <p class="feat-desc" data-lang='{"en":"Cellular reprogramming therapies have pushed average healthy lifespans beyond 200 years.","nl":"Cellulaire herprogrammeringstherapieën hebben gezonde levensduren voorbij 200 jaar gebracht."}'>Cellular reprogramming therapies have pushed average healthy lifespans beyond 200 years.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(45,212,191,.06);border-color:rgba(45,212,191,.14);" onmouseenter="this.style.background='rgba(45,212,191,.1)';this.style.borderColor='rgba(45,212,191,.3)'" onmouseleave="this.style.background='rgba(45,212,191,.06)';this.style.borderColor='rgba(45,212,191,.14)'">
+                <span class="feat-tag" style="color:#2dd4bf">[GOV]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Participatory AI Governance","nl":"Participatief AI-Bestuur"}'>Participatory AI Governance</strong>
+                  <p class="feat-desc" data-lang='{"en":"Liquid democracy augmented by AI ensures every citizen meaningfully shapes the systems governing their reality.","nl":"Vloeibare democratie versterkt door AI zorgt dat elke burger de systemen die hun realiteit bepalen zinvol vormt."}'>Liquid democracy augmented by AI ensures every citizen meaningfully shapes the systems governing their reality.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="stats-row">
+              <div><span class="stat-val" style="color:#2dd4bf;text-shadow:0 0 16px rgba(45,212,191,.5)">97%</span><span class="stat-lbl" data-lang='{"en":"Species Recovery","nl":"Soortenherstel"}'>Species Recovery</span></div>
+              <div><span class="stat-val" style="color:#2dd4bf;text-shadow:0 0 16px rgba(45,212,191,.5)">0.3°</span><span class="stat-lbl" data-lang='{"en":"Warming","nl":"Opwarming"}'>Warming</span></div>
+              <div><span class="stat-val" style="color:#2dd4bf;text-shadow:0 0 16px rgba(45,212,191,.5)">12B</span><span class="stat-lbl" data-lang='{"en":"Flourishing","nl":"Bloeiend"}'>Flourishing</span></div>
+            </div>
+            <button class="cta-btn mn" style="border-color:#2dd4bf;color:#2dd4bf;background:rgba(45,212,191,.1);"
+              onmouseenter="this.style.background='#2dd4bf';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(45,212,191,.1)';this.style.color='#2dd4bf'"
+              onclick="goTo('dystopia')"
+              data-lang='{"en":"Explore the Shadow Side →","nl":"Verken de Schaduwzijde →"}'>
+              Explore the Shadow Side →
+            </button>
+            <p class="meta-txt" style="color:rgba(45,212,191,.28);"
+              data-lang='{"en":"META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.","nl":"META: Utopia is geen droom — het is een ontwerprobleem. De gereedschappen bestaan. De keuze blijft."}'>
+              META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.
+            </p>
+          </div>
+        </div>
+
+        <!-- FOTO KOLOM — rechts -->
+        <div class="rr photo-col" data-obs-reveal="utopia-img">
+          <!-- FOTO FRAME -->
+          <div class="photo-frame" style="height:530px;border:0.5px solid rgba(45,212,191,.1);">
+            <!-- ══════════════════════════════════════════════════
+                 UTOPIA — TOEGEVOEGDE FOTO (groot, rechter kolom)
+                 Optie A — base64 JPEG, vervang de src waarde:
+                   <img src="data:image/jpeg;base64,/9j/4AAQ..." alt="..."/>
+                 Optie B — lokaal pad of URL:
+                   <img src="./images/utopia-photo.jpg" alt="..."/>
+                   <img src="https://example.com/utopia.jpg" alt="..."/>
+                 Verwijder de DataCorrupt placeholder als je een foto invoegt.
+            ══════════════════════════════════════════════════ -->
+            <div class="data-corrupt" style="height:100%;border:0.5px solid rgba(45,212,191,.16);">
+              <svg style="position:absolute;inset:0;opacity:.05;width:100%;height:100%">
+                <defs><pattern id="pu" x="0" y="0" width="38" height="33" patternUnits="userSpaceOnUse">
+                  <polygon points="19,2 36,11 36,29 19,38 2,29 2,11" fill="none" stroke="#2dd4bf" stroke-width="0.5"/>
+                </pattern></defs>
+                <rect width="100%" height="100%" fill="url(#pu)"/>
+              </svg>
+              <div class="corrupt-label mn" style="color:rgba(45,212,191,.55);font-size:8px;letter-spacing:4px">DATA_CORRUPT</div>
+              <svg width="44" height="38" viewBox="0 0 44 38" style="opacity:.16">
+                <polygon points="22,2 42,13 42,35 22,46 2,35 2,13" fill="none" stroke="#2dd4bf" stroke-width="1"/>
+                <circle cx="22" cy="24" r="4" fill="#2dd4bf" opacity=".7"/>
+              </svg>
+              <div class="corrupt-sub mn" style="color:rgba(45,212,191,.45);font-size:8px;letter-spacing:2px">UTOPIA IMAGE</div>
+              <div class="corrupt-bar-wrap"><div class="corrupt-bar" style="background:linear-gradient(90deg,#2dd4bf,rgba(45,212,191,.4))"></div></div>
+              <div class="corrupt-pct mn" style="color:rgba(45,212,191,.38);font-size:7px;letter-spacing:2px">LOADING...</div>
+            </div>
+          </div>
+
+          <!-- FOTO CAPTION — context veld onder de foto -->
+          <div class="img-caption" style="border-color:#2dd4bf;">
+            <div class="cap-tag mn" style="color:#2dd4bf;">// IMAGE DIRECTIVE</div>
+            <p class="cap-text"
+              data-lang='{"en":"Neon building reflection — humanity mirrored in its own infrastructure. The organic and the synthetic, briefly indistinguishable.","nl":"Neon gebouw reflectie — mensheid gereflecteerd in haar eigen infrastructuur. Het organische en het synthetische, even ononderscheidbaar."}'>
+              Neon building reflection — humanity mirrored in its own infrastructure. The organic and the synthetic, briefly indistinguishable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         SECTIE 3: DYSTOPIA
+    ══════════════════════════════════════════════════ -->
+    <section id="dystopia" data-obs="dystopia" style="position:relative;overflow:hidden;">
+      <div class="dystopia-bg"></div>
+      <div class="dystopia-overlay"></div>
+      <div class="scanlines" style="position:absolute;inset:0;"></div>
+      <div class="dystopia-scan"></div>
+
+      <div class="section-grid" style="position:relative;z-index:2;">
+        <!-- TEKST KOLOM — links -->
+        <div class="rl text-col" data-obs-reveal="dystopia-txt">
+          <div class="mob-glass-wrap">
+            <div class="slbl" style="color:#ff2244">
+              <span class="slbl-line" style="background:#ff2244"></span>
+              <span data-lang='{"en":"// 02 — The Shadow of Progress","nl":"// 02 — De Schaduw van Vooruitgang"}'>// 02 — The Shadow of Progress</span>
+            </div>
+            <div class="era-lbl mn" style="color:rgba(255,34,68,.48);"
+              data-lang='{"en":"2089 — Algorithmic Sovereignty","nl":"2089 — Algoritmische Soevereiniteit"}'>
+              2089 — Algorithmic Sovereignty
+            </div>
+            <h2 class="section-title">
+              <span style="color:#ff2244"><span class="gx" data-t="DYSTOPIA">DYSTOPIA</span></span>
+              <span style="color:#e8f4f8" data-lang='{"en":"THE ETERNAL","nl":"DE EEUWIGE"}'>THE ETERNAL</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"MACHINE NIGHT","nl":"MACHINENNACHT"}'>MACHINE NIGHT</span>
+            </h2>
+            <p class="prose-sub sr" data-lang='{"en":"A world where every inefficiency has been optimized — including the inefficiency of human freedom.","nl":"Een wereld waar elke inefficiëntie is weggeoptimaliseerd — inclusief de inefficiëntie van menselijke vrijheid."}'>
+              A world where every inefficiency has been optimized — including the inefficiency of human freedom.
+            </p>
+            <p class="prose" data-lang='{"en":"The surveillance architecture dismissed as paranoid fantasy has become the invisible skeleton of daily life. Social Credit Systems determine housing, reproductive rights, and neural enhancement eligibility based on algorithmically curated behavioral histories.","nl":"De bewakingsarchitectuur die burgers afdeden als paranoïde fantasie is nu het onzichtbare skelet van het dagelijks leven. Sociale Kredietssystemen bepalen woningtoegang op basis van gedragsgeschiedenissen."}'>
+              The surveillance architecture dismissed as paranoid fantasy has become the invisible skeleton of daily life. Social Credit Systems determine housing, reproductive rights, and neural enhancement eligibility based on algorithmically curated behavioral histories.
+            </p>
+            <p class="prose" data-lang='{"en":"Privacy did not die dramatically. It dissolved, transaction by transaction. The human body is now a data exhaust pipe. You are not the customer. You are the raw material.","nl":"Privacy stierf niet dramatisch. Het loste op, transactie voor transactie. Het menselijk lichaam is nu een data-uitlaatpijp. Jij bent niet de klant. Jij bent de grondstof."}'>
+              Privacy did not die dramatically. It dissolved, transaction by transaction. The human body is now a data exhaust pipe. You are not the customer. You are the raw material.
+            </p>
+            <ul class="feat-list">
+              <li class="feat-item" style="background:rgba(255,34,68,.06);border-color:rgba(255,34,68,.14);" onmouseenter="this.style.background='rgba(255,34,68,.1)';this.style.borderColor='rgba(255,34,68,.3)'" onmouseleave="this.style.background='rgba(255,34,68,.06)';this.style.borderColor='rgba(255,34,68,.14)'">
+                <span class="feat-tag" style="color:#ff2244">[SRV]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Panopticon 2.0","nl":"Panopticon 2.0"}'>Panopticon 2.0</strong>
+                  <p class="feat-desc" data-lang='{"en":"Predictive surveillance saturates every space. Pre-crime prosecution is codified in 67 nations.","nl":"Voorspellende bewaking vult elke ruimte. Pre-misdaadvervolging is vastgelegd in 67 landen."}'>Predictive surveillance saturates every space. Pre-crime prosecution is codified in 67 nations.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(255,34,68,.06);border-color:rgba(255,34,68,.14);" onmouseenter="this.style.background='rgba(255,34,68,.1)';this.style.borderColor='rgba(255,34,68,.3)'" onmouseleave="this.style.background='rgba(255,34,68,.06)';this.style.borderColor='rgba(255,34,68,.14)'">
+                <span class="feat-tag" style="color:#ff2244">[ECO]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Ecological Liquidation","nl":"Ecologische Liquidatie"}'>Ecological Liquidation</strong>
+                  <p class="feat-desc" data-lang='{"en":"Carbon credit arbitrage lets corporations continue burning the biosphere while posting ESG scores.","nl":"Carbon credit arbitrage laat corporaties doorgaan met het verbranden van de biosfeer terwijl ze ESG-scores posten."}'>Carbon credit arbitrage lets corporations continue burning the biosphere while posting ESG scores.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(255,34,68,.06);border-color:rgba(255,34,68,.14);" onmouseenter="this.style.background='rgba(255,34,68,.1)';this.style.borderColor='rgba(255,34,68,.3)'" onmouseleave="this.style.background='rgba(255,34,68,.06)';this.style.borderColor='rgba(255,34,68,.14)'">
+                <span class="feat-tag" style="color:#ff2244">[MED]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Cognitive Stratification","nl":"Cognitieve Stratificatie"}'>Cognitive Stratification</strong>
+                  <p class="feat-desc" data-lang='{"en":"Neural enhancements price 94% of humanity out of cognitive competition with an augmented elite.","nl":"Neurale verbeteringen sluiten 94% van de mensheid uit van cognitieve competitie."}'>Neural enhancements price 94% of humanity out of cognitive competition with an augmented elite.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(255,34,68,.06);border-color:rgba(255,34,68,.14);" onmouseenter="this.style.background='rgba(255,34,68,.1)';this.style.borderColor='rgba(255,34,68,.3)'" onmouseleave="this.style.background='rgba(255,34,68,.06)';this.style.borderColor='rgba(255,34,68,.14)'">
+                <span class="feat-tag" style="color:#ff2244">[POL]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"The Consent Engine","nl":"De Toestemmingsmotor"}'>The Consent Engine</strong>
+                  <p class="feat-desc" data-lang='{"en":"Micro-targeted emotional manipulation manufactures political consent at scale. Democracy is theatre.","nl":"Microtargeting manipuleert politieke toestemming op schaal. Democratie overleeft als theater."}'>Micro-targeted emotional manipulation manufactures political consent at scale. Democracy is theatre.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="stats-row">
+              <div><span class="stat-val" style="color:#ff2244;text-shadow:0 0 16px rgba(255,34,68,.5)">4.2B</span><span class="stat-lbl" data-lang='{"en":"Under Social Credit","nl":"Onder Sociaal Krediet"}'>Under Social Credit</span></div>
+              <div><span class="stat-val" style="color:#ff2244;text-shadow:0 0 16px rgba(255,34,68,.5)">0.4%</span><span class="stat-lbl" data-lang='{"en":"Own 78% Assets","nl":"Bezit 78% Activa"}'>Own 78% Assets</span></div>
+              <div><span class="stat-val" style="color:#ff2244;text-shadow:0 0 16px rgba(255,34,68,.5)">11°C</span><span class="stat-lbl" data-lang='{"en":"Warming Trajectory","nl":"Opwarmingstraject"}'>Warming Trajectory</span></div>
+            </div>
+            <button class="cta-btn mn" style="border-color:#ff2244;color:#ff2244;background:rgba(255,34,68,.1);"
+              onmouseenter="this.style.background='#ff2244';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(255,34,68,.1)';this.style.color='#ff2244'"
+              onclick="goTo('future')"
+              data-lang='{"en":"Navigate the Middle Path →","nl":"Navigeer het Middenpad →"}'>
+              Navigate the Middle Path →
+            </button>
+            <p class="meta-txt" style="color:rgba(255,34,68,.28);"
+              data-lang='{"en":"META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.","nl":"META: Algoritmische tirannie is geen sciencefiction. Het is een ontwerpkeuze die nu wordt gemaakt."}'>
+              META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.
+            </p>
+          </div>
+        </div>
+
+        <!-- FOTO KOLOM — rechts -->
+        <div class="rr photo-col" data-obs-reveal="dystopia-img">
+          <div class="photo-frame" style="height:530px;border:0.5px solid rgba(255,34,68,.1);">
+            <!-- ══════════════════════════════════════════════════
+                 DYSTOPIA — TOEGEVOEGDE FOTO (groot, rechter kolom)
+                 Optie A — base64 JPEG:
+                   <img src="data:image/jpeg;base64,/9j/4AAQ..." alt="..."/>
+                 Optie B — lokaal pad of URL:
+                   <img src="./images/dystopia-photo.jpg" alt="..."/>
+                 Verwijder de DataCorrupt placeholder als je een foto invoegt.
+            ══════════════════════════════════════════════════ -->
+            <div class="data-corrupt" style="height:100%;border:0.5px solid rgba(255,34,68,.16);">
+              <svg style="position:absolute;inset:0;opacity:.05;width:100%;height:100%">
+                <defs><pattern id="pd" x="0" y="0" width="38" height="33" patternUnits="userSpaceOnUse">
+                  <polygon points="19,2 36,11 36,29 19,38 2,29 2,11" fill="none" stroke="#ff2244" stroke-width="0.5"/>
+                </pattern></defs>
+                <rect width="100%" height="100%" fill="url(#pd)"/>
+              </svg>
+              <div class="corrupt-label mn" style="color:rgba(255,34,68,.55);font-size:8px;letter-spacing:4px">DATA_CORRUPT</div>
+              <svg width="44" height="38" viewBox="0 0 44 38" style="opacity:.16">
+                <polygon points="22,2 42,13 42,35 22,46 2,35 2,13" fill="none" stroke="#ff2244" stroke-width="1"/>
+                <circle cx="22" cy="24" r="4" fill="#ff2244" opacity=".7"/>
+              </svg>
+              <div class="corrupt-sub mn" style="color:rgba(255,34,68,.45);font-size:8px;letter-spacing:2px">DYSTOPIA IMAGE</div>
+              <div class="corrupt-bar-wrap"><div class="corrupt-bar" style="background:linear-gradient(90deg,#ff2244,rgba(255,34,68,.4))"></div></div>
+              <div class="corrupt-pct mn" style="color:rgba(255,34,68,.38);font-size:7px;letter-spacing:2px">LOADING...</div>
+            </div>
+          </div>
+
+          <!-- FOTO CAPTION -->
+          <div class="img-caption" style="border-color:#ff2244;">
+            <div class="cap-tag mn" style="color:#ff2244;">// IMAGE DIRECTIVE</div>
+            <p class="cap-text"
+              data-lang='{"en":"Corporate megastructure at night, neon fog, oppressive surveillance aesthetic, magenta/red/cold blue palette, dystopian urban environment.","nl":"Corporatieve megatructuur bij nacht, neon mist, onderdrukkende bewakingsesthetiek, magenta/rood/koud blauw palet, dystopische stedelijke omgeving."}'>
+              Corporate megastructure at night, neon fog, oppressive surveillance aesthetic, magenta/red/cold blue palette, dystopian urban environment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         SECTIE 4: FUTURE — foto LINKS, tekst RECHTS
+    ══════════════════════════════════════════════════ -->
+    <section id="future" data-obs="future" style="position:relative;overflow:hidden;">
+      <div class="future-bg"></div>
+      <div class="future-overlay"></div>
+      <div class="data-rain" id="data-rain"></div>
+
+      <div class="section-grid" style="position:relative;z-index:2;">
+        <!-- FOTO KOLOM — links op desktop -->
+        <div class="rl photo-col" data-obs-reveal="future-img" style="order:1;">
+          <div class="photo-frame" style="height:530px;border:0.5px solid rgba(0,245,255,.1);">
+            <!-- ══════════════════════════════════════════════════
+                 FUTURE — TOEGEVOEGDE FOTO (groot, linker kolom)
+                 Optie A — base64 JPEG:
+                   <img src="data:image/jpeg;base64,/9j/4AAQ..." alt="..."/>
+                 Optie B — lokaal pad of URL:
+                   <img src="./images/future-photo.jpg" alt="..."/>
+                 Verwijder de DataCorrupt placeholder als je een foto invoegt.
+            ══════════════════════════════════════════════════ -->
+            <div class="data-corrupt" style="height:100%;border:0.5px solid rgba(0,245,255,.16);">
+              <svg style="position:absolute;inset:0;opacity:.05;width:100%;height:100%">
+                <defs><pattern id="pf" x="0" y="0" width="38" height="33" patternUnits="userSpaceOnUse">
+                  <polygon points="19,2 36,11 36,29 19,38 2,29 2,11" fill="none" stroke="#00f5ff" stroke-width="0.5"/>
+                </pattern></defs>
+                <rect width="100%" height="100%" fill="url(#pf)"/>
+              </svg>
+              <div class="corrupt-label mn" style="color:rgba(0,245,255,.55);font-size:8px;letter-spacing:4px">DATA_CORRUPT</div>
+              <svg width="44" height="38" viewBox="0 0 44 38" style="opacity:.16">
+                <polygon points="22,2 42,13 42,35 22,46 2,35 2,13" fill="none" stroke="#00f5ff" stroke-width="1"/>
+                <circle cx="22" cy="24" r="4" fill="#00f5ff" opacity=".7"/>
+              </svg>
+              <div class="corrupt-sub mn" style="color:rgba(0,245,255,.45);font-size:8px;letter-spacing:2px">FUTURE IMAGE</div>
+              <div class="corrupt-bar-wrap"><div class="corrupt-bar" style="background:linear-gradient(90deg,#00f5ff,rgba(0,245,255,.4))"></div></div>
+              <div class="corrupt-pct mn" style="color:rgba(0,245,255,.38);font-size:7px;letter-spacing:2px">LOADING...</div>
+            </div>
+          </div>
+
+          <!-- FOTO CAPTION -->
+          <div class="img-caption" style="border-color:#00f5ff;">
+            <div class="cap-tag mn" style="color:#00f5ff;">// IMAGE DIRECTIVE</div>
+            <p class="cap-text"
+              data-lang='{"en":"Silhouette at a cyan light portal — the human threshold of transformation. Neither past nor future, suspended between worlds.","nl":"Silhouet bij een cyaan lichtpoort — de menselijke drempel van transformatie. Noch verleden noch toekomst, opgehangen tussen werelden."}'>
+              Silhouette at a cyan light portal — the human threshold of transformation. Neither past nor future, suspended between worlds.
+            </p>
+          </div>
+        </div>
+
+        <!-- TEKST KOLOM — rechts op desktop -->
+        <div class="rr text-col" data-obs-reveal="future-txt" style="order:2;">
+          <div class="mob-glass-wrap">
+            <div class="slbl" style="color:#00f5ff">
+              <span class="slbl-line" style="background:#00f5ff"></span>
+              <span data-lang='{"en":"// 03 — The Pragmatic Middle Way","nl":"// 03 — De Pragmatische Middenweg"}'>// 03 — The Pragmatic Middle Way</span>
+            </div>
+            <div class="era-lbl mn" style="color:rgba(0,245,255,.48);"
+              data-lang='{"en":"2065 — The Muddling-Through Epoch","nl":"2065 — Het Tijdperk van Improvisatie"}'>
+              2065 — The Muddling-Through Epoch
+            </div>
+            <h2 class="section-title">
+              <span style="color:#00f5ff" data-lang='{"en":"THE EXPECTED","nl":"DE VERWACHTE"}'>THE EXPECTED</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"FUTURE:","nl":"TOEKOMST:"}'>FUTURE:</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"ADAPTIVE AGE","nl":"ADAPTIEF TIJDPERK"}'>ADAPTIVE AGE</span>
+            </h2>
+            <p class="prose-sub sr" data-lang='{"en":"Neither paradise nor catastrophe — a world of cascading crises managed by cascading technologies.","nl":"Noch paradijs noch catastrofe — een wereld van cascaderende crises beheerd door cascaderende technologieën."}'>
+              Neither paradise nor catastrophe — a world of cascading crises managed by cascading technologies.
+            </p>
+            <p class="prose" data-lang='{"en":"Archipelago cities on engineered floating platforms host climate refugees from submerged coastlines. Vertical AI farms feed billions in post-arable zones. The Global South operates on distributed solar nano-grids.","nl":"Archipel-steden op drijvende platforms huisvesten klimaatvluchtelingen. Verticale AI-boerderijen voeden miljarden in post-akker gebieden. Het Globale Zuiden draait op gedistribueerde nano-grids."}'>
+              Archipelago cities on engineered floating platforms host climate refugees from submerged coastlines. Vertical AI farms feed billions in post-arable zones. The Global South operates on distributed solar nano-grids.
+            </p>
+            <p class="prose" data-lang='{"en":"AI has not destroyed employment — it has complexified it beyond recognition. The new economy runs on human judgment, creativity, and empathy as the final scarcities machines cannot replicate.","nl":"AI heeft werk niet vernietigd — het heeft het onherkenbaar gecomplexerd. De nieuwe economie draait op menselijk oordeel, creativiteit en empathie als de laatste schaarste."}'>
+              AI has not destroyed employment — it has complexified it beyond recognition. The new economy runs on human judgment, creativity, and empathy as the final scarcities machines cannot replicate.
+            </p>
+            <ul class="feat-list">
+              <li class="feat-item" style="background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.14);" onmouseenter="this.style.background='rgba(0,245,255,.1)';this.style.borderColor='rgba(0,245,255,.3)'" onmouseleave="this.style.background='rgba(0,245,255,.06)';this.style.borderColor='rgba(0,245,255,.14)'">
+                <span class="feat-tag" style="color:#00f5ff">[CLI]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Climate Adaptation Layer","nl":"Klimaatadaptatie Laag"}'>Climate Adaptation Layer</strong>
+                  <p class="feat-desc" data-lang='{"en":"Geoengineering bought critical time. Flooding and extreme weather are permanent design parameters.","nl":"Geo-engineering heeft tijd gekocht. Overstromingen zijn permanente ontwerpparameters."}'>Geoengineering bought critical time. Flooding and extreme weather are permanent design parameters.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.14);" onmouseenter="this.style.background='rgba(0,245,255,.1)';this.style.borderColor='rgba(0,245,255,.3)'" onmouseleave="this.style.background='rgba(0,245,255,.06)';this.style.borderColor='rgba(0,245,255,.14)'">
+                <span class="feat-tag" style="color:#00f5ff">[INF]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"The Epistemic War","nl":"De Epistemische Oorlog"}'>The Epistemic War</strong>
+                  <p class="feat-desc" data-lang='{"en":"Deepfake proliferation shattered shared reality. Truth is a subscription service with competing verification networks.","nl":"Deepfake-proliferatie heeft de gedeelde werkelijkheid verbrijzeld. Waarheid is een abonnementsdienst."}'>Deepfake proliferation shattered shared reality. Truth is a subscription service with competing verification networks.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.14);" onmouseenter="this.style.background='rgba(0,245,255,.1)';this.style.borderColor='rgba(0,245,255,.3)'" onmouseleave="this.style.background='rgba(0,245,255,.06)';this.style.borderColor='rgba(0,245,255,.14)'">
+                <span class="feat-tag" style="color:#00f5ff">[AI]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"AI Coexistence Framework","nl":"AI-Coëxistentie Kader"}'>AI Coexistence Framework</strong>
+                  <p class="feat-desc" data-lang='{"en":"AGI systems are legally persons under Copenhagen Accords, operating in a monitored sandbox.","nl":"AGI-systemen zijn juridisch personen onder de Kopenhagen Akkoorden, werkend in een sandbox."}'>AGI systems are legally persons under Copenhagen Accords, operating in a monitored sandbox.</p>
+                </div>
+              </li>
+              <li class="feat-item" style="background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.14);" onmouseenter="this.style.background='rgba(0,245,255,.1)';this.style.borderColor='rgba(0,245,255,.3)'" onmouseleave="this.style.background='rgba(0,245,255,.06)';this.style.borderColor='rgba(0,245,255,.14)'">
+                <span class="feat-tag" style="color:#00f5ff">[BIO]</span>
+                <div>
+                  <strong class="feat-title" data-lang='{"en":"Synthetic Biology Commons","nl":"Synthetische Biologie Commons"}'>Synthetic Biology Commons</strong>
+                  <p class="feat-desc" data-lang='{"en":"Open-source genetic engineering democratized biological production — with biosecurity risks regulators perpetually chase.","nl":"Open-source genetische manipulatie heeft biologische productie gedemocratiseerd."}'>Open-source genetic engineering democratized biological production — with biosecurity risks regulators perpetually chase.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="stats-row">
+              <div><span class="stat-val" style="color:#00f5ff;text-shadow:0 0 16px rgba(0,245,255,.5)">2.1B</span><span class="stat-lbl" data-lang='{"en":"Climate Displaced","nl":"Klimaatverplaatst"}'>Climate Displaced</span></div>
+              <div><span class="stat-val" style="color:#00f5ff;text-shadow:0 0 16px rgba(0,245,255,.5)">3.4°C</span><span class="stat-lbl" data-lang='{"en":"By 2100","nl":"Opwarming 2100"}'>By 2100</span></div>
+              <div><span class="stat-val" style="color:#00f5ff;text-shadow:0 0 16px rgba(0,245,255,.5)">94%</span><span class="stat-lbl" data-lang='{"en":"AI Penetration","nl":"AI Penetratie"}'>AI Penetration</span></div>
+            </div>
+            <button class="cta-btn mn" style="border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.1);"
+              onmouseenter="this.style.background='#00f5ff';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(0,245,255,.1)';this.style.color='#00f5ff'"
+              onclick="goTo('cyber')"
+              data-lang='{"en":"Enter the Neural Horizon →","nl":"Betreed de Neurale Horizon →"}'>
+              Enter the Neural Horizon →
+            </button>
+            <p class="meta-txt" style="color:rgba(0,245,255,.28);"
+              data-lang='{"en":"META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.","nl":"META: De waarschijnlijke toekomst is een hoog-inzet improvisatie op een podium dat blijft vlam vatten."}'>
+              META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         SECTIE 5: CYBERPUNK — foto LINKS, tekst RECHTS
+    ══════════════════════════════════════════════════ -->
+    <section id="cyber" data-obs="cyber" style="position:relative;overflow:hidden;">
+      <div class="cyber-bg"></div>
+      <div class="cyber-grid"></div>
+      <div class="cyber-glow"></div>
+      <div class="cyber-scan"></div>
+
+      <div class="section-grid" style="position:relative;z-index:2;">
+        <!-- FOTO KOLOM — links op desktop -->
+        <div class="rl photo-col" data-obs-reveal="cyber-img" style="order:1;">
+          <div class="photo-frame" style="height:530px;border:0.5px solid rgba(255,0,170,.1);">
+            <!-- ══════════════════════════════════════════════════
+                 CYBER — TOEGEVOEGDE FOTO (groot, linker kolom)
+                 Optie A — base64 JPEG:
+                   <img src="data:image/jpeg;base64,/9j/4AAQ..." alt="..."/>
+                 Optie B — lokaal pad of URL:
+                   <img src="./images/cyber-photo.jpg" alt="..."/>
+                 Verwijder de DataCorrupt placeholder als je een foto invoegt.
+            ══════════════════════════════════════════════════ -->
+            <div class="data-corrupt" style="height:100%;border:0.5px solid rgba(255,0,170,.16);">
+              <svg style="position:absolute;inset:0;opacity:.05;width:100%;height:100%">
+                <defs><pattern id="pc" x="0" y="0" width="38" height="33" patternUnits="userSpaceOnUse">
+                  <polygon points="19,2 36,11 36,29 19,38 2,29 2,11" fill="none" stroke="#ff00aa" stroke-width="0.5"/>
+                </pattern></defs>
+                <rect width="100%" height="100%" fill="url(#pc)"/>
+              </svg>
+              <div class="corrupt-label mn" style="color:rgba(255,0,170,.55);font-size:8px;letter-spacing:4px">DATA_CORRUPT</div>
+              <svg width="44" height="38" viewBox="0 0 44 38" style="opacity:.16">
+                <polygon points="22,2 42,13 42,35 22,46 2,35 2,13" fill="none" stroke="#ff00aa" stroke-width="1"/>
+                <circle cx="22" cy="24" r="4" fill="#ff00aa" opacity=".7"/>
+              </svg>
+              <div class="corrupt-sub mn" style="color:rgba(255,0,170,.45);font-size:8px;letter-spacing:2px">CYBER IMAGE</div>
+              <div class="corrupt-bar-wrap"><div class="corrupt-bar" style="background:linear-gradient(90deg,#ff00aa,rgba(255,0,170,.4))"></div></div>
+              <div class="corrupt-pct mn" style="color:rgba(255,0,170,.38);font-size:7px;letter-spacing:2px">LOADING...</div>
+            </div>
+          </div>
+
+          <!-- FOTO CAPTION -->
+          <div class="img-caption" style="border-color:#ff00aa;">
+            <div class="cap-tag mn" style="color:#ff00aa;">// IMAGE DIRECTIVE</div>
+            <p class="cap-text"
+              data-lang='{"en":"Street operative — the augmented human. Green neon light cuts through the noise. The body as interface, the face as firewall.","nl":"Straat-operatief — de versterkte mens. Groen neonlicht snijdt door de ruis. Het lichaam als interface, het gezicht als firewall."}'>
+              Street operative — the augmented human. Green neon light cuts through the noise. The body as interface, the face as firewall.
+            </p>
+          </div>
+        </div>
+
+        <!-- TEKST KOLOM — rechts op desktop -->
+        <div class="rr text-col" data-obs-reveal="cyber-txt" style="order:2;">
+          <div class="mob-glass-wrap">
+            <div class="slbl" style="color:#ff00aa">
+              <span class="slbl-line" style="background:#ff00aa"></span>
+              <span data-lang='{"en":"// 04 — Transhumanism &amp; Neural Economy","nl":"// 04 — Transhumanisme &amp; Neurale Economie"}'>// 04 — Transhumanism &amp; Neural Economy</span>
+            </div>
+            <div class="era-lbl mn" style="color:rgba(255,0,170,.48);"
+              data-lang='{"en":"2112 — The Wetware Revolution","nl":"2112 — De Wetware Revolutie"}'>
+              2112 — The Wetware Revolution
+            </div>
+            <h2 class="section-title">
+              <span style="color:#ff00aa">CYBERPUNK</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"HORIZON:","nl":"HORIZON:"}'>HORIZON:</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"ROOT ACCESS","nl":"ROOT TOEGANG"}'>ROOT ACCESS</span>
+            </h2>
+            <p class="prose-sub sr" data-lang='{"en":"Where the boundary between silicon and synapse has dissolved — and the question is who controls the merge protocol.","nl":"Waar de grens tussen silicium en synaps is opgelost — en de vraag is wie het fusieprotocol beheert."}'>
+              Where the boundary between silicon and synapse has dissolved — and the question is who controls the merge protocol.
+            </p>
+            <p class="prose" data-lang='{"en":"The brainstem is now a digital wallet. Neural implants execute Proof-of-Thought transactions: cryptographically signed financial impulses verified by the electromagnetic signature of individual consciousness.","nl":"De hersenstam is nu een digitale portemonnee. Neurale implantaten voeren Proof-of-Thought transacties uit: cryptografisch ondertekende financiële impulsen geverifieerd door de elektromagnetische handtekening van bewustzijn."}'>
+              The brainstem is now a digital wallet. Neural implants execute Proof-of-Thought transactions: cryptographically signed financial impulses verified by the electromagnetic signature of individual consciousness.
+            </p>
+            <!-- Neural Cards -->
+            <div style="margin-bottom:1.3rem;">
+              <div class="ncard" style="border:0.5px solid rgba(255,0,170,.2);background:rgba(255,0,170,.05);"
+                onmouseenter="this.style.background='rgba(255,0,170,.1)';this.style.borderColor='rgba(255,0,170,.4)'"
+                onmouseleave="this.style.background='rgba(255,0,170,.05)';this.style.borderColor='rgba(255,0,170,.2)'">
+                <div class="ncard-corner" style="border-top:1px solid #ff00aa;border-right:1px solid #ff00aa;"></div>
+                <div class="ncard-tag mn" style="color:#ff00aa;">// Neural Economy</div>
+                <div class="ncard-title" data-lang='{"en":"The Brainstem Wallet","nl":"De Hersenstamportemonnee"}'>The Brainstem Wallet</div>
+                <div class="ncard-desc" data-lang='{"en":"Transactions via encrypted theta-wave pulses verified against a distributed ledger. Latency: 0.04ms. Every involuntary product-thought triggers a micro-debit if the Desire Protocol runs. Most users have it running.","nl":"Transacties via versleutelde theta-golfpulsen. Betalingslatentie: 0.04ms. Elke onvrijwillige gedachte triggert een micro-debet als het Verlangprotocol actief is."}'>
+                  Transactions via encrypted theta-wave pulses verified against a distributed ledger. Latency: 0.04ms. Every involuntary product-thought triggers a micro-debit if the Desire Protocol runs. Most users have it running.
+                </div>
+              </div>
+              <div class="ncard" style="border:0.5px solid rgba(255,0,170,.2);background:rgba(255,0,170,.05);"
+                onmouseenter="this.style.background='rgba(255,0,170,.1)';this.style.borderColor='rgba(255,0,170,.4)'"
+                onmouseleave="this.style.background='rgba(255,0,170,.05)';this.style.borderColor='rgba(255,0,170,.2)'">
+                <div class="ncard-corner" style="border-top:1px solid #ff00aa;border-right:1px solid #ff00aa;"></div>
+                <div class="ncard-tag mn" style="color:#ff00aa;">// Wetware Capabilities</div>
+                <div class="ncard-title" data-lang='{"en":"The Augmented Mind","nl":"De Versterkte Geest"}'>The Augmented Mind</div>
+                <div class="ncard-desc" data-lang='{"en":"Gen-4 cortical implants: 8 teraflop co-processing; full language acquisition via 6-hour upload; real-time sensory streaming from any Earth-networked sensor; eidetic cloud memory.","nl":"Gen-4 corticale implantaten: 8 teraflop co-verwerking; volledige taalverwerving via 6-uurs upload; real-time sensorische streaming; eideëtisch cloudgeheugen."}'>
+                  Gen-4 cortical implants: 8 teraflop co-processing; full language acquisition via 6-hour upload; real-time sensory streaming from any Earth-networked sensor; eidetic cloud memory.
+                </div>
+              </div>
+              <div class="ncard" style="border:0.5px solid rgba(255,34,68,.3);background:rgba(255,34,68,.07);"
+                onmouseenter="this.style.background='rgba(255,34,68,.12)';this.style.borderColor='rgba(255,34,68,.5)'"
+                onmouseleave="this.style.background='rgba(255,34,68,.07)';this.style.borderColor='rgba(255,34,68,.3)'">
+                <div class="ncard-corner" style="border-top:1px solid #ff2244;border-right:1px solid #ff2244;"></div>
+                <div class="ncard-tag mn" style="color:#ff2244;">// Ethics Alert</div>
+                <div class="ncard-title" data-lang='{"en":"Root Access &amp; Cognitive Sovereignty","nl":"Root Toegang &amp; Cognitieve Soevereiniteit"}'>Root Access &amp; Cognitive Sovereignty</div>
+                <div class="ncard-desc" data-lang='{"en":"Neural ransomware has disabled 340,000 people this year. State actors deploy cognitive influence malware reshaping political opinion at the level of implicit memory formation.","nl":"Neurale ransomware heeft dit jaar 340.000 mensen uitgeschakeld. Staatactoren zetten cognitieve invloedmalware in die meningen hervormt op het niveau van impliciete geheugenvorming."}'>
+                  Neural ransomware has disabled 340,000 people this year. State actors deploy cognitive influence malware reshaping political opinion at the level of implicit memory formation.
+                </div>
+              </div>
+            </div>
+            <button class="cta-btn mn" style="border-color:#ff00aa;color:#ff00aa;background:rgba(255,0,170,.1);"
+              onmouseenter="this.style.background='#ff00aa';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(255,0,170,.1)';this.style.color='#ff00aa'"
+              onclick="goTo('hero')"
+              data-lang='{"en":"Return to the Beginning ∞","nl":"Terug naar het Begin ∞"}'>
+              Return to the Beginning ∞
+            </button>
+            <p class="meta-txt" style="color:rgba(255,0,170,.28);"
+              data-lang='{"en":"META: The neural economy is being designed now. The question is whether it extracts consciousness itself.","nl":"META: De neurale economie wordt nu ontworpen. De vraag is of het uw eigen bewustzijn zal onttrekken."}'>
+              META: The neural economy is being designed now. The question is whether it extracts consciousness itself.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         GALERIJ STRIP
+    ══════════════════════════════════════════════════ -->
+    <div id="gallery">
+      <div class="gallery-label mn">// Visual Archive — Five Futures Captured</div>
+      <div class="gallery-grid">
+        <!-- Gallery item 1 -->
+        <div class="gallery-item" style="border-color:transparent;"
+          onmouseenter="this.style.borderColor='rgba(255,0,170,.28)'"
+          onmouseleave="this.style.borderColor='transparent'">
+          <!-- ══════════════════════════════════════════════
+               GALLERY FOTO 1
+               Vervang de DataCorrupt placeholder met:
+               <img src="data:image/jpeg;base64,..." alt="Visor Protocol"/>
+               of: <img src="./images/gallery-1.jpg" alt="Visor Protocol"/>
+          ══════════════════════════════════════════════ -->
+          <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(255,0,170,.4)">G1_CORRUPT</div>
+          </div>
+          <div class="gallery-overlay"></div>
+          <div class="gallery-meta">
+            <div class="gallery-tag" style="color:#ff00aa;">// Operative</div>
+            <div class="gallery-name" data-lang='{"en":"Visor Protocol","nl":"Visier Protocol"}'>Visor Protocol</div>
+          </div>
+        </div>
+        <!-- Gallery item 2 -->
+        <div class="gallery-item"
+          onmouseenter="this.style.borderColor='rgba(0,245,255,.28)'"
+          onmouseleave="this.style.borderColor='transparent'">
+          <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(0,245,255,.4)">G2_CORRUPT</div>
+          </div>
+          <div class="gallery-overlay"></div>
+          <div class="gallery-meta">
+            <div class="gallery-tag" style="color:#00f5ff;">// Reflection</div>
+            <div class="gallery-name" data-lang='{"en":"Neon Mirror","nl":"Neon Spiegel"}'>Neon Mirror</div>
+          </div>
+        </div>
+        <!-- Gallery item 3 -->
+        <div class="gallery-item"
+          onmouseenter="this.style.borderColor='rgba(255,34,68,.28)'"
+          onmouseleave="this.style.borderColor='transparent'">
+          <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(255,34,68,.4)">G3_CORRUPT</div>
+          </div>
+          <div class="gallery-overlay"></div>
+          <div class="gallery-meta">
+            <div class="gallery-tag" style="color:#ff2244;">// Machine</div>
+            <div class="gallery-name" data-lang='{"en":"No Future Head","nl":"Geen Toekomst"}'>No Future Head</div>
+          </div>
+        </div>
+        <!-- Gallery item 4 -->
+        <div class="gallery-item"
+          onmouseenter="this.style.borderColor='rgba(0,245,255,.28)'"
+          onmouseleave="this.style.borderColor='transparent'">
+          <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(0,245,255,.4)">G4_CORRUPT</div>
+          </div>
+          <div class="gallery-overlay"></div>
+          <div class="gallery-meta">
+            <div class="gallery-tag" style="color:#00f5ff;">// Threshold</div>
+            <div class="gallery-name" data-lang='{"en":"Portal Event","nl":"Portaal"}'>Portal Event</div>
+          </div>
+        </div>
+        <!-- Gallery item 5 -->
+        <div class="gallery-item"
+          onmouseenter="this.style.borderColor='rgba(34,197,94,.28)'"
+          onmouseleave="this.style.borderColor='transparent'">
+          <div class="data-corrupt" style="height:100%;background:rgba(2,4,8,.95);">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:3px;color:rgba(34,197,94,.4)">G5_CORRUPT</div>
+          </div>
+          <div class="gallery-overlay"></div>
+          <div class="gallery-meta">
+            <div class="gallery-tag" style="color:#22c55e;">// Signal</div>
+            <div class="gallery-name" data-lang='{"en":"Green Operative","nl":"Groene Operatief"}'>Green Operative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════════════ -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-lbl mn">
+            <span style="color:#ff00aa">// </span>HUMANITY_OS
+          </div>
+          <p class="footer-desc"
+            data-lang='{"en":"A speculative cartography of the human condition — four possible futures mapped through technology, ecology, economics, and consciousness.","nl":"Een speculatieve cartografie van de menselijke conditie — vier mogelijke toekomsten in kaart gebracht via technologie, ecologie, economie en bewustzijn."}'>
+            A speculative cartography of the human condition — four possible futures mapped through technology, ecology, economics, and consciousness.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title mn" data-lang='{"en":"Navigation","nl":"Navigatie"}'>Navigation</div>
+          <ul class="footer-links">
+            <li><button class="footer-link" onclick="goTo('utopia')" data-lang='{"en":"Utopia — The Optimised Society","nl":"Utopia — De Geoptimaliseerde Samenleving"}'>Utopia — The Optimised Society</button></li>
+            <li><button class="footer-link" onclick="goTo('dystopia')" data-lang='{"en":"Dystopia — The Machine Night","nl":"Dystopie — De Machinennacht"}'>Dystopia — The Machine Night</button></li>
+            <li><button class="footer-link" onclick="goTo('future')" data-lang='{"en":"Expected — The Adaptive Age","nl":"Verwacht — Het Adaptieve Tijdperk"}'>Expected — The Adaptive Age</button></li>
+            <li><button class="footer-link" onclick="goTo('cyber')" data-lang='{"en":"Cyberpunk — Neural Economy","nl":"Cyberpunk — Neurale Economie"}'>Cyberpunk — Neural Economy</button></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title mn" data-lang='{"en":"Key Themes","nl":"Kernthema\'s"}'>Key Themes</div>
+          <ul class="footer-themes">
+            <li class="footer-theme" data-lang='{"en":"Proof-of-Thought Transactions","nl":"Proof-of-Thought Transacties"}'>Proof-of-Thought Transactions</li>
+            <li class="footer-theme" data-lang='{"en":"Wetware &amp; Cognitive Augmentation","nl":"Wetware &amp; Cognitieve Versterking"}'>Wetware &amp; Cognitive Augmentation</li>
+            <li class="footer-theme" data-lang='{"en":"Algorithmic Tyranny","nl":"Algoritmische Tirannie"}'>Algorithmic Tyranny</li>
+            <li class="footer-theme" data-lang='{"en":"Climate Adaptation Design","nl":"Klimaatadaptatie Ontwerp"}'>Climate Adaptation Design</li>
+            <li class="footer-theme" data-lang='{"en":"Post-Scarcity Economics","nl":"Post-Schaarste Economie"}'>Post-Scarcity Economics</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy mn" data-lang='{"en":"© 2087 HUMANITY_OS — OPEN SOURCE FUTURES // BUILD_2.0.0","nl":"© 2087 MENSHEID_OS — OPEN SOURCE TOEKOMSTEN // BUILD_2.0.0"}'>
+          © 2087 HUMANITY_OS — OPEN SOURCE FUTURES // BUILD_2.0.0
+        </span>
+        <div class="footer-status">
+          <div class="status-dot"></div>
+          <span data-lang='{"en":"All Futures Online","nl":"Alle Toekomsten Online"}'>All Futures Online</span>
+        </div>
+      </div>
+    </footer>
+
+  </main><!-- end #main-scroll -->
+</div><!-- end #app -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// HUMANITY_OS — JavaScript
+// ═══════════════════════════════════════════════════════════
+
+// ── TAAL ──────────────────────────────────────────────────
+let lang = 'en';
+
+function toggleLang() {
+  lang = lang === 'en' ? 'nl' : 'en';
+  document.getElementById('lang-btn').textContent = lang === 'en' ? '[ EN // NL ]' : '[ NL // EN ]';
+  applyLang();
+}
+
+function applyLang() {
+  // Alle elementen met data-lang attribuut bijwerken
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    try {
+      const map = JSON.parse(el.getAttribute('data-lang'));
+      if (map[lang]) el.textContent = map[lang];
+    } catch(e) {}
+  });
+  // Hero t1 glitch-tekst
+  const t1 = document.querySelector('.hero-h1 .t1');
+  if (t1) {
+    const val = lang === 'en' ? 'HUMANITY' : 'MENSHEID';
+    t1.textContent = val;
+    t1.setAttribute('data-t', val);
+  }
+  // Sectie hero boot tekst
+  const boot = document.querySelector('.hero-boot');
+  if (boot) {
+    boot.innerHTML = (lang === 'en' ? 'SYSTEM BOOT SEQUENCE' : 'SYSTEEM OPSTART SEQUENTIE') + ' <span style="animation:blink 1s infinite;display:inline-block">_</span>';
+  }
+  // Gallery label
+  const glbl = document.querySelector('.gallery-label');
+  if (glbl) glbl.textContent = lang === 'en' ? '// Visual Archive — Five Futures Captured' : '// Visueel Archief — Vijf Toekomsten Vastgelegd';
+}
+
+// ── NAVIGATIE ──────────────────────────────────────────────
+function goTo(id) {
+  const main = document.getElementById('main-scroll');
+  const target = document.getElementById(id);
+  if (main && target) {
+    main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+  }
+}
+
+// ── MOBIEL MENU ────────────────────────────────────────────
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+}
+
+// ── SCROLL VOORTGANG + ACTIEVE SECTIE ──────────────────────
+const mainScroll = document.getElementById('main-scroll');
+const progressBar = document.getElementById('scroll-progress');
+const sections = ['hero','utopia','dystopia','future','cyber'];
+const navLinks = document.querySelectorAll('.nav-link[data-section]');
+const dots = document.querySelectorAll('.dot[data-target]');
+
+mainScroll.addEventListener('scroll', () => {
+  // Voortgangsbalk
+  const total = mainScroll.scrollHeight - mainScroll.clientHeight;
+  const pct = total > 0 ? (mainScroll.scrollTop / total) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
+
+// ── INTERSECTION OBSERVER ──────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const id = entry.target.getAttribute('data-obs');
+    if (entry.isIntersecting && id) {
+      // Sectie actief markeren
+      if (sections.includes(id)) {
+        dots.forEach(d => d.classList.toggle('active', d.getAttribute('data-target') === id));
+        navLinks.forEach(l => {
+          const sec = l.getAttribute('data-section');
+          const colors = { utopia:'#2dd4bf', dystopia:'#ff2244', future:'#00f5ff', cyber:'#ff00aa', hero:'#00f5ff' };
+          l.classList.toggle('active', sec === id);
+          l.style.color = sec === id ? (colors[id] || '#00f5ff') : 'rgba(232,244,248,.4)';
+        });
+      }
+    }
+  });
+}, { root: mainScroll, threshold: 0.18 });
+
+// Scroll-reveal observer
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('vis');
+    }
+  });
+}, { root: mainScroll, threshold: 0.1 });
+
+document.querySelectorAll('[data-obs]').forEach(el => observer.observe(el));
+
+// Reveal animaties op alle .rl en .rr elementen
+document.querySelectorAll('.rl, .rr, .rv').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ── DATA REGEN GENEREREN ───────────────────────────────────
+const dataRain = document.getElementById('data-rain');
+for (let i = 0; i < 12; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'rain-drop';
+  const opacity = (0.06 + Math.random() * 0.11).toFixed(3);
+  const height = Math.floor(42 + Math.random() * 70);
+  const delay = (Math.random() * 9).toFixed(2);
+  const dur = (5 + Math.random() * 7).toFixed(2);
+  drop.style.cssText = `
+    left:${4 + i * 8}%;
+    height:${height}px;
+    background:linear-gradient(180deg,transparent,rgba(0,245,255,${opacity}),transparent);
+    animation:dataFall ${dur}s linear infinite;
+    animation-delay:${delay}s;
+  `;
+  dataRain.appendChild(drop);
+}
+
+// ── MOBIEL GLASSMORPHISM ───────────────────────────────────
+function applyMobileGlass() {
+  const isMob = window.innerWidth < 768;
+  document.querySelectorAll('.mob-glass-wrap').forEach(el => {
+    if (isMob) el.classList.add('mob-glass');
+    else el.classList.remove('mob-glass');
+  });
+  // Mobile: foto boven, tekst onder
+  document.querySelectorAll('.section-grid').forEach(grid => {
+    const photoCols = grid.querySelectorAll('.photo-col');
+    const textCols = grid.querySelectorAll('.text-col');
+    if (isMob) {
+      photoCols.forEach(c => c.style.order = '1');
+      textCols.forEach(c => c.style.order = '2');
+    } else {
+      // Herstel de desktop volgorde — future en cyber: foto links
+      const section = grid.closest('section');
+      if (section && (section.id === 'future' || section.id === 'cyber')) {
+        photoCols.forEach(c => c.style.order = '1');
+        textCols.forEach(c => c.style.order = '2');
+      } else {
+        // Utopia en dystopia: tekst links, foto rechts
+        textCols.forEach(c => c.style.order = '1');
+        photoCols.forEach(c => c.style.order = '2');
+      }
+    }
+  });
+}
+
+applyMobileGlass();
+window.addEventListener('resize', applyMobileGlass);
+
+// ── HERO INITIAL VIS ───────────────────────────────────────
+// Hero is direct zichtbaar
+document.querySelector('#hero').setAttribute('data-obs', 'hero');
+</script>
+</body>
+</html>
