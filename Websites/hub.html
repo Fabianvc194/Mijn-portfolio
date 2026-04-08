@@ -4,353 +4,677 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FVC | Command Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #030712;
-            --card-bg: rgba(17, 24, 39, 0.7);
+            --bg: #020810;
+            --bg2: #07101f;
+            --card-bg: rgba(10, 18, 35, 0.8);
             --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --terminal-green: #4ade80;
-            --border: rgba(255, 255, 255, 0.08);
-            --warning: #fbbf24;
-            --danger: #ef4444; /* Rood voor Kinetic */
-            --danger-glow: rgba(239, 68, 68, 0.3);
+            --accent-dim: rgba(56, 189, 248, 0.15);
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text: #e2eaf7;
+            --text-muted: #5a7599;
+            --text-soft: #8aa5c4;
+            --terminal-green: #34d399;
+            --green-dim: rgba(52, 211, 153, 0.12);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(56, 189, 248, 0.35);
+            --warning: #f59e0b;
+            --warning-dim: rgba(245, 158, 11, 0.12);
+            --danger: #f87171;
+            --danger-dim: rgba(248, 113, 113, 0.12);
+            --danger-glow: rgba(248, 113, 113, 0.25);
+            --scan-line: rgba(56, 189, 248, 0.03);
         }
 
-        /* --- RESET & BASE --- */
-        * { box-sizing: border-box; }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: var(--bg);
-            background-image: 
-                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
-                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            margin: 0;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 48px 24px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* Subtle scan-line overlay */
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    var(--scan-line) 0px,
+                    var(--scan-line) 1px,
+                    transparent 1px,
+                    transparent 4px
+                ),
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(56,189,248,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 0% 100%, rgba(14,30,55,0.6) 0%, transparent 50%);
         }
 
-        /* --- ANIMATIONS --- */
+        /* ── GRID NOISE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56,189,248,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56,189,248,0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Everything above the overlay */
+        header, .main-container { position: relative; z-index: 1; }
+
+        /* ── ANIMATIONS ── */
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.3; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
         }
 
         .animate {
             opacity: 0;
-            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
+        .d1 { animation-delay: 0.05s; }
+        .d2 { animation-delay: 0.15s; }
+        .d3 { animation-delay: 0.25s; }
+        .d4 { animation-delay: 0.35s; }
+        .d5 { animation-delay: 0.45s; }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-
-        /* --- HEADER --- */
+        /* ── HEADER ── */
         header {
             width: 100%;
-            max-width: 1000px;
-            margin-bottom: 40px;
+            max-width: 1020px;
+            margin-bottom: 44px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
+            padding-bottom: 18px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
         }
 
-        header h1 { 
-            font-family: 'Fira Code', monospace; 
-            font-size: 1.4rem; 
-            color: var(--accent); 
-            margin: 0;
-            letter-spacing: -1px;
+        .header-left { display: flex; flex-direction: column; gap: 4px; }
+
+        header h1 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -0.5px;
+            /* Shimmer on load */
+            background: linear-gradient(90deg, var(--accent), #bae6fd, var(--accent));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear 0.8s 1 forwards;
         }
+
+        .header-sub {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .header-right { display: flex; align-items: center; gap: 12px; }
 
         .status-badge {
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            background: rgba(74, 222, 128, 0.1);
+            font-size: 0.7rem;
+            background: var(--green-dim);
             color: var(--terminal-green);
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 4px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            letter-spacing: 0.5px;
         }
 
-        /* --- LAYOUT CONTAINER --- */
+        .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--terminal-green);
+            animation: pulse-dot 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        /* ── MAIN LAYOUT ── */
         .main-container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1020px;
             display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 30px;
+            grid-template-columns: 1fr 310px;
+            gap: 28px;
         }
 
-        /* --- BUTTONS --- */
+        /* ── SECTION LABEL ── */
+        .section-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ── QUICK ACTION BUTTONS ── */
         .btn-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 32px;
         }
 
         .btn {
-            padding: 14px;
-            border-radius: 10px;
+            padding: 13px 16px;
+            border-radius: 8px;
             text-decoration: none;
             font-family: 'Fira Code', monospace;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            font-size: 0.78rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Onopvallende stijl voor bovenste knoppen */
-        .btn-neutral { 
-            background: rgba(255, 255, 255, 0.03); 
-            color: var(--text-muted); 
-            border: 1px solid var(--border); 
+        .btn .icon {
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: transform 0.25s;
         }
-        .btn-neutral:hover { 
-            background: rgba(255, 255, 255, 0.08); 
-            color: var(--text); 
-            border-color: var(--text-muted);
+
+        .btn:hover .icon { transform: scale(1.15) rotate(-5deg); }
+
+        .btn .label { display: flex; flex-direction: column; gap: 2px; text-align: left; }
+        .btn .label .title { font-size: 0.78rem; font-weight: 600; }
+        .btn .label .sub { font-size: 0.63rem; letter-spacing: 1px; opacity: 0.6; }
+
+        .btn .arrow {
+            margin-left: auto;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.22s;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover .arrow { opacity: 1; transform: translateX(0); }
+
+        .btn-mail {
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            color: var(--terminal-green);
+        }
+        .btn-mail .icon { background: var(--green-dim); }
+        .btn-mail:hover {
+            background: var(--green-dim);
+            border-color: var(--terminal-green);
+            box-shadow: 0 8px 28px rgba(52,211,153,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
             transform: translateY(-2px);
         }
 
-        /* --- SECTIONS --- */
-        .section-label {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
-            letter-spacing: 1px;
+        .btn-hub {
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--accent);
+        }
+        .btn-hub .icon { background: var(--accent-dim); }
+        .btn-hub:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            box-shadow: 0 8px 28px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.05);
+            transform: translateY(-2px);
         }
 
+        /* ── GLOBAL SHORTCUTS ── */
         .link-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 35px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 32px;
         }
 
         .link-card {
             background: var(--card-bg);
-            padding: 15px;
+            padding: 14px 12px;
             border-radius: 8px;
             text-decoration: none;
-            color: var(--text);
+            color: var(--text-soft);
             text-align: center;
             font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             border: 1px solid var(--border);
-            transition: 0.2s;
-            backdrop-filter: blur(8px);
+            transition: all 0.22s ease;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
         }
+
+        .link-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.22s ease;
+        }
+
+        .link-card:hover::after { transform: scaleX(1); }
 
         .link-card:hover {
-            border-color: var(--accent);
-            background: rgba(56, 189, 248, 0.05);
-            transform: scale(1.03);
+            border-color: var(--border-hover);
+            background: var(--accent-dim);
             color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--accent-glow);
         }
 
-        /* --- EXPERIMENT & DEV CARDS --- */
+        /* ── CARD BASE ── */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 20px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .experiment-btn {
-            display: block;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid var(--warning);
-            color: var(--warning);
-            padding: 15px;
+        /* Subtle corner accent */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle at top left, rgba(56,189,248,0.07), transparent 70%);
+            pointer-events: none;
+        }
+
+        .card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* ── EXPERIMENT BUTTONS ── */
+        .exp-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: transparent;
+            padding: 14px 16px;
             border-radius: 8px;
             text-decoration: none;
             font-family: 'Fira Code', monospace;
-            font-weight: bold;
-            text-align: center;
-            transition: 0.3s;
+            font-weight: 500;
+            font-size: 0.82rem;
             margin-top: 10px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .experiment-btn:hover {
-            background: var(--warning);
-            color: var(--bg);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        .exp-btn .icon {
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: transform 0.25s;
+        }
+
+        .exp-btn:hover .icon { transform: scale(1.15) rotate(-5deg); }
+
+        .exp-btn .label { display: flex; flex-direction: column; gap: 2px; }
+        .exp-btn .label .title { font-size: 0.8rem; font-weight: 600; }
+        .exp-btn .label .sub { font-size: 0.65rem; letter-spacing: 1px; opacity: 0.6; }
+
+        .exp-btn .arrow {
+            margin-left: auto;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.22s;
+            font-size: 0.9rem;
+        }
+
+        .exp-btn:hover .arrow { opacity: 1; transform: translateX(0); }
+
+        /* Warning theme */
+        .exp-warning {
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--warning);
+        }
+        .exp-warning .icon { background: var(--warning-dim); }
+        .exp-warning:hover {
+            background: var(--warning-dim);
+            border-color: var(--warning);
+            box-shadow: 0 8px 28px rgba(245,158,11,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
             transform: translateY(-2px);
         }
 
-        /* LEARN KNOP (Blauw Thema) */
-        .learn-btn {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            margin-top: 15px;
-        }
-
-        .learn-btn:hover {
-            background: var(--accent);
-            color: var(--bg);
-            box-shadow: 0 0 20px var(--accent-glow);
-            transform: translateY(-2px);
-        }
-
-        /* NEXT GEN KNOP (Rood Thema) */
-        .nextgen-btn {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
+        /* Danger theme */
+        .exp-danger {
+            border: 1px solid rgba(248, 113, 113, 0.25);
             color: var(--danger);
-            margin-top: 15px;
         }
-
-        .nextgen-btn:hover {
-            background: var(--danger);
-            color: var(--text);
-            box-shadow: 0 0 20px var(--danger-glow);
+        .exp-danger .icon { background: var(--danger-dim); }
+        .exp-danger:hover {
+            background: var(--danger-dim);
+            border-color: var(--danger);
+            box-shadow: 0 8px 28px var(--danger-glow), inset 0 1px 0 rgba(255,255,255,0.05);
             transform: translateY(-2px);
         }
-        
+
+        /* Accent theme */
+        .exp-accent {
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--accent);
+        }
+        .exp-accent .icon { background: var(--accent-dim); }
+        .exp-accent:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            box-shadow: 0 8px 28px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ── SIDEBAR ── */
         .github-link {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--text-muted);
+            color: var(--text-soft);
             text-decoration: none;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            padding: 10px;
+            font-size: 0.82rem;
+            font-family: 'Fira Code', monospace;
+            padding: 9px 10px;
             border-radius: 6px;
             border: 1px solid transparent;
-            transition: 0.2s;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .github-link .gh-icon {
+            width: 24px; height: 24px;
+            border-radius: 5px;
+            background: var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+            flex-shrink: 0;
         }
 
         .github-link:hover {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border-color: var(--border);
             color: var(--text);
         }
 
-        @media (max-width: 850px) {
+        .github-link:hover .gh-icon { background: var(--accent-dim); }
+
+        /* ── STATS CARD ── */
+        .stats-card {
+            border-left: 2px solid var(--terminal-green);
+        }
+
+        .stats-card::before {
+            background: radial-gradient(circle at top left, rgba(52,211,153,0.06), transparent 70%);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.73rem;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .stat-val { font-weight: 500; }
+        .stat-val.green  { color: var(--terminal-green); }
+        .stat-val.yellow { color: var(--warning); }
+        .stat-val.blue   { color: var(--accent); }
+
+        /* Blinking cursor for uptime */
+        .cursor {
+            display: inline-block;
+            width: 7px; height: 12px;
+            background: var(--terminal-green);
+            vertical-align: middle;
+            margin-left: 3px;
+            animation: blink 1s step-end infinite;
+        }
+
+        /* ── MINI PROGRESS BAR ── */
+        .mini-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .mini-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--terminal-green), var(--accent));
+            transition: width 1s ease;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 860px) {
             .main-container { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+            header { flex-direction: column; align-items: flex-start; gap: 12px; }
             .btn-group { grid-template-columns: 1fr; }
             .link-grid { grid-template-columns: repeat(2, 1fr); }
-            body { padding: 20px 15px; }
-            header h1 { font-size: 1.1rem; }
+            body { padding: 24px 16px 60px; }
+            header h1 { font-size: 1.05rem; }
         }
     </style>
 </head>
 <body>
 
-    <header class="animate">
-        <h1>FVC://SYSTEM_CONTROL</h1>
-        <div class="status-badge">STATUS: OPERATIONAL</div>
+    <header class="animate d1">
+        <div class="header-left">
+            <h1>FVC://SYSTEM_CONTROL</h1>
+            <span class="header-sub">PERSONAL COMMAND CENTER · v2.1</span>
+        </div>
+        <div class="header-right">
+            <div class="status-badge">
+                <span class="dot"></span>
+                OPERATIONAL
+            </div>
+        </div>
     </header>
 
     <div class="main-container">
         <main>
-            <div class="btn-group animate delay-1">
-                <a href="mailto:fvc1994@live.nl" class="btn btn-neutral">✉ SEND_MAIL(fvc1994)</a>
-                <a href="#" target="_blank" class="btn btn-neutral">⚡ CONNECT_HUB_SERVER</a>
+
+            <!-- Quick Actions -->
+            <div class="btn-group animate d2">
+                <a href="mailto:fvc1994@live.nl" class="btn btn-mail">
+                    <div class="icon">✉</div>
+                    <div class="label">
+                        <span class="title">SEND_MAIL</span>
+                        <span class="sub">fvc1994@live.nl</span>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="#" target="_blank" class="btn btn-hub">
+                    <div class="icon">⚡</div>
+                    <div class="label">
+                        <span class="title">CONNECT_HUB</span>
+                        <span class="sub">SERVER · STANDBY</span>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
             </div>
 
-            <span class="section-label animate delay-1">Global Shortcuts</span>
-            <div class="link-grid animate delay-1">
-                <a href="https://youtube.com" target="_blank" class="link-card">Youtube</a>
-                <a href="https://tweakers.net" target="_blank" class="link-card">Tweakers</a>
-                <a href="https://google.nl" target="_blank" class="link-card">Google</a>
-                <a href="https://gemini.google.com" target="_blank" class="link-card">Gemini</a>
-                <a href="https://perplexity.ai" target="_blank" class="link-card">Perplexity</a>
-                <a href="https://chat.openai.com" target="_blank" class="link-card">ChatGPT</a>
+            <!-- Global Shortcuts -->
+            <span class="section-label animate d2">Global Shortcuts</span>
+            <div class="link-grid animate d2">
+                <a href="https://youtube.com"        target="_blank" class="link-card">Youtube</a>
+                <a href="https://tweakers.net"       target="_blank" class="link-card">Tweakers</a>
+                <a href="https://google.nl"          target="_blank" class="link-card">Google</a>
+                <a href="https://gemini.google.com"  target="_blank" class="link-card">Gemini</a>
+                <a href="https://perplexity.ai"      target="_blank" class="link-card">Perplexity</a>
+                <a href="https://chat.openai.com"    target="_blank" class="link-card">ChatGPT</a>
             </div>
 
-            <span class="section-label animate delay-2">R&D / Sandbox</span>
-            <div class="card animate delay-2">
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">
-                    Toegang tot experimentele features en alternatieve interfaces.
-                </p>
-                
-                <a href="Experimentv2.html" class="experiment-btn">
-                    🧪 LAUNCH_EXPERIMENT_V2
+            <!-- R&D Sandbox -->
+            <span class="section-label animate d3">R&amp;D / Sandbox</span>
+            <div class="card animate d3">
+                <p>Toegang tot experimentele features en alternatieve interfaces.</p>
+
+                <a href="Experimentv2.html" class="exp-btn exp-warning">
+                    <div class="icon">🧪</div>
+                    <div class="label">
+                        <span class="title">LAUNCH_EXPERIMENT_V2</span>
+                        <span class="sub">SANDBOX · UNSTABLE</span>
+                    </div>
+                    <span class="arrow">→</span>
                 </a>
 
-                 <a href="Humanity_OS.html" class="experiment-btn nextgen-btn">
-                    ☄️ KINETIC_NEXTGEN_PREVIEW
+                <a href="Humanity_OS.html" class="exp-btn exp-danger">
+                    <div class="icon">☄️</div>
+                    <div class="label">
+                        <span class="title">KINETIC_NEXTGEN_PREVIEW</span>
+                        <span class="sub">CLASSIFIED · RESTRICTED</span>
+                    </div>
+                    <span class="arrow">→</span>
                 </a>
 
-                <a href="learn.html" class="experiment-btn learn-btn">
-                    🧠 NEURAL_SYNC_PROTOCOL (LEARN)
+                <a href="learn.html" class="exp-btn exp-accent">
+                    <div class="icon">🧠</div>
+                    <div class="label">
+                        <span class="title">NEURAL_SYNC_PROTOCOL</span>
+                        <span class="sub">LEARN · ACTIVE SESSION</span>
+                    </div>
+                    <span class="arrow">→</span>
                 </a>
-
             </div>
+
         </main>
 
-        <aside class="animate delay-3">
-            <span class="section-label">GitHub Environment</span>
-            <div class="card">
+        <aside>
+            <!-- GitHub -->
+            <span class="section-label animate d3">GitHub Environment</span>
+            <div class="card animate d3">
                 <a href="https://github.com/Fabianvc194?tab=repositories" target="_blank" class="github-link">
-                    <span>📂 Mijn Repositories</span>
+                    <div class="gh-icon">📂</div>
+                    <span>Mijn Repositories</span>
                 </a>
                 <a href="https://github.com/pulls" target="_blank" class="github-link">
-                    <span>🔀 Pull Requests</span>
+                    <div class="gh-icon">🔀</div>
+                    <span>Pull Requests</span>
                 </a>
                 <a href="https://github.com/gist" target="_blank" class="github-link">
-                    <span>📜 Code Snippets</span>
+                    <div class="gh-icon">📜</div>
+                    <span>Code Snippets</span>
                 </a>
                 <a href="https://stackoverflow.com" target="_blank" class="github-link">
-                    <span>💬 Stack Overflow</span>
+                    <div class="gh-icon">💬</div>
+                    <span>Stack Overflow</span>
                 </a>
             </div>
 
-            <span class="section-label">System Stats</span>
-            <div class="card" style="border-left: 3px solid var(--terminal-green);">
-                <div style="font-family: 'Fira Code', monospace; font-size: 0.75rem;">
-                    <p style="margin: 5px 0;">Uptime: <span id="uptime" style="color: var(--terminal-green);">0h 0m</span></p>
-                    <p style="margin: 5px 0;">Host: Localhost</p>
-                    <p style="margin: 5px 0;">Mode: <span style="color: var(--warning);">Dev_v2.1</span></p>
+            <!-- Stats -->
+            <span class="section-label animate d4">System Stats</span>
+            <div class="card stats-card animate d4">
+                <div class="stat-row">
+                    <span>UPTIME</span>
+                    <span class="stat-val green" id="uptime">0h 0m<span class="cursor"></span></span>
+                </div>
+                <div class="stat-row">
+                    <span>HOST</span>
+                    <span class="stat-val blue">Localhost</span>
+                </div>
+                <div class="stat-row">
+                    <span>MODE</span>
+                    <span class="stat-val yellow">Dev_v2.1</span>
+                </div>
+                <div class="stat-row">
+                    <span>SESSION</span>
+                    <span class="stat-val green" id="session-id">––</span>
+                </div>
+                <div class="stat-row">
+                    <span>LOAD</span>
+                    <span class="stat-val green" id="load-val">––</span>
+                </div>
+                <div class="mini-bar" style="margin-top: 12px;">
+                    <div class="mini-bar-fill" id="load-bar" style="width: 0%;"></div>
                 </div>
             </div>
+
         </aside>
     </div>
 
-    <script>
-        // Uptime counter
-        let start = new Date();
-        setInterval(() => {
-            let now = new Date();
-            let diff = Math.floor((now - start) / 1000);
-            let m = Math.floor(diff / 60) % 60;
-            let h = Math.floor(diff / 3600);
-            document.getElementById('uptime').innerText = `${h}h ${m}m`;
-        }, 10000);
-    </script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Uptime
+        const start = new Date();
+        function updateUptime() {
+            const diff = Math.floor((new Date() - start) / 1000);
+            const m = Math.floor(diff / 60) % 60;
+            const h = Math.floor(diff / 3600);
+            document.getElementById('uptime').innerHTML =
+                `${h}h ${m}m<span class="cursor"></span>`;
+        }
+        updateUptime();
+        setInterval(updateUptime, 10000);
 
-</body>
-</html>
+        // Session ID (random hex)
+        const sid = Math.random().toString(16).slice(2, 10).toUpperCase();
+        document.getElementById('session-id').textContent = '#' + sid;
+
+        // Fake load meter
+        function updateLoad() {
+            const v = Math.floor(Math.random() * 30 + 5);
+            document.getElementById('load-val').textContent = v + '%';
+            document.getElementById('load-bar').
