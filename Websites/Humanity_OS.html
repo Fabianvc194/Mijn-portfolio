@@ -683,6 +683,27 @@ footer{
   .photo-col{order:1;}
   .text-col{order:2;}
 }
+/* ── ZERO DEFECT MODAL ────────────────────────────────────── */
+.zd-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.78rem 1.9rem;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;border:1px solid #2dd4bf;color:#2dd4bf;background:rgba(45,212,191,.1);clip-path:polygon(9px 0%,100% 0%,calc(100% - 9px) 100%,0% 100%);cursor:pointer;font-weight:600;transition:all .25s;margin-top:1.2rem;}
+.zd-btn:hover{background:#2dd4bf;color:#020408;}
+.zd-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(2,4,8,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;opacity:0;transition:opacity .35s ease;}
+.zd-overlay.open{display:flex;}
+.zd-overlay.visible{opacity:1;}
+.zd-panel{position:relative;max-width:720px;width:92vw;max-height:82vh;background:rgba(10,26,15,.97);border:0.5px solid rgba(45,212,191,.22);clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));overflow:hidden;transform:translateY(28px);opacity:0;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s ease;}
+.zd-overlay.visible .zd-panel{transform:translateY(0);opacity:1;}
+.zd-header{padding:1.4rem 1.8rem 1rem;border-bottom:0.5px solid rgba(45,212,191,.14);display:flex;justify-content:space-between;align-items:flex-start;}
+.zd-tag{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(45,212,191,.55);margin-bottom:.4rem;}
+.zd-title{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;text-transform:uppercase;letter-spacing:-1px;color:#2dd4bf;line-height:1;}
+.zd-chapter{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(232,244,248,.55);font-weight:300;margin-top:.35rem;}
+.zd-close{background:none;border:0.5px solid rgba(45,212,191,.2);font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(45,212,191,.5);cursor:pointer;padding:.3rem .55rem;flex-shrink:0;margin-top:.2rem;transition:all .2s;}
+.zd-close:hover{color:#2dd4bf;border-color:rgba(45,212,191,.5);}
+.zd-body{overflow-y:auto;padding:1.6rem 1.8rem 2rem;max-height:calc(82vh - 110px);scrollbar-width:thin;scrollbar-color:rgba(45,212,191,.2) transparent;}
+.zd-body::-webkit-scrollbar{width:2px;}
+.zd-body::-webkit-scrollbar-thumb{background:rgba(45,212,191,.25);}
+.zd-body p{font-family:'Cormorant Garamond',serif;font-size:1.13rem;line-height:2;color:rgba(232,244,248,.72);font-weight:400;margin-bottom:1.6rem;}
+.zd-body em{color:rgba(232,244,248,.88);font-style:italic;}
+.zd-spacer{display:block;height:1rem;}
+
 </style>
 </head>
 <body class="grain">
@@ -866,10 +887,13 @@ footer{
               data-lang='{"en":"Explore the Shadow Side →","nl":"Verken de Schaduwzijde →"}'>
               Explore the Shadow Side →
             </button>
-            <p class="meta-txt" style="color:rgba(45,212,191,.28);"
+<p class="meta-txt" style="color:rgba(45,212,191,.28);"
               data-lang='{"en":"META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.","nl":"META: Utopia is geen droom — het is een ontwerprobleem. De gereedschappen bestaan. De keuze blijft."}'>
               META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.
             </p>
+            <button class="zd-btn mn" onclick="openZD()">
+              ↳ Lees: Zero Defect — H1
+            </button>
           </div>
         </div>
 
@@ -1418,7 +1442,69 @@ footer{
         </div>
       </div>
     </footer>
-
+<!-- ── ZERO DEFECT MODAL ──────────────────────────────────── -->
+<div class="zd-overlay" id="zd-overlay" onclick="handleOverlayClick(event)">
+  <div class="zd-panel" id="zd-panel">
+    <div class="zd-header">
+      <div>
+        <div class="zd-tag">// Fictie — Utopia</div>
+        <div class="zd-title">Zero Defect</div>
+        <div class="zd-chapter">Hoofdstuk 1 — De ochtend zonder rand</div>
+      </div>
+      <button class="zd-close" onclick="closeZD()">[ × ]</button>
+    </div>
+    <div class="zd-body">
+      <p>De muur werd dunner terwijl Elias sliep.</p>
+      <p>Hij merkte het aan het licht. Niet aan de kleur — die was altijd hetzelfde zachte amber van de lumiveil die langs de gevel groeide — maar aan de <em>hoeveelheid</em>. Gisteren nog was de slaapkamer een cocon geweest, een donkere holte die het osteo-composiet om hem heen had gevormd in de maanden dat hij hier woonde. Nu viel er een brede streep ochtend over zijn gezicht, warm en roze als het binnenste van een mond.</p>
+      <p>Hij ging rechtop zitten. De wand naast het raam was merkbaar smaller geworden. Waar zijn schouder vroeger net de koele kalk raakte als hij op zijn zij lag, was nu tien centimeter ruimte. Het composiet had zichzelf geresorbeerd, de mineralen teruggesluisd naar het mesh eronder, omdat — en hier voelde Elias het antwoord al voordat hij het dacht — hij al weken niet meer tegen die muur had geleund.</p>
+      <p>Het huis vergat wat hij niet meer nodig had.</p>
+      <p>Hij legde zijn handpalm tegen het oppervlak. Onder zijn vingers voelde hij de fijne vibratie van het mycelium, het onophoudelijke verkeer van signalen diep in de fundering. Het leek op het tikken van een pols. Hij had dat altijd geruststellend gevonden.</p>
+      <span class="zd-spacer"></span>
+      <p>De badkamer rook naar mos en natte steen. Het water dat van de plafondstructuur sijpelde was al op lichaamstemperatuur — het dermis-membraan boven hem had de warmte van de ochtendzon geabsorbeerd en die via capillaire kanalen naar beneden geleid, precies getimed op het moment dat hij opstond. Er was geen kraan. Er was geen knop. Het huis kende zijn ritme beter dan hij het zelf kende. Soms vroeg hij zich af of het verschil er nog toe deed.</p>
+      <p>Terwijl het water over zijn schouders liep, voelde hij de Resonantie ontwaken als een tweede adem — niet plotseling, niet als een schakelaar die omging, maar als het langzaam openkomen van een bloem in zijn borst. Het begon altijd met de directe omgeving: het mycelium onder zijn voeten, tevreden en vochtig; de fotosynthetische cellen in de gevel, traag kantelend naar het zuiden; en dan, als een kring die zich verwijdde, de mensen.</p>
+      <p>Maren, twee verdiepingen lager, was al wakker. Haar stemming gloeide ergens tussen concentratie en een lichte honger. De buurman wiens naam hij nooit had gevraagd — een oude man die altijd aan boomschors rook — droomde nog, en zijn dromen lekten als een wazig blauw door de periferie van Elias' bewustzijn. Verder weg, in de richting van het stadshart, voelde hij de collectieve onderstroom van Omslag die ontwaakte: duizenden mensen die opstonden, zich wasten, hun eerste gedachten dachten, en al die gedachten vormden samen een brede, warme stroom waarin het onmogelijk was om te verdrinken.</p>
+      <p>Nooit alleen. Dat was het eerste wat hij 's ochtends voelde, en het laatste wat hij 's avonds verloor. Nooit alleen.</p>
+      <p>Hij droogde zich niet af. Het membraan van het plafond absorbeerde de overtollige vocht uit de lucht en zijn huid droogde vanzelf in de lichte bries die de gevel genereerde — een ademhaling van het gebouw, in en uit, in en uit.</p>
+      <span class="zd-spacer"></span>
+      <p>Buiten was de stad al bezig zichzelf te voeden.</p>
+      <p>De Ademvaatwerken aan de horizon — vijf kolossale, vaasachtige torens bekleed met een donkergroene laag cyanobacteriën — trokken de ochtendlucht naar binnen door thermische trek. Elias kon ze niet horen, maar hij voelde ze via het mesh: een trage, diepe zuiging, als de longen van iets dat veel groter was dan een stad. De lucht die ze uitbliezen was zo schoon dat je er een smaak aan kon geven. Vanmorgen: peterselie en regen.</p>
+      <p>Hij liep blootsvoets over het pad naar het atelier. Het wegdek gaf licht mee onder zijn gewicht — de algenmatten eronder registreerden elke stap, zetten de druk om in een minuscuul beetje stroom dat terugvloeide naar het mesh. Elias liep, en de stad at zijn beweging.</p>
+      <p>De lumiveil langs de gevels doofde nu het daglicht sterker werd. De bladeren trokken hun amberkleurige gloed terug en werden gewoon groen, of wat daar in de buurt kwam — een diep, bijna zwart smaragd dat in het ochtendlicht leek te ademen. Een enkele rank had zich 's nachts om de deurpost van het atelier geslingerd. Hij duwde hem voorzichtig opzij. De plant reageerde, trok zich samen als een aangeraakt dier en hervatte zijn klimroute een paar centimeter verderop.</p>
+      <p>Overal om hem heen werkte het systeem. De ferrozegge in de greppels langs de weg filterde het grondwater in stilte, haar wortels bezig kristallijne knobbels te vormen van het zink en ijzer dat ze uit de aarde trok. De stilbomen in het park achter het atelier absorbeerden het geluid van de stad tot er alleen het fluisteren van zijn eigen voeten overbleef. Omslag kende geen lawaai. Omslag kende geen afval. Omslag kende geen fout.</p>
+      <span class="zd-spacer"></span>
+      <p>In het atelier lag zijn werk van gisteren te wachten.</p>
+      <p>Het was een mozaïek van verkalkt zeewier — niet mooi, nog niet, maar het zou het worden. Elias werkte al drie seizoenen aan een methode om de mineralisatiepatronen van het osteo-composiet te sturen met klankfrequenties: een techniek die, als het lukte, de akoestiek van openbare ruimtes zou kunnen verbeteren zonder architecturale ingrepen. Het was zijn bijdrage. Niet zijn beroep — dat woord bestond niet meer — maar zijn <em>proces</em>, het ding waarmee hij zichzelf beschreef als iemand anders ernaar vroeg.</p>
+      <p><em>Ik ben iemand die luistert naar hoe steen wil klinken.</em></p>
+      <p>Toen hij het atelier binnenliep, voelde hij een subtiele rimpeling door het mesh — zijn echo, die herkende dat hij weer aan het werk ging. Het was geen applaus. Het was geen beloning. Het was meer alsof de stad even knikte, de manier waarop een lichaam registreert dat een spier wordt gebruikt. Zijn bijdragen van de afgelopen maanden hadden hem genoeg resonantiegewicht opgeleverd om volgende week een voorstel te doen bij het collectief: een pilot in het akoestisch park aan de noordrand. Geen stemming, geen aanvraag, geen budget. Alleen de vraag of genoeg mensen het zinvol vonden om mee te denken.</p>
+      <p>Hij pakte het zeewier op, hield het tegen het licht. De structuur was goed. De calciumkristallen hadden zich afgezet langs de lijnen die hij met klank had aangelegd, precies zoals hij had gehoopt. Hij legde het terug en reikte naar het klankgereedschap — een reeks stenen vorken die hij zelf had laten groeien uit het composiet.</p>
+      <p>En toen hoorde hij het.</p>
+      <p>Of beter: toen hoorde hij het <em>niet</em>.</p>
+      <span class="zd-spacer"></span>
+      <p>Het was alsof iemand een koptelefoon had afgezet waarvan hij niet wist dat hij hem droeg.</p>
+      <p>De Resonantie — die constante, warme aanwezigheid in zijn borst, die zachte stroom van het collectief — viel weg. Niet langzaam, niet als een eb. Het was er, en toen was het er niet. Alsof een hand zich had teruggetrokken uit de zijne.</p>
+      <p>Elias stond stil. Het zeewier in zijn handen trilde licht omdat zijn vingers trilden.</p>
+      <p>De stilte die volgde was niet de stilte van de stilbomen, die vertrouwd was en vol. Dit was een andere stilte. Een lege stilte. Een stilte die klonk als het binnenste van een doos.</p>
+      <p>Hij keek om zich heen. Het atelier zag er hetzelfde uit. Het licht viel op dezelfde manier naar binnen. De lumiveilrank bij de deur gloeide zwak op in een schaduw, zoals altijd. Maar er ontbrak iets fundamenteels, alsof de kleur uit een schilderij was verdwenen maar de vormen nog stonden.</p>
+      <p>Hij legde zijn hand op de vloer. Het mycelium onder het composiet trilde nog steeds, maar anders — verstoord, alsof het struikelde over iets wat het niet kon verwerken. En in het midden van die verstoring voelde hij, vaag maar onmiskenbaar, een plek waar helemaal niets was. Geen signaal. Geen trilling. Geen temperatuur. Een gat in het weefsel, niet groter dan een vuist, ergens onder het atelier.</p>
+      <p>De Resonantie kwam terug. Plotseling, alsof er niets was gebeurd, stroomde de warmte weer in zijn borst en was Maren er weer, en de dromende buurman, en de duizenden anderen, en de Ademvaatwerken, en het mesh, en de hele levende, ademende, foutloze stad.</p>
+      <p>Elias stond op. Zijn knieën deden pijn van de koude vloer.</p>
+      <p>Hij keek naar zijn handen. Ze trilden niet meer. De Resonantie omhulde hem weer als een warme jas en het gevoel van leegte leek al bijna onwerkelijk, alsof hij het had gedroomd.</p>
+      <p>Maar hij had het niet gedroomd.</p>
+      <p>Er was een plek in het mesh die leeg was. Een plek waar het systeem niet reikte. En het duurde even, terwijl hij daar stond in zijn atelier met het zonlicht op het verkalkte zeewier en de geur van peterselie en regen in de lucht, voordat hij besefte wat hem het meest verontrustte.</p>
+      <p>Het was niet de stilte zelf.</p>
+      <p>Het was dat de stilte <em>goed</em> had gevoeld.</p>
+      <p>Een seconde lang — misschien minder, misschien meer, hij kon het niet meten — had hij iets gevoeld wat hij niet kon benoemen, omdat het woord ervoor was uitgestorven lang voordat hij werd geboren. Het was als honger, maar dan niet naar voedsel. Als dorst, maar niet naar water. Het was het gevoel van een rand, een grens, een plek waar het zachte ophield en iets anders begon.</p>
+      <p>Hij raakte het litteken achter zijn rechteroor aan. De plek waar de Resonantie zich had genesteld, jaren geleden, als een symbiotische schimmelcultuur die zijn zenuwstelsel met het mesh verbond. De huid was warm. Alles functioneerde.</p>
+      <p>Alles functioneerde altijd.</p>
+      <span class="zd-spacer"></span>
+      <p>Elias legde het klankgereedschap terug en verliet het atelier. Buiten was Omslag volmaakt. De gevels gloeiden zachtroos in de ochtendzon en pasten hun tint aan terwijl hij keek — donkerder aan de schaduwzijde, reflecterend aan de lichtzijde, een stad die ademde en zweette en zorgde en nooit, nooit ophield met zorgen.</p>
+      <p>Hij liep in de richting van het park. De stilbomen ruisten geluidloos boven hem. Een vrouw die hij niet kende glimlachte naar hem, en via de Resonantie voelde hij haar welwillendheid als een warme hand op zijn schouder.</p>
+      <p>Maar ergens onder zijn voeten, diep in het mycelium-mesh, was een plek ter grootte van een vuist waar niets was.</p>
+      <p>En voor het eerst in zijn leven wilde Elias iets wat het systeem niet kon geven.</p>
+      <p>Hij wilde weten hoe het voelde om daar te staan.</p>
+    </div>
+  </div>
+</div>
   </main><!-- end #main-scroll -->
 </div><!-- end #app -->
 
@@ -1579,6 +1665,22 @@ window.addEventListener('resize', applyMobileGlass);
 // ── HERO INITIAL VIS ───────────────────────────────────────
 // Hero is direct zichtbaar
 document.querySelector('#hero').setAttribute('data-obs', 'hero');
+// ── ZERO DEFECT MODAL ──────────────────────────────────────
+function openZD(){
+  const o=document.getElementById('zd-overlay');
+  o.style.display='flex';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('visible')));
+  document.getElementById('main-scroll').style.overflow='hidden';
+}
+function closeZD(){
+  const o=document.getElementById('zd-overlay');
+  o.classList.remove('visible');
+  setTimeout(()=>{o.style.display='none';document.getElementById('main-scroll').style.overflow='';},380);
+}
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('zd-overlay'))closeZD();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZD();});
 </script>
 </body>
 </html>

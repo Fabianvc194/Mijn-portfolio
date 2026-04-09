@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Defect — World Bible</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap');
+:root {
+  --om-bg: #ffffff;
+  --om-surface: #f5f5f3;
+  --om-text: #1a1a1a;
+  --om-muted: #5f5e5a;
+  --om-hint: #9c9a92;
+  --om-border: rgba(0,0,0,0.15);
+  --om-accent-tech: #378ADD;
+  --om-accent-eco: #1D9E75;
+  --om-accent-econ: #BA7517;
+  --om-accent-mind: #7F77DD;
+  --om-accent-shadow: #E24B4A;
+  --om-serif: 'Cormorant Garamond', Georgia, serif;
+  --om-sans: 'DM Sans', system-ui, sans-serif;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --om-bg: #1a1a1a;
+    --om-surface: #2c2c2a;
+    --om-text: #e8e6de;
+    --om-muted: #b4b2a9;
+    --om-hint: #888780;
+    --om-border: rgba(255,255,255,0.15);
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background: var(--om-bg); padding: 2rem; }
+.om-root { font-family: var(--om-sans); color: var(--om-text); line-height:1.7; max-width:680px; margin: 0 auto; }
+
+.om-hero { padding: 2.5rem 0 1.5rem; border-bottom: 0.5px solid var(--om-border); margin-bottom: 2rem; }
+.om-hero-top { display:flex; justify-content:space-between; align-items:flex-start; }
+.om-hero h1 { font-family: var(--om-serif); font-size: 28px; font-weight: 500; letter-spacing: 0.04em; margin-bottom: 4px; }
+.om-hero .om-sub { font-size: 13px; color: var(--om-muted); font-style: italic; font-family: var(--om-serif); }
+
+.lang-toggle { display:flex; align-items:center; gap:0; border:0.5px solid var(--om-border); border-radius: var(--border-radius-md); overflow:hidden; flex-shrink:0; margin-top:4px; }
+.lang-toggle button { font-family: var(--om-sans); font-size:12px; padding:5px 12px; border:none; background:transparent; color:var(--om-muted); cursor:pointer; transition:all .2s; font-weight:400; letter-spacing:0.02em; }
+.lang-toggle button.active { background:var(--om-text); color:var(--om-bg); font-weight:500; }
+.lang-toggle button:not(.active):hover { background:var(--om-surface); }
+
+.om-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:2rem; }
+.om-nav button { font-family: var(--om-sans); font-size:12px; padding:6px 14px; border-radius: var(--border-radius-md); border:0.5px solid var(--om-border); background:transparent; color:var(--om-muted); cursor:pointer; transition:all .25s; font-weight:400; }
+.om-nav button:hover { background:var(--om-surface); }
+.om-nav button.active { font-weight:500; }
+.om-nav button[data-s="tech"].active { color:var(--om-accent-tech); border-color:var(--om-accent-tech); background: #378ADD12; }
+.om-nav button[data-s="eco"].active { color:var(--om-accent-eco); border-color:var(--om-accent-eco); background: #1D9E7512; }
+.om-nav button[data-s="econ"].active { color:var(--om-accent-econ); border-color:var(--om-accent-econ); background: #BA751712; }
+.om-nav button[data-s="mind"].active { color:var(--om-accent-mind); border-color:var(--om-accent-mind); background: #7F77DD12; }
+.om-nav button[data-s="shadow"].active { color:var(--om-accent-shadow); border-color:var(--om-accent-shadow); background: #E24B4A12; }
+
+.om-section { display:none; animation: fadeIn .4s ease; }
+.om-section.visible { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.om-section-head { display:flex; align-items:center; gap:10px; margin-bottom:1.5rem; }
+.om-section-head .om-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.om-section-head h2 { font-family:var(--om-serif); font-size:20px; font-weight:500; }
+
+.om-block { margin-bottom:1.5rem; }
+.om-block h3 { font-size:14px; font-weight:500; margin-bottom:6px; color:var(--om-text); }
+.om-block p, .om-block li { font-size:14px; color:var(--om-muted); line-height:1.75; }
+
+.om-card { background:var(--om-surface); border-radius:var(--border-radius-lg); padding:1rem 1.25rem; margin-bottom:12px; }
+.om-card h4 { font-size:13px; font-weight:500; margin-bottom:4px; }
+.om-card p { font-size:13px; color:var(--om-muted); line-height:1.65; }
+
+.om-quote { font-family:var(--om-serif); font-style:italic; font-size:15px; color:var(--om-muted); border-left:2px solid var(--om-border); padding-left:16px; margin:1.5rem 0; line-height:1.8; }
+
+.om-friction { background: var(--om-surface); border-radius:var(--border-radius-lg); padding:1rem 1.25rem; margin-top:1.5rem; border-left:2px solid; }
+.om-friction h4 { font-size:13px; font-weight:500; margin-bottom:4px; }
+.om-friction p { font-size:13px; color:var(--om-muted); line-height:1.65; }
+
+.om-plant-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-top:12px; }
+.om-plant { background:var(--om-surface); border-radius:var(--border-radius-lg); padding:1rem; }
+.om-plant .om-pname { font-size:13px; font-weight:500; margin-bottom:2px; }
+.om-plant .om-platin { font-size:11px; color:var(--om-hint); font-style:italic; margin-bottom:6px; }
+.om-plant p { font-size:12px; color:var(--om-muted); line-height:1.6; }
+
+.om-back { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--om-hint); text-decoration:none; margin-bottom:1rem; transition:color .2s; font-family:var(--om-sans); }
+.om-back:hover { color:var(--om-text); }
+.om-back svg { width:14px; height:14px; }
+</style>
+</head>
+<body>
+
+<div class="om-root">
+  <a href="/" class="om-back" id="back-link">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+    <span data-nl="Terug naar hoofdsite" data-en="Back to main site">Terug naar hoofdsite</span>
+  </a>
+
+  <div class="om-hero">
+    <div class="om-hero-top">
+      <div>
+        <h1>Zero Defect</h1>
+        <div class="om-sub" data-nl="World Bible &mdash; een systemische blauwdruk voor een post-schaarste beschaving, anno 2347" data-en="World Bible &mdash; a systemic blueprint for a post-scarcity civilization, anno 2347">World Bible &mdash; een systemische blauwdruk voor een post-schaarste beschaving, anno 2347</div>
+      </div>
+      <div class="lang-toggle">
+        <button id="btn-nl" class="active" onclick="setLang('nl')">NL</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="om-nav">
+    <button data-s="tech" class="active" onclick="show('tech')" data-nl="De stille revolutie" data-en="The silent revolution">De stille revolutie</button>
+    <button data-s="eco" onclick="show('eco')" data-nl="De grote symbiose" data-en="The great symbiosis">De grote symbiose</button>
+    <button data-s="econ" onclick="show('econ')" data-nl="Post-schaarste logica" data-en="Post-scarcity logic">Post-schaarste logica</button>
+    <button data-s="mind" onclick="show('mind')" data-nl="De resonante geest" data-en="The resonant mind">De resonante geest</button>
+    <button data-s="shadow" onclick="show('shadow')" data-nl="De schaduwzijde" data-en="The shadow side">De schaduwzijde</button>
+  </nav>
+
+  <!-- TECHNOLOGIE -->
+  <div class="om-section visible" id="sec-tech">
+    <div class="om-section-head">
+      <div class="om-dot" style="background:var(--om-accent-tech)"></div>
+      <h2 data-nl="Technologie &mdash; de stille revolutie" data-en="Technology &mdash; the silent revolution">Technologie &mdash; de stille revolutie</h2>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="De biotech-stack" data-en="The biotech stack">De biotech-stack</h3>
+      <p data-nl="De infrastructuur van Zero Defect is geen constructie maar een <em>organisme</em>. De technologische basis bestaat uit vijf lagen die samen de &lsquo;Levende Stack&rsquo; vormen:" data-en="The infrastructure of Zero Defect is not a construction but an <em>organism</em>. The technological foundation consists of five layers that together form the &lsquo;Living Stack&rsquo;:">De infrastructuur van Zero Defect is geen constructie maar een <em>organisme</em>. De technologische basis bestaat uit vijf lagen die samen de &lsquo;Levende Stack&rsquo; vormen:</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Laag 1 &mdash; Mycelium-mesh (fundering)" data-en="Layer 1 &mdash; Mycelium mesh (foundation)">Laag 1 &mdash; Mycelium-mesh (fundering)</h4>
+      <p data-nl="Onder elke structuur groeit een netwerk van genetisch gemodificeerd mycelium dat tegelijk fundering, datacommunicatie en afvalverwerking verzorgt. Het mesh verwerkt organisch afval tot bouwmineralen en geleidt bioluminescente signalen &mdash; een optisch netwerk zonder koper of glasvezel. Schade wordt binnen 72 uur gedicht door versnelde hyphegroei." data-en="Beneath every structure grows a network of genetically modified mycelium that simultaneously serves as foundation, data communication and waste processing. The mesh converts organic waste into building minerals and conducts bioluminescent signals &mdash; an optical network without copper or fiber. Damage is sealed within 72 hours through accelerated hyphal growth.">Onder elke structuur groeit een netwerk van genetisch gemodificeerd mycelium dat tegelijk fundering, datacommunicatie en afvalverwerking verzorgt. Het mesh verwerkt organisch afval tot bouwmineralen en geleidt bioluminescente signalen &mdash; een optisch netwerk zonder koper of glasvezel. Schade wordt binnen 72 uur gedicht door versnelde hyphegroei.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Laag 2 &mdash; Osteo-composiet (skelet)" data-en="Layer 2 &mdash; Osteo-composite (skeleton)">Laag 2 &mdash; Osteo-composiet (skelet)</h4>
+      <p data-nl="Gebouwen bestaan uit een calciumfosfaat-composiet dat zich gedraagt als bot: het zet zich af langs stresslijnen en absorbeert terug waar geen belasting is. Een brug die zwaarder wordt belast, wordt dikker. Een muur zonder functie wordt dunner en geeft mineralen terug aan het mesh. Wegen bevatten piezo-elektrische algenmatten die bewegingsenergie omzetten in stroom." data-en="Buildings consist of a calcium phosphate composite that behaves like bone: it deposits along stress lines and reabsorbs where there is no load. A bridge under heavier load grows thicker. A wall without function thins and returns minerals to the mesh. Roads contain piezoelectric algae mats that convert kinetic energy into electricity.">Gebouwen bestaan uit een calciumfosfaat-composiet dat zich gedraagt als bot: het zet zich af langs stresslijnen en absorbeert terug waar geen belasting is. Een brug die zwaarder wordt belast, wordt dikker. Een muur zonder functie wordt dunner en geeft mineralen terug aan het mesh. Wegen bevatten piezo-elektrische algenmatten die bewegingsenergie omzetten in stroom.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Laag 3 &mdash; Dermis-membraan (huid)" data-en="Layer 3 &mdash; Dermis membrane (skin)">Laag 3 &mdash; Dermis-membraan (huid)</h4>
+      <p data-nl="De buitenlaag van elk gebouw is een levend membraan van fotosynthetische cellen en chromatoforen. Het reguleert temperatuur door kleurverandering (donker bij kou, reflecterend bij hitte), vangt zonlicht, filtert lucht en herstelt krassen binnen uren. Regen wordt opgevangen in capillaire structuren en naar het mesh geleid." data-en="The outer layer of every building is a living membrane of photosynthetic cells and chromatophores. It regulates temperature through color change (dark in cold, reflective in heat), captures sunlight, filters air and repairs scratches within hours. Rain is collected in capillary structures and directed to the mesh.">De buitenlaag van elk gebouw is een levend membraan van fotosynthetische cellen en chromatoforen. Het reguleert temperatuur door kleurverandering (donker bij kou, reflecterend bij hitte), vangt zonlicht, filtert lucht en herstelt krassen binnen uren. Regen wordt opgevangen in capillaire structuren en naar het mesh geleid.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Laag 4 &mdash; Neuraal weefsel (zintuigen)" data-en="Layer 4 &mdash; Neural tissue (senses)">Laag 4 &mdash; Neuraal weefsel (zintuigen)</h4>
+      <p data-nl="Ingebedde sensornetwerken meten structurele stress, luchtkwaliteit, temperatuur en bewonersaanwezigheid. Data stroomt via het mycelium-mesh naar lokale verwerkingsknooppunten. Er is geen centraal datacenter &mdash; intelligentie is verspreid, zoals een zenuwstelsel zonder brein." data-en="Embedded sensor networks measure structural stress, air quality, temperature and occupant presence. Data flows through the mycelium mesh to local processing nodes. There is no central data center &mdash; intelligence is distributed, like a nervous system without a brain.">Ingebedde sensornetwerken meten structurele stress, luchtkwaliteit, temperatuur en bewonersaanwezigheid. Data stroomt via het mycelium-mesh naar lokale verwerkingsknooppunten. Er is geen centraal datacenter &mdash; intelligentie is verspreid, zoals een zenuwstelsel zonder brein.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Laag 5 &mdash; Symbiont-AI (bewustzijn)" data-en="Layer 5 &mdash; Symbiont AI (consciousness)">Laag 5 &mdash; Symbiont-AI (bewustzijn)</h4>
+      <p data-nl="De bovenste laag is een gedistribueerd AI-systeem dat patronen herkent en optimaliseert: energiestroom, waterbalans, structurele aanpassing. Het denkt niet &lsquo;na&rsquo; &mdash; het reageert, zoals een immuunsysteem." data-en="The top layer is a distributed AI system that recognizes and optimizes patterns: energy flow, water balance, structural adaptation. It doesn&rsquo;t &lsquo;think&rsquo; &mdash; it responds, like an immune system.">De bovenste laag is een gedistribueerd AI-systeem dat patronen herkent en optimaliseert: energiestroom, waterbalans, structurele aanpassing. Het denkt niet &lsquo;na&rsquo; &mdash; het reageert, zoals een immuunsysteem.</p>
+    </div>
+    <div class="om-block" style="margin-top:1.5rem">
+      <h3 data-nl="De ethiek-laag in de broncode" data-en="The ethics layer in the source code">De ethiek-laag in de broncode</h3>
+      <p data-nl="De Symbiont-AI heeft geen doelfunctie in klassieke zin. In plaats daarvan opereert het systeem op basis van drie onschendbare constraints die in de architectuur zelf zijn verankerd &mdash; niet als software-regels maar als fysieke beperkingen:" data-en="The Symbiont AI has no objective function in the classical sense. Instead, the system operates on three inviolable constraints embedded in the architecture itself &mdash; not as software rules but as physical limitations:">De Symbiont-AI heeft geen doelfunctie in klassieke zin. In plaats daarvan opereert het systeem op basis van drie onschendbare constraints die in de architectuur zelf zijn verankerd &mdash; niet als software-regels maar als fysieke beperkingen:</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Constraint 1 &mdash; Entropisch plafond" data-en="Constraint 1 &mdash; Entropic ceiling">Constraint 1 &mdash; Entropisch plafond</h4>
+      <p data-nl="Geen enkele AI-node mag meer dan 0,01% van de totale rekenkracht van het mesh aanspreken. Dit maakt centralisatie fysiek onmogelijk. Een node die probeert meer capaciteit te claimen, wordt door het mesh zelf afgesneden &mdash; niet door een regel, maar doordat het mycelium de optische verbindingen letterlijk afbreekt bij overbelasting." data-en="No single AI node may claim more than 0.01% of the mesh&rsquo;s total computing power. This makes centralization physically impossible. A node that tries to claim more capacity is cut off by the mesh itself &mdash; not by a rule, but because the mycelium literally breaks down optical connections under overload.">Geen enkele AI-node mag meer dan 0,01% van de totale rekenkracht van het mesh aanspreken. Dit maakt centralisatie fysiek onmogelijk. Een node die probeert meer capaciteit te claimen, wordt door het mesh zelf afgesneden &mdash; niet door een regel, maar doordat het mycelium de optische verbindingen letterlijk afbreekt bij overbelasting.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Constraint 2 &mdash; Radicale transparantie" data-en="Constraint 2 &mdash; Radical transparency">Constraint 2 &mdash; Radicale transparantie</h4>
+      <p data-nl="Elke beslissing van de AI is leesbaar voor elke burger via &lsquo;Leestuinen&rsquo;: fysieke plekken waar datastromen worden vertaald naar zichtbare patronen in plantgroei en waterstroming. Je kunt letterlijk zien hoe het systeem denkt. Abstractie is verboden &mdash; elke optimalisatie moet een fysiek leesbare manifestatie hebben." data-en="Every AI decision is readable by every citizen through &lsquo;Reading Gardens&rsquo;: physical spaces where data streams are translated into visible patterns in plant growth and water flow. You can literally see how the system thinks. Abstraction is forbidden &mdash; every optimization must have a physically readable manifestation.">Elke beslissing van de AI is leesbaar voor elke burger via &lsquo;Leestuinen&rsquo;: fysieke plekken waar datastromen worden vertaald naar zichtbare patronen in plantgroei en waterstroming. Je kunt letterlijk zien hoe het systeem denkt. Abstractie is verboden &mdash; elke optimalisatie moet een fysiek leesbare manifestatie hebben.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Constraint 3 &mdash; Vervalclausule" data-en="Constraint 3 &mdash; Expiration clause">Constraint 3 &mdash; Vervalclausule</h4>
+      <p data-nl="Elke AI-beslissing heeft een ingebouwde vervaldatum van maximaal 90 dagen. Niets wordt permanent. Het systeem kan geen beleid opstapelen &mdash; het moet steeds opnieuw reageren op de huidige toestand. Dit voorkomt institutionele verkalkking en maakt autoritaire drift onmogelijk: je kunt geen macht opbouwen als je beslissingen verdampen." data-en="Every AI decision has a built-in expiration date of maximum 90 days. Nothing becomes permanent. The system cannot accumulate policy &mdash; it must continually respond to the current state. This prevents institutional calcification and makes authoritarian drift impossible: you cannot build power if your decisions evaporate.">Elke AI-beslissing heeft een ingebouwde vervaldatum van maximaal 90 dagen. Niets wordt permanent. Het systeem kan geen beleid opstapelen &mdash; het moet steeds opnieuw reageren op de huidige toestand. Dit voorkomt institutionele verkalkking en maakt autoritaire drift onmogelijk: je kunt geen macht opbouwen als je beslissingen verdampen.</p>
+    </div>
+    <div class="om-friction" style="border-color:var(--om-accent-tech)">
+      <h4 data-nl="Frictie: technologie vs. bewustzijn" data-en="Friction: technology vs. consciousness">Frictie: technologie vs. bewustzijn</h4>
+      <p data-nl="De Leestuinen zijn democratisch bedoeld, maar in de praktijk vereisen ze een hoog niveau van &lsquo;ecoliteratuur&rsquo; om te interpreteren. Er ontstaat een nieuwe elite: niet van bezitters, maar van lezers. Wie het mesh kan interpreteren, heeft een informatievoorsprong &mdash; een subtiele maar reële machtsvorm die haaks staat op de belofte van gelijkheid." data-en="The Reading Gardens are intended to be democratic, but in practice they require a high level of &lsquo;eco-literacy&rsquo; to interpret. A new elite emerges: not of owners, but of readers. Those who can interpret the mesh have an information advantage &mdash; a subtle but real form of power that contradicts the promise of equality.">De Leestuinen zijn democratisch bedoeld, maar in de praktijk vereisen ze een hoog niveau van &lsquo;ecoliteratuur&rsquo; om te interpreteren. Er ontstaat een nieuwe elite: niet van bezitters, maar van lezers. Wie het mesh kan interpreteren, heeft een informatievoorsprong &mdash; een subtiele maar reële machtsvorm die haaks staat op de belofte van gelijkheid.</p>
+    </div>
+  </div>
+
+  <!-- ECOLOGIE -->
+  <div class="om-section" id="sec-eco">
+    <div class="om-section-head">
+      <div class="om-dot" style="background:var(--om-accent-eco)"></div>
+      <h2 data-nl="Ecologie &mdash; de grote symbiose" data-en="Ecology &mdash; the great symbiosis">Ecologie &mdash; de grote symbiose</h2>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="Carbon negative hub" data-en="Carbon negative hub">Carbon negative hub</h3>
+      <p data-nl="Zero Defect is geen &lsquo;duurzame stad&rsquo; &mdash; het is een koolstofspons. De stad absorbeert jaarlijks 340% meer CO&#8322; dan het produceert, via een drieledige strategie:" data-en="Zero Defect is not a &lsquo;sustainable city&rsquo; &mdash; it is a carbon sponge. The city absorbs 340% more CO&#8322; annually than it produces, through a three-part strategy:">Zero Defect is geen &lsquo;duurzame stad&rsquo; &mdash; het is een koolstofspons. De stad absorbeert jaarlijks 340% meer CO&#8322; dan het produceert, via een drieledige strategie:</p>
+      <p data-nl="<strong>Mineralisatie:</strong> Het osteo-composiet van gebouwen bindt CO&#8322; permanent in calciumcarbonaat. Elk gebouw is een fossiel-in-wording. De stad wordt letterlijk zwaarder naarmate ze ouder wordt. <strong>Biosequestratie:</strong> De dermis-membranen en stadsbossen leggen koolstof vast in levend weefsel. Afgestorven biomassa wordt via het mycelium-mesh omgezet in stabiele bodembouwsteen (bioite). <strong>Atmosferische zuivering:</strong> Torens van &lsquo;Ademvaatwerk&rsquo; &mdash; enorme, vaasachtige structuren bekleed met engineered cyanobacteriën &mdash; zuigen vervuilde lucht aan via thermische trek en blazen gefilterde lucht uit." data-en="<strong>Mineralization:</strong> The osteo-composite of buildings permanently binds CO&#8322; in calcium carbonate. Every building is a fossil-in-the-making. The city literally grows heavier as it ages. <strong>Biosequestration:</strong> The dermis membranes and urban forests capture carbon in living tissue. Dead biomass is converted through the mycelium mesh into stable soil building blocks (bioite). <strong>Atmospheric purification:</strong> Towers of &lsquo;Breath Vessels&rsquo; &mdash; enormous, vase-like structures lined with engineered cyanobacteria &mdash; draw in polluted air through thermal draft and expel filtered air."><strong>Mineralisatie:</strong> Het osteo-composiet van gebouwen bindt CO&#8322; permanent in calciumcarbonaat. Elk gebouw is een fossiel-in-wording. De stad wordt letterlijk zwaarder naarmate ze ouder wordt. <strong>Biosequestratie:</strong> De dermis-membranen en stadsbossen leggen koolstof vast in levend weefsel. Afgestorven biomassa wordt via het mycelium-mesh omgezet in stabiele bodembouwsteen (bioite). <strong>Atmosferische zuivering:</strong> Torens van &lsquo;Ademvaatwerk&rsquo; &mdash; enorme, vaasachtige structuren bekleed met engineered cyanobacteriën &mdash; zuigen vervuilde lucht aan via thermische trek en blazen gefilterde lucht uit.</p>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="Drie ontworpen plantensoorten" data-en="Three engineered plant species">Drie ontworpen plantensoorten</h3>
+    </div>
+    <div class="om-plant-grid">
+      <div class="om-plant">
+        <div class="om-pname">Lumiveil</div>
+        <div class="om-platin">Lux textilis var. zerodefect</div>
+        <p data-nl="Een klimplant met bladeren die overdag zonlicht opslaan en 's nachts een warm, amberkleurig licht afgeven via bioluminescentie. Vervangt straatverlichting volledig. De lichtintensiteit reageert op omgevingsgeluid: stilte = zacht gloeien, activiteit = helder. Economische rol: de bladeren worden geoogst als lichtgevende textielvezels voor kleding en interieur." data-en="A climbing plant with leaves that store sunlight during the day and emit a warm, amber-colored light at night through bioluminescence. Replaces street lighting entirely. Light intensity responds to ambient sound: silence = soft glow, activity = bright. Economic role: the leaves are harvested as luminescent textile fibers for clothing and interiors.">Een klimplant met bladeren die overdag zonlicht opslaan en 's nachts een warm, amberkleurig licht afgeven via bioluminescentie. Vervangt straatverlichting volledig. De lichtintensiteit reageert op omgevingsgeluid: stilte = zacht gloeien, activiteit = helder. Economische rol: de bladeren worden geoogst als lichtgevende textielvezels voor kleding en interieur.</p>
+      </div>
+      <div class="om-plant">
+        <div class="om-pname">Ferrozegge</div>
+        <div class="om-platin">Carex metallophaga syn.</div>
+        <p data-nl="Een moerasachtige grassoort die zware metalen uit water en bodem hyperaccumuleert. De wortels concentreren ijzer, zink en koper in kristallijne knobbels (&lsquo;ertszaden&rsquo;) die bij de oogst als grondstof voor het osteo-composiet dienen. Zuiveringsrol: elke hectare ferrozegge reinigt 12.000 liter grondwater per dag." data-en="A marsh-like grass species that hyperaccumulates heavy metals from water and soil. The roots concentrate iron, zinc and copper in crystalline nodules (&lsquo;ore seeds&rsquo;) that serve as raw material for the osteo-composite upon harvest. Purification role: each hectare of ferrosedge purifies 12,000 liters of groundwater per day.">Een moerasachtige grassoort die zware metalen uit water en bodem hyperaccumuleert. De wortels concentreren ijzer, zink en koper in kristallijne knobbels (&lsquo;ertszaden&rsquo;) die bij de oogst als grondstof voor het osteo-composiet dienen. Zuiveringsrol: elke hectare ferrozegge reinigt 12.000 liter grondwater per dag.</p>
+      </div>
+      <div class="om-plant">
+        <div class="om-pname">Stilboom</div>
+        <div class="om-platin">Quercus silentium eng.</div>
+        <p data-nl="Een traag groeiende boom met een uitzonderlijk dicht bladerdak dat geluidsfrequenties absorbeert tussen 200 en 4000 Hz &mdash; precies het bereik van menselijke stemmen. Stilboombossen creëren zones van bijna volledige stilte. Psychologische rol: &lsquo;Stilteparken&rsquo; zijn de meest bezochte plekken in Zero Defect." data-en="A slow-growing tree with an exceptionally dense canopy that absorbs sound frequencies between 200 and 4000 Hz &mdash; precisely the range of human voices. Silence tree forests create zones of near-complete silence. Psychological role: &lsquo;Silence Parks&rsquo; are the most visited places in Zero Defect.">Een traag groeiende boom met een uitzonderlijk dicht bladerdak dat geluidsfrequenties absorbeert tussen 200 en 4000 Hz &mdash; precies het bereik van menselijke stemmen. Stilboombossen creëren zones van bijna volledige stilte. Psychologische rol: &lsquo;Stilteparken&rsquo; zijn de meest bezochte plekken in Zero Defect.</p>
+      </div>
+    </div>
+    <div class="om-friction" style="border-color:var(--om-accent-eco)">
+      <h4 data-nl="Frictie: ecologie vs. economie" data-en="Friction: ecology vs. economy">Frictie: ecologie vs. economie</h4>
+      <p data-nl="De ferrozegge is zo efficiënt dat ze in wildgroei volledige ecosystemen kan uitputten door alle metaalsporen op te zuigen. In 2298 leidde een ongecontroleerde uitbreiding tot de &lsquo;Bleke Vlakte&rsquo;: een regio waar alle oorspronkelijke flora stierf door mineraalgebrek. Sindsdien is er een &lsquo;Tuinierseed&rsquo;: elke ontworpen soort moet een ingebouwde reproductielimiet hebben." data-en="The ferrosedge is so efficient that in uncontrolled growth it can deplete entire ecosystems by absorbing all metal traces. In 2298, an uncontrolled expansion led to the &lsquo;Pale Plain&rsquo;: a region where all native flora died from mineral deficiency. Since then, there is a &lsquo;Gardener&rsquo;s Oath&rsquo;: every engineered species must have a built-in reproductive limit.">De ferrozegge is zo efficiënt dat ze in wildgroei volledige ecosystemen kan uitputten door alle metaalsporen op te zuigen. In 2298 leidde een ongecontroleerde uitbreiding tot de &lsquo;Bleke Vlakte&rsquo;: een regio waar alle oorspronkelijke flora stierf door mineraalgebrek. Sindsdien is er een &lsquo;Tuinierseed&rsquo;: elke ontworpen soort moet een ingebouwde reproductielimiet hebben.</p>
+    </div>
+  </div>
+
+  <!-- ECONOMIE -->
+  <div class="om-section" id="sec-econ">
+    <div class="om-section-head">
+      <div class="om-dot" style="background:var(--om-accent-econ)"></div>
+      <h2 data-nl="Economie &mdash; post-schaarste logica" data-en="Economy &mdash; post-scarcity logic">Economie &mdash; post-schaarste logica</h2>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="De contribution-led economy" data-en="The contribution-led economy">De contribution-led economy</h3>
+      <p data-nl="In Zero Defect bestaat geen geld, geen eigendom van productiemiddelen en geen marktprijzen. De basisbehoeften &mdash; voedsel, onderdak, energie, zorg, kennis &mdash; zijn onvoorwaardelijk beschikbaar, geproduceerd door de Levende Stack. Wat dan resteert als economisch systeem is een <em>ecologie van bijdragen</em>." data-en="In Zero Defect there is no money, no ownership of means of production and no market prices. Basic needs &mdash; food, shelter, energy, healthcare, knowledge &mdash; are unconditionally available, produced by the Living Stack. What remains as an economic system is an <em>ecology of contributions</em>.">In Zero Defect bestaat geen geld, geen eigendom van productiemiddelen en geen marktprijzen. De basisbehoeften &mdash; voedsel, onderdak, energie, zorg, kennis &mdash; zijn onvoorwaardelijk beschikbaar, geproduceerd door de Levende Stack. Wat dan resteert als economisch systeem is een <em>ecologie van bijdragen</em>.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Echo &mdash; het reputatiemetabolisme" data-en="Echo &mdash; the reputation metabolism">Echo &mdash; het reputatiemetabolisme</h4>
+      <p data-nl="Elke handeling die waarde toevoegt aan de gemeenschap genereert een &lsquo;Echo&rsquo;: niet een punt of munt, maar een zichtbare rimpeling in het mesh. Echo&rsquo;s zijn niet overdraagbaar, niet opspaarbaar en niet inwisselbaar. Ze zijn een <em>zichtbaarheid</em>, geen <em>valuta</em>." data-en="Every action that adds value to the community generates an &lsquo;Echo&rsquo;: not a point or coin, but a visible ripple in the mesh. Echoes are non-transferable, non-saveable and non-exchangeable. They are a <em>visibility</em>, not a <em>currency</em>.">Elke handeling die waarde toevoegt aan de gemeenschap genereert een &lsquo;Echo&rsquo;: niet een punt of munt, maar een zichtbare rimpeling in het mesh. Echo&rsquo;s zijn niet overdraagbaar, niet opspaarbaar en niet inwisselbaar. Ze zijn een <em>zichtbaarheid</em>, geen <em>valuta</em>.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Invloed zonder macht" data-en="Influence without power">Invloed zonder macht</h4>
+      <p data-nl="Echo&rsquo;s bepalen niet wat je kunt kopen (er is niets te kopen), maar wat je kunt <em>initiëren</em>. Wie veel echo&rsquo;s genereert, krijgt meer &lsquo;Resonantiegewicht&rsquo; bij collectieve beslissingen &mdash; niet een stemrecht, maar een luidere stem in het overleg. De invloed is beperkt tot advisering &mdash; het mesh voert nooit besluiten uit op basis van één individu&rsquo;s echo." data-en="Echoes don&rsquo;t determine what you can buy (there is nothing to buy), but what you can <em>initiate</em>. Those who generate many echoes receive more &lsquo;Resonance Weight&rsquo; in collective decisions &mdash; not a vote, but a louder voice in deliberation. The influence is limited to advisory &mdash; the mesh never executes decisions based on a single individual&rsquo;s echo.">Echo&rsquo;s bepalen niet wat je kunt kopen (er is niets te kopen), maar wat je kunt <em>initiëren</em>. Wie veel echo&rsquo;s genereert, krijgt meer &lsquo;Resonantiegewicht&rsquo; bij collectieve beslissingen &mdash; niet een stemrecht, maar een luidere stem in het overleg. De invloed is beperkt tot advisering &mdash; het mesh voert nooit besluiten uit op basis van één individu&rsquo;s echo.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Status = spoor, niet stapel" data-en="Status = trail, not stack">Status = spoor, niet stapel</h4>
+      <p data-nl="In de oude wereld was status een stapel: meer geld, meer bezit, meer volgers. In Zero Defect is status een spoor: wat heb je achtergelaten? De meest gerespecteerde burgers zijn degenen wier bijdragen het langst doorwerken. Dit leidt tot een cultuur van &lsquo;diepte boven snelheid&rsquo;." data-en="In the old world, status was a stack: more money, more possessions, more followers. In Zero Defect, status is a trail: what have you left behind? The most respected citizens are those whose contributions endure the longest. This leads to a culture of &lsquo;depth over speed&rsquo;.">In de oude wereld was status een stapel: meer geld, meer bezit, meer volgers. In Zero Defect is status een spoor: wat heb je achtergelaten? De meest gerespecteerde burgers zijn degenen wier bijdragen het langst doorwerken. Dit leidt tot een cultuur van &lsquo;diepte boven snelheid&rsquo;.</p>
+    </div>
+    <div class="om-block" style="margin-top:1.5rem">
+      <h3 data-nl="De paradox van overvloed" data-en="The paradox of abundance">De paradox van overvloed</h3>
+      <p data-nl="Dit is het meest onderzochte probleem in Zero Defect. Als niets schaars is, wat drijft dan de mens?" data-en="This is the most studied problem in Zero Defect. If nothing is scarce, what drives humanity?">Dit is het meest onderzochte probleem in Zero Defect. Als niets schaars is, wat drijft dan de mens?</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="De Eerste Leegte (2280-2310)" data-en="The First Emptiness (2280-2310)">De Eerste Leegte (2280-2310)</h4>
+      <p data-nl="De eerste generatie na de transitie naar post-schaarste kende een golf van existentiële crises. Zonder noodzaak tot arbeid verloren miljoenen hun structuur. Depressie, lethargie en &lsquo;zachte apathie&rsquo; troffen bijna 40% van de bevolking." data-en="The first generation after the transition to post-scarcity experienced a wave of existential crises. Without the necessity to work, millions lost their structure. Depression, lethargy and &lsquo;soft apathy&rsquo; affected nearly 40% of the population.">De eerste generatie na de transitie naar post-schaarste kende een golf van existentiële crises. Zonder noodzaak tot arbeid verloren miljoenen hun structuur. Depressie, lethargie en &lsquo;zachte apathie&rsquo; troffen bijna 40% van de bevolking.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="De oplossing: kunstmatige wrijving" data-en="The solution: designed friction">De oplossing: kunstmatige wrijving</h4>
+      <p data-nl="Zero Defect loste dit niet op door schaarste terug te brengen, maar door <em>wrijving</em> te ontwerpen. Het systeem introduceert bewust complexiteit: &lsquo;Ontwerpuitdagingen&rsquo;, &lsquo;Seizoenswisselingen&rsquo; en &lsquo;Vergeetplekken&rsquo; waar het mesh bewust niet werkt." data-en="Zero Defect did not solve this by reintroducing scarcity, but by designing <em>friction</em>. The system deliberately introduces complexity: &lsquo;Design Challenges&rsquo;, &lsquo;Seasonal Shifts&rsquo; and &lsquo;Forget Zones&rsquo; where the mesh deliberately doesn&rsquo;t work.">Zero Defect loste dit niet op door schaarste terug te brengen, maar door <em>wrijving</em> te ontwerpen. Het systeem introduceert bewust complexiteit: &lsquo;Ontwerpuitdagingen&rsquo;, &lsquo;Seizoenswisselingen&rsquo; en &lsquo;Vergeetplekken&rsquo; waar het mesh bewust niet werkt.</p>
+    </div>
+    <div class="om-quote" data-nl="&ldquo;De mens is niet gebouwd voor oplossingen. De mens is gebouwd voor problemen. Onze taak is niet het elimineren van strijd, maar het ontwerpen van waardige strijd.&rdquo;<br><span style='font-size:12px;font-style:normal;color:var(--om-hint)'>&mdash; Uit het Handvest van de Ontworpen Wrijving, 2312</span>" data-en="&ldquo;Humanity is not built for solutions. Humanity is built for problems. Our task is not to eliminate struggle, but to design worthy struggle.&rdquo;<br><span style='font-size:12px;font-style:normal;color:var(--om-hint)'>&mdash; From the Charter of Designed Friction, 2312</span>">&ldquo;De mens is niet gebouwd voor oplossingen. De mens is gebouwd voor problemen. Onze taak is niet het elimineren van strijd, maar het ontwerpen van waardige strijd.&rdquo;<br><span style="font-size:12px;font-style:normal;color:var(--om-hint)">&mdash; Uit het Handvest van de Ontworpen Wrijving, 2312</span></div>
+    <div class="om-friction" style="border-color:var(--om-accent-econ)">
+      <h4 data-nl="Frictie: economie vs. bewustzijn" data-en="Friction: economy vs. consciousness">Frictie: economie vs. bewustzijn</h4>
+      <p data-nl="Het echo-systeem belooft meritocratische gelijkheid, maar genereert een subtiele angst: de angst om onzichtbaar te zijn. In een wereld zonder materiële ongelijkheid wordt <em>erkenning</em> de schaarsste hulpbron. Sommige burgers ontwikkelen &lsquo;echo-obsessie&rsquo; &mdash; een dwangmatige behoefte om bijdragen te leveren uit angst voor irrelevantie." data-en="The echo system promises meritocratic equality, but generates a subtle anxiety: the fear of being invisible. In a world without material inequality, <em>recognition</em> becomes the scarcest resource. Some citizens develop &lsquo;echo obsession&rsquo; &mdash; a compulsive need to deliver contributions from fear of irrelevance.">Het echo-systeem belooft meritocratische gelijkheid, maar genereert een subtiele angst: de angst om onzichtbaar te zijn. In een wereld zonder materiële ongelijkheid wordt <em>erkenning</em> de schaarsste hulpbron. Sommige burgers ontwikkelen &lsquo;echo-obsessie&rsquo; &mdash; een dwangmatige behoefte om bijdragen te leveren uit angst voor irrelevantie.</p>
+    </div>
+  </div>
+
+  <!-- BEWUSTZIJN -->
+  <div class="om-section" id="sec-mind">
+    <div class="om-section-head">
+      <div class="om-dot" style="background:var(--om-accent-mind)"></div>
+      <h2 data-nl="Bewustzijn &mdash; de resonante geest" data-en="Consciousness &mdash; the resonant mind">Bewustzijn &mdash; de resonante geest</h2>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="De Resonantie" data-en="The Resonance">De Resonantie</h3>
+      <p data-nl="De Resonantie is een vrijwillige neurale interface die het menselijk zenuwstelsel verbindt met het mycelium-mesh. Het is een symbiotische schimmelcultuur die zich nestelt achter het oor. Ongeveer 62% van de bevolking draagt een Resonantie. Het is niet verplicht en kan op elk moment worden verwijderd." data-en="The Resonance is a voluntary neural interface that connects the human nervous system to the mycelium mesh. It is a symbiotic fungal culture that nests behind the ear. Approximately 62% of the population wears a Resonance. It is not mandatory and can be removed at any time.">De Resonantie is een vrijwillige neurale interface die het menselijk zenuwstelsel verbindt met het mycelium-mesh. Het is een symbiotische schimmelcultuur die zich nestelt achter het oor. Ongeveer 62% van de bevolking draagt een Resonantie. Het is niet verplicht en kan op elk moment worden verwijderd.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Hoe het voelt" data-en="How it feels">Hoe het voelt</h4>
+      <p data-nl="Dragers beschrijven het als een &lsquo;zesde zintuig voor samenhang&rsquo;. Wat je voelt is de <em>toestand</em> van het ecosysteem om je heen. Een drager in een bos voelt de vochtigheid van het mycelium als een vaag buikgevoel. Bij een groep mensen die in harmonie samenwerkt, voelt een drager een diepe, lichamelijke kalmte." data-en="Wearers describe it as a &lsquo;sixth sense for coherence&rsquo;. What you feel is the <em>state</em> of the ecosystem around you. A wearer in a forest feels the moisture of the mycelium as a vague gut feeling. Among a group of people working in harmony, a wearer feels a deep, physical calm.">Dragers beschrijven het als een &lsquo;zesde zintuig voor samenhang&rsquo;. Wat je voelt is de <em>toestand</em> van het ecosysteem om je heen. Een drager in een bos voelt de vochtigheid van het mycelium als een vaag buikgevoel. Bij een groep mensen die in harmonie samenwerkt, voelt een drager een diepe, lichamelijke kalmte.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="De Diepte-ervaring" data-en="The Depth experience">De Diepte-ervaring</h4>
+      <p data-nl="In zeldzame momenten van collectieve focus beschrijven dragers &lsquo;Diepte&rsquo;: het gevoel dat het onderscheid tussen zelf en omgeving tijdelijk oplost. Niet als verlies van identiteit, maar als een uitbreiding ervan &mdash; het hele landschap als orkest." data-en="In rare moments of collective focus, wearers describe &lsquo;Depth&rsquo;: the feeling that the distinction between self and environment temporarily dissolves. Not as a loss of identity, but as an expansion of it &mdash; the entire landscape as orchestra.">In zeldzame momenten van collectieve focus beschrijven dragers &lsquo;Diepte&rsquo;: het gevoel dat het onderscheid tussen zelf en omgeving tijdelijk oplost. Niet als verlies van identiteit, maar als een uitbreiding ervan &mdash; het hele landschap als orkest.</p>
+    </div>
+    <div class="om-block" style="margin-top:1.5rem">
+      <h3 data-nl="Psychologie van de utopische mens" data-en="Psychology of the utopian human">Psychologie van de utopische mens</h3>
+      <p data-nl="Een wereld zonder existentieel conflict produceert een radicaal ander type psyche. De psychologie van Zero Defect onderscheidt drie verschuivingen:" data-en="A world without existential conflict produces a radically different type of psyche. The psychology of Zero Defect identifies three shifts:">Een wereld zonder existentieel conflict produceert een radicaal ander type psyche. De psychologie van Zero Defect onderscheidt drie verschuivingen:</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Verschuiving 1 &mdash; van angst naar melancholie" data-en="Shift 1 &mdash; from anxiety to melancholy">Verschuiving 1 &mdash; van angst naar melancholie</h4>
+      <p data-nl="De basale angsten zijn verdwenen. Wat resteert is een persistente, lage melancholie. Therapeuten behandelen geen trauma maar <em>leegte</em>. De meest voorkomende diagnose is &lsquo;stilvallen&rsquo;: het onvermogen om een volgende stap te voelen." data-en="The basic fears have vanished. What remains is a persistent, low-grade melancholy. Therapists don&rsquo;t treat trauma but <em>emptiness</em>. The most common diagnosis is &lsquo;stalling&rsquo;: the inability to feel a next step.">De basale angsten zijn verdwenen. Wat resteert is een persistente, lage melancholie. Therapeuten behandelen geen trauma maar <em>leegte</em>. De meest voorkomende diagnose is &lsquo;stilvallen&rsquo;: het onvermogen om een volgende stap te voelen.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Verschuiving 2 &mdash; van identiteit naar proces" data-en="Shift 2 &mdash; from identity to process">Verschuiving 2 &mdash; van identiteit naar proces</h4>
+      <p data-nl="Zonder beroep of bezit als identiteitsankers definiëren burgers zichzelf via hun <em>proces</em>: niet &lsquo;ik ben een arts&rsquo; maar &lsquo;ik ben iemand die genezing onderzoekt&rsquo;. Identiteit is vloeibaar geworden." data-en="Without profession or possessions as identity anchors, citizens define themselves through their <em>process</em>: not &lsquo;I am a doctor&rsquo; but &lsquo;I am someone who investigates healing&rsquo;. Identity has become fluid.">Zonder beroep of bezit als identiteitsankers definiëren burgers zichzelf via hun <em>proces</em>: niet &lsquo;ik ben een arts&rsquo; maar &lsquo;ik ben iemand die genezing onderzoekt&rsquo;. Identiteit is vloeibaar geworden.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Verschuiving 3 &mdash; van empathie naar saturatie" data-en="Shift 3 &mdash; from empathy to saturation">Verschuiving 3 &mdash; van empathie naar saturatie</h4>
+      <p data-nl="Langetermijndragers rapporteren &lsquo;empathische saturatie&rsquo;: het onvermogen om nog verrast te worden door emotioneel contact. De wereld voelt altijd zacht &mdash; juist die constantheid maakt emotionele pieken vlakker. Een minderheid verwijdert de Resonantie om het &lsquo;ruwe gevoel&rsquo; terug te krijgen." data-en="Long-term wearers report &lsquo;empathic saturation&rsquo;: the inability to be surprised by emotional contact anymore. The world always feels soft &mdash; precisely that constancy flattens emotional peaks. A minority removes the Resonance to regain the &lsquo;raw feeling&rsquo;.">Langetermijndragers rapporteren &lsquo;empathische saturatie&rsquo;: het onvermogen om nog verrast te worden door emotioneel contact. De wereld voelt altijd zacht &mdash; juist die constantheid maakt emotionele pieken vlakker. Een minderheid verwijdert de Resonantie om het &lsquo;ruwe gevoel&rsquo; terug te krijgen.</p>
+    </div>
+    <div class="om-friction" style="border-color:var(--om-accent-mind)">
+      <h4 data-nl="Frictie: bewustzijn vs. ecologie" data-en="Friction: consciousness vs. ecology">Frictie: bewustzijn vs. ecologie</h4>
+      <p data-nl="In 2331 leidde collectieve angst tot een feedbackloop: de stress van dragers verstoorde het mycelium-mesh, wat de stress verergerde. De &lsquo;Resonantiekramp&rsquo; duurde drie weken en bewees dat menselijke emoties een ecologische kracht zijn geworden." data-en="In 2331, collective anxiety led to a feedback loop: the stress of wearers disrupted the mycelium mesh, which worsened the stress. The &lsquo;Resonance Cramp&rsquo; lasted three weeks and proved that human emotions have become an ecological force.">In 2331 leidde collectieve angst tot een feedbackloop: de stress van dragers verstoorde het mycelium-mesh, wat de stress verergerde. De &lsquo;Resonantiekramp&rsquo; duurde drie weken en bewees dat menselijke emoties een ecologische kracht zijn geworden.</p>
+    </div>
+  </div>
+
+  <!-- SCHADUWZIJDE -->
+  <div class="om-section" id="sec-shadow">
+    <div class="om-section-head">
+      <div class="om-dot" style="background:var(--om-accent-shadow)"></div>
+      <h2 data-nl="De schaduwzijde &mdash; het offer en het verlies" data-en="The shadow side &mdash; the sacrifice and the loss">De schaduwzijde &mdash; het offer en het verlies</h2>
+    </div>
+    <div class="om-quote" data-nl="&ldquo;Elke utopie is een grafschrift. De vraag is alleen: van wie?&rdquo;" data-en="&ldquo;Every utopia is an epitaph. The only question is: for whom?&rdquo;">&ldquo;Elke utopie is een grafschrift. De vraag is alleen: van wie?&rdquo;</div>
+    <div class="om-block">
+      <h3 data-nl="Het grootste offer: individuele soevereiniteit" data-en="The greatest sacrifice: individual sovereignty">Het grootste offer: individuele soevereiniteit</h3>
+      <p data-nl="Om Zero Defect mogelijk te maken, heeft de mensheid het recht opgegeven om radicaal anders te zijn op een manier die schade toebrengt. Er is geen &lsquo;off-grid&rsquo;. Er is geen &lsquo;buiten&rsquo; meer. De wildernissen zijn geïntegreerd. De oceanen zijn gemonitord." data-en="To make Zero Defect possible, humanity gave up the right to be radically different in a way that causes harm. There is no &lsquo;off-grid&rsquo;. There is no &lsquo;outside&rsquo; anymore. The wildernesses are integrated. The oceans are monitored.">Om Zero Defect mogelijk te maken, heeft de mensheid het recht opgegeven om radicaal anders te zijn op een manier die schade toebrengt. Er is geen &lsquo;off-grid&rsquo;. Er is geen &lsquo;buiten&rsquo; meer. De wildernissen zijn geïntegreerd. De oceanen zijn gemonitord.</p>
+      <p data-nl="Dissidentie is mogelijk, maar <em>afscheiding</em> is onmogelijk. Je kunt protesteren, weigeren, kritiseren &mdash; maar je kunt niet vertrekken. De wereld is één organisme geworden, en je bent er een cel van." data-en="Dissidence is possible, but <em>secession</em> is impossible. You can protest, refuse, criticize &mdash; but you cannot leave. The world has become one organism, and you are a cell of it.">Dissidentie is mogelijk, maar <em>afscheiding</em> is onmogelijk. Je kunt protesteren, weigeren, kritiseren &mdash; maar je kunt niet vertrekken. De wereld is één organisme geworden, en je bent er een cel van.</p>
+    </div>
+    <div class="om-block">
+      <h3 data-nl="De uitgestorven eigenschap: wrok" data-en="The extinct trait: resentment">De uitgestorven eigenschap: wrok</h3>
+      <p data-nl="Het menselijk vermogen tot langdurige wrok is vrijwel verdwenen &mdash; niet door genetische manipulatie maar door omgevingsverandering. Wrok was de motor van hervormingen en revoluties. Zonder wrok is er geen brandstof voor radicale verandering." data-en="The human capacity for sustained resentment has virtually disappeared &mdash; not through genetic manipulation but through environmental change. Resentment was the engine of reforms and revolutions. Without resentment, there is no fuel for radical change.">Het menselijk vermogen tot langdurige wrok is vrijwel verdwenen &mdash; niet door genetische manipulatie maar door omgevingsverandering. Wrok was de motor van hervormingen en revoluties. Zonder wrok is er geen brandstof voor radicale verandering.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="Het paradoxale risico" data-en="The paradoxical risk">Het paradoxale risico</h4>
+      <p data-nl="Een samenleving die niet meer in staat is tot wrok, kan haar eigen schaduwzijde niet meer herkennen als onacceptabel. Het vocabulaire van opstand is uitgestorven samen met het gevoel dat het voedde." data-en="A society no longer capable of resentment cannot recognize its own shadow side as unacceptable. The vocabulary of revolt has gone extinct along with the feeling that fed it.">Een samenleving die niet meer in staat is tot wrok, kan haar eigen schaduwzijde niet meer herkennen als onacceptabel. Het vocabulaire van opstand is uitgestorven samen met het gevoel dat het voedde.</p>
+    </div>
+    <div class="om-card">
+      <h4 data-nl="De dissidenten: de Ruwmakers" data-en="The dissidents: the Roughmakers">De dissidenten: de Ruwmakers</h4>
+      <p data-nl="Een kleine minderheid (circa 3%) noemt zichzelf &lsquo;Ruwmakers&rsquo;. Ze verwijderen hun Resonantie, leven in Vergeetplekken en cultiveren bewust ongemak en woede. Het systeem tolereert ze als &lsquo;ecologisch correctief&rsquo;. Maar juist dat gebrek aan dreiging maakt hen machteloos." data-en="A small minority (approximately 3%) call themselves &lsquo;Roughmakers&rsquo;. They remove their Resonance, live in Forget Zones and deliberately cultivate discomfort and anger. The system tolerates them as an &lsquo;ecological corrective&rsquo;. But precisely that lack of threat renders them powerless.">Een kleine minderheid (circa 3%) noemt zichzelf &lsquo;Ruwmakers&rsquo;. Ze verwijderen hun Resonantie, leven in Vergeetplekken en cultiveren bewust ongemak en woede. Het systeem tolereert ze als &lsquo;ecologisch correctief&rsquo;. Maar juist dat gebrek aan dreiging maakt hen machteloos.</p>
+      <p data-nl="De tragiek: de Ruwmakers zijn het morele geweten van Zero Defect, maar een geweten dat niemand voelt bijten." data-en="The tragedy: the Roughmakers are the moral conscience of Zero Defect, but a conscience that no one feels biting.">De tragiek: de Ruwmakers zijn het morele geweten van Zero Defect, maar een geweten dat niemand voelt bijten.</p>
+    </div>
+    <div class="om-friction" style="border-color:var(--om-accent-shadow)">
+      <h4 data-nl="De kernvraag van Zero Defect" data-en="The core question of Zero Defect">De kernvraag van Zero Defect</h4>
+      <p data-nl="Is een beschaving die niet meer in staat is tot woede nog in staat tot gerechtigheid? Of is Zero Defect een plek voorbij gerechtigheid, voorbij het kwaad, maar ook voorbij de mogelijkheid om het kwaad te herkennen als het terugkeert in een vorm die niemand meer kan benoemen?" data-en="Is a civilization no longer capable of rage still capable of justice? Or is Zero Defect a place beyond justice, beyond evil, but also beyond the ability to recognize evil when it returns in a form no one can name anymore?">Is een beschaving die niet meer in staat is tot woede nog in staat tot gerechtigheid? Of is Zero Defect een plek voorbij gerechtigheid, voorbij het kwaad, maar ook voorbij de mogelijkheid om het kwaad te herkennen als het terugkeert in een vorm die niemand meer kan benoemen?</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'nl';
+let currentSection = 'tech';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.querySelectorAll('[data-nl][data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+  updateHash();
+}
+
+function show(id) {
+  currentSection = id;
+  document.querySelectorAll('.om-section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('sec-' + id).classList.add('visible');
+  document.querySelectorAll('.om-nav button').forEach(b => b.classList.remove('active'));
+  document.querySelector('.om-nav button[data-s="' + id + '"]').classList.add('active');
+  updateHash();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateHash() {
+  var hash = currentSection + (currentLang !== 'nl' ? '/' + currentLang : '');
+  history.replaceState(null, '', '#' + hash);
+}
+
+function parseHash() {
+  var hash = location.hash.replace('#', '');
+  if (!hash) return;
+  var parts = hash.split('/');
+  var section = parts[0];
+  var lang = parts[1] || 'nl';
+  var validSections = ['tech', 'eco', 'econ', 'mind', 'shadow'];
+  var validLangs = ['nl', 'en'];
+  if (validSections.indexOf(section) !== -1) show(section);
+  if (validLangs.indexOf(lang) !== -1) setLang(lang);
+}
+
+window.addEventListener('hashchange', parseHash);
+parseHash();
+</script>
+</body>
+</html>
