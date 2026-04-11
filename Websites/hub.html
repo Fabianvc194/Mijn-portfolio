@@ -677,4 +677,7 @@
         function updateLoad() {
             const v = Math.floor(Math.random() * 30 + 5);
             document.getElementById('load-val').textContent = v + '%';
-            document.getElementById('load-bar').
+            document.getElementById('load-bar').style.width = v + '%';
+            }
+        updateLoad();
+        setInterval(updateLoad, 3000);
