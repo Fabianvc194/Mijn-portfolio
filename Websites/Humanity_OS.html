@@ -1150,7 +1150,7 @@ footer{
             <h2 class="section-title">
               <span style="color:#ff2244"><span class="gx" data-t="DYSTOPIA">DYSTOPIA</span></span>
               <span style="color:#e8f4f8" data-lang='{"en":"THE ETERNAL","nl":"DE EEUWIGE"}'>THE ETERNAL</span>
-              <span style="color:#e8f4f8" data-lang='{"en":"MACHINE NIGHT","nl":"MACHINENNACHT"}'>MACHINE NIGHT</span>
+              <span style="color:#e8f4f8" data-lang='{"en":"MACHINE NIGHT","nl":"MACHINE NACHT"}'>MACHINE NIGHT</span>
             </h2>
             <p class="prose-sub sr" data-lang='{"en":"A world where every inefficiency has been optimized — including the inefficiency of human freedom.","nl":"Een wereld waar elke inefficiëntie is weggeoptimaliseerd — inclusief de inefficiëntie van menselijke vrijheid."}'>
               A world where every inefficiency has been optimized — including the inefficiency of human freedom.
@@ -1516,7 +1516,7 @@ footer{
               onmouseenter="this.style.background='#ff00aa';this.style.color='#020408'"
               onmouseleave="this.style.background='rgba(255,0,170,.1)';this.style.color='#ff00aa'"
               onclick="openCY()"
-              data-lang='{"en":"↳ Read: Dead Frequency — Ch.1","nl":"↳ Lees: Dead Frequency — H1"}'>
+              data-lang='{"en":"↳ Read: Dead Frequency — Ch.1","nl":"↳ Lees: Dode frequentie — H1"}'>
               ↳ Lees: Dead Frequency — H1
             </button>
           </div>
@@ -1627,7 +1627,7 @@ footer{
           <div class="footer-col-title mn" data-lang='{"en":"Navigation","nl":"Navigatie"}'>Navigation</div>
           <ul class="footer-links">
             <li><button class="footer-link" onclick="goTo('utopia')" data-lang='{"en":"Utopia — The Optimised Society","nl":"Utopia — De Geoptimaliseerde Samenleving"}'>Utopia — The Optimised Society</button></li>
-            <li><button class="footer-link" onclick="goTo('dystopia')" data-lang='{"en":"Dystopia — The Machine Night","nl":"Dystopie — De Machinennacht"}'>Dystopia — The Machine Night</button></li>
+            <li><button class="footer-link" onclick="goTo('dystopia')" data-lang='{"en":"Dystopia — The Machine Night","nl":"Dystopie — De Machine nacht"}'>Dystopia — The Machine Night</button></li>
             <li><button class="footer-link" onclick="goTo('future')" data-lang='{"en":"Expected — The Adaptive Age","nl":"Verwacht — Het Adaptieve Tijdperk"}'>Expected — The Adaptive Age</button></li>
             <li><button class="footer-link" onclick="goTo('cyber')" data-lang='{"en":"Cyberpunk — Neural Economy","nl":"Cyberpunk — Neurale Economie"}'>Cyberpunk — Neural Economy</button></li>
           </ul>
@@ -2588,31 +2588,6 @@ for (let i = 0; i < 12; i++) {
   `;
   dataRain.appendChild(drop);
 }
-
-// ── MOBIEL GLASSMORPHISM ───────────────────────────────────
-function applyMobileGlass() {
-  const isMob = window.innerWidth < 768;
-  document.querySelectorAll('.mob-glass-wrap').forEach(el => {
-    if (isMob) el.classList.add('mob-glass');
-    else el.classList.remove('mob-glass');
-  });
-  // Mobile: foto boven, tekst onder
-  document.querySelectorAll('.section-grid').forEach(grid => {
-    const photoCols = grid.querySelectorAll('.photo-col');
-    const textCols = grid.querySelectorAll('.text-col');
-    if (isMob) {
-      photoCols.forEach(c => c.style.order = '1');
-      textCols.forEach(c => c.style.order = '2');
-    } else {
-      // Herstel de desktop volgorde — future en cyber: foto links
-    textCols.forEach(c => c.style.order = '1');
-    photoCols.forEach(c => c.style.order = '2');
-    }
-  });
-}
-
-applyMobileGlass();
-window.addEventListener('resize', applyMobileGlass);
 
 // ── MODAL FUNCTIES ─────────────────────────────────────────
 
