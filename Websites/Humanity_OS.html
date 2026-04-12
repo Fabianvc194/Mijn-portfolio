@@ -190,7 +190,7 @@ main{flex:1;overflow-y:auto;position:relative;}
 /* ── SECTION GRID LAYOUT ──────────────────────────────────── */
 .section-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns: 1fr 480px;   /* tekst fluid, foto VAST */
   gap:3.5rem;
   max-width:1240px;
   margin:0 auto;
@@ -683,6 +683,32 @@ footer{
   .photo-col{order:1;}
   .text-col{order:2;}
 }
+#ds-overlay,
+#ft-overlay,
+#cy-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .35s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+#ds-overlay.open,
+#ft-overlay.open,
+#cy-overlay.open {
+  display: flex;
+}
+
+#ds-overlay.visible,
+#ft-overlay.visible,
+#cy-overlay.visible {
+  opacity: 1;
+}
 /* ── ZERO DEFECT MODAL ────────────────────────────────────── */
 .zd-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.78rem 1.9rem;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;border:1px solid #2dd4bf;color:#2dd4bf;background:rgba(45,212,191,.1);clip-path:polygon(9px 0%,100% 0%,calc(100% - 9px) 100%,0% 100%);cursor:pointer;font-weight:600;transition:all .25s;margin-top:1.2rem;}
 .zd-btn:hover{background:#2dd4bf;color:#020408;}
@@ -703,6 +729,164 @@ footer{
 .zd-body p{font-family:'Cormorant Garamond',serif;font-size:1.13rem;line-height:2;color:rgba(232,244,248,.72);font-weight:400;margin-bottom:1.6rem;}
 .zd-body em{color:rgba(232,244,248,.88);font-style:italic;}
 .zd-spacer{display:block;height:1rem;}
+
+/* ══════════════════════════════════════════════════════
+   MODAL KLEURTHEMA'S — scoped per overlay-ID
+   Elke sectie volgt exact het Zero Defect patroon.
+══════════════════════════════════════════════════════ */
+
+/* ── DYSTOPIA (#ff2244 rood) ── */
+#ds-overlay {
+  background: rgba(20,4,8,.88);
+}
+#ds-overlay .zd-panel {
+  background: rgba(20,4,8,.97);
+  border-color: rgba(255,34,68,.22);
+  clip-path: polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));
+}
+#ds-overlay .zd-header {
+  border-bottom-color: rgba(255,34,68,.14);
+}
+#ds-overlay .zd-tag {
+  color: rgba(255,34,68,.55);
+}
+#ds-overlay .zd-title {
+  color: #ff2244;
+}
+#ds-overlay .zd-chapter {
+  color: rgba(232,244,248,.55);
+}
+#ds-overlay .zd-close {
+  border-color: rgba(255,34,68,.2);
+  color: rgba(255,34,68,.5);
+}
+#ds-overlay .zd-close:hover {
+  color: #ff2244;
+  border-color: rgba(255,34,68,.5);
+}
+#ds-overlay .zd-body {
+  scrollbar-color: rgba(255,34,68,.2) transparent;
+}
+#ds-overlay .zd-body::-webkit-scrollbar-thumb {
+  background: rgba(255,34,68,.25);
+}
+#ds-overlay .zd-body p {
+  color: rgba(232,244,248,.72);
+}
+#ds-overlay .zd-body em {
+  color: rgba(232,244,248,.88);
+}
+#ds-overlay .zd-btn {
+  border-color: #ff2244;
+  color: #ff2244;
+  background: rgba(255,34,68,.1);
+}
+#ds-overlay .zd-btn:hover {
+  background: #ff2244;
+  color: #020408;
+}
+
+/* ── EXPECTED FUTURE (#00f5ff cyaan) ── */
+#ft-overlay {
+  background: rgba(0,12,18,.88);
+}
+#ft-overlay .zd-panel {
+  background: rgba(0,12,18,.97);
+  border-color: rgba(0,245,255,.22);
+  clip-path: polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));
+}
+#ft-overlay .zd-header {
+  border-bottom-color: rgba(0,245,255,.14);
+}
+#ft-overlay .zd-tag {
+  color: rgba(0,245,255,.55);
+}
+#ft-overlay .zd-title {
+  color: #00f5ff;
+}
+#ft-overlay .zd-chapter {
+  color: rgba(232,244,248,.55);
+}
+#ft-overlay .zd-close {
+  border-color: rgba(0,245,255,.2);
+  color: rgba(0,245,255,.5);
+}
+#ft-overlay .zd-close:hover {
+  color: #00f5ff;
+  border-color: rgba(0,245,255,.5);
+}
+#ft-overlay .zd-body {
+  scrollbar-color: rgba(0,245,255,.2) transparent;
+}
+#ft-overlay .zd-body::-webkit-scrollbar-thumb {
+  background: rgba(0,245,255,.25);
+}
+#ft-overlay .zd-body p {
+  color: rgba(232,244,248,.72);
+}
+#ft-overlay .zd-body em {
+  color: rgba(232,244,248,.88);
+}
+#ft-overlay .zd-btn {
+  border-color: #00f5ff;
+  color: #00f5ff;
+  background: rgba(0,245,255,.1);
+}
+#ft-overlay .zd-btn:hover {
+  background: #00f5ff;
+  color: #020408;
+}
+
+/* ── CYBERPUNK (#ff00aa magenta) ── */
+#cy-overlay {
+  background: rgba(20,0,14,.88);
+}
+#cy-overlay .zd-panel {
+  background: rgba(20,0,14,.97);
+  border-color: rgba(255,0,170,.22);
+  clip-path: polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));
+}
+#cy-overlay .zd-header {
+  border-bottom-color: rgba(255,0,170,.14);
+}
+#cy-overlay .zd-tag {
+  color: rgba(255,0,170,.55);
+}
+#cy-overlay .zd-title {
+  color: #ff00aa;
+}
+#cy-overlay .zd-chapter {
+  color: rgba(232,244,248,.55);
+}
+#cy-overlay .zd-close {
+  border-color: rgba(255,0,170,.2);
+  color: rgba(255,0,170,.5);
+}
+#cy-overlay .zd-close:hover {
+  color: #ff00aa;
+  border-color: rgba(255,0,170,.5);
+}
+#cy-overlay .zd-body {
+  scrollbar-color: rgba(255,0,170,.2) transparent;
+}
+#cy-overlay .zd-body::-webkit-scrollbar-thumb {
+  background: rgba(255,0,170,.25);
+}
+#cy-overlay .zd-body p {
+  color: rgba(232,244,248,.72);
+}
+#cy-overlay .zd-body em {
+  color: rgba(232,244,248,.88);
+}
+#cy-overlay .zd-btn {
+  border-color: #ff00aa;
+  color: #ff00aa;
+  background: rgba(255,0,170,.1);
+}
+#cy-overlay .zd-btn:hover {
+  background: #ff00aa;
+  color: #020408;
+}
 
 </style>
 </head>
@@ -896,7 +1080,6 @@ footer{
             </button>
           </div>
         </div>
-
         <!-- FOTO KOLOM — rechts -->
         <div class="rr photo-col" data-obs-reveal="utopia-img">
           <!-- FOTO FRAME -->
@@ -1020,8 +1203,16 @@ footer{
             </button>
             <p class="meta-txt" style="color:rgba(255,34,68,.28);"
               data-lang='{"en":"META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.","nl":"META: Algoritmische tirannie is geen sciencefiction. Het is een ontwerpkeuze die nu wordt gemaakt."}'>
-              META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.
+              META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.<br><br>
             </p>
+            <!-- ── DYSTOPIA LEESKNOP — uniek voor dit hoofdstuk ── -->
+            <button class="cta-btn mn"
+              style="border-color:#ff2244;color:#ff2244;background:rgba(255,34,68,.1);"
+              onmouseenter="this.style.background='#ff2244';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(255,34,68,.1)';this.style.color='#ff2244'"
+              onclick="openDS()">
+              ↳ Lees: The Baseline Audit — H1
+            </button>
           </div>
         </div>
 
@@ -1077,7 +1268,7 @@ footer{
 
       <div class="section-grid" style="position:relative;z-index:2;">
         <!-- FOTO KOLOM — links op desktop -->
-        <div class="rl photo-col" data-obs-reveal="future-img" style="order:1;">
+        <div class="rl photo-col" data-obs-reveal="future-img">
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(0,245,255,.1);">
             <img src="Images/future.jpg" alt="Future"/>
             <!-- ══════════════════════════════════════════════════
@@ -1105,7 +1296,6 @@ footer{
               <div class="corrupt-pct mn" style="color:rgba(0,245,255,.38);font-size:7px;letter-spacing:2px">LOADING...</div>
             </div>
           </div>
-
           <!-- FOTO CAPTION -->
           <div class="img-caption" style="border-color:#00f5ff;">
             <div class="cap-tag mn" style="color:#00f5ff;">// IMAGE DIRECTIVE</div>
@@ -1117,7 +1307,7 @@ footer{
         </div>
 
         <!-- TEKST KOLOM — rechts op desktop -->
-        <div class="rr text-col" data-obs-reveal="future-txt" style="order:2;">
+        <div class="rr text-col" data-obs-reveal="future-txt">
           <div class="mob-glass-wrap">
             <div class="slbl" style="color:#00f5ff">
               <span class="slbl-line" style="background:#00f5ff"></span>
@@ -1187,6 +1377,13 @@ footer{
               data-lang='{"en":"META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.","nl":"META: De waarschijnlijke toekomst is een hoog-inzet improvisatie op een podium dat blijft vlam vatten."}'>
               META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.
             </p>
+            <button class="cta-btn mn"
+              style="border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.1);margin-top:1.4rem;"
+              onmouseenter="this.style.background='#00f5ff';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(0,245,255,.1)';this.style.color='#00f5ff'"
+              onclick="openFT()">
+              ↳ Lees: Noise — H1 
+            </button>
           </div>
         </div>
       </div>
@@ -1203,7 +1400,7 @@ footer{
 
       <div class="section-grid" style="position:relative;z-index:2;">
         <!-- FOTO KOLOM — links op desktop -->
-        <div class="rl photo-col" data-obs-reveal="cyber-img" style="order:1;">
+        <div class="rl photo-col" data-obs-reveal="cyber-img">
           <div class="photo-frame" style="height:530px;border:0.5px solid rgba(255,0,170,.1);">
             <img src="Images/cyber.jpg" alt="Cyber"/>
             <!-- ══════════════════════════════════════════════════
@@ -1243,7 +1440,7 @@ footer{
         </div>
 
         <!-- TEKST KOLOM — rechts op desktop -->
-        <div class="rr text-col" data-obs-reveal="cyber-txt" style="order:2;">
+        <div class="rr text-col" data-obs-reveal="cyber-txt">
           <div class="mob-glass-wrap">
             <div class="slbl" style="color:#ff00aa">
               <span class="slbl-line" style="background:#ff00aa"></span>
@@ -1306,8 +1503,16 @@ footer{
             </button>
             <p class="meta-txt" style="color:rgba(255,0,170,.28);"
               data-lang='{"en":"META: The neural economy is being designed now. The question is whether it extracts consciousness itself.","nl":"META: De neurale economie wordt nu ontworpen. De vraag is of het uw eigen bewustzijn zal onttrekken."}'>
-              META: The neural economy is being designed now. The question is whether it extracts consciousness itself.
+              META: The neural economy is being designed now. The question is whether it extracts consciousness itself.<br><br>
             </p>
+        <!-- ↓ HIER de Cyber knop toevoegen -->
+        <button class="cta-btn mn"
+          style="border-color:#ff00aa;color:#ff00aa;background:rgba(255,0,170,.1);"
+          onmouseenter="this.style.background='#ff00aa';this.style.color='#020408'"
+          onmouseleave="this.style.background='rgba(255,0,170,.1)';this.style.color='#ff00aa'"
+          onclick="openCY()">
+          ↳ Lees: Dead Frequency — H1
+        </button>
           </div>
         </div>
       </div>
@@ -1622,6 +1827,320 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
   </main><!-- end #main-scroll -->
 </div><!-- end #app -->
 
+<!-- ══════════════════════════════════════════════════════
+     DYSTOPIA MODAL — The Baseline Audit
+     Identieke structuur als #zd-overlay / #zd-panel.
+     Unieke IDs: ds-overlay, ds-panel
+     Unieke kleur: #ff2244 (dystopia rood)
+══════════════════════════════════════════════════════ -->
+<div class="zd-overlay" id="ds-overlay" onclick="handleDSOverlayClick(event)">
+  <div class="zd-panel" id="ds-panel">  
+    <!-- HEADER — unieke titels voor Dystopia -->
+    <div class="zd-header">
+      <div>
+        <div class="zd-tag">// Fictie — Dystopia</div>
+        <div class="zd-title" style="color:#ff2244;">The Baseline Audit</div>
+        <div class="zd-chapter">Hoofdstuk 1 — Ochtendroutine (06:04:17 – 07:02:43)</div>
+      </div>
+      <button class="zd-close" onclick="closeDS()">[ × ]</button>
+    </div>
+
+    <!-- BODY — verhaaltekst Dystopia -->
+    <div class="zd-body">
+
+      <p>De slaap stopt.<br>
+      Niet geleidelijk. Niet zacht. Hij stopt omdat de WellnessMonitor in het matras bepaalt dat de slaaparchitectuur zijn economische piek heeft bereikt: 94,3 minuten rem-cyclus, cortisol op 12,7 nmol/liter, spierspanning binnen tolerantieband. Verdere slaap zou verspilling zijn. Het systeem registreert dit als een keuze.</p>
+
+      <p>Karin Steef, Baseline-identificatie 7-NL-0041882, opent haar ogen.</p>
+
+      <p>De kamer is al wakker. Het licht is niet aan gegaan — het was nooit uit. Het werkt in twee spectrale lagen: een basislicht van 4800 Kelvin dat het circadiaanse ritme begeleidt, en een pulserend infraroodcomponent dat de huidtemperatuur monitort. De kleur is neutraal wit. Er bestaat geen andere kleur. De muren zijn van glad gepolijst composiet, mat, zonder naden. Ze absorberen geluid. Ze absorberen niets anders.</p>
+
+      <p>Karin zit rechtop. Haar bewegingsprofiel is al doorgestuurd.<br>
+      Ze staat op.</p>
+
+      <span class="zd-spacer"></span>
+
+      <p>De badkamer is twee meter bij anderhalve meter. Functionele dimensionering, klasse C-woning, sector 7. De spiegel is een scherm. Hij toont haar gezicht en tegelijkertijd een getal: 81. Haar DailyCap — de hoeveelheid CarbonCredit die zij vandaag mag consumeren voor basisfuncties. Douchen kost 4. Warme douche kost 6. Ze draait de kraan op warm.</p>
+
+      <p>Het water komt na drie seconden. Het heeft een geur van niets.</p>
+
+      <p>Terwijl ze onder de straal staat, scant de schuine sensor in de douchewand haar retinae. Niet voor identificatie — die werd al gedaan bij het opstaan, via de DrukPlaat in de vloer. De retinacheck is voor iets anders. Hij meet de dilatatie van de pupil. Stressscore. Agitatie-index. Het systeem zoekt afwijkingen.</p>
+
+      <p>Karin's pupillen zijn 4,1 millimeter. Binnen norm.<br>
+      Ze droogt zich af. De handdoek is van gerecycled microvlies. Hij heeft de textuur van een formulier.</p>
+
+      <span class="zd-spacer"></span>
+
+      <p>De keuken.<br>
+      De GVA — GedragsVerificatieApplicatie, behuisd in het paneel boven het aanrecht — wacht. Karin loopt ernaartoe. Ze weet wat er komt. Ze doet het iedere ochtend. Ze staat stil voor het paneel en produceert een glimlach.</p>
+
+      <p>De scan duurt 0,4 seconden.</p>
+
+      <p>De glimlach hoeft niet gemeend te zijn. Het systeem meet geen intentie. Het meet symmetrie, spierspanning, de elevatie van de zygomaticus major. Karin's glimlach haalt een 73 van de 100. Voldoende. Het koffieapparaat ontgrendelt.</p>
+
+      <p>De koffie is synthetisch. De grondstof is een enzymatisch fermentaat van cellulose en gistextract. Hij is bruin. Hij is warm. Hij smaakt naar niets bijzonders, maar het label op de cartridge zegt <em>Koffie — Variant Premium Basis</em>, en Karin leest het label niet meer.<br>
+      Ze drinkt staand.</p>
+
+      <span class="zd-spacer"></span>
+
+      <p>Het ontbijt begint met een klik.</p>
+
+      <p>Niet hoorbaar voor anderen. Alleen voor haar. Het zit in haar tweede premolaar rechts, onder het glazuur, een piëzo-element ter grootte van een zoutkorrel dat samenwerkt met de biometrische sensor in haar kiezen. Wanneer ze begint te kauwen op het Ochtendrantsoen — een gekomprimeerde blok van eiwitpasta, zemelen en micronutriënten, de kleur van verzadigde grond — registreert de sensor de druk. De klikherhaling analyseert kauwfrequentie, bolussamendrukking, salivaproductie.</p>
+
+      <p>Tanden zijn eindpunten. Tanden vertellen wat het bloed al weet maar later meldt.</p>
+
+      <p>De sensor klikt drie keer snel achter elkaar. Dat betekent: calcium-opname acceptabel. Dan een langzame klik: glucoserespons normaal. Karin kauwt door. Ze weet wat de klikken betekenen omdat ze ze ooit heeft opgezocht in de gebruikershandleiding, twee jaar geleden, in een periode dat ze nog vragen stelde. Nu zijn de klikken gewoon geluid. Zoals de gerecyclede lucht gewoon lucht is.</p>
+
+      <p>De lucht heeft een geur van ionisatie en talg en iets wat op ozon lijkt maar het niet is. De lucht is acht keer per uur gefilterd. Er zijn geen allergenen. Er zijn ook geen geuren van voedsel, van buitenlucht, van andere mensen. Er is alleen de functionele atmosfeer van een ruimte die zich gedraagt als een long.</p>
+
+      <span class="zd-spacer"></span>
+
+      <p>Het scherm aan de muur gaat aan. Dit is automatisch. Karin heeft dit niet aangevraagd.</p>
+
+      <p>Het InfoKanaal toont eerst het BasisNieuwsframe: temperatuurgemiddelden, TrafficFlow-updates, het dagelijkse Productiviteitsquotiënt van sector 7 (0,94 — onder het nationale gemiddelde van 0,97, een feit dat Karin passief registreert zoals men een straatsteen registreert). Dan het hoofdbericht.</p>
+
+      <p>De presentator heeft een gezicht dat op rust is gecalibreerd. Zijn ogen staan 68% open. Zijn stem beweegt binnen een bandbreedte van 220 tot 260 Hz, wat het BreinProtocol aanduidt als de <em>Gezaghebbend-Neutraal</em>-modus. Hij zegt:</p>
+
+      <p><em>"Het Ministerie van Ecologische Optimalisatie meldt vandaag de succesvolle liquidatie van Bosreservaat 7-Noord. Het gebied, 1.240 hectare omvattend, is per direct omgezet in CarbonCredit-equivalenten en gedistribueerd via het nationale verdeelsysteem. Minister Verhoef spreekt van een <strong>efficiëntiewinst van historische omvang</strong>. De credits zijn verwerkt in het Q2-budget. Burgers in de aangrenzende sectoren mogen een tijdelijke verhoging van hun DailyCap verwachten van gemiddeld 1,3 punten."</em></p>
+
+      <p>Karin eet de laatste hap van het Ochtendrantsoen.</p>
+
+      <p>Buiten het raam — een venster van 60 bij 40 centimeter, niet te openen, van gelaagd gehard glas — is sector 7 al in beweging. Bewegende figuren op de loopstraat. Identieke jassen in grijs-beige, verplicht klasse C. Geen bomen. Er zijn al jaren geen bomen meer in sector 7. Er zijn vakken in de grond waar bomen stonden: cirkels van een ander soort beton, iets donkerder, als littekens.</p>
+
+      <p>Karin kijkt ernaar.<br>
+      Ze denkt niets bijzonders.</p>
+
+      <span class="zd-spacer"></span>
+
+      <p>Om 06:58:31 maakt ze haar jas dicht en pakt haar TransportTag van het haakje naast de deur. Ze staat klaar. Ze is op tijd. Ze is altijd op tijd.</p>
+
+      <p>Dan.<br>
+      Een kleine gebeurtenis zonder naam.</p>
+
+      <p>Terwijl ze kauwde op het Ochtendrantsoen — zes minuten eerder, om 06:52:44 — heeft de piëzo-sensor in haar tweede premolaar een reeks klikken geproduceerd. Normaal. Gewoon. Niets bijzonders. Maar de derde klikreeks, veroorzaakt door het hardste stuk in de eiwitblok, genereerde een frequentie van 218 Hz bij een amplitude van 0,003 Pascal. Een toon die het menselijk oor niet waarneemt. Een toon die geen functie heeft in het biometrische protocol.</p>
+
+      <p>De muur tussen flat 7-B en flat 7-C is van voorgespannen composiet, 9 centimeter dik, met geïntegreerde akoestische sensoren op iedere halve meter. De sensoren zijn bedoeld voor spraakdetectie, voor ademhalingsmonitoring, voor de grove mechanische signalen van dagelijks leven. Ze zijn niet bedoeld voor frequenties van 218 Hz bij 0,003 Pascal.<br>
+      Maar ze registreren ze wel.</p>
+
+      <p>De akoestische sensor in 7-C logt het signaal om 06:52:47 als een <em>onbekend geluidsprofiel</em>, subcategorie <em>Ongeïdentificeerde Orale Activiteit</em>. Het systeem heeft geen categorie voor dit geluid. Het zoekt automatisch een bron. De bewoner van 7-B — Karin, identificatie 7-NL-0041882 — bevindt zich op dat moment buiten de detectiezone van haar eigen muurpaneel: ze staat bij het raam, niet bij het aanrecht, niet bij de muur. Afstand tot de sensor: 2,3 meter. Buiten de drempelwaarde voor brontoeschrijving.</p>
+
+      <p>Het systeem concludeert: signaal afkomstig van bewoner 7-C.</p>
+
+      <p>De bewoner van 7-C is Nadia Ferr, identificatie 7-NL-0039104. Ze slaapt nog. Haar WellnessMonitor registreert een hartslag van 57, een ademhaling van 12 per minuut, een cortisol van 8,8 nmol/liter. Alles binnen norm. Alles rustig.</p>
+
+      <p>Het systeem wacht niet op verificatie. Verificatie is een handmatig proces en handmatige processen zijn traag. Het AutoSanctieProtocol werkt in realtime. Het koppelt het geluidsprofiel aan Nadia Ferr's ComplianceScore en past die score aan op basis van de afwijkingszwaarte: klasse II, eerste registratie, geen eerdere orale anomalieën in het dossier. Dat levert een aftrek op van 4 punten.</p>
+
+      <p>Nadia Ferr's ComplianceScore was 91. Nu is hij 87.<br>
+      Bij 85 verliest ze de subsidie op haar wooneenheid.</p>
+
+      <p>Ze weet dit niet. Ze slaapt. Haar ademhaling is 12 per minuut. Haar cortisol is 8,8.</p>
+
+      <p>Karin trekt de deur achter zich dicht. Ze hoort de vergrendeling.<br>
+      Ze loopt naar de loopstraat.<br>
+      Ze is op tijd.<br>
+      Haar dossier is schoon. Haar ComplianceScore is 91.<br>
+      Ze heeft Nadia Ferr nooit ontmoet.</p>
+
+      <span class="zd-spacer"></span>
+
+      <!-- Systeemlog — uniek opmaakelement voor Dystopia -->
+      <p style="
+        font-family: monospace;
+        font-size: 0.72rem;
+        color: rgba(255,34,68,0.45);
+        border-left: 2px solid rgba(255,34,68,0.25);
+        padding-left: 1rem;
+        line-height: 1.7;
+        letter-spacing: 0.03em;
+      ">
+        <em>Bestand 7-NL-0039104 / Dagmarkering 11-04-2041 / AutoSanctie uitgevoerd: 06:52:49 / ComplianceScore: 87 (–4) / Reden: Ongeïdentificeerde Orale Activiteit, Klasse II / Bezwaartermijn: 30 dagen / Bezwaar vereist: schriftelijk, formulier CS-7, vergezeld van medische verklaring klasse A of hoger / Woningsubsidie: Actief — drempelwaarde 85 / Marge: 2 punten.</em>
+      </p>
+    </div>
+  </div>
+</div>
+</main><!-- end #main-scroll -->
+<!-- ══════════════════════════════════════════════════════
+     FUTURE MODAL
+     Unieke IDs: ft-overlay, ft-panel | Kleur: #00f5ff
+══════════════════════════════════════════════════════ -->
+<div class="zd-overlay" id="ft-overlay" onclick="handleFTOverlayClick(event)">
+  <div class="zd-panel" id="ft-panel">
+    <div class="zd-header">
+      <div>
+        <div class="zd-tag">// Fictie — Expected Future</div>
+        <div class="zd-title">Noise</div>
+        <div class="zd-chapter">Hoofdstuk 1 — Het warme water</div>
+      </div>
+      <button class="zd-close" onclick="closeFT()">[ × ]</button>
+    </div>
+    <div class="zd-body">
+<p>Het water in de goot was te warm.</p>
+ 
+<p>Mara voelde het toen ze knielde bij het aftapventiel onder de vensterbank, zoals ze elke ochtend deed. De koperen draaiknop gaf het gebruikelijke lichte verzet, het ventiel opende, en het water liep over haar vingertoppen. Helder. Geen sediment, geen verkleuring. Maar de temperatuur klopte niet — niet spectaculair fout, maar net genoeg om haar hand een halve seconde langer onder de stroom te houden dan normaal. Haar overlay bevestigde het zonder dat ze erom vroeg: 17.1 graden. Het had 14 moeten zijn, misschien 15.</p>
+ 
+<p>Ze sloot het ventiel en veegde haar hand af aan haar broek.</p>
+ 
+<p>Buiten rook het naar natte aarde en ozon, zoals altijd na een nacht waarin de luchtfilters op straatniveau hun werk hadden gedaan. De myceliumwand naast haar keukendeur had nieuwe uitlopers gevormd — dunne witte draden die over het voegwerk tastten als vingers die iets zochten. Ergens diep in haar geheugenlaag landde het als een tijdstempel naast een foto die ze niet bewust had genomen. Ze zou het over drie weken terugvinden als ze zocht naar groeipatronen van blok 14-C. Of ze zou het vergeten. Dat was het verschil tussen wat het systeem onthield en wat zij onthield: het systeem vergat niets, maar begreep niets. Zij vergat het meeste, maar wist wanneer iets niet klopte.</p>
+ 
+<p>Het water was te warm. Ze dacht het nog een keer terwijl ze haar rugzak omdeed en de trap afliep.</p>
+ 
+<div class="section-break">* * *</div>
+ 
+<p>De Koninginnebrug was dicht — koelgootonderhoud, elke maandag — en haar overlay had de alternatieve route al geladen toen ze wakker werd. Merwestraat, tien minuten extra. Ze had het geaccepteerd zonder ernaar te kijken, zoals je een deur opent zonder na te denken over het scharnier.</p>
+ 
+<p>Op de Merwestraat liep het water vandaag hoger dan normaal, tot aan de rand van de loopplanken die permanent langs de gevels hingen. Ze zette haar voet op de eerste plank en voelde het vertrouwde wiegen. De planken waren van gerecycled composiet, lichtgrijs, aangetast door jaren brak water — ze hadden ze vijf jaar geleden moeten vervangen, maar het budget ging steeds naar de primaire waterkeringen. Dat was hoe het werkte: alles wat niet direct dreigde te bezwijken, wachtte.</p>
+ 
+<p>Halverwege de straat zag ze Jens. Hij stond waar hij elke ochtend stond, bij de gootrand, zijn meetapparaat hangend in het water als een hengel. Hij keek naar zijn scherm met de uitdrukking van iemand die precies weet wat hij gaat zien maar het toch wil bevestigen.</p>
+ 
+<p>"Hoog vandaag," zei ze.</p>
+ 
+<p>Hij knikte zonder op te kijken. "Twee centimeter boven model."</p>
+ 
+<p>"Temperatuur ook?"</p>
+ 
+<p>Nu keek hij wel op. "Hoezo?"</p>
+ 
+<p>"Mijn aftap was warm vanochtend."</p>
+ 
+<p>Jens haalde zijn schouders op. "Kan. Er lag gisteravond een logistieke drone laag boven de gracht. Thermische reflectie." Hij zei het op de toon van iemand die de standaardverklaring gaf omdat de standaardverklaring meestal klopte.</p>
+ 
+<p>Mara knikte en liep door. Bij het stationsplein kocht ze koffie bij de automaat naast de ingang — geen overlay-koppeling, geen aanbeveling, gewoon een machine die koffie maakte als je betaalde. Er waren er niet veel meer van over. De meeste waren vervangen door adaptieve units die je drankvoorkeur kenden en aanpasten op basis van je slaapdata en stressniveau. Mara had een keer geprobeerd zo'n aangepaste koffie te drinken. Het smaakte alsof iemand anders hem voor haar had besteld. Dat was precies wat er was gebeurd.</p>
+ 
+<div class="section-break">* * *</div>
+ 
+<p>De Waterautoriteit, afdeling Gebiedsmonitoring Rijnmond, zat op de derde verdieping van een gebouw dat eruitzag alsof het in de jaren dertig was ontworpen door iemand die dacht dat beton en mycelium vrienden konden zijn. Het beton was gebleven. Het mycelium had het gewonnen.</p>
+ 
+<p>Diederik was er al. Natuurlijk was Diederik er al. Tweede koffie, berichten gelezen en beantwoord, stoel iets naar achteren geschoven zodat hij met één oog zijn scherm kon zien en met het andere de deur — alsof hij een schildwacht was in een fort dat al decennia niet meer werd aangevallen.</p>
+ 
+<p>"Je bent laat," zei hij.</p>
+ 
+<p>"Ik ben op tijd."</p>
+ 
+<p>"Je bent later dan normaal."</p>
+ 
+<p>Ze hing haar jas op en liet het gaan. Diederik registreerde afwijkingen van patroon bij mensen met dezelfde nauwkeurigheid waarmee hij ze registreerde in waterdata. Het was zijn beste en meest vermoeiende eigenschap.</p>
+ 
+<p>Naast hem zat Sil, de stagiair die er sinds drie weken was en die ze nu bij naam kende alleen omdat Diederik hem elke ochtend bij naam begroette, alsof het een oefening was in menselijkheid. Sil had zijn overlay permanent op volledige transparantie staan — je kon de datalagen zien bewegen in zijn rechteroog als je dichtbij genoeg stond. Mara vond het ongemakkelijk, niet omdat het ongewoon was, maar omdat het haar herinnerde aan hoe zij er op zijn leeftijd had uitgezien: hongerig naar informatie, overtuigd dat meer altijd beter was.</p>
+ 
+<p>Ze had haar eigen overlay zes maanden geleden teruggeschroefd naar basisniveau. Alleen metingen, meldingen en navigatie. Geen contextuele achtergrond, geen sociale metadata, geen geheugensuggesties. Haar therapeut had het aangeraden als eerste stap. Eerste stap waarheen, had ze gevraagd. Dat had hij niet gezegd.</p>
+ 
+<div class="section-break">* * *</div>
+ 
+<p>Haar werkscherm laadde de nachtlog. Honderdzevenendertig sensorpunten in het netwerk. Honderdzevenendertig groene iconen, zoals altijd.</p>
+ 
+<p>Ze scrollde erdoorheen met de automatische aandacht waarmee je een tekst scant waarvan je weet wat erin staat — snel, vlak, zoekend naar wat afwijkt. Ze vond het bij sensor 94-G.</p>
+ 
+<p>Katendrechtse Lagune, 03:17. Een temperatuurpiek. 1.8 graden boven het voorspelde model. Begonnen om 03:17, verdwenen om 03:41. Het systeem had het geclassificeerd als thermische reflectie — waarschijnlijk dezelfde logistieke drone die Jens had genoemd — en het automatisch gearchiveerd. Geel vlaggetje. Afgehandeld.</p>
+ 
+<p>Ze klikte het open.</p>
+ 
+<p>De tijdreeks zag er niet uit als een reflectie. Een reflectie was een piek: scherp omhoog, scherp terug, het thermische equivalent van iemand die een deur opent en weer sluit. Dit was anders. Een boog. Traag opgaand, perfect plateau, traag dalend. Symmetrisch als een ademhaling.</p>
+ 
+<p>Ze keek ernaar. Ze klikte op de ruwe data. Ze keek er weer naar.</p>
+ 
+<p>Toen opende ze haar archieflaag.</p>
+ 
+<p>Het geheugen was al aan het laden voor ze de zoekopdracht had afgemaakt — haar systeem kende haar zoekpatronen beter dan zij ze zelf kende. Het eerste resultaat verscheen binnen twee seconden. Sensor 61-B, Nieuwe Maas, vier jaar geleden. Dezelfde boog, iets minder symmetrisch. Geclassificeerd als meetfout. Gearchiveerd.</p>
+ 
+<p>Het tweede resultaat verraste haar. Sensor 12-A, Waalhaven, twee jaar en zeven maanden geleden. Dezelfde boog. Iets langer plateau. Geclassificeerd als thermische reflectie. Gearchiveerd.</p>
+ 
+<p>Het derde resultaat maakte haar stil. Sensor 88-F, Brienenoordbocht, elf maanden geleden. Dezelfde boog. Exact dezelfde symmetrie als vannacht. Geclassificeerd als sensorafwijking. Gearchiveerd.</p>
+ 
+<p>Vier keer. In vier jaar. Vier verschillende sensoren, vier verschillende locaties, vier verschillende automatische verklaringen. Geen van de verklaringen was hetzelfde, maar het patroon was identiek.</p>
+ 
+<p>Ze leunde achterover. Buiten klonk het gemurmel van de goot. Diederik zei iets aan de telefoon over kwartaalrapportages. Sil tikte op zijn scherm met de snelheid van iemand die nog geloofde dat snelheid gelijk stond aan voortgang.</p>
+ 
+<p>Mara keek naar de vier tijdreeksen die naast elkaar op haar scherm stonden. Vier bogen. Vier keer gearchiveerd door een systeem dat patronen herkende maar nooit over sensorgrenzen heen keek, omdat niemand het had gevraagd dat te doen. Het systeem classificeerde per punt, niet per netwerk. Het zag bomen. Niemand had het gevraagd naar het bos te kijken.</p>
+ 
+<p>Ze opende een nieuw analysescherm en begon de vier datareeksen naast elkaar te monteren. Dit was geen standaardprocedure. Er was geen protocol voor wat ze deed, geen werkinstructie, geen formulier. Ze deed het omdat het patroon niet klopte en omdat ze het soort persoon was dat niet kon ophouden als iets niet klopte — een eigenschap die haar therapeut omschreef als hypervigilantie en die haar leidinggevende omschreef als betrouwbaarheid, en die in werkelijkheid hetzelfde was.</p>
+ 
+<p>De vier bogen stonden nu naast elkaar. Ze normaliseerde de tijdas. Ze normaliseerde de amplitude.</p>
+ 
+<p>Ze waren niet vergelijkbaar. Ze waren identiek.</p>
+ 
+<p>Niet bijna identiek, niet statistisch vergelijkbaar, maar identiek op een manier die niet voorkwam in natuurlijke systemen. Natuurlijke thermische events varieerden. Ze hadden ruis, onregelmatigheden, de willekeurige vingerafdruk van een fysiek proces. Dit had geen ruis. Dit was schoon. Te schoon.</p>
+ 
+<p>Ze pakte haar telefoon en scrollde naar een nummer dat ze al maanden niet had gebruikt. Lena Vos, onderzoeksafdeling, drie verdiepingen hoger, iemand die ze kende van voor de reorganisatie en die ze was blijven kennen omdat Lena het soort persoon was dat dingen interessant vond die andere mensen als afgehandeld beschouwden.</p>
+ 
+<p>Ze typte: <em>Heb je vijf minuten? Ik heb iets wat niet klopt.</em></p>
+ 
+<p>Ze aarzelde. Keek nog een keer naar de vier bogen op haar scherm.</p>
+ 
+<p>Verstuurde het bericht.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     CYBERPUNK MODAL
+     Unieke IDs: cy-overlay, cy-panel | Kleur: #ff00aa
+══════════════════════════════════════════════════════ -->
+<div class="zd-overlay" id="cy-overlay" onclick="handleCYOverlayClick(event)">
+  <div class="zd-panel" id="cy-panel">
+    <div class="zd-header">
+      <div>
+        <div class="zd-tag">// Fictie — Cyberpunk</div>
+        <div class="zd-title">Dead frequency</div>
+        <div class="zd-chapter">Hoofdstuk 1 — Pacifica Metropolitan Zone</div>
+      </div>
+      <button class="zd-close" onclick="closeCY()">[ × ]</button>
+    </div>
+    <div class="zd-body">
+        <p>De naald gleed uit zijn nekvlees en Dex voelde het bloed langs zijn kraag lopen voordat de pijn kwam.</p>
+
+  <p>&ldquo;Hou stil.&rdquo; De vrouw achter hem &mdash; klein, kaalgeschoren hoofd, handen die naar desinfectiemiddel en soldeervloeistof roken &mdash; drukte een vuile doek tegen de insnijding. &ldquo;De firmware moet laden. Als je beweegt terwijl de chip synchroniseert, brand ik je auditief cortex leeg.&rdquo;</p>
+
+  <p>Dex bewoog niet. Hij zat op een metalen kruk in een ruimte die ooit een parkeergarage was geweest, vier verdiepingen onder het maaiveld van de Naad. Het plafond hing zo laag dat hij zijn hoofd moest buigen. Overal om hem heen: het gezoem van koelventilatoren, het tikken van gerecyclede servers, en de geur van warm plastic en iets organisch dat hij niet wilde identificeren. Langs de muren stonden glazen containers met daarin vormen die leken op organen maar te symmetrisch waren, te glad &mdash; gekweekt weefsel, klaar voor implantatie.</p>
+
+  <p>Dit was de Hof. Geen naam die je op een kaart vond. Een netwerk van verbonden kelders en oude tunnels onder het logistieke district, waar de Binnenzee&rsquo;s getijdenwater soms doorsijpelde en bruine vegen achterliet op de betonnen vloer. Hier opereerden de snijders: chirurgen zonder licentie die implantaten plaatsten die geen enkele drager had goedgekeurd.</p>
+
+  <p>De vrouw &mdash; ze noemde zichzelf Okra, en Dex had geleerd om niet naar haar echte naam te vragen &mdash; tikte op een scherm dat aan een gedemonteerde servermast hing. &ldquo;Chip is actief. Je hebt nu een tweede frequentie.&rdquo;</p>
+
+  <p>Dex slikte. Zijn contractnode &mdash; het standaard subcutane implantaat dat elke burger van Pacifica droeg &mdash; opereerde op &eacute;&eacute;n frequentie, beheerd door zijn drager. Alles wat hij dacht, voelde en deed passeerde dat kanaal. Elke transactie, elk bericht, elke hartslag. Wat Okra zojuist in zijn nek had geschoven, was een parallelle wetware-chip die een tweede, onzichtbaar kanaal opende. Niet-geregistreerd. Onzichtbaar voor het systeem.</p>
+
+  <p>&ldquo;Wat kost dit?&rdquo; vroeg hij, hoewel hij het antwoord al kende.</p>
+
+  <p>&ldquo;Je weet wat het kost.&rdquo; Okra veegde haar handen af aan haar short. &ldquo;Drieduizend synthetische datacycli. Of het equivalent in orgaanweefsel. Ik neem ook nieren.&rdquo;</p>
+
+  <p>Dex had de cycli. Gestolen, technisch gezien &mdash; gesynthetiseerde gedragsdata die hij op de zijmarkt had gekocht om zijn contract te vullen zonder de bijbehorende werkelijkheid te leven. Fictieve stappen, fictieve slaap, fictieve maaltijden. Zijn drager zag een tevreden burger. De werkelijkheid was een man die een illegale chip in zijn nek liet plaatsen in een voormalige parkeergarage.</p>
+
+  <p>Hij betaalde. De transactie liep niet via zijn contractnode maar via het fluisteren &mdash; het versleutelde peer-to-peer protocol dat de zijmarkt bij elkaar hield. Geen spoor.</p>
+
+  <p class="scenebreak">&bull; &bull; &bull;</p>
+
+  <p>De corpo&rsquo;s kwamen vijftien minuten later.</p>
+
+  <p>Dex hoorde ze voordat hij ze zag: het ritmische stampen van gestandaardiseerde laarzen op beton, het lage elektronische piepen van wapensystemen die zich kalibreerden. Handhaving. Geen gewone straatpolitie &mdash; die waren al jaren niet meer in de Hof geweest. Dit waren dragerhandhavers, privaat gefinancierd, zwaar geaugmenteerd, en uitgerust met wetware die hen in staat stelde om neurale kanalen in een straal van dertig meter te scannen en te classificeren.</p>
+
+  <p>Okra&rsquo;s gezicht verstrakte. Ze greep een tas, propte er instrumenten in, en wees naar een opening in de muur achter de servermasten &mdash; een ventilatieschacht die naar een diepere laag leidde.</p>
+
+  <p>&ldquo;Rennen,&rdquo; zei ze. Geen paniek in haar stem. Routine.</p>
+
+  <p>Dex rende. De schacht was smal genoeg dat zijn schouders de wanden raakten, en de lucht erin was warm en vochtig en smaakte naar roest. Achter hem hoorde hij een knal &mdash; niet van een vuurwapen, maar van een EMP-puls, het favoriete openingswapen van dragerhandhaving. Het geluid resoneerde door het beton als een diepe, droge hoest. Elke onbeschermde elektronica binnen het bereik was nu dood.</p>
+
+  <p>Maar niet zijn nieuwe chip. Dat was het punt van niet-geregistreerde wetware: geen firmwareverbinding met de dragers betekende ook geen kwetsbaarheid voor hun gereedschap.</p>
+
+  <p>Hij bereikte een T-splitsing. Links: een tunnel die naar het getijdengebied leidde, waar het water kniehoog kon staan en de corpo&rsquo;s hun zware uitrusting niet konden gebruiken. Rechts: een ladder omhoog naar de logistieke zone, waar hij kon opgaan in de menigte.</p>
+
+  <p>Dex ging rechts. Hij klom. Zijn myofibrilversterking &mdash; de synthetische spierlaag die zijn drager hem had laten installeren voor zijn werk als lezer, en die hij braaf afbetaalde in gedragsdata &mdash; maakte de klim moeiteloos. Drie verdiepingen in twintig seconden. Hij duwde een luik open en stapte het felle, witte licht van de logistieke zone in.</p>
+
+  <p>Mensen overal. Het zoemen van magnetische capsules boven zijn hoofd. De geur van synthetisch eiwit uit een nabijgelegen eetmarkt. Normaliteit. Hij rechtte zijn rug, veegde het bloed van zijn nek, en begon te lopen.</p>
+
+  <p>Toen stopte hij.</p>
+
+  <p>Niet omdat hij dat wilde. Zijn benen stopten. Zijn armen vielen langs zijn zij. Zijn ogen bleven open maar zijn hoofd draaide, langzaam, zonder zijn toestemming, naar links &mdash; naar een surveillancedrone die op ooghoogte hing, drie meter verderop.</p>
+
+  <p>Iemand had zijn cortexlink gehackt.</p>
+
+  <p>Niet de oude frequentie. Niet zijn drager. Iemand zat op de nieuwe chip &mdash; het kanaal dat vijftien minuten geleden nog niet bestond. De parallelle frequentie die Okra had ge&iuml;nstalleerd als onzichtbaar, onvindbaar, veilig.</p>
+
+  <p>Dex voelde gedachten die niet van hem waren. Ze kwamen binnen als woorden maar ook als gevoel, als kleur, als een druk achter zijn ogen die pijn deed en tegelijk vertrouwd aanvoelde, alsof iemand een hand in zijn schedel had gestoken en zachtjes kneep.</p>
+
+  <p class="cliffhanger"><em>De gedachte zei: Welkom, Anker. We hebben je chip gebouwd. We hebben elke chip gebouwd. En nu heb je een keuze &mdash;</em></p>
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════════════════════
 // HUMANITY_OS — JavaScript
@@ -1760,15 +2279,8 @@ function applyMobileGlass() {
       textCols.forEach(c => c.style.order = '2');
     } else {
       // Herstel de desktop volgorde — future en cyber: foto links
-      const section = grid.closest('section');
-      if (section && (section.id === 'future' || section.id === 'cyber')) {
-        photoCols.forEach(c => c.style.order = '1');
-        textCols.forEach(c => c.style.order = '2');
-      } else {
-        // Utopia en dystopia: tekst links, foto rechts
-        textCols.forEach(c => c.style.order = '1');
-        photoCols.forEach(c => c.style.order = '2');
-      }
+    textCols.forEach(c => c.style.order = '1');
+    photoCols.forEach(c => c.style.order = '2');
     }
   });
 }
@@ -1794,7 +2306,69 @@ function closeZD(){
 function handleOverlayClick(e){
   if(e.target===document.getElementById('zd-overlay'))closeZD();
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZD();});
+
+function openDS(){
+  const o = document.getElementById('ds-overlay');
+  o.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
+  document.getElementById('main-scroll').style.overflow = 'hidden';
+}
+function closeDS(){
+  const o = document.getElementById('ds-overlay');
+  o.classList.remove('visible');
+  setTimeout(() => {
+    o.style.display = 'none';
+    document.getElementById('main-scroll').style.overflow = '';
+  }, 380);
+}
+function handleDSOverlayClick(e){
+  if (e.target === document.getElementById('ds-overlay')) closeDS();
+}
+// Escape-toets sluit ook de Dystopia-modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDS(); });
+
+// ── EXPECTED FUTURE MODAL ──────────────────────────────
+function openFT(){
+  const o = document.getElementById('ft-overlay');
+  o.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
+  document.getElementById('main-scroll').style.overflow = 'hidden';
+}
+function closeFT(){
+  const o = document.getElementById('ft-overlay');
+  o.classList.remove('visible');
+  setTimeout(() => {
+    o.style.display = 'none';
+    document.getElementById('main-scroll').style.overflow = '';
+  }, 380);
+}
+function handleFTOverlayClick(e){
+  if (e.target === document.getElementById('ft-overlay')) closeFT();
+}
+
+// ── CYBERPUNK MODAL ────────────────────────────────────
+function openCY(){
+  const o = document.getElementById('cy-overlay');
+  o.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
+  document.getElementById('main-scroll').style.overflow = 'hidden';
+}
+function closeCY(){
+  const o = document.getElementById('cy-overlay');
+  o.classList.remove('visible');
+  setTimeout(() => {
+    o.style.display = 'none';
+    document.getElementById('main-scroll').style.overflow = '';
+  }, 380);
+}
+function handleCYOverlayClick(e){
+  if (e.target === document.getElementById('cy-overlay')) closeCY();
+}
+
+// Escape sluit alle modals — vervang de bestaande keydown listener
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeZD(); closeDS(); closeFT(); closeCY(); }
+});
 </script>
 </body>
 </html>
