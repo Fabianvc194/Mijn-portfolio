@@ -926,7 +926,7 @@ footer{
     <button class="mob-nav-link" onclick="goTo('dystopia');toggleMenu()">Dystopia</button>
     <button class="mob-nav-link" onclick="goTo('future');toggleMenu()">Expected</button>
     <button class="mob-nav-link" onclick="goTo('cyber');toggleMenu()">Cyberpunk</button>
-    <button class="btn-ui" style="margin-top:.7rem;background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.18);color:#00f5ff;" onclick="toggleLang();toggleMenu()">[ EN // NL ]</button>
+    <button class="btn-ui mobile-lang-btn" style="margin-top:.7rem;background:rgba(0,245,255,.06);border-color:rgba(0,245,255,.18);color:#00f5ff;" onclick="toggleLang();toggleMenu()">[ EN // NL ]</button>
   </div>
 
   <!-- Dots sidebar nav -->
@@ -1653,12 +1653,14 @@ footer{
         </div>
       </div>
     </footer>
+  </main><!-- end #main-scroll -->
+</div><!-- end #app -->
+
 <!-- ── ZERO DEFECT MODAL ──────────────────────────────────── -->
 <div class="zd-overlay" id="zd-overlay" onclick="handleOverlayClick(event)">
   <div class="zd-panel" id="zd-panel">
     <div class="zd-header">
       <div>
-        <!-- GEWIJZIGD: data-lang op tag en chapter; title is al Engels -->
         <div class="zd-tag"
           data-lang='{"en":"// Fiction — Utopia","nl":"// Fictie — Utopia"}'>
           // Fictie — Utopia
@@ -1668,9 +1670,10 @@ footer{
           data-lang='{"en":"Chapter 1 — Morning without borders","nl":"Hoofdstuk 1 — Ochtend zonder grenzen"}'>
           Hoofdstuk 1 — Ochtend zonder grenzen
         </div>
+      </div>
       <button class="zd-close" onclick="closeZD()">[ × ]</button>
     </div>
-    <div class="zd-body">
+    <div class="zd-body" id="zd-body-utopia">   <!-- Utopia modal body -->
 <p>
 De muur werd dunner terwijl Elias sliep. 
 Hij merkte het aan het licht in zijn kamer. 
@@ -1836,8 +1839,6 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
     </div>
   </div>
 </div>
-  </main><!-- end #main-scroll -->
-</div><!-- end #app -->
 
 <!-- ══════════════════════════════════════════════════════
      DYSTOPIA MODAL — The Baseline Audit
@@ -1850,15 +1851,21 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
     <!-- HEADER — unieke titels voor Dystopia -->
     <div class="zd-header">
       <div>
-        <div class="zd-tag">// Fictie — Dystopia</div>
+        <div class="zd-tag"
+          data-lang='{"en":"// Fiction — Dystopia","nl":"// Fictie — Dystopia"}'>
+          // Fictie — Dystopia
+        </div>
         <div class="zd-title" style="color:#ff2244;">The Baseline Audit</div>
-        <div class="zd-chapter">Hoofdstuk 1 — Ochtendroutine (06:04:17 – 07:02:43)</div>
+        <div class="zd-chapter"
+          data-lang='{"en":"Chapter 1 — Morning Routine (06:04:17 – 07:02:43)","nl":"Hoofdstuk 1 — Ochtendroutine (06:04:17 – 07:02:43)"}'>
+          Hoofdstuk 1 — Ochtendroutine (06:04:17 – 07:02:43)
+        </div>
       </div>
       <button class="zd-close" onclick="closeDS()">[ × ]</button>
     </div>
 
     <!-- BODY — verhaaltekst Dystopia -->
-    <div class="zd-body">
+    <div class="zd-body" id="zd-body-dystopia"> <!-- Dystopia modal body -->
 
       <p>De slaap stopt.<br>
       Niet geleidelijk. Niet zacht. Hij stopt omdat de WellnessMonitor in het matras bepaalt dat de slaaparchitectuur zijn economische piek heeft bereikt: 94,3 minuten rem-cyclus, cortisol op 12,7 nmol/liter, spierspanning binnen tolerantieband. Verdere slaap zou verspilling zijn. Het systeem registreert dit als een keuze.</p>
@@ -1970,7 +1977,7 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
     </div>
   </div>
 </div>
-</main><!-- end #main-scroll -->
+
 <!-- ══════════════════════════════════════════════════════
      FUTURE MODAL
      Unieke IDs: ft-overlay, ft-panel | Kleur: #00f5ff
@@ -1979,13 +1986,19 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
   <div class="zd-panel" id="ft-panel">
     <div class="zd-header">
       <div>
-        <div class="zd-tag">// Fictie — Expected Future</div>
+        <div class="zd-tag"
+          data-lang='{"en":"// Fiction — Expected Future","nl":"// Fictie — Expected Future"}'>
+          // Fictie — Expected Future
+        </div>
         <div class="zd-title">Noise</div>
-        <div class="zd-chapter">Hoofdstuk 1 — Het warme water</div>
+        <div class="zd-chapter"
+          data-lang='{"en":"Chapter 1 — The warm water","nl":"Hoofdstuk 1 — Het warme water"}'>
+          Hoofdstuk 1 — Het warme water
+        </div>
       </div>
       <button class="zd-close" onclick="closeFT()">[ × ]</button>
     </div>
-    <div class="zd-body">
+    <div class="zd-body" id="zd-body-future">   <!-- Future modal body -->
 <p>Het water in de goot was te warm.</p>
  
 <p>Mara voelde het toen ze knielde bij het aftapventiel onder de vensterbank, zoals ze elke ochtend deed. De koperen draaiknop gaf het gebruikelijke lichte verzet, het ventiel opende, en het water liep over haar vingertoppen. Helder. Geen sediment, geen verkleuring. Maar de temperatuur klopte niet — niet spectaculair fout, maar net genoeg om haar hand een halve seconde langer onder de stroom te houden dan normaal. Haar overlay bevestigde het zonder dat ze erom vroeg: 17.1 graden. Het had 14 moeten zijn, misschien 15.</p>
@@ -2091,13 +2104,19 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
   <div class="zd-panel" id="cy-panel">
     <div class="zd-header">
       <div>
-        <div class="zd-tag">// Fictie — Cyberpunk</div>
-        <div class="zd-title">Dead frequency</div>
-        <div class="zd-chapter">Hoofdstuk 1 — Pacifica Metropolitan Zone</div>
+        <div class="zd-tag"
+          data-lang='{"en":"// Fiction — Cyberpunk","nl":"// Fictie — Cyberpunk"}'>
+          // Fictie — Cyberpunk
+        </div>
+        <div class="zd-title">Dead Frequency</div>
+        <div class="zd-chapter"
+          data-lang='{"en":"Chapter 1 — The new chip","nl":"Hoofdstuk 1 — De nieuwe chip"}'>
+          Hoofdstuk 1 — De nieuwe chip
+        </div>
       </div>
       <button class="zd-close" onclick="closeCY()">[ × ]</button>
     </div>
-    <div class="zd-body">
+    <div class="zd-body" id="zd-body-cyber">    <!-- Cyberpunk modal body -->
         <p>De naald gleed uit zijn nekvlees en Dex voelde het bloed langs zijn kraag lopen voordat de pijn kwam.</p>
 
   <p>&ldquo;Hou stil.&rdquo; De vrouw achter hem &mdash; klein, kaalgeschoren hoofd, handen die naar desinfectiemiddel en soldeervloeistof roken &mdash; drukte een vuile doek tegen de insnijding. &ldquo;De firmware moet laden. Als je beweegt terwijl de chip synchroniseert, brand ik je auditief cortex leeg.&rdquo;</p>
@@ -2159,35 +2178,330 @@ Hij wilde weten hoe het voelde om daar, in die leegte, te staan.
 // ═══════════════════════════════════════════════════════════
 
 // ── TAAL ──────────────────────────────────────────────────
+// ── STAP 1: vertalingsobject declareren (EERST, vóór alles) ──────────────
+const chapterTranslations = {
+
+  // ── UTOPIA — Zero Defect, Chapter 1 ──────────────────────
+  'zd-body-utopia': { en: `
+<p>The wall grew thinner while Elias slept.
+He noticed it in the light of his room.
+It was not the colour — that was still the same soft amber of the <strong>lumiveil</strong>, the luminescent climbing plant that draped like a veil along the facade.
+It was the amount of light.
+</p>
+<p>Yesterday the bedroom had still been a dark cocoon, shaped by the <strong>osteo-composite</strong>, the living, bone-like building material of the walls.
+But now a broad stripe of morning light fell across his face, warm and pink as the inside of a mouth.
+</p>
+<p><span class="zd-spacer"></span>
+He sat upright.
+The wall beside the window had noticeably narrowed.
+Where his shoulder used to touch the cool plaster when he lay on his side, there were now ten centimetres of open air.
+</p>
+<p>The house had let the wall shrink and withdrawn the building material back into the foundation.
+The reason was simple: Elias had not leaned against that wall in weeks.
+The house simply forgot what he no longer needed.
+</p>
+<span class="zd-spacer"></span>
+<p>He pressed his palm to the wall.
+Under his fingers he felt the fine vibration of the <strong>mycelium</strong>, the vast network of living fungal threads deep beneath the floor that carry all signals through the city.
+It felt like a heartbeat in a wrist.
+He had always found that reassuring.
+</p>
+<span class="zd-spacer"></span>
+<p>The bathroom smelled of moss and wet stone.
+The water seeping from the ceiling was already precisely at body temperature.
+The <strong>dermis membrane</strong>, the soft layer above him that feels like warm skin, had absorbed the sun's heat and channelled it downward through thin capillaries.
+There was no tap or button.
+</p>
+<p>The house knew his rhythm better than he did.
+Sometimes he wondered whether there was still a difference between him and the building.
+</p>
+<span class="zd-spacer"></span>
+<p>As the water ran across his shoulders, he felt the <strong>Resonance</strong> stir.
+It was the mental connection with the rest of the city, beginning to glow like a warm current in his chest.
+It started with the surroundings: the moist network beneath his feet and the living cells in the facade slowly turning toward the sun.
+</p>
+<p>Then the feeling spread to the people.
+Maren, two floors below, was already awake; he sensed her light hunger.
+The old neighbour was still dreaming, his hazy dreams seeping softly into Elias' own consciousness.
+Further across the city the rest of the collective was waking: thousands of people rising at once.
+Together they formed a broad, warm current of thought in which you could never drown.
+<em>Never alone.</em>
+That was the first thing he felt each morning and the last thing he lost each evening.
+</p>
+<span class="zd-spacer"></span>
+<p>He did not dry himself.
+The skin-like layer in the ceiling drew the moisture from the air and his skin dried naturally in a breeze generated by the facade — the breathing of the building.
+Outside, the city was already feeding itself.
+On the horizon stood the <strong>Breathworks</strong>: five colossal towers shaped like enormous vases.
+They were coated in a layer of green <strong>cyanobacteria</strong>, a living algae that inhaled polluted air and exhaled pure oxygen.
+The air they produced was so clean it almost had a taste.
+This morning that taste was of parsley and rain.
+</p>
+<span class="zd-spacer"></span>
+<p>He walked barefoot along the path to his studio.
+The surface gave slightly under his weight; the algae mats beneath the pavement registered every step and converted the pressure into electricity for the city.
+Elias walked, and the city ate his movement.
+</p>
+<span class="zd-spacer"></span>
+<p>All around him the system was working.
+In the gutters, plants filtered the groundwater, and in the park the <strong>still-trees</strong> absorbed all noise until he heard nothing but his own footsteps.
+The city of Omslag knew no noise, no waste, and no errors.
+</p>
+<span class="zd-spacer"></span>
+<p>In his studio a mosaic of calcified seaweed was waiting for him.
+Elias was working on a way to direct the growth of walls using sound.
+It was his contribution to the community.
+He did not call it his profession, but his process.
+<em>I am someone who listens to how stone wants to sound.</em>
+</p>
+<span class="zd-spacer"></span>
+<p>When he stepped inside he felt a ripple through the network beneath his feet.
+The city recognised that he was going to work again.
+It was as if the city gave him a small nod, the way a body notices a muscle being tensed.
+He picked up his tools — a set of tuning forks he had grown from the wall.
+</p>
+<span class="zd-spacer"></span>
+<p>And then it happened.
+Or rather: nothing happened.
+It was as if someone had suddenly pulled a pair of headphones from his head.
+The <strong>Resonance</strong> — that constant, warm current of other people in his chest — fell away.
+It was there, and then it was gone.
+As if a hand had suddenly been withdrawn from his.
+</p>
+<span class="zd-spacer"></span>
+<p>Elias stood perfectly still.
+The silence was not the pleasant silence of the park.
+This was an empty silence.
+A silence that sounded like the inside of a sealed box.
+He looked around.
+Everything looked the same, but something essential was missing, as if the colour had been drained from a painting.
+</p>
+<span class="zd-spacer"></span>
+<p>He placed his hand on the floor.
+The network of fungal threads still vibrated, but it felt disturbed, as if the city were stumbling.
+And at the centre of that disturbance he felt a gap.
+A place where there was nothing at all.
+No signal, no warmth.
+A gap in the city, no larger than a fist, somewhere beneath the floor of his studio.
+</p>
+<span class="zd-spacer"></span>
+<p>Suddenly the connection returned.
+Warmth flooded back into his chest and he felt Maren and the thousands of others again.
+Everything was normal once more.
+Elias stood up.
+His knees ached from the cold floor.
+He looked at his hands; they were no longer trembling.
+The connection felt like a warm coat again and the moment of emptiness seemed almost a dream.
+</p>
+<span class="zd-spacer"></span>
+<p>But he knew it had not been a dream.
+There was a place in the city where the system did not reach.
+And as he stood there, in the scent of parsley and rain, he understood what had frightened him most.
+</p>
+<p>It was not the silence itself.
+It was that the silence had felt <em>good</em>.
+</p>
+<span class="zd-spacer"></span>
+<p>For one second he had felt something he could not name, because the word for it had long since ceased to exist.
+It was the feeling of a boundary.
+A place where the city ended and he himself began.
+</p>
+<span class="zd-spacer"></span>
+<p>He touched the scar behind his right ear, the place where he was connected to the city.
+Everything was working again.
+Everything always worked.
+He left his studio.
+Outside the city was perfect once more.
+</p>
+<p>The walls glowed soft pink in the sun and the city breathed and cared for him, as it always did.
+A strange woman smiled at him and he felt her kindness like a warm hand on his shoulder.
+</p>
+<span class="zd-spacer"></span>
+<p>But somewhere beneath his feet was that gap where nothing was.
+And for the first time in his life Elias wanted something the city could not give him.
+He wanted to know what it felt like to stand there, in that emptiness.
+</p>
+` },
+
+  // ── DYSTOPIA — The Baseline Audit, Chapter 1 ─────────────
+  'zd-body-dystopia': { en: `
+<p>Sleep stops.<br>
+Not gradually. Not gently. It stops because the WellnessMonitor in the mattress determines that the sleep architecture has reached its economic peak: 94.3 minutes REM cycle, cortisol at 12.7 nmol/litre, muscle tension within tolerance band. Further sleep would be waste. The system registers this as a choice.</p>
+<p>Karin Steef, Baseline identification 7-NL-0041882, opens her eyes.</p>
+<p>The room is already awake. The light has not come on — it was never off. It operates in two spectral layers: a base light of 4800 Kelvin guiding the circadian rhythm, and a pulsing infrared component monitoring skin temperature. The colour is neutral white. No other colour exists. The walls are of smooth polished composite, matt, seamless. They absorb sound. They absorb nothing else.</p>
+<p>Karin sits up. Her movement profile has already been transmitted.<br>She stands.</p>
+<span class="zd-spacer"></span>
+<p>The bathroom is two metres by one and a half. Functional dimensioning, class C dwelling, sector 7. The mirror is a screen. It shows her face and simultaneously a number: 81. Her DailyCap — the amount of CarbonCredit she may consume today for basic functions. Showering costs 4. A warm shower costs 6. She turns the tap to warm.</p>
+<p>The water comes after three seconds. It has the scent of nothing.</p>
+<p>While she stands under the stream, the angled sensor in the shower wall scans her retinae. Not for identification — that was already done upon waking, via the PressurePlate in the floor. The retina check is for something else. It measures pupil dilation. Stress score. Agitation index. The system is looking for deviations.</p>
+<p>Karin's pupils are 4.1 millimetres. Within norm.<br>She dries herself. The towel is recycled microfibre. It has the texture of a form.</p>
+<span class="zd-spacer"></span>
+<p>The kitchen.<br>The BVA — BehaviourVerificationApplication, housed in the panel above the counter — waits. Karin walks toward it. She knows what is coming. She does it every morning. She stands before the panel and produces a smile.</p>
+<p>The scan takes 0.4 seconds.</p>
+<p>The smile does not need to be genuine. The system does not measure intent. It measures symmetry, muscle tension, the elevation of the zygomaticus major. Karin's smile scores a 73 out of 100. Sufficient. The coffee machine unlocks.</p>
+<p>The coffee is synthetic. The raw material is an enzymatic fermentate of cellulose and yeast extract. It is brown. It is warm. It tastes of nothing in particular, but the label on the cartridge says <em>Coffee — Premium Basic Variant</em>, and Karin no longer reads the label.<br>She drinks standing up.</p>
+<span class="zd-spacer"></span>
+<p>Breakfast begins with a click.</p>
+<p>Inaudible to others. Only to her. It sits in her second premolar on the right, beneath the enamel, a piezo element the size of a grain of salt working in concert with the biometric sensor in her teeth. When she begins chewing the Morning Ration — a compressed block of protein paste, bran, and micronutrients, the colour of saturated earth — the sensor registers the pressure. The click frequency analyses chew rate, bolus compression, saliva production.</p>
+<p>Teeth are endpoints. Teeth reveal what the blood already knows but reports later.</p>
+<p>The sensor clicks three times in rapid succession. That means: calcium absorption acceptable. Then a slow click: glucose response normal. Karin chews on. She knows what the clicks mean because she once looked them up in the user manual, two years ago, during a period when she still asked questions. Now the clicks are simply sound. Just as the recycled air is simply air.</p>
+<p>The air has a scent of ionisation and sebum and something resembling ozone but not quite. The air is filtered eight times per hour. There are no allergens. There are also no scents of food, of outdoor air, of other people. There is only the functional atmosphere of a space that behaves like a lung.</p>
+<span class="zd-spacer"></span>
+<p>The wall screen switches on. This is automatic. Karin did not request it.</p>
+<p>The InfoChannel first shows the BasicNewsFrame: temperature averages, TrafficFlow updates, the daily Productivity Quotient of sector 7 (0.94 — below the national average of 0.97, a fact Karin registers passively the way one registers a paving stone). Then the main story.</p>
+<p>The presenter has a face calibrated to calm. His eyes are 68% open. His voice moves within a bandwidth of 220 to 260 Hz, which the BrainProtocol designates as <em>Authoritative-Neutral</em> mode. He says:</p>
+<p><em>"The Ministry of Ecological Optimisation today announces the successful liquidation of Forest Reserve 7-North. The area, comprising 1,240 hectares, has been converted with immediate effect into CarbonCredit equivalents and distributed via the national allocation system. Minister Verhoef speaks of an <strong>efficiency gain of historic magnitude</strong>. The credits have been processed into the Q2 budget. Citizens in the adjacent sectors may expect a temporary increase in their DailyCap of an average 1.3 points."</em></p>
+<p>Karin eats the last bite of the Morning Ration.</p>
+<p>Outside the window — a pane of 60 by 40 centimetres, non-opening, laminated toughened glass — sector 7 is already in motion. Moving figures on the walkway. Identical jackets in grey-beige, mandatory class C. No trees. There have been no trees in sector 7 for years. There are spaces in the ground where trees stood: circles of a different kind of concrete, slightly darker, like scars.</p>
+<p>Karin looks at them.<br>She thinks nothing in particular.</p>
+<span class="zd-spacer"></span>
+<p>At 06:58:31 she fastens her jacket and takes her TransportTag from the hook beside the door. She is ready. She is on time. She is always on time.</p>
+<p>Then.<br>A small event without a name.</p>
+<p>While she was chewing the Morning Ration — six minutes earlier, at 06:52:44 — the piezo sensor in her second premolar produced a series of clicks. Normal. Ordinary. Nothing remarkable. But the third click sequence, caused by the hardest piece in the protein block, generated a frequency of 218 Hz at an amplitude of 0.003 Pascal. A tone the human ear does not perceive. A tone that serves no function in the biometric protocol.</p>
+<p>The wall between flat 7-B and flat 7-C is of prestressed composite, 9 centimetres thick, with integrated acoustic sensors every half metre. The sensors are intended for speech detection, breathing monitoring, the coarse mechanical signals of daily life. They are not intended for frequencies of 218 Hz at 0.003 Pascal.<br>But they register them.</p>
+<p>The acoustic sensor in 7-C logs the signal at 06:52:47 as an <em>unknown sound profile</em>, subcategory <em>Unidentified Oral Activity</em>. The system has no category for this sound. It automatically searches for a source. The occupant of 7-B — Karin, identification 7-NL-0041882 — is at that moment outside the detection zone of her own wall panel: she is standing at the window, not at the counter, not near the wall. Distance to the sensor: 2.3 metres. Below the threshold for source attribution.</p>
+<p>The system concludes: signal originating from occupant 7-C.</p>
+<p>The occupant of 7-C is Nadia Ferr, identification 7-NL-0039104. She is still asleep. Her WellnessMonitor registers a heart rate of 57, breathing of 12 per minute, cortisol of 8.8 nmol/litre. Everything within norm. Everything calm.</p>
+<p>The system does not wait for verification. Verification is a manual process and manual processes are slow. The AutoSanctionProtocol operates in real time. It links the sound profile to Nadia Ferr's ComplianceScore and adjusts that score based on the severity of the deviation: class II, first registration, no prior oral anomalies on file. That yields a deduction of 4 points.</p>
+<p>Nadia Ferr's ComplianceScore was 91. Now it is 87.<br>At 85 she loses the subsidy on her housing unit.</p>
+<p>She does not know this. She is asleep. Her breathing is 12 per minute. Her cortisol is 8.8.</p>
+<p>Karin pulls the door shut behind her. She hears the lock.<br>She walks to the walkway.<br>She is on time.<br>Her file is clean. Her ComplianceScore is 91.<br>She has never met Nadia Ferr.</p>
+<span class="zd-spacer"></span>
+<p style="font-family:monospace;font-size:0.72rem;color:rgba(255,34,68,0.45);border-left:2px solid rgba(255,34,68,0.25);padding-left:1rem;line-height:1.7;letter-spacing:0.03em;">
+<em>File 7-NL-0039104 / Day marking 11-04-2041 / AutoSanction executed: 06:52:49 / ComplianceScore: 87 (-4) / Reason: Unidentified Oral Activity, Class II / Appeal period: 30 days / Appeal requires: written, form CS-7, accompanied by medical declaration class A or higher / Housing subsidy: Active - threshold 85 / Margin: 2 points.</em>
+</p>
+` },
+
+  // ── EXPECTED FUTURE — Noise, Chapter 1 ───────────────────
+  'zd-body-future': { en: `
+<p>The water in the gutter was too warm.</p>
+<p>Mara felt it when she knelt at the drain valve beneath the windowsill, as she did every morning. The copper knob gave its usual slight resistance, the valve opened, and the water ran over her fingertips. Clear. No sediment, no discolouration. But the temperature was off — not spectacularly wrong, but just enough for her hand to linger under the flow half a second longer than usual. Her overlay confirmed it without being asked: 17.1 degrees. It should have been 14, perhaps 15.</p>
+<p>She closed the valve and wiped her hand on her trousers.</p>
+<p>Outside it smelled of wet earth and ozone, as always after a night in which the street-level air filters had done their work. The mycelium wall beside her kitchen door had formed new runners — thin white threads feeling their way across the masonry like fingers searching for something. Somewhere deep in her memory layer it landed as a timestamp beside a photograph she had not consciously taken. She would find it in three weeks when she searched for growth patterns in block 14-C. Or she would forget it. That was the difference between what the system remembered and what she remembered: the system forgot nothing, but understood nothing. She forgot most things, but knew when something was wrong.</p>
+<p>The water was too warm. She thought it again while she slung on her pack and went down the stairs.</p>
+<p>* * *</p>
+<p>The Koninginnebrug was closed — cooling-gutter maintenance, every Monday — and her overlay had already loaded the alternative route when she woke. Merwestraat, ten minutes extra. She had accepted it without looking, the way you open a door without thinking about the hinge.</p>
+<p>On the Merwestraat the water was running higher than usual today, up to the edge of the walkboards that hung permanently along the facades. She put her foot on the first board and felt the familiar sway. The boards were recycled composite, light grey, eroded by years of brackish water — they should have been replaced five years ago, but the budget always went to the primary flood defences. That was how it worked: everything that was not about to collapse immediately waited.</p>
+<p>Halfway down the street she saw Jens. He was standing where he stood every morning, at the gutter edge, his measuring device hanging in the water like a fishing line. He was looking at his screen with the expression of someone who knows exactly what they are going to see but wants to confirm it anyway.</p>
+<p>"High today," she said.</p>
+<p>He nodded without looking up. "Two centimetres above model."</p>
+<p>"Temperature too?"</p>
+<p>Now he did look up. "How so?"</p>
+<p>"My drain was warm this morning."</p>
+<p>Jens shrugged. "Could be. There was a logistics drone flying low over the canal last night. Thermal reflection." He said it in the tone of someone giving the standard explanation because the standard explanation was usually right.</p>
+<p>Mara nodded and walked on. At the station square she bought coffee at the machine beside the entrance — no overlay coupling, no recommendation, just a machine that made coffee when you paid. There were not many left. Most had been replaced by adaptive units that knew your drink preference and adjusted it based on your sleep data and stress level. Mara had once tried such a personalised coffee. It tasted as if someone else had ordered it for her. That was exactly what had happened.</p>
+<p>* * *</p>
+<p>The Water Authority, department of Area Monitoring Rijnmond, was on the third floor of a building that looked as if it had been designed in the thirties by someone who thought concrete and mycelium could be friends. The concrete had remained. The mycelium had won.</p>
+<p>Diederik was already there. Of course Diederik was already there. Second coffee, messages read and answered, chair pushed slightly back so he could see his screen with one eye and the door with the other — as if he were a sentry in a fort that had not been attacked in decades.</p>
+<p>"You're late," he said.</p>
+<p>"I'm on time."</p>
+<p>"You're later than usual."</p>
+<p>She hung up her coat and let it go. Diederik registered deviations from pattern in people with the same precision he registered them in water data. It was his best and most exhausting quality.</p>
+<p>Beside him sat Sil, the intern who had been there for three weeks and whom she now knew by name only because Diederik greeted him by name every morning, as if it were an exercise in humanity. Sil kept his overlay on full transparency permanently — you could see the data layers moving in his right eye if you stood close enough. Mara found it uncomfortable, not because it was unusual, but because it reminded her of what she had looked like at his age: hungry for information, convinced that more was always better.</p>
+<p>She had dialled her own overlay back to basic level six months ago. Measurements, notifications and navigation only. No contextual background, no social metadata, no memory suggestions. Her therapist had recommended it as a first step. First step toward what, she had asked. He had not said.</p>
+<p>* * *</p>
+<p>Her work screen loaded the night log. One hundred and thirty-seven sensor points in the network. One hundred and thirty-seven green icons, as always.</p>
+<p>She scrolled through with the automatic attention of someone scanning a text they expect to know — quickly, flatly, looking for what deviates. She found it at sensor 94-G.</p>
+<p>Katendrechtse Lagune, 03:17. A temperature spike. 1.8 degrees above the predicted model. Started at 03:17, gone by 03:41. The system had classified it as thermal reflection — probably the same logistics drone Jens had mentioned — and automatically archived it. Yellow flag. Handled.</p>
+<p>She clicked it open.</p>
+<p>The time series did not look like a reflection. A reflection was a peak: sharply up, sharply back, the thermal equivalent of someone opening and closing a door. This was different. An arc. Slowly rising, perfect plateau, slowly falling. Symmetrical as a breath.</p>
+<p>She looked at it. She clicked into the raw data. She looked at it again.</p>
+<p>Then she opened her archive layer.</p>
+<p>The memory was already loading before she had finished the search query — her system knew her search patterns better than she knew them herself. The first result appeared within two seconds. Sensor 61-B, Nieuwe Maas, four years ago. The same arc, slightly less symmetrical. Classified as measurement error. Archived.</p>
+<p>The second result surprised her. Sensor 12-A, Waalhaven, two years and seven months ago. The same arc. Slightly longer plateau. Classified as thermal reflection. Archived.</p>
+<p>The third result made her go still. Sensor 88-F, Brienenoordbocht, eleven months ago. The same arc. Exactly the same symmetry as last night. Classified as sensor deviation. Archived.</p>
+<p>Four times. In four years. Four different sensors, four different locations, four different automatic explanations. None of the explanations was the same, but the pattern was identical.</p>
+<p>She leaned back. Outside came the murmur of the gutter. Diederik said something on the phone about quarterly reports. Sil tapped at his screen with the speed of someone who still believed that speed equalled progress.</p>
+<p>Mara looked at the four time series standing side by side on her screen. Four arcs. Four times archived by a system that recognised patterns but never looked across sensor boundaries, because no one had asked it to do so. The system classified point by point, not network by network. It saw trees. No one had asked it to look at the forest.</p>
+<p>She opened a new analysis screen and began mounting the four data series side by side. This was not standard procedure. There was no protocol for what she was doing, no work instruction, no form. She did it because the pattern did not fit and because she was the kind of person who could not stop when something did not fit — a quality her therapist described as hypervigilance and her manager described as reliability, and which in reality was the same thing.</p>
+<p>The four arcs now stood side by side. She normalised the time axis. She normalised the amplitude.</p>
+<p>They were not comparable. They were identical.</p>
+<p>Not nearly identical, not statistically comparable, but identical in a way that did not occur in natural systems. Natural thermal events varied. They had noise, irregularities, the random fingerprint of a physical process. This had no noise. This was clean. Too clean.</p>
+<p>She picked up her phone and scrolled to a number she had not used for months. Lena Vos, research department, three floors up, someone she knew from before the reorganisation and had stayed in touch with because Lena was the kind of person who found things interesting that other people considered settled.</p>
+<p>She typed: <em>Do you have five minutes? I have something that doesn't add up.</em></p>
+<p>She hesitated. Looked once more at the four arcs on her screen.</p>
+<p>Sent the message.</p>
+` },
+
+  // ── CYBERPUNK — Dead Frequency, Chapter 1 ────────────────
+  'zd-body-cyber': { en: `
+<p>The needle slid out of his neck tissue and Dex felt the blood running down his collar before the pain arrived.</p>
+<p>"Stay still." The woman behind him — small, shaved head, hands that smelled of disinfectant and solder flux — pressed a dirty cloth against the incision. "The firmware has to load. If you move while the chip is synchronising, I'll fry your auditory cortex."</p>
+<p>Dex did not move. He was sitting on a metal stool in a space that had once been a car park, four floors below street level in the Seam. The ceiling hung so low he had to bow his head. All around him: the hum of cooling fans, the ticking of recycled servers, and the smell of warm plastic and something organic he did not want to identify. Along the walls stood glass containers holding shapes that resembled organs but were too symmetrical, too smooth — grown tissue, ready for implantation.</p>
+<p>This was the Courtyard. Not a name you would find on a map. A network of connected cellars and old tunnels beneath the logistics district, where the Inland Sea's tidal water sometimes seeped through and left brown streaks on the concrete floor. This was where the cutters operated: surgeons without licences who placed implants no carrier had approved.</p>
+<p>The woman — she called herself Okra, and Dex had learned not to ask for her real name — tapped at a screen hanging from a dismantled server mast. "Chip is active. You now have a second frequency."</p>
+<p>Dex swallowed. His contract node — the standard subcutaneous implant every citizen of Pacifica carried — operated on one frequency, managed by his carrier. Everything he thought, felt, and did passed through that channel. Every transaction, every message, every heartbeat. What Okra had just inserted into his neck was a parallel wetware chip that opened a second, invisible channel. Unregistered. Invisible to the system.</p>
+<p>"What does this cost?" he asked, though he already knew the answer.</p>
+<p>"You know what it costs." Okra wiped her hands on her shorts. "Three thousand synthetic data cycles. Or the equivalent in organ tissue. I also take kidneys."</p>
+<p>Dex had the cycles. Stolen, technically — synthesised behavioural data he had bought on the sidemarket to fill his contract without living the corresponding reality. Fictional steps, fictional sleep, fictional meals. His carrier saw a satisfied citizen. The reality was a man having an illegal chip inserted in his neck in a former car park.</p>
+<p>He paid. The transaction did not run through his contract node but through the whisper — the encrypted peer-to-peer protocol that held the sidemarket together. No trace.</p>
+<p>&#8226; &#8226; &#8226;</p>
+<p>The corps arrived fifteen minutes later.</p>
+<p>Dex heard them before he saw them: the rhythmic stamping of standardised boots on concrete, the low electronic beep of weapons systems calibrating. Enforcement. Not ordinary street police — those had not been in the Courtyard for years. These were carrier enforcers, privately funded, heavily augmented, and equipped with wetware that enabled them to scan and classify neural channels within a radius of thirty metres.</p>
+<p>Okra's face tightened. She grabbed a bag, stuffed instruments into it, and pointed toward an opening in the wall behind the server masts — a ventilation shaft leading to a deeper layer.</p>
+<p>"Run," she said. No panic in her voice. Routine.</p>
+<p>Dex ran. The shaft was narrow enough that his shoulders touched the walls, and the air inside was warm and moist and tasted of rust. Behind him he heard a bang — not from a firearm, but from an EMP pulse, the preferred opening weapon of carrier enforcement. The sound resonated through the concrete like a deep, dry cough. Every unshielded electronic device within range was now dead.</p>
+<p>But not his new chip. That was the point of unregistered wetware: no firmware connection to the carriers meant no vulnerability to their tools.</p>
+<p>He reached a T-junction. Left: a tunnel leading to the tidal zone, where the water could stand knee-high and the corps could not use their heavy equipment. Right: a ladder up to the logistics zone, where he could dissolve into the crowd.</p>
+<p>Dex went right. He climbed. His myofibril reinforcement — the synthetic muscle layer his carrier had let him install for his work as a reader, and which he was dutifully paying off in behavioural data — made the climb effortless. Three floors in twenty seconds. He pushed open a hatch and stepped into the bright white light of the logistics zone.</p>
+<p>People everywhere. The hum of magnetic capsules overhead. The smell of synthetic protein from a nearby food market. Normality. He straightened up, wiped the blood from his neck, and began to walk.</p>
+<p>Then he stopped.</p>
+<p>Not because he wanted to. His legs stopped. His arms fell to his sides. His eyes stayed open but his head turned, slowly, without his permission, to the left — toward a surveillance drone hovering at eye level, three metres away.</p>
+<p>Someone had hacked his cortex link.</p>
+<p>Not the old frequency. Not his carrier. Someone was on the new chip — the channel that had not existed fifteen minutes ago. The parallel frequency that Okra had installed as invisible, untraceable, safe.</p>
+<p>Dex felt thoughts that were not his. They arrived as words but also as feeling, as colour, as a pressure behind his eyes that hurt and at the same time felt familiar, as if someone had inserted a hand into his skull and was gently squeezing.</p>
+<p><em>The thought said: Welcome, Anchor. We built your chip. We built every chip. And now you have a choice —</em></p>
+` }
+
+};
+
+// ── STAP 2: NL opslaan — ZONDER DOMContentLoaded wrapper ────────────────
+// Script staat onderaan de pagina, DOM is al beschikbaar. 
+// DOMContentLoaded is hier overbodig en veroorzaakt een timing-probleem.
+const chapterNL = {};
+['zd-body-utopia','zd-body-dystopia','zd-body-future','zd-body-cyber'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) chapterNL[id] = el.innerHTML;
+});
+
+// ── STAP 3: taalvariabele en functies ────────────────────────────────────
 let lang = 'en';
 
 function toggleLang() {
   lang = lang === 'en' ? 'nl' : 'en';
-  document.getElementById('lang-btn').textContent = lang === 'en' ? '[ EN // NL ]' : '[ NL // EN ]';
+  const label = lang === 'en' ? '[ EN // NL ]' : '[ NL // EN ]';
+  document.querySelectorAll('#lang-btn, .mobile-lang-btn').forEach(btn => btn.textContent = label);
   applyLang();
 }
 
 function applyLang() {
-  // Alle elementen met data-lang attribuut bijwerken
   document.querySelectorAll('[data-lang]').forEach(el => {
     try {
       const map = JSON.parse(el.getAttribute('data-lang'));
       if (map[lang]) el.textContent = map[lang];
     } catch(e) {}
   });
-  // Hero t1 glitch-tekst
+
+  ['zd-body-utopia','zd-body-dystopia','zd-body-future','zd-body-cyber'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (lang === 'nl' && chapterNL[id]) {
+      el.innerHTML = chapterNL[id];
+    } else if (lang === 'en' && chapterTranslations[id]?.en) {
+      el.innerHTML = chapterTranslations[id].en;
+    }
+  });
+
   const t1 = document.querySelector('.hero-h1 .t1');
   if (t1) {
     const val = lang === 'en' ? 'HUMANITY' : 'MENSHEID';
     t1.textContent = val;
     t1.setAttribute('data-t', val);
   }
-  // Sectie hero boot tekst
   const boot = document.querySelector('.hero-boot');
   if (boot) {
     boot.innerHTML = (lang === 'en' ? 'SYSTEM BOOT SEQUENCE' : 'SYSTEEM OPSTART SEQUENTIE') + ' <span style="animation:blink 1s infinite;display:inline-block">_</span>';
   }
-  // Gallery label
   const glbl = document.querySelector('.gallery-label');
   if (glbl) glbl.textContent = lang === 'en' ? '// Visual Archive — Five Futures Captured' : '// Visueel Archief — Vijf Toekomsten Vastgelegd';
 }
@@ -2300,87 +2614,77 @@ function applyMobileGlass() {
 applyMobileGlass();
 window.addEventListener('resize', applyMobileGlass);
 
-// ── HERO INITIAL VIS ───────────────────────────────────────
-// Hero is direct zichtbaar
-document.querySelector('#hero').setAttribute('data-obs', 'hero');
-// ── ZERO DEFECT MODAL ──────────────────────────────────────
-function openZD(){
-  const o=document.getElementById('zd-overlay');
-  o.style.display='flex';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('visible')));
-  document.getElementById('main-scroll').style.overflow='hidden';
+// ── MODAL FUNCTIES ─────────────────────────────────────────
+
+// UTOPIA modal
+function openZD() {
+  const o = document.getElementById('zd-overlay');
+  o.classList.add('open');
+  requestAnimationFrame(() => o.classList.add('visible'));
 }
-function closeZD(){
-  const o=document.getElementById('zd-overlay');
+function closeZD() {
+  const o = document.getElementById('zd-overlay');
   o.classList.remove('visible');
-  setTimeout(()=>{o.style.display='none';document.getElementById('main-scroll').style.overflow='';},380);
+  setTimeout(() => o.classList.remove('open'), 380);
 }
-function handleOverlayClick(e){
-  if(e.target===document.getElementById('zd-overlay'))closeZD();
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('zd-overlay')) closeZD();
 }
 
-function openDS(){
+// DYSTOPIA modal
+function openDS() {
   const o = document.getElementById('ds-overlay');
-  o.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
-  document.getElementById('main-scroll').style.overflow = 'hidden';
+  o.classList.add('open');
+  requestAnimationFrame(() => o.classList.add('visible'));
 }
-function closeDS(){
+function closeDS() {
   const o = document.getElementById('ds-overlay');
   o.classList.remove('visible');
-  setTimeout(() => {
-    o.style.display = 'none';
-    document.getElementById('main-scroll').style.overflow = '';
-  }, 380);
+  setTimeout(() => o.classList.remove('open'), 380);
 }
-function handleDSOverlayClick(e){
+function handleDSOverlayClick(e) {
   if (e.target === document.getElementById('ds-overlay')) closeDS();
 }
-// Escape-toets sluit ook de Dystopia-modal
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDS(); });
 
-// ── EXPECTED FUTURE MODAL ──────────────────────────────
-function openFT(){
+// FUTURE modal
+function openFT() {
   const o = document.getElementById('ft-overlay');
-  o.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
-  document.getElementById('main-scroll').style.overflow = 'hidden';
+  o.classList.add('open');
+  requestAnimationFrame(() => o.classList.add('visible'));
 }
-function closeFT(){
+function closeFT() {
   const o = document.getElementById('ft-overlay');
   o.classList.remove('visible');
-  setTimeout(() => {
-    o.style.display = 'none';
-    document.getElementById('main-scroll').style.overflow = '';
-  }, 380);
+  setTimeout(() => o.classList.remove('open'), 380);
 }
-function handleFTOverlayClick(e){
+function handleFTOverlayClick(e) {
   if (e.target === document.getElementById('ft-overlay')) closeFT();
 }
 
-// ── CYBERPUNK MODAL ────────────────────────────────────
-function openCY(){
+// CYBERPUNK modal
+function openCY() {
   const o = document.getElementById('cy-overlay');
-  o.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => o.classList.add('visible')));
-  document.getElementById('main-scroll').style.overflow = 'hidden';
+  o.classList.add('open');
+  requestAnimationFrame(() => o.classList.add('visible'));
 }
-function closeCY(){
+function closeCY() {
   const o = document.getElementById('cy-overlay');
   o.classList.remove('visible');
-  setTimeout(() => {
-    o.style.display = 'none';
-    document.getElementById('main-scroll').style.overflow = '';
-  }, 380);
+  setTimeout(() => o.classList.remove('open'), 380);
 }
-function handleCYOverlayClick(e){
+function handleCYOverlayClick(e) {
   if (e.target === document.getElementById('cy-overlay')) closeCY();
 }
 
-// Escape sluit alle modals — vervang de bestaande keydown listener
+// ESC sluit alle modals
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeZD(); closeDS(); closeFT(); closeCY(); }
 });
+
+
+// Initialisatie: synchroniseer taal op load
+applyLang();
+
 </script>
 </body>
 </html>
