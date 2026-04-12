@@ -1075,7 +1075,9 @@ footer{
               data-lang='{"en":"META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.","nl":"META: Utopia is geen droom — het is een ontwerprobleem. De gereedschappen bestaan. De keuze blijft."}'>
               META: Utopia is not a dream — it is a design problem. The tools exist. The choice remains.
             </p>
-            <button class="zd-btn mn" onclick="openZD()">
+            <!-- GEWIJZIGD: data-lang toegevoegd zodat applyLang() de knoptekst vertaalt -->
+            <button class="zd-btn mn" onclick="openZD()"
+              data-lang='{"en":"↳ Read: Zero Defect — Ch.1","nl":"↳ Lees: Zero Defect — H1"}'>
               ↳ Lees: Zero Defect — H1
             </button>
           </div>
@@ -1205,12 +1207,13 @@ footer{
               data-lang='{"en":"META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.","nl":"META: Algoritmische tirannie is geen sciencefiction. Het is een ontwerpkeuze die nu wordt gemaakt."}'>
               META: Algorithmic tyranny is not science fiction. It is a design choice being made right now.<br><br>
             </p>
-            <!-- ── DYSTOPIA LEESKNOP — uniek voor dit hoofdstuk ── -->
+            <!-- GEWIJZIGD: data-lang toegevoegd -->
             <button class="cta-btn mn"
               style="border-color:#ff2244;color:#ff2244;background:rgba(255,34,68,.1);"
               onmouseenter="this.style.background='#ff2244';this.style.color='#020408'"
               onmouseleave="this.style.background='rgba(255,34,68,.1)';this.style.color='#ff2244'"
-              onclick="openDS()">
+              onclick="openDS()"
+              data-lang='{"en":"↳ Read: The Baseline Audit — Ch.1","nl":"↳ Lees: The Baseline Audit — H1"}'>
               ↳ Lees: The Baseline Audit — H1
             </button>
           </div>
@@ -1377,12 +1380,14 @@ footer{
               data-lang='{"en":"META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.","nl":"META: De waarschijnlijke toekomst is een hoog-inzet improvisatie op een podium dat blijft vlam vatten."}'>
               META: The probable future is a high-stakes improvisation on a stage that keeps catching fire.
             </p>
+            <!-- GEWIJZIGD: data-lang toegevoegd -->
             <button class="cta-btn mn"
               style="border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.1);margin-top:1.4rem;"
               onmouseenter="this.style.background='#00f5ff';this.style.color='#020408'"
               onmouseleave="this.style.background='rgba(0,245,255,.1)';this.style.color='#00f5ff'"
-              onclick="openFT()">
-              ↳ Lees: Noise — H1 
+              onclick="openFT()"
+              data-lang='{"en":"↳ Read: Noise — Ch.1","nl":"↳ Lees: Noise — H1"}'>
+              ↳ Lees: Noise — H1
             </button>
           </div>
         </div>
@@ -1505,14 +1510,15 @@ footer{
               data-lang='{"en":"META: The neural economy is being designed now. The question is whether it extracts consciousness itself.","nl":"META: De neurale economie wordt nu ontworpen. De vraag is of het uw eigen bewustzijn zal onttrekken."}'>
               META: The neural economy is being designed now. The question is whether it extracts consciousness itself.<br><br>
             </p>
-        <!-- ↓ HIER de Cyber knop toevoegen -->
-        <button class="cta-btn mn"
-          style="border-color:#ff00aa;color:#ff00aa;background:rgba(255,0,170,.1);"
-          onmouseenter="this.style.background='#ff00aa';this.style.color='#020408'"
-          onmouseleave="this.style.background='rgba(255,0,170,.1)';this.style.color='#ff00aa'"
-          onclick="openCY()">
-          ↳ Lees: Dead Frequency — H1
-        </button>
+        <!-- GEWIJZIGD: data-lang toegevoegd -->
+            <button class="cta-btn mn"
+              style="border-color:#ff00aa;color:#ff00aa;background:rgba(255,0,170,.1);"
+              onmouseenter="this.style.background='#ff00aa';this.style.color='#020408'"
+              onmouseleave="this.style.background='rgba(255,0,170,.1)';this.style.color='#ff00aa'"
+              onclick="openCY()"
+              data-lang='{"en":"↳ Read: Dead Frequency — Ch.1","nl":"↳ Lees: Dead Frequency — H1"}'>
+              ↳ Lees: Dead Frequency — H1
+            </button>
           </div>
         </div>
       </div>
@@ -1652,10 +1658,16 @@ footer{
   <div class="zd-panel" id="zd-panel">
     <div class="zd-header">
       <div>
-        <div class="zd-tag">// Fictie — Utopia</div>
+        <!-- GEWIJZIGD: data-lang op tag en chapter; title is al Engels -->
+        <div class="zd-tag"
+          data-lang='{"en":"// Fiction — Utopia","nl":"// Fictie — Utopia"}'>
+          // Fictie — Utopia
+        </div>
         <div class="zd-title">Zero Defect</div>
-        <div class="zd-chapter">Hoofdstuk 1 — Ochtend zonder grenzen</div>
-      </div>
+        <div class="zd-chapter"
+          data-lang='{"en":"Chapter 1 — Morning without borders","nl":"Hoofdstuk 1 — Ochtend zonder grenzen"}'>
+          Hoofdstuk 1 — Ochtend zonder grenzen
+        </div>
       <button class="zd-close" onclick="closeZD()">[ × ]</button>
     </div>
     <div class="zd-body">
