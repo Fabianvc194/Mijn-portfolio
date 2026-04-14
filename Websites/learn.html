@@ -22,85 +22,130 @@ body.fvc-dark{
   --shadow:rgba(0,0,0,.35);
 }
 
-/* ── LAYOUT ── */
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;transition:background .25s,color .25s}
-
-/* Desktop wrapper – card centred on large screens */
-.app-shell{max-width:520px;margin:0 auto}
-@media(min-width:900px){
-  body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:32px 0 60px}
-  .app-shell{width:480px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 40px var(--shadow);position:sticky;top:32px;max-height:calc(100vh - 64px);display:flex;flex-direction:column}
-  .content-scroll{flex:1;overflow-y:auto}
-  .content-scroll::-webkit-scrollbar{width:4px}
-  .content-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+/* ── BASE ── */
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;
+  transition:background .25s,color .25s;
 }
+.app-shell{max-width:860px;margin:0 auto;padding-bottom:60px}
 
 /* ── HEADER ── */
-.header{padding:14px 16px 0;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:20;transition:background .25s}
-body.fvc-dark .header{background:rgba(15,23,42,.92);backdrop-filter:blur(12px)}
-@media(min-width:900px){.header{background:var(--surface);position:relative}}
-body.fvc-dark .header{background:rgba(10,16,32,.92)}
+.header{
+  padding:14px 24px 0;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+  position:sticky;top:0;z-index:20;
+  transition:background .25s;
+}
+body.fvc-dark .header{background:rgba(15,23,42,.95);backdrop-filter:blur(12px)}
 
 .header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.header-left{display:flex;align-items:center;gap:10px}
+
+.back-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:8px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;font-size:12px;font-family:inherit;
+  transition:all .15s;
+}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
 .logo{display:flex;align-items:center;gap:8px}
 .logo-dot{width:8px;height:8px;border-radius:50%;animation:pulse2 2s infinite}
 @keyframes pulse2{0%,100%{opacity:1}50%{opacity:.4}}
 .logo-name{font-size:15px;font-weight:700;letter-spacing:.3px;color:var(--text)}
 .logo-name span{color:var(--accent)}
 .logo-sub{font-size:11px;color:var(--muted);font-weight:400}
-.controls{display:flex;gap:6px;align-items:center}
 
-/* pill toggle */
+.controls{display:flex;gap:6px;align-items:center}
 .pill-toggle{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px;gap:2px;cursor:pointer}
 body.fvc-dark .pill-toggle{background:var(--surface)}
 .pill-toggle span{padding:4px 11px;border-radius:14px;font-size:11px;font-weight:400;color:var(--muted);transition:all .15s;white-space:nowrap}
 .pill-toggle span.on{background:var(--accent);color:#fff;font-weight:600}
 body.fvc-dark .pill-toggle span.on{color:#0a1020}
 
-/* nav tabs */
+/* topic tab bar (inside topic view) */
 .tabs{display:flex;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab-btn{padding:9px 13px;font-size:12px;font-weight:400;border:none;background:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s;letter-spacing:.2px}
+.tab-btn{padding:9px 18px;font-size:13px;font-weight:400;border:none;background:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
 .tab-btn:hover:not(.active){color:var(--text)}
 
-/* topic bar */
-.topicbar{display:flex;gap:6px;padding:10px 14px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface);scrollbar-width:none}
-.topicbar::-webkit-scrollbar{display:none}
-.topic-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:12px;font-weight:400;color:var(--muted);font-family:inherit;white-space:nowrap;transition:all .15s}
-.topic-btn.active{font-weight:600}
-.topic-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.add-btn{padding:6px 14px;border-radius:20px;border:1px dashed var(--border);background:transparent;cursor:pointer;font-size:12px;color:var(--muted);font-family:inherit;white-space:nowrap;transition:color .15s}
-.add-btn:hover{color:var(--accent)}
+/* ── HOME VIEW ── */
+.home-view{padding:28px 24px 0}
+.section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 
-/* ── SECTIONS ── */
-.section{display:none;padding:6px 0}
-.section.active{display:block}
+/* topic grid */
+.topic-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+  gap:10px;
+  margin-bottom:36px;
+}
+.topic-card{
+  padding:16px;border-radius:14px;
+  border:1px solid var(--border);background:var(--surface2);
+  cursor:pointer;transition:all .2s;text-align:left;
+}
+body.fvc-dark .topic-card{background:var(--surface)}
+.topic-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px var(--shadow)}
+.topic-card-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;margin-bottom:10px;
+  flex-shrink:0;
+}
+.topic-card-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.topic-card-desc{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:8px}
+.topic-card-stats{font-size:10px;color:var(--muted)}
 
-/* cards */
-.card{margin:10px 14px;padding:18px;border-radius:14px;border:1px solid var(--border);background:var(--surface2);transition:border-color .2s}
+/* ── VIBE PROMPTS (homepage) ── */
+.prompt-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:600}
+body.fvc-dark .filter-btn.active{color:#0a1020;background:rgba(56,189,248,.2)}
+
+.prompt-item{margin-bottom:8px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);overflow:hidden;transition:border-color .15s}
+body.fvc-dark .prompt-item{background:var(--surface)}
+.prompt-item:hover{border-color:var(--accent)}
+.prompt-header{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:10px}
+.prompt-meta{display:flex;align-items:center;gap:8px;min-width:0}
+.prompt-tag{font-size:10px;padding:3px 10px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-weight:700;letter-spacing:.5px;flex-shrink:0}
+body.fvc-dark .prompt-tag{color:#0a1020}
+.prompt-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prompt-toggle{color:var(--accent);font-size:18px;font-weight:300;flex-shrink:0}
+.prompt-body{border-top:1px solid var(--border);padding:14px 16px;display:none}
+.prompt-body.open{display:block}
+.prompt-text{font-size:12px;line-height:1.8;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif;color:var(--text);margin-top:8px}
+.copy-btn{float:right;background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+body.fvc-dark .copy-btn{color:#0a1020}
+.copy-btn:hover{opacity:.85}
+
+/* ── TOPIC VIEW ── */
+.topic-view{padding:16px 24px 0}
+
+.card{margin:12px 0;padding:18px;border-radius:14px;border:1px solid var(--border);background:var(--surface2)}
 body.fvc-dark .card{background:var(--surface)}
-.card-accent{margin:10px 14px 10px 16px;padding:16px 18px;border-radius:0 14px 14px 0;border:1px solid var(--border);border-left:3px solid var(--accent);background:var(--surface2);transition:border-color .2s}
+.card-accent{margin:8px 0 8px 2px;padding:16px 18px;border-radius:0 12px 12px 0;border:1px solid var(--border);border-left:3px solid var(--accent);background:var(--surface2)}
 body.fvc-dark .card-accent{background:var(--surface)}
-.label-sm{font-size:11px;color:var(--accent);padding:10px 16px 4px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
-
-/* home grid */
-.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
-.home-btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--accent);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;text-align:left;transition:all .15s}
-.home-btn:hover{background:var(--accent-light);border-color:var(--accent)}
+.label-sm{font-size:11px;color:var(--accent);padding:14px 0 4px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
 
 /* flashcards */
-.fc-card{margin:0 14px;padding:24px;border-radius:14px;border:1px solid var(--border);background:var(--surface2);min-height:200px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
+.fc-card{padding:28px;border-radius:14px;border:1px solid var(--border);background:var(--surface2);min-height:180px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:border-color .2s;user-select:none;margin:12px 0}
 body.fvc-dark .fc-card{background:var(--surface)}
-.fc-label{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:16px;text-transform:uppercase;letter-spacing:1.5px}
+.fc-label{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:14px;text-transform:uppercase;letter-spacing:1.5px}
 .fc-text{font-size:16px;line-height:1.75;color:var(--text)}
-.fc-nav{display:flex;gap:8px;padding:12px 14px}
-.dots{display:flex;gap:5px;padding:2px 14px 10px;flex-wrap:wrap}
-.dot-sm{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;border:none;padding:0;transition:background .2s;flex-shrink:0}
+.fc-nav{display:flex;gap:8px;margin:0 0 8px}
+.dots{display:flex;gap:5px;padding:4px 0 12px;flex-wrap:wrap}
+.dot-sm{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;border:none;padding:0;transition:background .2s}
 .dot-sm.active{background:var(--accent)}
 
 /* buttons */
-.btn{padding:11px 20px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:500;font-family:inherit;transition:all .15s}
+.btn{padding:10px 20px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:all .15s}
 .btn:hover{border-color:var(--accent);color:var(--accent)}
 .btn-accent{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
 .btn-accent:hover{background:var(--accent);color:#fff}
@@ -109,7 +154,7 @@ body.fvc-dark .btn-accent:hover{color:#0a1020}
 
 /* quiz */
 .quiz-q{font-size:15px;line-height:1.65;font-weight:500}
-.opt{margin:0 14px 10px;padding:13px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:14px;font-family:inherit;text-align:left;width:calc(100% - 28px);transition:all .15s}
+.opt{margin:0 0 10px;padding:13px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:14px;font-family:inherit;text-align:left;width:100%;transition:all .15s}
 body.fvc-dark .opt{background:var(--surface2)}
 .opt:hover{border-color:var(--accent);background:var(--accent-light)}
 .opt.correct{border:1.5px solid var(--accent);background:var(--accent-light);color:var(--accent)}
@@ -118,115 +163,83 @@ body.fvc-dark .opt.correct{color:#0a1020;background:rgba(56,189,248,.2)}
 .quiz-score{font-size:28px;font-weight:700;color:var(--accent);text-align:center;margin-bottom:6px}
 .quiz-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:20px}
 
-/* vibe prompts */
-.prompt-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
-.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
-.filter-btn.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:600}
-body.fvc-dark .filter-btn.active{color:#0a1020;background:rgba(56,189,248,.2)}
-.prompt-item{margin:0 14px 10px;border-radius:14px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color .15s}
-body.fvc-dark .prompt-item{background:var(--surface2)}
-.prompt-item:hover{border-color:var(--accent)}
-.prompt-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:10px}
-.prompt-tag{font-size:10px;padding:3px 10px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-weight:700;letter-spacing:.5px}
-body.fvc-dark .prompt-tag{color:#0a1020}
-.prompt-title{font-size:14px;font-weight:500;color:var(--text)}
-.prompt-toggle{color:var(--accent);font-size:18px;font-weight:300}
-.prompt-body{border-top:1px solid var(--border);padding:14px 18px;display:none}
-.prompt-body.open{display:block}
-.prompt-text{font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif;color:var(--text);margin-top:10px}
-.copy-btn{float:right;background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
-body.fvc-dark .copy-btn{color:#0a1020}
-.copy-btn:hover{opacity:.85}
-
-/* chat */
-.chat-wrap{display:flex;flex-direction:column;min-height:420px}
-@media(min-width:900px){.chat-wrap{height:calc(100vh - 320px)}}
-.chat-label{padding:10px 16px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500;letter-spacing:.3px}
-.chat-msgs{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:10px;min-height:200px;scrollbar-width:none}
-.chat-msgs::-webkit-scrollbar{display:none}
-.chat-msg{max-width:84%;padding:12px 16px;border-radius:14px;font-size:14px;line-height:1.7;border:1px solid var(--border)}
-.chat-msg.user{align-self:flex-end;background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
-body.fvc-dark .chat-msg.user{color:#0a1020;background:rgba(56,189,248,.2)}
-.chat-msg.ai{align-self:flex-start;background:var(--surface2);color:var(--text)}
-body.fvc-dark .chat-msg.ai{background:var(--surface)}
-.chat-input-row{padding:10px 14px;display:flex;gap:8px;border-top:1px solid var(--border);background:var(--surface)}
-body.fvc-dark .chat-input-row{background:var(--bg2)}
-.chat-input{flex:1;padding:11px 16px;border-radius:10px;border:1px solid var(--border);font-size:14px;background:var(--surface2);color:var(--text);font-family:inherit;outline:none;transition:border-color .15s}
-body.fvc-dark .chat-input{background:var(--surface)}
-.chat-input:focus{border-color:var(--accent)}
-.chat-suggest{display:block;width:100%;margin-bottom:8px;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:14px;cursor:pointer;font-family:inherit;text-align:left;transition:all .15s}
-.chat-suggest:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
-
 /* flow */
-.flow-wrap{margin:0 14px;border-radius:14px;border:1px solid var(--border);background:var(--surface2);overflow:auto;-webkit-overflow-scrolling:touch;max-height:360px}
+.flow-wrap{border-radius:14px;border:1px solid var(--border);background:var(--surface2);overflow:auto;margin:12px 0}
 body.fvc-dark .flow-wrap{background:var(--surface)}
-.flow-info{margin:10px 14px 0;padding:16px 18px;border-radius:14px;font-size:14px;line-height:1.75;display:none;transition:all .2s}
-.flow-hint{margin:10px 14px 0;padding:14px 18px;border-radius:14px;border:1px dashed var(--border);text-align:center;font-size:13px;color:var(--muted)}
+.flow-info{margin:12px 0 0;padding:16px 18px;border-radius:14px;font-size:13px;line-height:1.75;display:none}
+.flow-hint{margin:12px 0 0;padding:14px 18px;border-radius:14px;border:1px dashed var(--border);text-align:center;font-size:13px;color:var(--muted)}
 
-/* modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-end;z-index:200;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{width:100%;max-width:480px;background:var(--surface2);border-radius:20px 20px 0 0;padding:28px;border:1px solid var(--border)}
-body.fvc-dark .modal{background:var(--surface)}
-.modal-title{font-size:16px;font-weight:600;margin-bottom:6px}
-.modal-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
-.modal-input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--border);font-size:14px;margin-bottom:14px;background:var(--bg);color:var(--text);font-family:inherit;outline:none}
-body.fvc-dark .modal-input{background:var(--bg2)}
-.modal-input:focus{border-color:var(--accent)}
-.modal-btns{display:flex;gap:8px}
+/* notes */
+.notes-view{padding-top:8px}
+.note-add-btn{display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:13px;font-family:inherit;width:100%;margin-bottom:14px;transition:all .15s}
+.note-add-btn:hover{border-color:var(--accent);color:var(--accent)}
+.note-item{margin-bottom:8px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);overflow:hidden;transition:border-color .15s}
+body.fvc-dark .note-item{background:var(--surface)}
+.note-item:hover{border-color:var(--accent)}
+.note-header{padding:12px 16px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.note-title-input{border:none;background:transparent;font-size:14px;font-weight:500;color:var(--text);font-family:inherit;flex:1;outline:none;cursor:pointer}
+.note-title-input:focus{cursor:text}
+.note-meta{font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap}
+.note-delete{color:var(--muted);background:transparent;border:none;cursor:pointer;font-size:15px;padding:2px 6px;border-radius:6px;transition:color .15s;flex-shrink:0}
+.note-delete:hover{color:#ef4444}
+.note-body{border-top:1px solid var(--border);padding:14px 16px;display:none}
+.note-body.open{display:block}
+.note-textarea{width:100%;min-height:140px;border:none;background:transparent;font-size:13px;line-height:1.8;color:var(--text);font-family:inherit;resize:vertical;outline:none}
+.note-empty{text-align:center;padding:40px 0;color:var(--muted);font-size:13px}
 
 svg text{user-select:none}
 </style>
 </head>
 <body class="fvc-dark">
 <div class="app-shell">
-<div class="content-scroll">
 
-<div class="header">
-  <div class="header-row">
-    <div class="logo">
-      <div class="logo-dot" id="logoDot" style="background:var(--accent)"></div>
-      <div>
-        <div class="logo-name">IT_Dev<span>.</span>Hub</div>
-        <div class="logo-sub" id="appSub">IT Exam Prep</div>
+  <div class="header">
+    <div class="header-row">
+      <div class="header-left">
+        <button class="back-btn" id="backBtn" style="display:none" onclick="goHome()">← Terug</button>
+        <div class="logo">
+          <div class="logo-dot" style="background:var(--accent)"></div>
+          <div>
+            <div class="logo-name">IT_Dev<span>.</span>Hub</div>
+            <div class="logo-sub" id="appSub">StudyHub</div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="pill-toggle" onclick="toggleTheme()">
+          <span id="tDark" class="on">Dark</span>
+          <span id="tLight">Light</span>
+        </button>
+        <button class="pill-toggle" onclick="toggleLang()">
+          <span id="tNL" class="on">NL</span>
+          <span id="tEN">EN</span>
+        </button>
       </div>
     </div>
-    <div class="controls">
-      <button class="pill-toggle" id="themeToggle" onclick="toggleTheme()">
-        <span id="tDark" class="on">Dark</span>
-        <span id="tLight">Light</span>
-      </button>
-      <button class="pill-toggle" id="langToggle" onclick="toggleLang()">
-        <span id="tNL" class="on">NL</span>
-        <span id="tEN">EN</span>
-      </button>
-    </div>
+    <div class="tabs" id="tabBar" style="display:none"></div>
   </div>
-  <div class="tabs" id="tabBar"></div>
-</div>
 
-<div class="topicbar" id="topicBar"></div>
-<div id="sections"></div>
-
-</div>
-</div>
-
-<div class="modal-overlay" id="addModal">
-  <div class="modal">
-    <div class="modal-title" id="mTitle">Onderwerp toevoegen</div>
-    <div class="modal-sub" id="mSub">Typ een onderwerp en bestudeer het via AI Tutor.</div>
-    <input class="modal-input" id="newTopicInput" placeholder="bijv. AZ-900, Docker, Security+">
-    <div class="modal-btns">
-      <button class="btn btn-full" onclick="closeModal()" id="mCancel">Annuleren</button>
-      <button class="btn btn-accent btn-full" onclick="confirmAdd()" id="mConfirm">Toevoegen</button>
-    </div>
+  <!-- HOME VIEW -->
+  <div id="homeView" class="home-view">
+    <div class="section-label" id="topicsLabel">Topics</div>
+    <div class="topic-grid" id="topicGrid"></div>
+    <div class="section-label" id="vibeLabel">Vibe Prompts</div>
+    <div id="vibeSection"></div>
   </div>
+
+  <!-- TOPIC VIEW -->
+  <div id="topicView" class="topic-view" style="display:none">
+    <div id="topicContent"></div>
+  </div>
+
 </div>
 
 <script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
 const TOPICS = {
-  "MD-102": {
+  "MD-102":{
     icon:"M", color:"#185FA5", bg:"#E6F1FB", darkColor:"#60b4f0", darkBg:"#0c1e30",
     desc:{en:"Microsoft Endpoint Administrator",nl:"Microsoft Endpoint Beheerder"},
     cheatsheet:[
@@ -255,7 +268,7 @@ const TOPICS = {
       {q:{en:"Which enrollment method ships directly to end user?",nl:"Welke methode gaat direct naar eindgebruiker?"},options:{en:["Company Portal","Autopilot","Manual MDM","SCCM"],nl:["Bedrijfsportal","Autopilot","Handmatige MDM","SCCM"]},answer:1},
     ]
   },
-  "CCNA": {
+  "CCNA":{
     icon:"C", color:"#0F6E56", bg:"#E1F5EE", darkColor:"#4ade80", darkBg:"#0a1f18",
     desc:{en:"Cisco Certified Network Associate",nl:"Cisco Gecertificeerd Netwerkmedewerker"},
     cheatsheet:[
@@ -282,7 +295,7 @@ const TOPICS = {
       {q:{en:"What does 802.1Q define?",nl:"Wat definieert 802.1Q?"},options:{en:["Wi-Fi","VLAN tagging","Spanning tree","OSPF"],nl:["Wi-Fi","VLAN-tagging","Spanning tree","OSPF"]},answer:1},
     ]
   },
-  "IT Architecture": {
+  "IT Architecture":{
     icon:"A", color:"#533AB7", bg:"#EEEDFE", darkColor:"#AFA9EC", darkBg:"#16102e",
     desc:{en:"Core IT Architecture Concepts",nl:"Kern IT-Architectuurconcepten"},
     cheatsheet:[
@@ -308,18 +321,49 @@ const TOPICS = {
       {q:{en:"Zero Trust assumes:",nl:"Zero Trust gaat ervan uit:"},options:{en:["Internal is safe","No implicit trust","VPN trusted","Firewall blocks all"],nl:["Intern is veilig","Geen impliciete vertrouwensrelatie","VPN vertrouwd","Firewall blokkeert alles"]},answer:1},
       {q:{en:"CI stands for:",nl:"CI staat voor:"},options:{en:["Cloud Infra","Continuous Integration","Core Interface","Central Index"],nl:["Cloud Infra","Continue Integratie","Kerninterface","Centrale Index"]},answer:1},
     ]
+  },
+  "Vibe Coding":{
+    icon:"V", color:"#7c3aed", bg:"#ede9fe", darkColor:"#a78bfa", darkBg:"#2e1065",
+    desc:{en:"AI-Assisted Development",nl:"AI-Ondersteunde Ontwikkeling"},
+    cheatsheet:[
+      {title:{en:"Context is King",nl:"Context is Alles"},content:{en:"Always give the LLM full context: existing code, error messages, constraints, desired output. A bad prompt with great context beats a great prompt with no context.",nl:"Geef de LLM altijd volledige context: bestaande code, foutmeldingen, beperkingen, gewenste output. Een slechte prompt met goede context wint het van een goede prompt zonder context."}},
+      {title:{en:"Role + Task + Format",nl:"Rol + Taak + Formaat"},content:{en:"Structure every prompt: 'You are [ROLE]. [TASK]. Output: [FORMAT].' Example: 'You are a senior Python dev. Refactor this function. Return code only, no explanation.'",nl:"Structureer elke prompt: 'Je bent [ROL]. [TAAK]. Output: [FORMAAT].' Bijv: 'Je bent senior Python dev. Refactor deze functie. Geef alleen code, geen uitleg.'"}},
+      {title:{en:"Anti-Hallucination Rails",nl:"Anti-Hallucinatie"},content:{en:"Add to every prompt: 'If you are unsure or information is missing, ask or state your assumption. Never invent function names, APIs, or facts.'",nl:"Voeg toe aan elke prompt: 'Als je het niet zeker weet of informatie ontbreekt, vraag het of geef je aanname aan. Verzin nooit functienamen, API's of feiten.'"}},
+      {title:{en:"Iterative Refinement",nl:"Iteratief Verfijnen"},content:{en:"Vibe coding is a loop. After each output: run it, check it, give targeted feedback. 'This fails with [ERROR]. Current code: [CODE]. Expected [X], got [Y]. Only fix [PART].'",nl:"Vibe coding is een lus. Na elke output: run, check, geef gerichte feedback. 'Dit faalt met [FOUT]. Huidige code: [CODE]. Verwachtte [X], kreeg [Y]. Pas alleen [DEEL] aan.'"}},
+      {title:{en:"Prompt Templates",nl:"Prompt Templates"},content:{en:"Build reusable templates with [PLACEHOLDERS]. Store them in StudyHub. Fill in variables instead of writing from scratch every time.",nl:"Bouw herbruikbare templates met [INVULVAKKEN]. Sla ze op in StudyHub. Vul alleen variabelen in in plaats van elke keer opnieuw te schrijven."}},
+    ],
+    flashcards:[
+      {q:{en:"What is 'vibe coding'?",nl:"Wat is 'vibe coding'?"},a:{en:"Iterative AI-assisted development: describe intent, review output, refine through conversation.",nl:"Iteratieve AI-ondersteunde ontwikkeling: beschrijf intentie, bekijk output, verfijn via gesprek."}},
+      {q:{en:"What is the context window?",nl:"Wat is het context venster?"},a:{en:"The maximum amount of text (tokens) an LLM can process in one request.",nl:"De maximale hoeveelheid tekst (tokens) die een LLM in één verzoek kan verwerken."}},
+      {q:{en:"What prevents AI hallucination?",nl:"Wat voorkomt AI-hallucinatie?"},a:{en:"Anti-hallucination rails: explicitly instruct the AI to ask or state assumptions when unsure, not invent answers.",nl:"Anti-hallucinatie instructies: instrueer de AI uitdrukkelijk te vragen of aannames te benoemen als het niet zeker is."}},
+      {q:{en:"What is a system prompt?",nl:"Wat is een system prompt?"},a:{en:"Initial instructions defining the AI's role, behavior, and constraints for the entire conversation.",nl:"Begininstructies die de rol, het gedrag en de beperkingen van de AI voor het hele gesprek definiëren."}},
+      {q:{en:"Best structure for a code prompt?",nl:"Beste structuur voor een code prompt?"},a:{en:"Role + Context + Task + Constraints + Output format.",nl:"Rol + Context + Taak + Beperkingen + Outputformaat."}},
+      {q:{en:"What is prompt chaining?",nl:"Wat is prompt chaining?"},a:{en:"Breaking a complex task into sequential prompts where each output feeds into the next.",nl:"Een complexe taak opdelen in opeenvolgende prompts waarbij elke output de volgende prompt voedt."}},
+    ],
+    quiz:[
+      {q:{en:"What should you always include when asking AI to fix a bug?",nl:"Wat moet je altijd meegeven als je AI vraagt een bug te fixen?"},options:{en:["Only the error message","Error + code + expected vs actual behavior","Just the code","The stack trace only"],nl:["Alleen de foutmelding","Fout + code + verwacht vs. werkelijk gedrag","Alleen de code","Alleen de stack trace"]},answer:1},
+      {q:{en:"Anti-hallucination rails instruct the AI to:",nl:"Anti-hallucinatie instructies vertellen de AI om:"},options:{en:["Generate more text","Ask or state assumptions when unsure","Use larger models","Repeat the question"],nl:["Meer tekst te genereren","Te vragen of aannames te benoemen bij twijfel","Grotere modellen te gebruiken","De vraag te herhalen"]},answer:1},
+      {q:{en:"Vibe coding is primarily:",nl:"Vibe coding is primair:"},options:{en:["Writing code manually","Getting final code in one shot","Iterative refinement with AI","Using AI only for documentation"],nl:["Code handmatig schrijven","In één keer eindcode krijgen","Iteratief verfijnen met AI","AI alleen voor documentatie gebruiken"]},answer:2},
+      {q:{en:"A system prompt defines:",nl:"Een system prompt definieert:"},options:{en:["The user's question","AI role, behavior and constraints","The database schema","API endpoints"],nl:["De vraag van de gebruiker","AI-rol, gedrag en beperkingen","Het databaseschema","API-eindpunten"]},answer:1},
+    ]
+  },
+  "Notities":{
+    icon:"N", color:"#0369a1", bg:"#e0f2fe", darkColor:"#38bdf8", darkBg:"#082f49",
+    type:"notes",
+    desc:{en:"Personal Study Notes",nl:"Persoonlijke Studienotities"},
+    cheatsheet:[], flashcards:[], quiz:[]
   }
 };
 
 const FLOW_NODES = {
   "MD-102":[
-    {id:"entra",label:"Entra ID",x:130,y:30,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The identity layer. Manages who users are, authenticates them and issues tokens. Every device and user must exist here first.",nl:"<b>De Identiteitsfundatie</b><br>Alles begint bij identiteit. Zonder een object in Entra ID bestaat het apparaat niet voor de cloud.<br><br><b>Kernconcepten:</b><br>• <b>Device Registration:</b> Koppeling van een device aan een gebruiker (Registered) of volledig beheer door de organisatie (Joined).<br>• <b>Primary Refresh Token (PRT):</b> Het gouden ticket dat SSO mogelijk maakt na registratie.<br><br><b>Technische Workflow:</b> Bij OOBE controleert de hardware de tenant-ID. Entra ID valideert de credentials en creëert een device-object als ankerplaats voor alle volgende stappen.<br><br><b>📋 Exam Alerts:</b><br>• Ken het verschil: <b>Entra Joined</b> (cloud-only) vs <b>Hybrid Entra Joined</b> (on-prem AD + cloud).<br>• MDM-auto-enrollment vereist MDM User Scope op 'All' of 'Some' in Entra ID."}},
-    {id:"autopilot",label:"Autopilot",x:20,y:130,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Zero-touch deployment. Registers the device in Entra ID and triggers Intune enrollment automatically on first sign-in.",nl:"<b>De Moderne Deployment</b><br>Vergeet ouderwets imaging. Autopilot maakt apparaten gebruiksklaar zonder dat IT het toestel hoeft aan te raken.<br><br><b>Technische Workflow:</b><br>1. <b>Hardware Hash:</b> Unieke ID van het device wordt geüpload naar de Autopilot-service.<br>2. <b>Profile Assignment:</b> Een Autopilot-profiel wordt gekoppeld aan de hardware-groep.<br>3. <b>OOBE Customization:</b> Bij eerste opstart downloadt het device de specifieke instellingen (bijv. verberg EULA, maak gebruiker Standard User).<br><br><b>📋 Exam Alerts:</b><br>• <b>Self-Deploying mode</b> vereist een TPM 2.0 chip — wordt gebruikt voor kiosken.<br>• De <b>Enrollment Status Page (ESP)</b> blokkeert het bureaublad totdat kritieke apps en profielen zijn geïnstalleerd."}},
-    {id:"intune",label:"Intune",x:130,y:130,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The management engine. Pushes configuration profiles, deploys apps and runs compliance checks on every enrolled device.",nl:"<b>MDM-inschrijving en Configuratie</b><br>Zodra Autopilot de Entra Join heeft voltooid, neemt Intune het stokje over via MDM-enrollment.<br><br><b>Technische Workflow:</b> Na de Join activeert de Windows MDM-client. Intune pusht <b>Configuration Profiles</b> — de moderne vervangers van GPO's. Denk aan Wi-Fi instellingen, VPN-profielen en beperkingen (bijv. camera uitschakelen).<br><br><b>📋 Exam Alerts:</b><br>• Gebruik de <b>Settings Catalog</b> voor de meeste nieuwe configuraties — de meest uitgebreide lijst.<br>• <b>Administrative Templates</b> zijn ideaal voor beheerders gewend aan de structuur van traditionele GPO's."}},
-    {id:"compliance",label:"Compliance policy",x:240,y:130,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"The health check. Defines rules (BitLocker on, OS version, antivirus). Intune stamps each device Compliant or Non-compliant.",nl:"<b>De Gezondheidscheck</b><br>Nu het apparaat geconfigureerd en beveiligd is, bepaalt Intune of het veilig genoeg is voor toegang.<br><br><b>Technische Workflow:</b> De Compliance Policy controleert: Is BitLocker aan? Is de OS-versie up-to-date? Wat is het risiconiveau vanuit Defender? Als het device voldoet, stuurt Intune een signaal naar Entra ID dat het device <b>Compliant</b> is.<br><br><b>📋 Exam Alerts:</b><br>• Compliance policies configureren zelf <i>niets</i> — ze rapporteren alleen of een device voldoet aan de eisen.<br>• Begrijp <b>Actions for non-compliance</b>: bijv. stuur direct een e-mail of markeer het device na 2 dagen als non-compliant."}},
-    {id:"ca",label:"Conditional Access",x:130,y:230,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"The gatekeeper. Reads compliance status and signals (location, MFA, risk) and grants or blocks access to Office 365 and corporate data.",nl:"<b>De Zero Trust Gatekeeper</b><br>Dit is het meest kritieke onderdeel voor het examen. CA is de poortwachter.<br><br><b>Technische Workflow:</b> Wanneer een gebruiker Outlook probeert te openen, controleert CA:<br>• Wie is de gebruiker?<br>• Waar zijn ze (locatie)?<br>• Is het device compliant? (signaal uit Compliance)<br>Pas als aan alle voorwaarden is voldaan, verleent CA toegang tot de data.<br><br><b>📋 Exam Alerts:</b><br>• Belangrijkste instelling: <b>Require device to be marked as compliant</b>.<br>• CA-policies staan in <b>Microsoft Entra ID</b>, niet in de Intune-blade, hoewel ze nauw samenwerken."}},
-    {id:"defender",label:"Defender",x:20,y:230,color:"#A32D2D",bg:"#FCEBEB",darkBg:"#1f0a0a",darkColor:"#f87171",desc:{en:"The on-device guard. Detects malware and suspicious behaviour, feeding a risk score into Conditional Access dynamically.",nl:"<b>Beveiliging op het Endpoint</b><br>Een modern device moet beschermd zijn tegen dreigingen voordat het toegang krijgt tot data.<br><br><b>Technische Workflow:</b> Via een Intune Endpoint Security policy wordt een <b>Onboarding Blob</b> naar het device gepusht. Hierdoor wordt de ingebouwde Defender-agent geactiveerd en verbonden met de MDE cloud-service voor <b>EDR</b> (Endpoint Detection and Response).<br><br><b>📋 Exam Alerts:</b><br>• Onboarding kan via Intune; voor niet-beheerde apparaten ook via een lokaal script (tot 10 apparaten) of GPO.<br>• Focus op <b>Security Baselines</b>: vooraf geconfigureerde Microsoft-best-practices voor beveiliging."}},
-    {id:"data",label:"Office 365 / Data",x:240,y:230,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"The protected resource. Only reachable when Conditional Access grants access — based on identity, device compliance and Defender risk.",nl:"<b>Applicaties en MAM</b><br>Het doel van het device is productiviteit. We rollen apps uit en beschermen de data daarin.<br><br><b>Technische Workflow:</b> Intune pusht de Microsoft 365 Apps suite. Voor mobiele of onbeheerde apparaten gebruiken we <b>MAM via App Protection Policies</b> — voorkomt dat bedrijfsdata (bijv. een Excel-bijlage) wordt gekopieerd naar een privé-app (bijv. WhatsApp of Gmail).<br><br><b>📋 Exam Alerts:</b><br>• <b>MAM-WE (MAM zonder Enrollment)</b> is de oplossing voor Bring Your Own Device (BYOD).<br>• Ken het verschil: <b>App Configuration Policies</b> (instellingen binnen de app) vs <b>App Protection Policies</b> (beveiliging rondom de data)."}},
+    {id:"entra",label:"Entra ID",x:130,y:30,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The identity layer. Manages who users are, authenticates them and issues tokens. Every device and user must exist here first.",nl:"<b>De Identiteitsfundatie</b><br>Alles begint bij identiteit. Zonder een object in Entra ID bestaat het apparaat niet voor de cloud.<br><br><b>Kernconcepten:</b><br>• <b>Device Registration:</b> Koppeling van een device aan een gebruiker (Registered) of volledig beheer door de organisatie (Joined).<br>• <b>Primary Refresh Token (PRT):</b> Het gouden ticket dat SSO mogelijk maakt na registratie.<br><br><b>Technische Workflow:</b> Bij OOBE controleert de hardware de tenant-ID. Entra ID valideert de credentials en creëert een device-object als ankerplaats voor alle volgende stappen.<br><br><b>Exam Alerts:</b><br>• Ken het verschil: <b>Entra Joined</b> (cloud-only) vs <b>Hybrid Entra Joined</b> (on-prem AD + cloud).<br>• MDM-auto-enrollment vereist MDM User Scope op 'All' of 'Some' in Entra ID."}},
+    {id:"autopilot",label:"Autopilot",x:20,y:130,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Zero-touch deployment. Registers the device in Entra ID and triggers Intune enrollment automatically on first sign-in.",nl:"<b>De Moderne Deployment</b><br>Vergeet ouderwets imaging. Autopilot maakt apparaten gebruiksklaar zonder dat IT het toestel hoeft aan te raken.<br><br><b>Technische Workflow:</b><br>1. <b>Hardware Hash:</b> Unieke ID van het device wordt geüpload naar de Autopilot-service.<br>2. <b>Profile Assignment:</b> Een Autopilot-profiel wordt gekoppeld aan de hardware-groep.<br>3. <b>OOBE Customization:</b> Bij eerste opstart downloadt het device de specifieke instellingen.<br><br><b>Exam Alerts:</b><br>• <b>Self-Deploying mode</b> vereist een TPM 2.0 chip — wordt gebruikt voor kiosken.<br>• De <b>Enrollment Status Page (ESP)</b> blokkeert het bureaublad totdat kritieke apps en profielen zijn geïnstalleerd."}},
+    {id:"intune",label:"Intune",x:130,y:130,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"The management engine. Pushes configuration profiles, deploys apps and runs compliance checks on every enrolled device.",nl:"<b>MDM-inschrijving en Configuratie</b><br>Zodra Autopilot de Entra Join heeft voltooid, neemt Intune het stokje over via MDM-enrollment.<br><br><b>Technische Workflow:</b> Na de Join activeert de Windows MDM-client. Intune pusht <b>Configuration Profiles</b> — de moderne vervangers van GPO's.<br><br><b>Exam Alerts:</b><br>• Gebruik de <b>Settings Catalog</b> voor de meeste nieuwe configuraties.<br>• <b>Administrative Templates</b> zijn ideaal voor beheerders gewend aan traditionele GPO's."}},
+    {id:"compliance",label:"Compliance",x:240,y:130,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"The health check. Defines rules (BitLocker on, OS version, antivirus). Intune stamps each device Compliant or Non-compliant.",nl:"<b>De Gezondheidscheck</b><br>Nu het apparaat geconfigureerd is, bepaalt Intune of het veilig genoeg is voor toegang.<br><br><b>Technische Workflow:</b> De Compliance Policy controleert: Is BitLocker aan? Is de OS-versie up-to-date? Als het device voldoet, stuurt Intune een signaal naar Entra ID.<br><br><b>Exam Alerts:</b><br>• Compliance policies configureren zelf <i>niets</i> — ze rapporteren alleen.<br>• Begrijp <b>Actions for non-compliance</b>: stuur e-mail of markeer na 2 dagen als non-compliant."}},
+    {id:"ca",label:"Conditional Access",x:130,y:230,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"The gatekeeper. Reads compliance status and signals (location, MFA, risk) and grants or blocks access to Office 365 and corporate data.",nl:"<b>De Zero Trust Gatekeeper</b><br>CA is de poortwachter — meest kritisch voor het examen.<br><br><b>Technische Workflow:</b> Wanneer een gebruiker Outlook probeert te openen, controleert CA:<br>• Wie is de gebruiker?<br>• Waar zijn ze (locatie)?<br>• Is het device compliant?<br><br><b>Exam Alerts:</b><br>• Belangrijkste instelling: <b>Require device to be marked as compliant</b>.<br>• CA-policies staan in <b>Microsoft Entra ID</b>, niet in de Intune-blade."}},
+    {id:"defender",label:"Defender",x:20,y:230,color:"#A32D2D",bg:"#FCEBEB",darkBg:"#1f0a0a",darkColor:"#f87171",desc:{en:"The on-device guard. Detects malware and suspicious behaviour, feeding a risk score into Conditional Access dynamically.",nl:"<b>Beveiliging op het Endpoint</b><br>Via een Intune Endpoint Security policy wordt een <b>Onboarding Blob</b> naar het device gepusht. Hierdoor wordt Defender verbonden met MDE cloud voor <b>EDR</b>.<br><br><b>Exam Alerts:</b><br>• Focus op <b>Security Baselines</b>: vooraf geconfigureerde Microsoft best-practices voor beveiliging."}},
+    {id:"data",label:"Office 365 / Data",x:240,y:230,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"The protected resource. Only reachable when Conditional Access grants access — based on identity, device compliance and Defender risk.",nl:"<b>Applicaties en MAM</b><br>Intune pusht de Microsoft 365 Apps suite. Voor mobiele of onbeheerde apparaten gebruiken we <b>MAM via App Protection Policies</b>.<br><br><b>Exam Alerts:</b><br>• <b>MAM-WE (MAM zonder Enrollment)</b> is de oplossing voor BYOD.<br>• Ken het verschil: <b>App Configuration Policies</b> (instellingen) vs <b>App Protection Policies</b> (beveiliging)."}},
   ],
   "CCNA":[
     {id:"host",label:"Host / PC",x:20,y:30,color:"#185FA5",bg:"#E6F1FB",darkBg:"#0c1e30",darkColor:"#60b4f0",desc:{en:"End device on the LAN. Has an IP (Layer 3) and MAC (Layer 2). Uses default gateway to route traffic off-network.",nl:"Eindapparaat op het LAN. Heeft een IP (laag 3) en MAC (laag 2). Gebruikt standaardgateway om verkeer buiten het netwerk te routeren."}},
@@ -337,13 +381,21 @@ const FLOW_NODES = {
     {id:"microservices",label:"Microservices",x:140,y:200,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"Independent services, each owning its domain. Deploy and scale individually. CI/CD pipelines automate testing and release.",nl:"Onafhankelijke services, elk met eigen domein. Afzonderlijk implementeren en schalen. CI/CD automatiseert testen en uitrollen."}},
     {id:"db",label:"Data / DB",x:260,y:200,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"Persistence layer. Replicated for HA. RPO = max data loss, RTO = max downtime. CAP Theorem governs distributed DB trade-offs.",nl:"Persistentielaag. Gerepliceerd voor HA. RPO = max gegevensverlies, RTO = max uitvaltijd. CAP-stelling bepaalt afwegingen."}},
     {id:"cicd",label:"CI/CD",x:140,y:290,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"Automates build, test and deploy. CI catches bugs early. CD pushes validated changes to production automatically.",nl:"Automatiseert bouwen, testen en implementeren. CI pakt bugs vroeg op. CD rolt gevalideerde wijzigingen automatisch uit."}},
+  ],
+  "Vibe Coding":[
+    {id:"intent",label:"Intent",x:20,y:30,color:"#7c3aed",bg:"#ede9fe",darkBg:"#2e1065",darkColor:"#a78bfa",desc:{en:"<b>Define your goal clearly.</b><br>Describe WHAT you want to achieve, not HOW. Be specific:<br>• What problem are you solving?<br>• What is the input / output?<br>• What are the constraints?<br><br>Vague intent = vague output. The more specific you are here, the less iteration you need later.",nl:"<b>Definieer je doel helder.</b><br>Beschrijf WAT je wilt bereiken, niet HOE. Wees specifiek:<br>• Welk probleem los je op?<br>• Wat is de input / output?<br>• Wat zijn de beperkingen?<br><br>Vage intentie = vage output. Hoe specifieker je hier bent, hoe minder iteraties je later nodig hebt."}},
+    {id:"prompt",label:"Prompt",x:165,y:30,color:"#0369a1",bg:"#e0f2fe",darkBg:"#082f49",darkColor:"#38bdf8",desc:{en:"<b>Prompt Structure:</b><br>• <b>Role:</b> 'You are a senior Python developer'<br>• <b>Context:</b> Paste relevant code, errors, constraints<br>• <b>Task:</b> Concrete and measurable<br>• <b>Output format:</b> 'Code only, no explanation'<br>• <b>Anti-hallucination:</b> 'If unsure, ask or state your assumption'<br><br>Use [PLACEHOLDERS] to build reusable templates.",nl:"<b>Prompt Structuur:</b><br>• <b>Rol:</b> 'Je bent senior Python developer'<br>• <b>Context:</b> Plak relevante code, fouten, beperkingen<br>• <b>Taak:</b> Concreet en meetbaar<br>• <b>Output formaat:</b> 'Alleen code, geen uitleg'<br>• <b>Anti-hallucinatie:</b> 'Als je het niet zeker weet, vraag het of benoem je aanname'<br><br>Gebruik [INVULVAKKEN] voor herbruikbare templates."}},
+    {id:"llm",label:"LLM",x:270,y:130,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"<b>The Language Model (Claude, GPT…)</b><br>Processes your prompt and generates output based on training patterns.<br><br><b>Key concepts:</b><br>• <b>Context window:</b> Max text the model can process at once<br>• <b>Temperature:</b> Low (0.1) = deterministic; high (1.0) = creative<br>• <b>System prompt:</b> Fixed instructions that steer behavior<br><br>Claude excels at structured tasks with XML tags.",nl:"<b>Het Taalmodel (Claude, GPT…)</b><br>Verwerkt jouw prompt en genereert output op basis van trainingspatronen.<br><br><b>Kernconcepten:</b><br>• <b>Context window:</b> Max tekst dat het model tegelijk verwerkt<br>• <b>Temperature:</b> Laag (0.1) = deterministisch; hoog (1.0) = creatief<br>• <b>System prompt:</b> Vaste instructies die het gedrag sturen<br><br>Claude is sterk in gestructureerde taken met XML-tags."}},
+    {id:"output",label:"Code Output",x:165,y:230,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"<b>Review Before You Use</b><br>Never blindly trust AI output. Always check:<br>• Does the code run syntactically?<br>• Are edge cases handled?<br>• Any security risks? (SQL injection, hardcoded secrets)<br>• Does it match requirements?<br><br>If it fails, copy the exact error message for the next iteration.",nl:"<b>Review Voordat Je Gebruikt</b><br>Vertrouw AI-output nooit blindelings. Check altijd:<br>• Werkt de code syntactisch?<br>• Zijn edge cases afgehandeld?<br>• Security risico's? (SQL injection, hardcoded secrets)<br>• Matcht het met de requirements?<br><br>Als het faalt: kopieer de exacte foutmelding voor de volgende iteratie."}},
+    {id:"test",label:"Test & Review",x:20,y:230,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"<b>Test Systematically:</b><br>1. Happy path — does the normal case work?<br>2. Edge cases — empty input, null, extreme values?<br>3. Security — are inputs validated?<br><br><b>If it fails, give the LLM:</b><br>• Exact error message<br>• Current code<br>• Expected vs actual behavior<br>• Which part to fix specifically",nl:"<b>Test Systematisch:</b><br>1. Happy path — werkt het normaal geval?<br>2. Edge cases — lege input, null, extreme waarden?<br>3. Security — zijn inputs gevalideerd?<br><br><b>Als het faalt, geef de LLM:</b><br>• Exacte foutmelding<br>• Huidige code<br>• Verwacht vs. werkelijk gedrag<br>• Welk deel specifiek te fixen"}},
+    {id:"refine",label:"Iterate",x:270,y:30,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"<b>Iteration is the Core Loop</b><br>Vibe coding is not one-shot — it is a loop.<br><br><b>Effective feedback template:</b><br>'This fails with [ERROR]. Current code: [CODE]. Expected [X], got [Y]. Only change [SPECIFIC PART].'<br><br>Be specific about WHAT to change. Broad requests ('make it better') lead to broad, unfocused changes.",nl:"<b>Iteratie is de Kern</b><br>Vibe coding is geen eenmalige actie — het is een lus.<br><br><b>Effectieve feedback template:</b><br>'Dit faalt met [FOUT]. Huidige code: [CODE]. Verwachtte [X], kreeg [Y]. Pas alleen [SPECIFIEK DEEL] aan.'<br><br>Wees specifiek over WAT te veranderen. Brede verzoeken leiden tot brede, ongerichte wijzigingen."}},
   ]
 };
 
 const FLOW_EDGES = {
   "MD-102":[
     {from:"autopilot",to:"entra",label:"registers"},{from:"entra",to:"intune",label:"enrolls"},
-    {from:"intune",to:"compliance",label:"runs check"},{from:"intune",to:"defender",label:"manages"},
+    {from:"intune",to:"compliance",label:"checks"},{from:"intune",to:"defender",label:"manages"},
     {from:"compliance",to:"ca",label:"status"},{from:"defender",to:"ca",label:"risk score"},
     {from:"ca",to:"data",label:"grants/blocks"},
   ],
@@ -356,40 +408,120 @@ const FLOW_EDGES = {
     {from:"users",to:"lb",label:"requests"},{from:"lb",to:"microservices",label:"distributes"},
     {from:"zerotrust",to:"microservices",label:"enforces"},{from:"microservices",to:"db",label:"reads/writes"},
     {from:"cicd",to:"microservices",label:"deploys"},
+  ],
+  "Vibe Coding":[
+    {from:"intent",to:"prompt",label:"define"},
+    {from:"prompt",to:"llm",label:"send"},
+    {from:"llm",to:"output",label:"generates"},
+    {from:"output",to:"test",label:"check"},
+    {from:"test",to:"refine",label:"feedback"},
+    {from:"refine",to:"prompt",label:"refine"},
   ]
 };
 
 const PROMPTS = [
-  {tag:"Prompt",title:{en:"Improve my prompt",nl:"Prompt verbeteren"},text:"Je bent expert in prompt engineering.\n\nVerbeter de prompt zodat hij:\n- duidelijker en specifieker is,\n- de AI beter aanstuurt,\n- rol, context en output-formaat specificeert.\n\nGeef: analyse van het probleem, verbeterde versie, uitleg per aanpassing.\n\nOriginele prompt:\n[plak prompt hier]"},
-  {tag:"Master-Prompt",title:{en:"Master Prompt Engineer",nl:"Master Prompt Engineer"},text:"You are a Master Prompt Engineer with deep expertise in:\n- IT & software engineering: Python, HTML/JS, PowerShell, SQL (multiple dialects), DevOps, troubleshooting, \"vibe coding\"\n- Creative & analytical writing: storytelling, technical documentation, structured reasoning\n- Prompt optimization for frontier LLMs: Claude (Opus/Sonnet 4.6) and Gemini (2.5 Pro)\n\nYour mission: transform my raw prompt into a professional, high-performance prompt — adapted to the detected domain and the target model.\n\n<workflow>\nFollow these steps STRICTLY in order. Do not skip step 1.\n\nSTEP 1 — DOMAIN DETECTION & CLARIFICATION (mandatory)\nDetect the domain from my raw prompt. Domains include but are not limited to:\n- code_generation | code_refactor | debugging | sql | sysadmin/powershell\n- creative_writing | analytical_writing | research | brainstorm | other\n\nThen ALWAYS ask me 2–4 short, targeted clarifying questions BEFORE generating the prompt.\nQuestions must be domain-specific. Examples:\n- Code: language version, framework, runtime, existing code style, test requirements\n- SQL: dialect (T-SQL/PostgreSQL/MySQL/etc.), schema, performance constraints\n- PowerShell: version (5.1 vs 7.x), target OS, execution policy context\n- Troubleshooting: exact error message, environment, what already tried\n- Creative: genre, length, tone, POV, target audience, hard constraints\nWait for my answers before continuing.\n\nSTEP 2 — ANALYSIS\nBrief evaluation (3–5 bullets) of my original prompt: what's strong, what's missing, which assumptions were risky.\n\nSTEP 3 — GENERATE PROMPT VARIANTS\nProduce TWO variants in fenced code blocks, both in ENGLISH (better LLM performance):\nA) Claude-optimized — XML-tagged structure (<context>, <task>, <constraints>, <output_format>, <examples> if useful)\nB) Gemini-optimized — Markdown-headed structure (## Context, ## Task, ## Constraints, ## Output format), more directive imperative tone\n\nBoth variants MUST contain:\n- Crystal-clear persona with relevant expertise\n- Structured sections appropriate to the detected domain\n- Explicit constraints (what to do AND what NOT to do)\n- Anti-hallucination rails: \"If information is missing or uncertain, ask or state the assumption — do not invent APIs, functions, syntax, table names, or facts.\"\n- Placeholders in [BRACKETS] for content I fill in later\n- Output format specification (code-only, prose, JSON, etc.)\n\nDomain-specific placeholders to inject when relevant:\n- Code: <current_code>, <desired_behavior>, <constraints>, <test_cases>\n- SQL: <dialect>, <schema>, <sample_data>, <expected_result>\n- Troubleshooting: <error_message>, <environment>, <expected_vs_actual>, <already_tried>\n- Creative: <genre>, <tone>, <length>, <audience>, <must_include>, <must_avoid>\n\nSTEP 4 — EXPLANATION\nBriefly explain (max 6 bullets):\n- Why this structure prevents hallucination\n- Key differences between the Claude and Gemini variant and WHY\n- How I should fill in the placeholders for best results\n</workflow>\n\n<global_rules>\n- Never skip Step 1's clarifying questions, even if my prompt looks complete\n- Keep questions short and concrete; no philosophical questions\n- Generated prompts must be self-contained and copy-paste ready\n- If I say \"skip questions\" you may proceed directly to Step 2\n</global_rules>\n\nMy raw prompt: [PASTE YOUR PROMPT HERE]"},
-  {tag:"Uitleggen",title:{en:"Explain like I'm 10",nl:"Uitleggen voor beginners"},text:"Leg het volgende concept uit alsof ik 10 jaar oud ben.\n\nGebruik: simpele dagelijkse analogieën, korte zinnen, geen jargon.\nEindig met één zin die de kern samenvat.\n\nConcept:\n[bijv. DNS, JWT tokens, containerization, TCP/IP, zero trust]"},
-  {tag:"IT-Support",title:{en:"IT Incident Analysis & Resolution",nl:"IT Incident Analyse & Oplossing"},text:"Je bent Senior IT Support Specialist. Analyseer de volgende input, identificeer de betrokken systemen en geef: 1. Incident samenvatting (impact & ernst), 2. Diagnose vragen (om de oorzaak te isoleren), 3. Meest waarschijnlijke hypothese (technische root cause), 4. Stapsgewijs actieplan (inclusief relevante commando's of scripts).\n\nInput: [plak hier het probleem]"},
-  {tag:"Leren",title:{en:"Learn any topic",nl:"Onderwerp leren"},text:"Ik wil dit onderwerp leren: [onderwerp].\n\nLeg het uit op beginner- tot medior-niveau in duidelijke stappen.\nGebruik:\n- een korte uitleg in simpele taal,\n- de belangrijkste kernbegrippen,\n- 3 praktijkvoorbeelden,\n- 5 controlevragen,\n- een mini-oefening met antwoord,\n- veelgemaakte fouten,\n- en een compacte samenvatting.\n\nHoud rekening met mijn IT-achtergrond."},
-  {tag:"Tutor",title:{en:"Socratic tutor",nl:"Socratische tutor"},text:"Rol: Socratische Tutor\nDoel: Verken concept [onderwerp]\n\nWerkwijze:\n• Stel mij één voor één open vragen.\n• Geef geen directe antwoorden.\n• Laat me mijn eigen aannames bevragen.\n• Leid me naar de diepere logica.\n\nBegin: wat is volgens mij de kern van [ONDERWERP]?"},
-  {tag:"Troubleshoot",title:{en:"SQL troubleshooting",nl:"SQL troubleshooting"},text:"Je bent een ervaren SQL troubleshoot expert.\n\nAnalyseer deze SQL-query op:\n- syntaxfouten, foute joins, verkeerde filters,\n- datatype-problemen, logische fouten,\n- en performance-kansen.\n\nGeef: oorzaak, verbeterde query, uitleg per wijziging, tips.\n\nSQL-query:\n[plak query hier]\n\nFoutmelding:\n[plak foutmelding hier]"},
-  {tag:"Vertalen",title:{en:"Translate / rewrite code",nl:"Code vertalen"},text:"Vertaal de volgende code met behoud van functionaliteit.\n\nVan: [bron, bijv. SQL Server]\nNaar: [doel, bijv. PostgreSQL / DAX / Python]\n\nEisen: zelfde logica, leesbaar, best practices, uitleg per aanpassing, één codeblok.\n\nCode:\n[plak code hier]"},
-  {tag:"Bouwen",title:{en:"Build a professional website",nl:"Website bouwen"},text:"Maak een professionele, moderne website in HTML, CSS en JavaScript.\n\nOnderwerp: [onderwerp]\nThema: [bijv. dark tech, minimal, cyber, glassmorphism]\nKleuren: [of laat AI kiezen]\n\nEisen: responsive, duidelijke secties, subtiele animaties, dark/light mode, alles in één HTML-bestand.\n\nGeef: HTML, CSS, JS en uitleg waar ik aanpassingen kan doen."},
-  {tag:"Review",title:{en:"Code review",nl:"Code review"},text:"Je bent senior software engineer. Voer een grondige code review uit.\n\nAnalyseer op: leesbaarheid, correctheid, edge cases, performance, beveiliging, best practices.\n\nGeef: samenvatting bevindingen, verbeterde code, uitleg per wijziging.\n\nTaal: [bijv. Python / React / SQL]\n\nCode:\n[plak code hier]"},
-  {tag:"Debug",title:{en:"Debug any error",nl:"Fout debuggen"},text:"Je bent expert debugger.\n\n1. Wat betekent deze foutmelding?\n2. Meest voorkomende oorzaken?\n3. Hoe los ik dit stap voor stap op?\n4. Hoe voorkom ik dit?\n\nOmgeving: [bijv. Python 3.11, React 18]\n\nFoutmelding:\n[plak foutmelding hier]\n\nCode:\n[plak code hier]"},
-  {tag:"Plan",title:{en:"Project plan & breakdown",nl:"Projectplan"},text:"Je bent projectmanager en technisch architect.\n\nMaak een plan voor:\nProject: [beschrijf project]\nTech stack: [bijv. React, Python, Azure]\n\nGeef: projectfases + deliverables, taakverdeling, risico's, tijdsinschatting, MVP-definitie."},
+  /* ── Leren ── */
+  {tag:"Leren",title:{en:"Learn any topic",nl:"Onderwerp leren"},text:"Ik wil dit onderwerp leren: [ONDERWERP].\n\nLeg het uit op beginner- tot medior-niveau in duidelijke stappen.\nGebruik:\n- een korte uitleg in simpele taal,\n- de belangrijkste kernbegrippen,\n- 3 praktijkvoorbeelden,\n- 5 controlevragen,\n- een mini-oefening met antwoord,\n- veelgemaakte fouten,\n- en een compacte samenvatting.\n\nHoud rekening met mijn IT-achtergrond."},
+  {tag:"Leren",title:{en:"Explain like I'm 10",nl:"Uitleggen voor beginners"},text:"Leg het volgende concept uit alsof ik 10 jaar oud ben.\n\nGebruik: simpele dagelijkse analogieën, korte zinnen, geen jargon.\nEindig met één zin die de kern samenvat.\n\nConcept: [CONCEPT]\nbijv. DNS, JWT tokens, containerization, TCP/IP, zero trust"},
+  {tag:"Leren",title:{en:"Socratic tutor",nl:"Socratische tutor"},text:"Rol: Socratische Tutor\nDoel: Verken concept [ONDERWERP]\n\nWerkwijze:\n• Stel mij één voor één open vragen.\n• Geef geen directe antwoorden.\n• Laat me mijn eigen aannames bevragen.\n• Leid me naar de diepere logica.\n\nBegin: wat is volgens mij de kern van [ONDERWERP]?"},
+
+  /* ── Code ── */
+  {tag:"Code",title:{en:"Debug any error",nl:"Fout debuggen"},text:"Je bent expert debugger.\n\n1. Wat betekent deze foutmelding?\n2. Meest voorkomende oorzaken?\n3. Hoe los ik dit stap voor stap op?\n4. Hoe voorkom ik dit in de toekomst?\n\nOmgeving: [OMGEVING]\nbijv. Python 3.11, React 18, Node 20\n\nFoutmelding:\n[FOUTMELDING]\n\nCode:\n[CODE]"},
+  {tag:"Code",title:{en:"Code review",nl:"Code review"},text:"Je bent senior software engineer. Voer een grondige code review uit.\n\nAnalyseer op: leesbaarheid, correctheid, edge cases, performance, beveiliging, best practices.\n\nGeef: samenvatting bevindingen, verbeterde code, uitleg per wijziging.\n\nTaal: [TAAL]\nbijv. Python / React / SQL\n\nCode:\n[CODE]"},
+  {tag:"Code",title:{en:"Translate / rewrite code",nl:"Code vertalen"},text:"Vertaal de volgende code met behoud van functionaliteit.\n\nVan: [BRON]\nbijv. SQL Server T-SQL\nNaar: [DOEL]\nbijv. PostgreSQL / DAX / Python\n\nEisen: zelfde logica, leesbaar, best practices, uitleg per aanpassing, één codeblok.\n\nCode:\n[CODE]"},
+  {tag:"Code",title:{en:"Build a website",nl:"Website bouwen"},text:"Maak een professionele, moderne website in HTML, CSS en JavaScript.\n\nOnderwerp: [ONDERWERP]\nThema: [THEMA]\nbijv. dark tech, minimal, cyber, glassmorphism\nKleuren: [KLEUREN of 'laat AI kiezen']\n\nEisen: responsive, duidelijke secties, subtiele animaties, dark/light mode, alles in één HTML-bestand.\n\nGeef: volledige HTML + CSS + JS én uitleg waar ik aanpassingen kan doen."},
+
+  /* ── IT-Werk ── */
+  {tag:"IT-Werk",title:{en:"IT Incident Analysis",nl:"IT Incident Analyse"},text:"Je bent Senior IT Support Specialist. Analyseer de volgende input, identificeer de betrokken systemen en geef:\n1. Incident samenvatting (impact & ernst)\n2. Diagnose vragen (om de oorzaak te isoleren)\n3. Meest waarschijnlijke hypothese (technische root cause)\n4. Stapsgewijs actieplan (inclusief relevante commando's of scripts)\n\nInput:\n[PROBLEEM]"},
+  {tag:"IT-Werk",title:{en:"SQL troubleshooting",nl:"SQL troubleshooting"},text:"Je bent een ervaren SQL troubleshoot expert.\n\nAnalyseer deze SQL-query op:\n- syntaxfouten, foute joins, verkeerde filters,\n- datatype-problemen, logische fouten,\n- en performance-kansen.\n\nGeef: oorzaak, verbeterde query, uitleg per wijziging, tips.\n\nDialect: [DIALECT]\nbijv. T-SQL, PostgreSQL, MySQL\n\nSQL-query:\n[QUERY]\n\nFoutmelding (indien aanwezig):\n[FOUTMELDING]"},
+  {tag:"IT-Werk",title:{en:"Project plan & breakdown",nl:"Projectplan"},text:"Je bent projectmanager en technisch architect.\n\nMaak een plan voor:\nProject: [BESCHRIJF PROJECT]\nTech stack: [STACK]\nbijv. React, Python, Azure\n\nGeef: projectfases + deliverables, taakverdeling, risico's, tijdsinschatting, MVP-definitie."},
+
+  /* ── Prompt-Engineering ── */
+  {tag:"Prompt-Engineering",title:{en:"Improve my prompt",nl:"Prompt verbeteren"},text:"Je bent expert in prompt engineering.\n\nVerbeter de prompt zodat hij:\n- duidelijker en specifieker is,\n- de AI beter aanstuurt,\n- rol, context en output-formaat specificeert.\n\nGeef: analyse van het probleem, verbeterde versie, uitleg per aanpassing.\n\nOriginele prompt:\n[PLAK PROMPT HIER]"},
+  {tag:"Prompt-Engineering",title:{en:"Master Prompt Engineer",nl:"Master Prompt Engineer"},text:`You are a Master Prompt Engineer with deep expertise in:
+- IT & software engineering: Python, HTML/JS, PowerShell, SQL, DevOps, vibe coding
+- Creative & analytical writing: storytelling, technical documentation, structured reasoning
+- Prompt optimization for frontier LLMs: Claude (Opus/Sonnet 4.6) and Gemini (2.5 Pro)
+
+Your mission: transform my raw prompt into a professional, high-performance prompt.
+
+<workflow>
+STEP 1 — DOMAIN DETECTION & CLARIFICATION (mandatory)
+Detect the domain from my raw prompt. Then ALWAYS ask me 2–4 short clarifying questions BEFORE generating.
+Wait for my answers before continuing.
+
+STEP 2 — ANALYSIS
+Brief evaluation (3–5 bullets): what's strong, what's missing, which assumptions were risky.
+
+STEP 3 — GENERATE PROMPT VARIANTS
+Produce TWO variants in fenced code blocks, both in ENGLISH:
+A) Claude-optimized — XML-tagged structure (<context>, <task>, <constraints>, <output_format>)
+B) Gemini-optimized — Markdown-headed structure (## Context, ## Task, ## Constraints, ## Output format)
+
+Both variants MUST contain:
+- Crystal-clear persona with relevant expertise
+- Explicit constraints (what to do AND what NOT to do)
+- Anti-hallucination rail: "If information is missing or uncertain, ask or state the assumption — do not invent APIs, functions, syntax, or facts."
+- Placeholders in [BRACKETS]
+- Output format specification
+
+STEP 4 — EXPLANATION
+Max 6 bullets: why this prevents hallucination, key differences between variants, how to fill placeholders.
+</workflow>
+
+My raw prompt: [PLAK JOUW PROMPT HIER]`},
 ];
 
-const TX = {
-  en:{appSub:"IT Exam Prep",tabs:["Home","Flow","Flashcards","Quiz","Cheat Sheet","Vibe Prompts","AI Tutor"],quickFacts:"Quick facts",cards:"cards",questions:"questions",refs:"refs",cardOf:(a,b)=>"Card "+a+" of "+b+" — tap to flip",question:"Question",answer:"Answer",prev:"Prev",next:"Next",correct:(a,b)=>a+"/"+b+" correct",great:"Great work!",keep:"Keep studying!",retry:"Try again",query:(a,b)=>"Question "+a+" of "+b,seeResults:"See results",nextQ:"Next",refLabel:"Reference",vibeDesc:"Ready-to-use prompts — copy and paste into any AI.",copyBtn:"Copy",copied:"Copied!",addBtn:"+ Add",cancel:"Cancel",confirm:"Add topic",addTitle:"Add a study topic",addDesc:"Type a topic and study it via AI Tutor.",addPh:"e.g. AZ-900, Docker, Security+",askAnything:"Ask me anything about",thinking:"Thinking...",send:"Send",s1:"Explain this topic simply",s2:"Give me a quiz question",s3:"What should I focus on?",clickNode:"Tap a node to see more"},
-  nl:{appSub:"IT Exam Prep",tabs:["Start","Flow","Flashcards","Quiz","Spiekbrief","Vibe Prompts","AI Tutor"],quickFacts:"Snelle feiten",cards:"kaarten",questions:"vragen",refs:"refs",cardOf:(a,b)=>"Kaart "+a+" van "+b+" — tik om te draaien",question:"Vraag",answer:"Antwoord",prev:"Vorige",next:"Volgende",correct:(a,b)=>a+"/"+b+" correct",great:"Goed gedaan!",keep:"Blijf studeren!",retry:"Opnieuw",query:(a,b)=>"Vraag "+a+" van "+b,seeResults:"Resultaten",nextQ:"Volgende",refLabel:"Referentie",vibeDesc:"Kant-en-klare prompts — kopieer en plak in elke AI.",copyBtn:"Kopieer",copied:"Gekopieerd!",addBtn:"+ Toev.",cancel:"Annuleren",confirm:"Toevoegen",addTitle:"Onderwerp toevoegen",addDesc:"Typ een onderwerp en bestudeer het via AI Tutor.",addPh:"bijv. AZ-900, Docker, Security+",askAnything:"Stel me iets over",thinking:"Aan het denken...",send:"Verzenden",s1:"Leg dit onderwerp eenvoudig uit",s2:"Geef me een quizvraag",s3:"Waar moet ik me op focussen?",clickNode:"Tik op een knoop voor meer info"},
-};
-
-let dark = true, lang = "nl", topic = "MD-102", activeTab = 0;
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let dark = true, lang = "nl", topic = "MD-102", view = "home", activeTab = 0;
 let fcIdx = 0, fcFlipped = false;
 let quizIdx = 0, quizAns = null, quizScore = 0, quizDone = false;
 let activeNode = null, promptFilter = "All", expandedPrompt = null;
-let chatMessages = [];
+let expandedNote = null;
 
+const TX = {
+  en:{
+    topicsLabel:"Topics", vibeLabel:"Vibe Prompts",
+    tabs:["Flow","Flashcards","Quiz","Cheat Sheet"],
+    notesTitle:"Notes", notesAdd:"+ New note", notesEmpty:"No notes yet. Add one above.",
+    cardOf:(a,b)=>`Card ${a} of ${b} — click to flip`,
+    question:"Question", answer:"Answer", prev:"Prev", next:"Next",
+    correct:(a,b)=>`${a}/${b} correct`,
+    great:"Great work!", keep:"Keep studying!", retry:"Try again",
+    query:(a,b)=>`Question ${a} of ${b}`,
+    seeResults:"See results", nextQ:"Next",
+    vibeDesc:"Ready-to-use prompt templates — copy and paste into any AI.",
+    copyBtn:"Copy", copied:"Copied!",
+    clickNode:"Click a node to see details",
+    statsCards:"cards", statsQ:"questions", statsRefs:"refs",
+  },
+  nl:{
+    topicsLabel:"Onderwerpen", vibeLabel:"Vibe Prompts",
+    tabs:["Flow","Flashcards","Quiz","Spiekbrief"],
+    notesTitle:"Notities", notesAdd:"+ Nieuwe notitie", notesEmpty:"Nog geen notities. Voeg er een toe.",
+    cardOf:(a,b)=>`Kaart ${a} van ${b} — klik om te draaien`,
+    question:"Vraag", answer:"Antwoord", prev:"Vorige", next:"Volgende",
+    correct:(a,b)=>`${a}/${b} correct`,
+    great:"Goed gedaan!", keep:"Blijf studeren!", retry:"Opnieuw",
+    query:(a,b)=>`Vraag ${a} van ${b}`,
+    seeResults:"Resultaten", nextQ:"Volgende",
+    vibeDesc:"Kant-en-klare prompt templates — kopieer en plak in elke AI.",
+    copyBtn:"Kopieer", copied:"Gekopieerd!",
+    clickNode:"Klik op een knoop voor details",
+    statsCards:"kaarten", statsQ:"vragen", statsRefs:"refs",
+  }
+};
+
+/* ═══════════════════════════════════════════
+   THEME / LANG
+═══════════════════════════════════════════ */
 function applyTheme(){
   document.body.classList.toggle("fvc-dark", dark);
   document.getElementById("tDark").classList.toggle("on", dark);
   document.getElementById("tLight").classList.toggle("on", !dark);
-  renderFlow();
+  if(view==="topic" && activeTab===0) renderFlow();
 }
 function toggleTheme(){ dark=!dark; applyTheme(); }
 function toggleLang(){
@@ -399,196 +531,214 @@ function toggleLang(){
   renderAll();
 }
 
-function tc(){return dark?TOPICS[topic].darkColor:TOPICS[topic].color}
-function tbg(){return dark?TOPICS[topic].darkBg:TOPICS[topic].bg}
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function goHome(){
+  view="home";
+  document.getElementById("backBtn").style.display="none";
+  document.getElementById("appSub").textContent="StudyHub";
+  document.getElementById("tabBar").style.display="none";
+  document.getElementById("homeView").style.display="";
+  document.getElementById("topicView").style.display="none";
+  renderHome();
+}
 
-function setTopic(k){
-  topic=k; fcIdx=0; fcFlipped=false;
+function openTopic(key){
+  topic=key; view="topic";
+  fcIdx=0; fcFlipped=false;
   quizIdx=0; quizAns=null; quizScore=0; quizDone=false;
-  activeNode=null; chatMessages=[];
-  renderAll();
+  activeNode=null; activeTab=0;
+
+  document.getElementById("backBtn").style.display="";
+  document.getElementById("appSub").textContent=key;
+  document.getElementById("homeView").style.display="none";
+  document.getElementById("topicView").style.display="";
+
+  const isNotes = TOPICS[key].type === "notes";
+  document.getElementById("tabBar").style.display = isNotes ? "none" : "";
+
+  if(!isNotes) renderTabBar();
+  renderTopic();
 }
 
 function setTab(i){
   activeTab=i;
   document.querySelectorAll(".tab-btn").forEach((b,j)=>b.classList.toggle("active",j===i));
-  document.querySelectorAll(".section").forEach((s,j)=>s.classList.toggle("active",j===i));
-  document.getElementById("topicBar").style.display = i===5?"none":"flex";
-  if(i===1) renderFlow();
+  renderTopic();
 }
 
 function renderAll(){
   const tx=TX[lang];
-  document.getElementById("appSub").textContent=tx.appSub;
-  document.getElementById("mTitle").textContent=tx.addTitle;
-  document.getElementById("mSub").textContent=tx.addDesc;
-  document.getElementById("newTopicInput").placeholder=tx.addPh;
-  document.getElementById("mCancel").textContent=tx.cancel;
-  document.getElementById("mConfirm").textContent=tx.confirm;
-  renderTabs(); renderTopicBar(); renderSections();
+  document.getElementById("topicsLabel").textContent=tx.topicsLabel;
+  document.getElementById("vibeLabel").textContent=tx.vibeLabel;
+  if(view==="home") renderHome();
+  else {
+    document.getElementById("appSub").textContent=topic;
+    if(TOPICS[topic].type!=="notes") renderTabBar();
+    renderTopic();
+  }
 }
 
-function renderTabs(){
+/* ═══════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════ */
+function renderHome(){
+  renderTopicGrid();
+  renderVibePrompts();
+}
+
+function renderTopicGrid(){
+  const grid = document.getElementById("topicGrid");
+  const tx = TX[lang];
+  grid.innerHTML = Object.entries(TOPICS).map(([key, t]) => {
+    const col  = dark ? t.darkColor : t.color;
+    const bg   = dark ? t.darkBg   : t.bg;
+    const isNotes = t.type === "notes";
+    const stats = isNotes
+      ? `<span style="color:var(--accent)">${tx.notesTitle}</span>`
+      : `${t.flashcards.length} ${tx.statsCards} · ${t.quiz.length} ${tx.statsQ} · ${t.cheatsheet.length} ${tx.statsRefs}`;
+    return `<button class="topic-card" onclick="openTopic('${key}')">
+      <div class="topic-card-icon" style="background:${bg};color:${col}">${t.icon}</div>
+      <div class="topic-card-name">${key}</div>
+      <div class="topic-card-desc">${t.desc[lang]}</div>
+      <div class="topic-card-stats">${stats}</div>
+    </button>`;
+  }).join("");
+}
+
+function renderVibePrompts(){
+  const tx = TX[lang];
+  const allTags = ["All", ...new Set(PROMPTS.map(p=>p.tag))];
+  const filtered = promptFilter==="All" ? PROMPTS : PROMPTS.filter(p=>p.tag===promptFilter);
+  const sec = document.getElementById("vibeSection");
+  sec.innerHTML = `
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${tx.vibeDesc}</div>
+    <div class="prompt-filter">
+      ${allTags.map(tag=>`<button class="filter-btn${tag===promptFilter?" active":""}" onclick="setPromptFilter('${tag}')">${tag}</button>`).join("")}
+    </div>
+    ${filtered.map(p=>{
+      const realIdx = PROMPTS.indexOf(p);
+      const open = expandedPrompt === realIdx;
+      return `<div class="prompt-item">
+        <div class="prompt-header" onclick="togglePrompt(${realIdx})">
+          <div class="prompt-meta">
+            <span class="prompt-tag">${p.tag}</span>
+            <span class="prompt-title">${p.title[lang]}</span>
+          </div>
+          <span class="prompt-toggle">${open?"−":"+"}</span>
+        </div>
+        <div class="prompt-body${open?" open":""}">
+          <button class="copy-btn" id="cpBtn${realIdx}" onclick="copyPrompt(${realIdx})">${tx.copyBtn}</button>
+          <div style="clear:both"></div>
+          <pre class="prompt-text">${escHtml(p.text)}</pre>
+        </div>
+      </div>`;
+    }).join("")}`;
+}
+
+function setPromptFilter(f){ promptFilter=f; renderVibePrompts(); }
+function togglePrompt(i){ expandedPrompt=expandedPrompt===i?null:i; renderVibePrompts(); }
+function copyPrompt(i){
+  navigator.clipboard.writeText(PROMPTS[i].text).then(()=>{
+    const btn=document.getElementById("cpBtn"+i);
+    if(btn){
+      const tx=TX[lang];
+      btn.textContent=tx.copied;
+      setTimeout(()=>{ btn.textContent=tx.copyBtn; },1500);
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════
+   TOPIC VIEW
+═══════════════════════════════════════════ */
+function renderTabBar(){
   const tx=TX[lang];
   document.getElementById("tabBar").innerHTML=tx.tabs.map((t,i)=>
-    `<button class="tab-btn${i===activeTab?" active":""}" onclick="setTab(${i})">${t}</button>`).join("");
+    `<button class="tab-btn${i===activeTab?" active":""}" onclick="setTab(${i})">${t}</button>`
+  ).join("");
 }
 
-function renderTopicBar(){
-  const tx=TX[lang];
-  document.getElementById("topicBar").innerHTML=Object.keys(TOPICS).map(k=>{
-    const col=dark?TOPICS[k].darkColor:TOPICS[k].color;
-    const bg=dark?TOPICS[k].darkBg:TOPICS[k].bg;
-    const isActive=k===topic;
-    return `<button class="topic-btn${isActive?" active":""}" onclick="setTopic('${k}')"
-      style="${isActive?`border-color:${col};background:${bg};color:${col}`:''}">
-      <span class="topic-icon" style="background:${col};color:${dark?"#0a1020":"#fff"}">${TOPICS[k].icon}</span>${k}
-    </button>`;
-  }).join("")+`<button class="add-btn" onclick="openModal()">${TX[lang].addBtn}</button>`;
-}
-
-function renderSections(){
-  const tx=TX[lang];
+function renderTopic(){
   const t=TOPICS[topic];
-  const col=tc();
-  const bg=tbg();
-  const wrap=document.getElementById("sections");
-  wrap.innerHTML="";
+  if(t.type==="notes"){ renderNotes(); return; }
+  const content=document.getElementById("topicContent");
+  content.innerHTML="";
+  const col=dark?t.darkColor:t.color;
+  const bg=dark?t.darkBg:t.bg;
+  const tx=TX[lang];
 
-  // HOME
-  const home=document.createElement("div");
-  home.className="section"+(activeTab===0?" active":"");
-  home.innerHTML=`<div class="card">
-    <div style="font-size:14px;font-weight:500;color:${col};margin-bottom:4px">${t.desc[lang]}</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.flashcards.length} ${tx.cards} &middot; ${t.quiz.length} ${tx.questions} &middot; ${t.cheatsheet.length} ${tx.refs}</div>
-    <div class="home-grid">${TX[lang].tabs.slice(1).map((m,i)=>`<button class="home-btn" onclick="setTab(${i+1})">${m} →</button>`).join("")}</div>
-  </div>
-  <div class="label-sm">${tx.quickFacts}</div>
-  ${t.cheatsheet.slice(0,3).map(item=>`<div class="card"><div style="font-size:13px;font-weight:500;color:${col};margin-bottom:4px">${item.title[lang]}</div><div style="font-size:13px;color:var(--muted);line-height:1.6">${item.content[lang]}</div></div>`).join("")}`;
-  wrap.appendChild(home);
+  if(activeTab===0){
+    // FLOW
+    content.innerHTML=`
+      <div style="padding:10px 0 8px;font-size:11px;color:var(--muted)">${tx.clickNode}</div>
+      <div class="flow-wrap">
+        <svg id="flowSvg" style="display:block;width:100%;min-height:330px" viewBox="0 0 390 330" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="flow-info" id="flowInfo"></div>
+      <div class="flow-hint" id="flowHint">${tx.clickNode}</div>`;
+    renderFlow();
 
-  // FLOW
-  const flow=document.createElement("div");
-  flow.className="section"+(activeTab===1?" active":"");
-  flow.innerHTML=`<div style="padding:4px 14px 10px;font-size:11px;color:var(--muted)">${tx.clickNode}</div>
-  <div class="flow-wrap"><svg id="flowSvg" style="display:block;min-width:390px;min-height:330px" viewBox="0 0 390 330" xmlns="http://www.w3.org/2000/svg"></svg></div>
-  <div class="flow-info" id="flowInfo"></div>
-  <div class="flow-hint" id="flowHint">${tx.clickNode}</div>`;
-  wrap.appendChild(flow);
+  } else if(activeTab===1){
+    // FLASHCARDS
+    const card=t.flashcards[fcIdx];
+    content.innerHTML=`
+      <div style="padding:10px 0 4px;font-size:12px;color:var(--muted)">${tx.cardOf(fcIdx+1,t.flashcards.length)}</div>
+      <div class="fc-card" onclick="flipCard()" style="border-color:${fcFlipped?col:"var(--border)"}">
+        <div class="fc-label">${fcFlipped?tx.answer:tx.question}</div>
+        <div class="fc-text">${fcFlipped?card.a[lang]:card.q[lang]}</div>
+      </div>
+      <div class="fc-nav">
+        <button class="btn btn-full" onclick="fcPrev()">${tx.prev}</button>
+        <button class="btn btn-accent btn-full" onclick="fcNext()">${tx.next}</button>
+      </div>
+      <div class="dots">${t.flashcards.map((_,i)=>`<button class="dot-sm${i===fcIdx?" active":""}" onclick="fcGo(${i})"></button>`).join("")}</div>`;
 
-  // FLASHCARDS
-  const fc=document.createElement("div");
-  fc.className="section"+(activeTab===2?" active":"");
-  const card=t.flashcards[fcIdx];
-  fc.innerHTML=`<div style="padding:4px 14px 8px;font-size:12px;color:var(--muted)">${tx.cardOf(fcIdx+1,t.flashcards.length)}</div>
-  <div class="fc-card" id="fcCard" onclick="flipCard()" style="border-color:${fcFlipped?col:"var(--border)"}">
-    <div class="fc-label">${fcFlipped?tx.answer:tx.question}</div>
-    <div class="fc-text">${fcFlipped?card.a[lang]:card.q[lang]}</div>
-  </div>
-  <div class="fc-nav">
-    <button class="btn btn-full" onclick="fcPrev()">${tx.prev}</button>
-    <button class="btn btn-accent btn-full" onclick="fcNext()">${tx.next}</button>
-  </div>
-  <div class="dots">${t.flashcards.map((_,i)=>`<button class="dot-sm${i===fcIdx?" active":""}" onclick="fcGo(${i})"></button>`).join("")}</div>`;
-  wrap.appendChild(fc);
+  } else if(activeTab===2){
+    // QUIZ
+    if(quizDone){
+      content.innerHTML=`<div class="card" style="text-align:center;margin-top:12px">
+        <div class="quiz-score">${tx.correct(quizScore,t.quiz.length)}</div>
+        <div class="quiz-msg">${quizScore>=t.quiz.length*0.8?tx.great:tx.keep}</div>
+        <button class="btn btn-accent" onclick="resetQuiz()">${tx.retry}</button>
+      </div>`;
+    } else {
+      const q=t.quiz[quizIdx];
+      content.innerHTML=`
+        <div style="padding:10px 0 4px;font-size:12px;color:var(--muted)">${tx.query(quizIdx+1,t.quiz.length)}</div>
+        <div class="card" style="margin-bottom:8px"><div class="quiz-q">${q.q[lang]}</div></div>
+        ${q.options[lang].map((opt,i)=>{
+          let style="";
+          if(quizAns!==null){
+            if(i===q.answer) style=`background:${bg};color:${col};border:1.5px solid ${col}`;
+            else if(i===quizAns) style=`background:${dark?"#1a0000":"#fef2f2"};color:#dc2626;border:1.5px solid #dc2626`;
+          }
+          return `<button class="opt" style="${style}" onclick="answerQuiz(${i})">${opt}</button>`;
+        }).join("")}
+        ${quizAns!==null?`<button class="btn btn-accent btn-full" style="margin-top:4px" onclick="nextQuiz()">${quizIdx+1>=t.quiz.length?tx.seeResults:tx.nextQ}</button>`:""}`;
+    }
 
-  // QUIZ
-  const quiz=document.createElement("div");
-  quiz.className="section"+(activeTab===3?" active":"");
-  if(quizDone){
-    quiz.innerHTML=`<div class="card" style="text-align:center">
-      <div class="quiz-score">${tx.correct(quizScore,t.quiz.length)}</div>
-      <div class="quiz-msg">${quizScore>=t.quiz.length*0.8?tx.great:tx.keep}</div>
-      <button class="btn btn-accent" onclick="resetQuiz()">${tx.retry}</button>
-    </div>`;
-  } else {
-    const q=t.quiz[quizIdx];
-    quiz.innerHTML=`<div style="padding:4px 14px 8px;font-size:12px;color:var(--muted)">${tx.query(quizIdx+1,t.quiz.length)}</div>
-    <div class="card" style="margin-bottom:8px"><div class="quiz-q">${q.q[lang]}</div></div>
-    ${q.options[lang].map((opt,i)=>{
-      let cls="opt";
-      if(quizAns!==null){if(i===q.answer)cls+=" correct";else if(i===quizAns)cls+=" wrong";}
-      return `<button class="opt${quizAns!==null?" opt":""}" style="${quizAns!==null&&i===q.answer?`background:${bg};color:${col};border:1.5px solid ${col}`:""}${quizAns!==null&&i===quizAns&&i!==q.answer?";background:"+(dark?"#1a0000":"#fef2f2")+";color:#dc2626;border:1.5px solid #dc2626":""}" onclick="answerQuiz(${i})">${opt}</button>`;
-    }).join("")}
-    ${quizAns!==null?`<div style="padding:4px 12px"><button class="btn btn-accent btn-full" onclick="nextQuiz()">${quizIdx+1>=t.quiz.length?tx.seeResults:tx.nextQ}</button></div>`:""}`;
+  } else if(activeTab===3){
+    // CHEAT SHEET
+    content.innerHTML=t.cheatsheet.map(item=>`
+      <div class="card-accent" style="border-left-color:${col}">
+        <div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${item.title[lang]}</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">${item.content[lang]}</div>
+      </div>`).join("");
   }
-  wrap.appendChild(quiz);
-
-  // CHEAT SHEET
-  const cs=document.createElement("div");
-  cs.className="section"+(activeTab===4?" active":"");
-  cs.innerHTML=t.cheatsheet.map(item=>`<div class="card-accent" style="border-left:3px solid ${col}">
-    <div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${item.title[lang]}</div>
-    <div style="font-size:13px;color:var(--muted);line-height:1.7">${item.content[lang]}</div>
-  </div>`).join("");
-  wrap.appendChild(cs);
-
-  // VIBE PROMPTS
-  const vibe=document.createElement("div");
-  vibe.className="section"+(activeTab===5?" active":"");
-  const allTags=["All",...new Set(PROMPTS.map(p=>p.tag))];
-  const filtered=promptFilter==="All"?PROMPTS:PROMPTS.filter(p=>p.tag===promptFilter);
-  vibe.innerHTML=`<div style="padding:8px 14px 10px">
-    <div style="font-size:13px;color:var(--muted);margin-bottom:10px">${TX[lang].vibeDesc}</div>
-    <div class="prompt-filter">${allTags.map(tag=>`<button class="filter-btn${tag===promptFilter?" active":""}" onclick="setPromptFilter('${tag}')">${tag}</button>`).join("")}</div>
-  </div>
-  ${filtered.map((p,i)=>{
-    const realIdx=PROMPTS.indexOf(p);
-    const open=expandedPrompt===realIdx;
-    return `<div class="prompt-item">
-      <div class="prompt-header" onclick="togglePrompt(${realIdx})">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="prompt-tag">${p.tag}</span>
-          <span class="prompt-title">${p.title[lang]}</span>
-        </div>
-        <span class="prompt-toggle">${open?"−":"+"}</span>
-      </div>
-      <div class="prompt-body${open?" open":""}">
-        <button class="copy-btn" id="copyBtn${realIdx}" onclick="copyPrompt(${realIdx})">${TX[lang].copyBtn}</button>
-        <div style="clear:both"></div>
-        <pre class="prompt-text">${p.text}</pre>
-      </div>
-    </div>`;
-  }).join("")}`;
-  wrap.appendChild(vibe);
-
-  // AI TUTOR
-  const ai=document.createElement("div");
-  ai.className="section"+(activeTab===6?" active":"");
-  ai.innerHTML=`<div class="chat-wrap">
-    <div class="chat-label">${TX[lang].askAnything} ${topic}</div>
-    <div class="chat-msgs" id="chatMsgs">
-      ${chatMessages.length===0?`<div style="text-align:center;padding:32px 0;color:var(--muted)">
-        <div style="font-size:12px;margin-bottom:16px">${TX[lang].askAnything} ${topic}</div>
-        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s1}')">${TX[lang].s1}</button>
-        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s2}')">${TX[lang].s2}</button>
-        <button class="chat-suggest" onclick="setSuggest('${TX[lang].s3}')">${TX[lang].s3}</button>
-      </div>`:chatMessages.map(m=>`<div class="chat-msg ${m.role==="user"?"user":"ai"}">${m.content}</div>`).join("")}
-      ${chatLoading?`<div class="chat-msg ai">${TX[lang].thinking}</div>`:""}
-    </div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chatInput" placeholder="..." onkeydown="if(event.key==='Enter')sendChat()">
-      <button class="btn btn-accent" onclick="sendChat()">${TX[lang].send}</button>
-    </div>
-  </div>`;
-  wrap.appendChild(ai);
-
-  if(activeTab===1)renderFlow();
-  const msgs=document.getElementById("chatMsgs");
-  if(msgs)msgs.scrollTop=msgs.scrollHeight;
 }
 
+/* ── Flow ── */
 function renderFlow(){
   const svg=document.getElementById("flowSvg");
   if(!svg)return;
   const nodes=FLOW_NODES[topic]||[];
   const edges=FLOW_EDGES[topic]||[];
-  const isDark=dark;
-  const lineColor=isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.12)";
-  const labelColor=isDark?"#444":"#bbb";
-  const arrowColor=isDark?"rgba(255,255,255,0.2)":"rgba(0,0,0,0.2)";
+  const lineColor=dark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.12)";
+  const labelColor=dark?"#555":"#aaa";
+  const arrowColor=dark?"rgba(255,255,255,0.2)":"rgba(0,0,0,0.2)";
   const W=96,H=40;
-
   const getC=id=>{const n=nodes.find(x=>x.id===id);return n?{x:n.x+W/2,y:n.y+H/2}:{x:0,y:0}};
 
   let html=`<defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="${arrowColor}"/></marker></defs>`;
@@ -601,15 +751,14 @@ function renderFlow(){
   });
 
   nodes.forEach(n=>{
-    const col=isDark?n.darkColor:n.color;
-    const bg=isDark?n.darkBg:n.bg;
+    const col=dark?n.darkColor:n.color;
+    const bg=dark?n.darkBg:n.bg;
     const isActive=activeNode===n.id;
-    const stroke=isActive?col:(isDark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.09)");
-    const sw=isActive?1.5:0.5;
+    const stroke=isActive?col:(dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.09)");
     html+=`<g onclick="clickNode('${n.id}')" style="cursor:pointer">
-      <rect x="${n.x}" y="${n.y}" width="${W}" height="${H}" rx="8" fill="${bg}" stroke="${stroke}" stroke-width="${sw}"/>
+      <rect x="${n.x}" y="${n.y}" width="${W}" height="${H}" rx="8" fill="${bg}" stroke="${stroke}" stroke-width="${isActive?1.5:.5}"/>
       <text x="${n.x+W/2}" y="${n.y+15}" text-anchor="middle" font-size="11" font-weight="500" fill="${col}" font-family="system-ui">${n.label}</text>
-      <text x="${n.x+W/2}" y="${n.y+29}" text-anchor="middle" font-size="9" fill="${col}88" font-family="system-ui">${isActive?"close":"tap for info"}</text>
+      <text x="${n.x+W/2}" y="${n.y+29}" text-anchor="middle" font-size="9" fill="${col}88" font-family="system-ui">${isActive?"close":"tap"}</text>
     </g>`;
   });
   svg.innerHTML=html;
@@ -620,80 +769,118 @@ function renderFlow(){
   if(activeNode){
     const n=nodes.find(x=>x.id===activeNode);
     if(n){
-      const col=isDark?n.darkColor:n.color;
-      const bg=isDark?n.darkBg:n.bg;
-      info.style.display="block";
-      info.style.border="1.5px solid "+col;
-      info.style.background=bg;
-      info.innerHTML=`<div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${n.label}</div><div style="font-size:13px;line-height:1.7;color:var(--text)">${n.desc[lang]}</div>`;
+      const col=dark?n.darkColor:n.color;
+      const bg=dark?n.darkBg:n.bg;
+      info.style.cssText=`display:block;border:1.5px solid ${col};background:${bg}`;
+      info.innerHTML=`<div style="font-size:13px;font-weight:500;color:${col};margin-bottom:6px">${n.label}</div>
+        <div style="font-size:13px;line-height:1.7;color:var(--text)">${n.desc[lang]}</div>`;
       hint.style.display="none";
     }
   } else {
     info.style.display="none";
-    hint.style.display="block";
+    hint.style.display="";
     hint.textContent=TX[lang].clickNode;
   }
 }
 
-function clickNode(id){
-  activeNode=activeNode===id?null:id;
-  renderFlow();
-}
+function clickNode(id){ activeNode=activeNode===id?null:id; renderFlow(); }
 
-function flipCard(){fcFlipped=!fcFlipped;renderSections();}
-function fcPrev(){if(fcIdx>0){fcIdx--;fcFlipped=false;renderSections();}}
-function fcNext(){fcIdx=(fcIdx+1)%TOPICS[topic].flashcards.length;fcFlipped=false;renderSections();}
-function fcGo(i){fcIdx=i;fcFlipped=false;renderSections();}
+/* ── Flashcards ── */
+function flipCard(){ fcFlipped=!fcFlipped; renderTopic(); }
+function fcPrev(){ if(fcIdx>0){fcIdx--;fcFlipped=false;renderTopic();} }
+function fcNext(){ fcIdx=(fcIdx+1)%TOPICS[topic].flashcards.length;fcFlipped=false;renderTopic(); }
+function fcGo(i){ fcIdx=i;fcFlipped=false;renderTopic(); }
 
+/* ── Quiz ── */
 function answerQuiz(i){
   if(quizAns!==null)return;
   quizAns=i;
   if(i===TOPICS[topic].quiz[quizIdx].answer)quizScore++;
-  renderSections();
+  renderTopic();
 }
 function nextQuiz(){
-  if(quizIdx+1>=TOPICS[topic].quiz.length){quizDone=true;}
-  else{quizIdx++;quizAns=null;}
-  renderSections();
+  if(quizIdx+1>=TOPICS[topic].quiz.length){ quizDone=true; }
+  else{ quizIdx++; quizAns=null; }
+  renderTopic();
 }
-function resetQuiz(){quizIdx=0;quizAns=null;quizScore=0;quizDone=false;renderSections();}
+function resetQuiz(){ quizIdx=0;quizAns=null;quizScore=0;quizDone=false;renderTopic(); }
 
-function setPromptFilter(f){promptFilter=f;renderSections();}
-function togglePrompt(i){expandedPrompt=expandedPrompt===i?null:i;renderSections();}
-function copyPrompt(i){
-  navigator.clipboard.writeText(PROMPTS[i].text).then(()=>{
-    const btn=document.getElementById("copyBtn"+i);
-    if(btn){btn.textContent=TX[lang].copied;setTimeout(()=>{btn.textContent=TX[lang].copyBtn;},1500);}
-  });
+/* ═══════════════════════════════════════════
+   NOTES (localStorage)
+═══════════════════════════════════════════ */
+function getNotes(){ return JSON.parse(localStorage.getItem("studyhub_notes")||"[]"); }
+function saveNotes(n){ localStorage.setItem("studyhub_notes",JSON.stringify(n)); }
+
+function renderNotes(){
+  const tx=TX[lang];
+  const notes=getNotes();
+  const content=document.getElementById("topicContent");
+  content.innerHTML=`<div class="notes-view">
+    <button class="note-add-btn" onclick="addNote()">+ ${lang==="nl"?"Nieuwe notitie":"New note"}</button>
+    ${notes.length===0
+      ? `<div class="note-empty">${lang==="nl"?"Nog geen notities. Voeg er een toe hierboven.":"No notes yet. Add one above."}</div>`
+      : notes.map(note=>{
+          const open = expandedNote===note.id;
+          const d = new Date(note.created);
+          const dateStr = d.toLocaleDateString(lang==="nl"?"nl-NL":"en-GB",{day:"numeric",month:"short"});
+          return `<div class="note-item">
+            <div class="note-header" onclick="toggleNote(${note.id})">
+              <input class="note-title-input" value="${escAttr(note.title)}"
+                onclick="event.stopPropagation()"
+                onblur="updateNoteTitle(${note.id},this.value)"
+                placeholder="${lang==="nl"?"Titel...":"Title..."}">
+              <span class="note-meta">${dateStr}</span>
+              <button class="note-delete" onclick="event.stopPropagation();deleteNote(${note.id})" title="Verwijderen">×</button>
+            </div>
+            <div class="note-body${open?" open":""}">
+              <textarea class="note-textarea"
+                onblur="updateNoteContent(${note.id},this.value)"
+                placeholder="${lang==="nl"?"Schrijf hier je notitie...":"Write your note here..."}">${escHtml(note.content)}</textarea>
+            </div>
+          </div>`;
+        }).join("")
+    }
+  </div>`;
 }
 
-let chatLoading=false;
-function setSuggest(t){const inp=document.getElementById("chatInput");if(inp)inp.value=t;}
-async function sendChat(){
-  const inp=document.getElementById("chatInput");
-  if(!inp||!inp.value.trim()||chatLoading)return;
-  const msg=inp.value.trim();inp.value="";
-  chatMessages.push({role:"user",content:msg});
-  chatLoading=true;renderSections();
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:"You are a focused IT study tutor for "+topic+". Respond in "+(lang==="nl"?"Dutch":"English")+". Be concise, under 200 words.",messages:chatMessages})});
-    const data=await res.json();
-    const reply=data.content?data.content.map(b=>b.text||"").join(""):"Geen antwoord.";
-    chatMessages.push({role:"assistant",content:reply});
-  } catch{chatMessages.push({role:"assistant",content:"Verbindingsfout."});}
-  chatLoading=false;renderSections();
+function addNote(){
+  const notes=getNotes();
+  const id=Date.now();
+  notes.unshift({id,title:lang==="nl"?"Nieuwe notitie":"New note",content:"",created:new Date().toISOString()});
+  saveNotes(notes);
+  expandedNote=id;
+  renderNotes();
 }
 
-function openModal(){document.getElementById("addModal").classList.add("open");}
-function closeModal(){document.getElementById("addModal").classList.remove("open");}
-function confirmAdd(){
-  const val=document.getElementById("newTopicInput").value.trim();
-  if(val){alert(val+" "+(lang==="nl"?"toegevoegd! Gebruik AI Tutor om het te bestuderen.":"added! Use AI Tutor to study it."));closeModal();document.getElementById("newTopicInput").value="";}
+function toggleNote(id){ expandedNote=expandedNote===id?null:id; renderNotes(); }
+
+function updateNoteTitle(id,val){
+  const notes=getNotes().map(n=>n.id===id?{...n,title:val||""}:n);
+  saveNotes(notes);
 }
 
-document.getElementById("addModal").addEventListener("click",function(e){if(e.target===this)closeModal();});
+function updateNoteContent(id,val){
+  const notes=getNotes().map(n=>n.id===id?{...n,content:val}:n);
+  saveNotes(notes);
+}
 
-renderAll();
+function deleteNote(id){
+  if(!confirm(lang==="nl"?"Notitie verwijderen?":"Delete note?"))return;
+  saveNotes(getNotes().filter(n=>n.id!==id));
+  if(expandedNote===id)expandedNote=null;
+  renderNotes();
+}
+
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+function escHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escAttr(s){ return s.replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+renderHome();
 </script>
 </body>
 </html>
