@@ -86,6 +86,7 @@ body.fvc-dark .pill-toggle span.on{color:#0a1020}
   margin-bottom:36px;
 }
 .topic-card{
+  display:flex;flex-direction:column;
   padding:16px;border-radius:14px;
   border:1px solid var(--border);background:var(--surface2);
   cursor:pointer;transition:all .2s;text-align:left;
@@ -98,9 +99,35 @@ body.fvc-dark .topic-card{background:var(--surface)}
   font-size:14px;font-weight:700;margin-bottom:10px;
   flex-shrink:0;
 }
+.topic-card-body{flex:1}
 .topic-card-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
-.topic-card-desc{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:8px}
+.topic-card-desc{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:6px}
 .topic-card-stats{font-size:10px;color:var(--muted)}
+
+/* ── MOBILE: horizontale kaart, groot icoon rechts ── */
+@media(max-width:640px){
+  .topic-grid{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .topic-card{
+    flex-direction:row;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+  }
+  .topic-card-icon{
+    order:2;
+    width:56px;height:56px;
+    border-radius:14px;
+    font-size:26px;
+    margin-bottom:0;
+    flex-shrink:0;
+  }
+  .topic-card-body{order:1;flex:1;min-width:0}
+  .topic-card-name{font-size:14px}
+  .topic-card-desc{font-size:11px;margin-bottom:4px}
+}
 
 /* ── VIBE PROMPTS (homepage) ── */
 .prompt-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
@@ -209,10 +236,6 @@ svg text{user-select:none}
         <button class="pill-toggle" onclick="toggleTheme()">
           <span id="tDark" class="on">Dark</span>
           <span id="tLight">Light</span>
-        </button>
-        <button class="pill-toggle" onclick="toggleLang()">
-          <span id="tNL" class="on">NL</span>
-          <span id="tEN">EN</span>
         </button>
       </div>
     </div>
@@ -475,7 +498,8 @@ My raw prompt: [PLAK JOUW PROMPT HIER]`},
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
-let dark = true, lang = "nl", topic = "MD-102", view = "home", activeTab = 0;
+let dark = true, topic = "MD-102", view = "home", activeTab = 0;
+const lang = "nl"; // taal vast ingesteld op Nederlands
 let fcIdx = 0, fcFlipped = false;
 let quizIdx = 0, quizAns = null, quizScore = 0, quizDone = false;
 let activeNode = null, promptFilter = "All", expandedPrompt = null;
@@ -524,12 +548,6 @@ function applyTheme(){
   if(view==="topic" && activeTab===0) renderFlow();
 }
 function toggleTheme(){ dark=!dark; applyTheme(); }
-function toggleLang(){
-  lang = lang==="nl"?"en":"nl";
-  document.getElementById("tNL").classList.toggle("on", lang==="nl");
-  document.getElementById("tEN").classList.toggle("on", lang==="en");
-  renderAll();
-}
 
 /* ═══════════════════════════════════════════
    NAVIGATION
@@ -600,9 +618,11 @@ function renderTopicGrid(){
       : `${t.flashcards.length} ${tx.statsCards} · ${t.quiz.length} ${tx.statsQ} · ${t.cheatsheet.length} ${tx.statsRefs}`;
     return `<button class="topic-card" onclick="openTopic('${key}')">
       <div class="topic-card-icon" style="background:${bg};color:${col}">${t.icon}</div>
-      <div class="topic-card-name">${key}</div>
-      <div class="topic-card-desc">${t.desc[lang]}</div>
-      <div class="topic-card-stats">${stats}</div>
+      <div class="topic-card-body">
+        <div class="topic-card-name">${key}</div>
+        <div class="topic-card-desc">${t.desc[lang]}</div>
+        <div class="topic-card-stats">${stats}</div>
+      </div>
     </button>`;
   }).join("");
 }
