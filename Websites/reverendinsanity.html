@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverend Insanity — Fan Continuation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #1a1a1a;
+    color: #e8e8e8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .banner {
+    width: 100%;
+    max-height: 360px;
+    overflow: hidden;
+    background: #0f0f0f;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .banner img {
+    width: 100%;
+    height: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+  }
+
+  .header {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .header h1 {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #f0e6d2;
+    margin-bottom: 0.3rem;
+  }
+
+  .header .subtitle {
+    font-size: 0.95rem;
+    color: #9a9a9a;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .sidebar {
+    border-right: 1px solid #2a2a2a;
+    padding-right: 1.5rem;
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .sidebar h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chapter-list {
+    list-style: none;
+  }
+
+  .chapter-list li {
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #bdbdbd;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .chapter-list li:hover {
+    background: #242424;
+    color: #f0e6d2;
+  }
+
+  .chapter-list li.active {
+    background: #2a241a;
+    color: #f0e6d2;
+    border-left-color: #c9a961;
+    font-weight: 600;
+  }
+
+  .chapter-num {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.15rem;
+  }
+
+  .chapter-list li.active .chapter-num {
+    color: #c9a961;
+  }
+
+  .reader {
+    min-width: 0;
+  }
+
+  .reader h2.chapter-title {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2rem;
+    color: #f0e6d2;
+    margin-bottom: 0.3rem;
+    line-height: 1.25;
+  }
+
+  .reader .chapter-label {
+    font-size: 0.8rem;
+    color: #c9a961;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+
+  .chapter-body {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: #e8e8e8;
+  }
+
+  .chapter-body p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+  }
+
+  .chapter-body p:first-of-type::first-letter {
+    font-size: 2.8rem;
+    font-weight: 600;
+    float: left;
+    line-height: 1;
+    padding: 0.25rem 0.5rem 0 0;
+    color: #c9a961;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 0.85rem 1.25rem;
+    background: #242424;
+    color: #e8e8e8;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    background: #2a241a;
+    border-color: #c9a961;
+    color: #f0e6d2;
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .nav-btn.next { text-align: right; }
+  .nav-btn.prev { text-align: left; }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.8rem; }
+    .header .subtitle { font-size: 0.8rem; }
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .sidebar {
+      position: static;
+      border-right: none;
+      border-bottom: 1px solid #2a2a2a;
+      padding-right: 0;
+      padding-bottom: 1rem;
+      max-height: 240px;
+    }
+    .reader h2.chapter-title { font-size: 1.5rem; }
+    .chapter-body { font-size: 1rem; line-height: 1.75; }
+    .chapter-body p:first-of-type::first-letter { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <img src="banner.jpg" alt="Reverend Insanity">
+</div>
+
+<header class="header">
+  <h1>Reverend Insanity</h1>
+  <div class="subtitle">Fan Continuation — Chapter 2335+</div>
+</header>
+
+<main class="layout">
+  <aside class="sidebar">
+    <h2>Chapters</h2>
+    <ul class="chapter-list" id="chapterList"></ul>
+  </aside>
+
+  <section class="reader" id="reader">
+    <div class="chapter-label" id="chapterLabel"></div>
+    <h2 class="chapter-title" id="chapterTitle"></h2>
+    <div class="chapter-body" id="chapterBody"></div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn prev" id="prevBtn">&larr; Previous Chapter</button>
+      <button class="nav-btn next" id="nextBtn">Next Chapter &rarr;</button>
+    </div>
+  </section>
+</main>
+
+<script>
+  /* ============================================================
+   * HOW TO ADD A NEW CHAPTER
+   * ============================================================
+   *
+   * Each chapter is a plain JavaScript object with three fields:
+   *
+   *   {
+   *     number: 2336,              // integer — shown as "Chapter 2336"
+   *     title:  "Chapter Title",   // string  — shown next to the number
+   *     body:   `Full chapter text...`  // template literal (backticks)
+   *   }
+   *
+   * Steps:
+   *   1. Copy the object block for Chapter 2335 below.
+   *   2. Paste it into the `chapters` array, AFTER the existing entry
+   *      (keep chapters in ascending order — the list renders them
+   *      in array order).
+   *   3. Update `number` and `title`.
+   *   4. Paste the chapter text between the backticks in `body`.
+   *
+   * Formatting rules for `body`:
+   *   - Use a TEMPLATE LITERAL (backticks `...`), NOT regular quotes.
+   *     This lets the text span multiple lines without escaping.
+   *   - Separate paragraphs with a BLANK LINE (one empty line between
+   *     paragraphs). The renderer splits on blank lines and wraps each
+   *     chunk in a <p> tag automatically — do NOT add <p> tags yourself.
+   *   - Do NOT use raw backticks inside the text. If the chapter needs
+   *     one, escape it as \` or swap for a different character.
+   *   - Plain quotes ("..." and '...') are fine and need no escaping.
+   *   - HTML in the text is rendered as literal text (safe by default),
+   *     so "<sigh>" will show as <sigh>, not as a tag.
+   *
+   * The UI updates automatically when you add entries — no other code
+   * changes are needed. The sidebar index, prev/next buttons, and
+   * active-chapter highlighting all derive from this array.
+   *
+   * Example of adding two chapters:
+   *
+   *   const chapters = [
+   *     { number: 2335, title: "A Triangle Contracts", body: `...` },
+   *     { number: 2336, title: "The Ledger Opens",     body: `...` },
+   *     { number: 2337, title: "One Degree Missing",   body: `...` }
+   *   ];
+   *
+   * ============================================================ */
+
+  const chapters = [
+    {
+      number: 2335,
+      title: "A Triangle Contracts",
+      body: `The Heavenly Court hung above the Central Continent like a second sky.
+
+Beneath its outer array, three Venerables held a silence that the world was too small to contain.
+
+Star Constellation Immortal Venerable stood at the array's core. Her robes did not move. The light of the revival climbed her sleeves in slow threads, silver and older than silver, feeding the slumbering shape at her feet — a shape that was not yet a body and no longer only an idea. Primordial Origin Immortal Venerable was waking. Every dao mark in the array had been cut for that single purpose. Every rank 8 she had left alive in Heavenly Court stood in concentric rings behind her, feeding essence into the wound of existence she was patiently reopening.
+
+Fairy Zi Wei stood at her right shoulder, three breaths of distance and an inheritance's worth of trust.
+
+Duke Long stood in the outer ring. Long Hair Ancestor stood beside him. Feng Jiu Ge stood to the left with fortune gathered around him the way cloud-weight gathers before rain — patient, quiet, not yet spent. They were pillars, not fighters. The geometry of the array required them. The scale of what was happening above them did not.
+
+At the perimeter, where Heavenly Court's dao marks thinned into the common air, two demons waited.
+
+Giant Sun Immortal Venerable looked like a mountain that had decided, after long thought, to wear a man's shape. His qi did not radiate; it occupied. Wherever Giant Sun stood, time agreed with him first and consulted the world after. He was smiling — small, private, almost bored.
+
+"Old friend," he said, without turning his head. "You arrived ahead of me."
+
+Fang Yuan did not answer.
+
+He stood a single pace behind Giant Sun's right — neither deference nor threat — and watched the array. His expression was what it had been at rank 2, and at rank 5, and at the moment his aperture ruptured into a Sovereign's: nothing. A face arranged for the absence of a witness.
+
+Seven outer layers, he thought. Three inner. A core that is not a core but a sustained refusal — Star Constellation holding open a door that the world wants shut.
+
+Every breath she holds it open, Heavenly Court's advantage compounds. Every breath I delay, my Heaven Refining erodes under her divination. Every breath Giant Sun stands beside me, his luck taxes my plans.
+
+Strike first. Strike shallow. Let Giant Sun commit the deep blow. Let Heaven's Will commit to him.
+
+He had made the decision before his shadow finished falling.
+
+"There is nothing to say," Fang Yuan said. His voice was dry and level, like something read from a ledger. "If Primordial Origin wakes, we lose. If we attack separately, we lose. You will commit your Time Path at the third layer. I will refine the first."
+
+Giant Sun's smile did not move. "And the second?"
+
+"Heaven's Will."
+
+The mountain laughed — a short, cold sound, the laugh of a man reminded he is betting on a roll he already knows.
+
+"The most honest liar," Giant Sun said. "Fine. First, then."
+
+Fang Yuan raised two fingers, palm-inward, as if pinching a thread.
+
+Heaven Refining Path answered.
+
+Across a span the eye did not finish crossing, the array's outermost silver layer changed. Not shattered. Not torn. Refined. The dao marks that had spent an age being one thing agreed, under Fang Yuan's hand, to be another. The thread that had fed silver into Star Constellation's sleeve went dark — not cut, but turned inward, feeding Fang Yuan's Sovereign Immortal Aperture instead.
+
+Star Constellation's eyes opened.
+
+They had not been closed. They opened anyway — a reorientation so slight that only another Venerable would have registered it. In half a breath, the outer layer had rebuilt from her reserve. Fairy Zi Wei was holding a fraction of what Star Constellation had been holding alone.
+
+"A tax," Star Constellation said, in the tone of a matron counting beads. "Acceptable."
+
+"Your turn," Fang Yuan said.
+
+Giant Sun struck.
+
+Time Path, at Venerable tier, was a disagreement with causality, leveraged. Giant Sun disagreed with the third inner layer — disagreed that it should exist at the moment it was existing — and for three breaths the layer was a scar where there had been a shape. Primordial Origin's waking slowed.
+
+Star Constellation replied.
+
+Divination Path Sovereign turned in her palm. Fang Yuan felt her divination crawl over his next eight schemes and discard six. It was an intimate sensation. Only two remained in his head, because those two had been built to survive her reading. The other six had been built to die in front of her.
+
+Good, he thought, without warmth. She has confirmed what she can see.
+
+Giant Sun's Time Path pressed the scar again, and this time Star Constellation was not quite fast enough. Fairy Zi Wei stepped forward — a silver thread passed from Star Constellation's sleeve into hers. A rank 8 in the outer ring went silent. Three more took its place.
+
+Whoever pays first loses.
+
+Fang Yuan moved again.
+
+Heaven Refining Path reached across the array not to its silver threads but to the names of the threads. Every dao mark, at Venerable tier, has a name in the register of the world; Heaven Refining could refine the name. For three breaths, the first outer layer did not know what it was. Silver unspooled into a void that was not Giant Sun's void and not Star Constellation's and, critically, not a void Heaven's Will had a name for.
+
+The first layer collapsed.
+
+Star Constellation's eyes narrowed. The first movement of her face.
+
+"Heaven Refining," she said, tasting the words. "You are refining the register."
+
+"I am refining what is available," Fang Yuan said.
+
+"You will bring Heaven's Will down on yourself."
+
+"I will."
+
+The sky answered.
+
+What arrived was not lightning. It was a consensus — the dao marks of the world's upper layer agreeing, in chorus, that Fang Yuan should not exist at this moment. The consensus landed on his shoulders like a weight that had decided to be a weight.
+
+Heaven Refining ate half of it.
+
+The other half passed through him, wrote a wound somewhere inside his Sovereign Immortal Aperture, and did not find a target for its argument, because he did not agree that he was the kind of thing the consensus had been written for. The wound would cost two months of recovery. He had planned for three.
+
+Giant Sun was not touched.
+
+Of course. Giant Sun was, as always, lucky.
+
+"The Heavens love you," Fang Yuan said — not envy, only inventory.
+
+"The Heavens recognize me," Giant Sun corrected. "There is a difference."
+
+Giant Sun committed again at the third inner layer. This time Star Constellation had to turn her full attention to him.
+
+Fairy Zi Wei, behind her, held the outer rings alone.
+
+That was when Fang Yuan used the Luck Path Sovereign Immortal Gu.
+
+He did not announce it. He did not gesture. He made a single, measured withdrawal from Giant Sun's luck reservoir — one degree, no more. The kind of degree that would never be missed in an ordinary century, and would be missed, very specifically, in the next Venerable-tier exchange of weight.
+
+Giant Sun's expression did not change.
+
+For one breath, nothing was visible. Then a small line appeared at the corner of Giant Sun's mouth — a hesitation, the first Fang Yuan had seen on that face across the entire span of their mutual existence. It was gone before a mortal could have registered it.
+
+Fang Yuan booked it.
+
+In the center of the array, Star Constellation bled essence. It was not visible; it was audible to a Venerable — a thinning of the sound she made against the world, a lower note. She was spending Sovereign Immortal Gu essence to hold the inner layers, because Giant Sun had gotten his teeth into the third layer and had not let go, and Fang Yuan had taken a name away from the first.
+
+Primordial Origin stirred.
+
+One eye opened.
+
+Fang Yuan felt it the way a merchant feels a market shifting two provinces away — a pressure not yet a problem, but a pressure. Every dao mark within a thousand li rearranged itself, by a fraction, to face the opening eye. Heaven Refining's effective radius warped. Wisdom Path's projections hitched.
+
+A half-awake Venerable is worse than a sleeping one and better than a waking one only because I can still interfere.
+
+He looked at Giant Sun.
+
+Giant Sun was looking at him.
+
+Neither spoke. Both understood the order of the next three breaths.
+
+Giant Sun committed his peak technique — the overwriting of causality, not the mere refusal of it. The cost was an amount of essence that most Venerables could not pay in a century. Giant Sun paid it in a breath. Infallible luck translated the cost into a discount. The world made room for his preferred sequence because the world had, long ago, decided to like Giant Sun.
+
+Star Constellation shielded Primordial Origin's opening eye with her own body.
+
+The inner layer scarred deeply. The eye strained at the shield. Star Constellation took the overflow into her chest and did not fall, because she had decided she was not permitted to fall in this breath.
+
+Fang Yuan refined the second outer layer.
+
+When it collapsed, a thin silver thread that led from Star Constellation's sleeve to the revival's core stuttered.
+
+Primordial Origin's eye closed.
+
+Not by Fang Yuan's effort alone — by bookkeeping. There was no longer enough sustained refusal in the outer array to hold the door open, and the world, which had wanted the door shut, took the fractional opportunity.
+
+The eye closed. The revival did not collapse. It suspended.
+
+Star Constellation spoke one word.
+
+"Hold."
+
+Fairy Zi Wei stepped into the core. A second Sovereign Immortal Gu — subordinate, the second star of Star Constellation's system — turned in her palm. The outer array stabilized. The revival did not complete, but it did not fall.
+
+Giant Sun exhaled.
+
+The first exhale of the exchange. In Venerable terms, a concession — he had committed his peak technique and secured not a victory but a reset. The three of them had spent an immense amount for a shared conclusion: Primordial Origin would not wake in this exchange.
+
+"Withdraw," Giant Sun said.
+
+"Yes," Fang Yuan said.
+
+The yes came without hesitation. They withdrew.
+
+Behind them, Star Constellation was still standing. Fairy Zi Wei was already holding half of what Star Constellation had once held. Duke Long stood in the outer ring, exactly where he had been at the exchange's beginning, his fists bleeding dao marks from the array's structural demand. Feng Jiu Ge had not moved. Fortune had not been spent.
+
+They had not been needed.
+
+At this scale, they were not a variable.
+
+Primordial Origin Immortal Venerable, in the suspended core, was again fully asleep.
+
+Bing Sai Chuan, somewhere in the outer rings, was alive.
+
+Fang Yuan added that to the list.
+
+The world closed its upper sky around the two retreating demons, and Heaven's Will — watching, always watching — made a small revision to its own plans. One degree of luck had left the infallible, and the infallible had noticed it one breath too late.
+
+Fang Yuan walked away from the Heavenly Court's perimeter. Wound measured. Cost filed. Giant Sun had paid more than he had, for the same conclusion, and had paid one degree of luck he would not notice until the moment it mattered most.
+
+Acceptable, he thought.
+
+He closed the ledger.
+
+The sky closed with it.`
+    },
+    {
+      number: 2336,
+      title: "Star Dao, Iron Net",
+      body: `The silence after a Venerable exchange was not empty.
+
+It had texture. Weight. The world itself took time to agree on what had just happened to it, and in that interval — between the last technique landing and the first breath of normalcy — the dao marks of a thousand li settled like silt after a flood.
+
+Fang Yuan stood at the outer perimeter and watched the silt settle.
+
+He was not idle. A mind at Venerable tier did not idle; it only chose, in certain moments, to appear still. His Wisdom Path Sovereign Immortal Gu turned once, twice, three times in his aperture, cataloguing. The array above Heavenly Court was changing. Not repairing — changing. There was a difference, and the difference mattered.
+
+A repair was passive. A repair said: restore what was.
+
+What Star Constellation was doing said something else entirely.
+
+Inside the array's core, Star Constellation did not hurry.
+
+Hurry was a concession. Hurry meant the opponent had imposed a timeline, and Star Constellation had not lived ten thousand years by allowing opponents to impose timelines. She worked at the pace the array required — no faster, no slower — and the silver threads responded to her the way old tools respond to hands that have held them for centuries.
+
+"The first outer layer was refined at the name level," she said.
+
+Fairy Zi Wei stood at her right. Three paces. An inheritance's distance.
+
+"I observed," Fairy Zi Wei said.
+
+"Then you know the standard counter does not apply. You cannot rebuild a name that has been taken. You can only replace it with a new one." Star Constellation's fingers moved through the array's upper architecture with the particular economy of someone who has explained nothing for ten thousand years and explains nothing now, only acts, only shows. "We do not rebuild the outer layer. We absorb it into the second."
+
+Fairy Zi Wei was silent for a moment. Calculating.
+
+"The second layer becomes the new outer," she said. "Exposed."
+
+"And structurally distinct from what Heaven Refining has already consumed. He cannot apply the same technique twice to the same geometry." A thread shifted. A dao mark rewrote its position in the register, not erased but migrated — a technique so subtle that without Divination Path Sovereign it would have been invisible even to a peer Venerable. "The array contracts. Five layers become four. The revival slows."
+
+"By how much?"
+
+Star Constellation considered this the way a matron considers a household account — not with alarm, only with accuracy.
+
+"Three months longer," she said. "Possibly four."
+
+Fairy Zi Wei did not comment on whether this was acceptable. She understood that Star Constellation had already decided it was acceptable, had decided before she began contracting the array, and that the question of acceptability was therefore not a question at all.
+
+"The rank 8s," Fairy Zi Wei said instead.
+
+"The outer ring will lose six more before the restructure is complete. The essence demand increases when layers merge." Star Constellation did not look at the outer ring. She did not need to look at things to account for them. "They understand their function."
+
+In the outer ring, the rank 8s fed the array. Duke Long's fists had stopped bleeding; the structural demand had found another source. Long Hair Ancestor stood absolutely still, eyes closed, pouring. Feng Jiu Ge stood with his eyes open, fortune gathered around him like a weather that had decided to be patient, and fed nothing — he was not an essence pillar, not today. He was a reserve of a different kind, and Star Constellation knew the difference, and had placed him accordingly.
+
+The array contracted.
+
+Five layers became four. The revival geometry compressed inward, slower, denser, more resistant. Above it, visible only to Venerables, the dao mark architecture shifted from the open-handed shape of a door being held ajar into something closer and harder — the way a fist closes when it has decided to hold rather than reach.
+
+Star Constellation registered the completion.
+
+Fairy Zi Wei felt the weight change in her palm where the secondary Sovereign Gu rested, and adjusted. She was learning to carry what she would eventually carry alone.
+
+"He will test the new configuration," Fairy Zi Wei said.
+
+"Giant Sun will," Star Constellation said. "He tests things."
+
+"And Fang Yuan?"
+
+"Fang Yuan will watch Giant Sun test it." A pause that was not uncertainty but precision. "He tests nothing he can learn from watching someone else test first."
+
+Outside, Giant Sun moved.
+
+Giant Sun Immortal Venerable was not impatient. He was simply, constitutionally, someone who moved when moving was indicated, and at present it was indicated.
+
+The array had changed. He had observed the change. He had observed Star Constellation's hands and Fairy Zi Wei absorbing weight and the outer ring losing six rank 8s in the interval. He had formed a sufficient model of the new configuration, and a sufficient model was all he required. His luck would handle the rest.
+
+He reached forward with Time Path — not a peak technique, a probe. The way a hand tests water before committing to a crossing.
+
+The probe landed on the new outer layer.
+
+The layer held.
+
+Not merely held — redirected. The Time Path disagreement-with-causality arrived at the layer's surface and found, instead of a dao mark structure it could argue with, a structure it had already argued with, in a different form, three exchanges ago. Star Constellation had taken the specific Time Path frequency Giant Sun had used in the previous exchange and woven a counter-resonance into the new layer's fabric. The probe bounced.
+
+Giant Sun's expression did not change. His eyes sharpened by a fraction.
+
+He committed more. Not a peak technique — a second probe, heavier, with a different Time Path frequency. This one found less resistance. He pressed it further. The layer gave slightly, the way a good armor gives slightly: yielding just enough to absorb, not enough to fracture.
+
+The probe cost him seventeen units of essence.
+
+In the previous exchange, a probe of equivalent depth would have cost eleven.
+
+The number was not large. The number was not the point.
+
+The point was the ratio, and the ratio had changed against him.
+
+Giant Sun withdrew the probe. He did not look at Fang Yuan. He adjusted his model of the array, internally, with the particular adjustment that meant: the discount is smaller here. His luck was infallible in aggregate. It was not uniformly distributed. In this specific configuration, against this specific counter-resonance, the discount his infallibility provided was less than he had expected.
+
+He filed it. He moved back to the perimeter.
+
+Fang Yuan had not moved while Giant Sun probed.
+
+He had watched.
+
+Fang Yuan's model of the new array was complete before Giant Sun's probe finished landing.
+
+He had not needed the probe's result. He had built his model from Star Constellation's hands while she rebuilt, from the pattern of rank 8 deaths in the outer ring, from the compression of the array's visible geometry, from seventeen variables he had isolated and cross-referenced using Wisdom Path Sovereign before the silence had fully ended.
+
+But Giant Sun's probe had added one thing his model lacked: the counter-resonance's specific frequency.
+
+Star Constellation had counter-woven against Time Path's last frequency.
+
+She had not counter-woven against Heaven Refining.
+
+This was not an oversight. Star Constellation did not make oversights. She had chosen not to counter Heaven Refining because countering it would have required sacrificing a different layer of structural integrity — and she had calculated that the Time Path counter was worth more than the Heaven Refining counter, because Giant Sun was the more immediate pressure.
+
+She has prioritized correctly, Fang Yuan thought, without admiration, only measurement. From her position, Giant Sun is the greater threat in the short term. He commits peak techniques. I refine names. She can absorb name-refining more slowly than she can absorb peak techniques. Therefore she counters the peak techniques.
+
+But she has told me, in doing so, exactly where the name-vulnerability now sits.
+
+He did not move. Not yet. Moving now would tell her something she did not yet know, and an enemy learning something was always a cost.
+
+He instead turned the problem over once more in his Wisdom Path Sovereign, checking for the error in his model. He found none. He checked again. Still none. He set the vulnerability aside in his All-Encompassing True Meaning Gu — a stored fact, available on demand — and turned his attention to the number.
+
+Seventeen units of essence. Against eleven.
+
+The ratio had shifted by one and a half times against Giant Sun.
+
+Fang Yuan ran the attrition model.
+
+Star Constellation held the array's core with Sovereign Immortal Gu essence — the deepest reserve in the current era, accumulated over ten thousand years, difficult to estimate precisely. Giant Sun's luck discounted his essence costs by a calculable margin — slightly smaller now, given the Luck Path drain from the previous exchange. Fang Yuan's own reserves were smaller than either of theirs, but his costs were smaller too; Heaven Refining's name-refining technique was catastrophically efficient relative to any other Venerable-tier approach.
+
+The model resolved to a single, clean conclusion.
+
+This is no longer a battle of techniques. It is a battle of reserves. Whoever spends first, loses.
+
+He had known this abstractly before. He had now measured it specifically. There was a difference between knowing a principle and knowing its numerical expression, and the number mattered because numbers could be manipulated.
+
+Giant Sun's reserve was the weakest — not in absolute terms, but in effective terms. His luck discounted his costs, but that discount was now a degree smaller than yesterday. A degree that would compound over exchanges. A degree that he would not feel until the moment it made the difference between a technique that succeeded and a technique that did not.
+
+Star Constellation's reserve was the strongest. Ten thousand years of accumulation. Uncountable.
+
+But Star Constellation had three months added to the revival timeline. Three months of array maintenance. Three months of rank 8 essence debt. Three months of Heaven Refining finding the new vulnerability and slowly, quietly, taking names.
+
+Three months, at Venerable tier, was not a long time.
+
+Three months of steady expense, at this scale, was not nothing.
+
+Fang Yuan added a line to his ledger.
+
+Giant Sun: one degree down, compounding. Star Constellation: reserve superior, but timeline extended. Balance tips by the third major exchange. First to commit a second peak technique loses position.
+
+He looked at the array.
+
+Fairy Zi Wei was absorbing more weight. It was gradual — a thread here, a structural node there — the way water rises in a vessel: no single moment of transition, only the accumulated fact of a higher waterline. She was ready for more than she was carrying. Star Constellation was giving it to her in measured doses.
+
+The succession is accelerating, Fang Yuan noted. Not because Star Constellation is weakening — not yet. Because she has decided the timeline. She knows when she will step into the core. She is calibrating the transfer to complete at that moment, not before and not after.
+
+He revised his estimate of the timeline.
+
+Not three months. Two and a half.
+
+He revised his plan accordingly. Two adjustments, minor, executed in the space between two of Giant Sun's breaths. The adjustments would have been visible to Star Constellation's Divination Path Sovereign if she had been looking at him in that exact interval. She had not been. She had been adjusting the third surviving layer's counter-resonance in response to Giant Sun's probe.
+
+This was the nature of Venerable-tier awareness: total in theory, finite in practice. No Venerable could watch every variable at every moment. They watched the variables that mattered most and trusted their architecture to handle the rest.
+
+Star Constellation had trusted her architecture to handle Fang Yuan.
+
+It would handle him. For a while.
+
+Giant Sun, beside him, spoke.
+
+"The counter-weave is specific to my last frequency." His voice was conversational. "She is faster than she was last exchange."
+
+"She is more efficient," Fang Yuan said. "Faster is not the word."
+
+Giant Sun considered this. "What is the word?"
+
+"Committed." Fang Yuan paused. "She has decided the outcome she is building toward and every action now serves that outcome without deliberation. Deliberation costs time. She has removed it."
+
+A silence.
+
+"She is building toward the succession," Giant Sun said.
+
+"She has been building toward the succession since before this exchange began."
+
+Giant Sun's mouth moved in something that was not quite a smile. "You think she will die in the array."
+
+"I think she has decided to die in the array," Fang Yuan said. "There is a difference. One is a prediction. The other is a fact she has already accepted and is presently scheduling."
+
+Giant Sun looked at the array. At Star Constellation's still form at its core. At the silver light on her sleeves.
+
+"She is not afraid," he said.
+
+"No."
+
+"Does that concern you?"
+
+Fang Yuan thought about this for exactly the length of time it took to verify he had already thought about it.
+
+"A cornered enemy who is not afraid has either made peace with dying, or has a plan for surviving that they are confident in," he said. "Star Constellation has made peace with dying. This means her plan does not require her survival. Only Fairy Zi Wei's." He paused. "That concerns me more than fear would."
+
+Giant Sun was quiet for a moment.
+
+"And the new outer layer's vulnerability," he said, changing directions the way water changes around a stone. "You have found it."
+
+"Yes."
+
+"Where."
+
+Fang Yuan looked at him.
+
+"That information has a price," Fang Yuan said.
+
+Giant Sun laughed — short, private.
+
+"Name it."
+
+"The next peak technique you commit," Fang Yuan said, "you commit at the third inner layer. Not the outer. Not the second. The third. At the moment I indicate, not the moment you choose."
+
+A beat of silence.
+
+"You want to coordinate the timing," Giant Sun said.
+
+"I want to ensure that when I take the outer layer's new vulnerability, the third layer cannot redirect the array's reserve to compensate. A simultaneous pressure prevents compensation." Fang Yuan paused. "One hand holds. The other takes. This is not an unusual arrangement."
+
+"No," Giant Sun agreed. "It is not." His smile was small and real and did not extend past his eyes. "The vulnerability."
+
+"The name-register at the fourth node of the new outer layer carries a double-registration — the original node name and the new one she applied during the contraction. She did not have time to fully resolve the overlap. The overlap is a seam. A seam can be refined."
+
+Giant Sun stood with this information. He was, Fang Yuan knew, checking it against his own model of the array — his model that was built on probability and luck rather than Wisdom Path calculus, but that had, over ten thousand years, become formidably accurate by a different route.
+
+"Agreed," Giant Sun said at last.
+
+Fang Yuan noted the agreement. He noted, also, that Giant Sun had agreed more quickly than a man with truly infallible luck would have needed to. A man with truly infallible luck would have found the vulnerability himself, eventually. Giant Sun had agreed quickly because quickly was cheaper than waiting.
+
+The drain from the previous exchange was already compounding.
+
+Neither of them acknowledged this.
+
+They stood at the perimeter and watched the array breathe, and the array watched them back through Star Constellation's Divination Path eyes, and the world held the arithmetic of the standoff in its dao marks like a calculation half-finished, waiting for the next hand to set the next term.
+
+Fang Yuan did not move.
+
+He was not idle.
+
+He was only choosing, in this moment, to appear still.`
+    }
+  ];
+  
+
+  const chapterList = document.getElementById('chapterList');
+  const chapterLabel = document.getElementById('chapterLabel');
+  const chapterTitle = document.getElementById('chapterTitle');
+  const chapterBody = document.getElementById('chapterBody');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let currentIndex = 0;
+
+  function buildIndex() {
+    chapters.forEach((ch, i) => {
+      const li = document.createElement('li');
+      li.dataset.index = i;
+      li.innerHTML = `<span class="chapter-num">Chapter ${ch.number}</span>${ch.title}`;
+      li.addEventListener('click', () => loadChapter(i));
+      chapterList.appendChild(li);
+    });
+  }
+
+  function loadChapter(index) {
+    if (index < 0 || index >= chapters.length) return;
+    currentIndex = index;
+    const ch = chapters[index];
+
+    chapterLabel.textContent = `Chapter ${ch.number}`;
+    chapterTitle.textContent = ch.title;
+
+    chapterBody.innerHTML = '';
+    const paragraphs = ch.body.split(/\n\n+/);
+    paragraphs.forEach(p => {
+      const para = document.createElement('p');
+      para.textContent = p.trim();
+      chapterBody.appendChild(para);
+    });
+
+    [...chapterList.children].forEach((li, i) => {
+      li.classList.toggle('active', i === index);
+    });
+
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === chapters.length - 1;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  prevBtn.addEventListener('click', () => loadChapter(currentIndex - 1));
+  nextBtn.addEventListener('click', () => loadChapter(currentIndex + 1));
+
+  buildIndex();
+  loadChapter(0);
+</script>
+
+</body>
+</html>
