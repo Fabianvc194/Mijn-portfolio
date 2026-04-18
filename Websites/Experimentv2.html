@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabian van Caspel</title>
+    <title>The Operator's Codex</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #080604;
             --bg-card: rgba(18, 13, 7, 0.98);
+            --bg-nav: rgba(10, 8, 4, 0.97);
             --gold: #c9a84c;
             --gold-light: #e8c97a;
-            --gold-glow: rgba(201, 168, 76, 0.15);
+            --gold-glow: rgba(201, 168, 76, 0.1);
             --cream: #e8d5b0;
             --cream-dim: #9a8a6a;
-            --border: rgba(201, 168, 76, 0.22);
+            --border: rgba(201, 168, 76, 0.2);
+            --key-bg: rgba(201, 168, 76, 0.07);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* ── PARTICLE CANVAS ── */
+        /* ── CANVAS ── */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -39,67 +41,69 @@
         /* ── HERO ── */
         #hero {
             position: relative;
+            z-index: 1;
             width: 100%;
             height: 100vh;
-            min-height: 500px;
+            min-height: 480px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            z-index: 1;
             padding: 20px;
         }
 
         .hero-ornament {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             opacity: 0;
-            animation: fadeUp 1s ease forwards 0.4s;
+            animation: fadeUp 1s ease forwards 0.3s;
         }
 
-        .hero-name {
+        .hero-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2.2rem, 7vw, 5.5rem);
+            font-size: clamp(2rem, 6vw, 4.8rem);
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--gold-light);
-            text-shadow: 0 0 80px rgba(201, 168, 76, 0.35);
+            text-shadow: 0 0 80px rgba(201,168,76,0.3);
             opacity: 0;
-            animation: fadeUp 1.2s ease forwards 0.8s;
+            animation: fadeUp 1.2s ease forwards 0.7s;
         }
 
         .hero-line {
-            width: clamp(150px, 30vw, 280px);
+            width: clamp(120px, 28vw, 260px);
             height: 1px;
             background: linear-gradient(to right, transparent, var(--gold), transparent);
-            margin: 20px auto;
+            margin: 22px auto;
             opacity: 0;
-            animation: fadeIn 1s ease forwards 1.4s;
+            animation: fadeIn 1s ease forwards 1.3s;
         }
 
-        .hero-subtitle {
+        .hero-sub {
             font-family: 'Cinzel', serif;
-            font-size: clamp(0.6rem, 1.5vw, 0.85rem);
-            letter-spacing: 0.45em;
+            font-size: clamp(0.6rem, 1.4vw, 0.82rem);
+            letter-spacing: 0.42em;
             text-transform: uppercase;
             color: var(--cream-dim);
             opacity: 0;
-            animation: fadeUp 1s ease forwards 1.6s;
+            animation: fadeUp 1s ease forwards 1.5s;
         }
 
-        .hero-contact {
-            margin-top: 14px;
-            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+        .hero-count {
+            margin-top: 16px;
+            font-size: 0.9rem;
             color: var(--cream-dim);
             opacity: 0;
-            animation: fadeUp 1s ease forwards 2s;
-            letter-spacing: 0.04em;
+            animation: fadeUp 1s ease forwards 1.9s;
+            font-style: italic;
         }
+
+        .hero-count span { color: var(--gold); font-style: normal; }
 
         .scroll-cue {
             position: absolute;
-            bottom: 32px;
+            bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -107,307 +111,334 @@
             align-items: center;
             gap: 10px;
             opacity: 0;
-            animation: fadeIn 1s ease forwards 2.8s;
+            animation: fadeIn 1s ease forwards 2.6s;
             color: var(--cream-dim);
             font-family: 'Cinzel', serif;
-            font-size: 0.6rem;
-            letter-spacing: 0.35em;
+            font-size: 0.58rem;
+            letter-spacing: 0.38em;
             text-transform: uppercase;
         }
 
-        .scroll-cue-line {
-            width: 1px;
-            height: 45px;
+        .scroll-line {
+            width: 1px; height: 42px;
             background: linear-gradient(to bottom, var(--gold), transparent);
             animation: pulseDown 2s ease-in-out infinite;
         }
 
-        /* ── ORNAMENT DIVIDER ── */
-        .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 70px auto 50px;
-            max-width: 340px;
+        /* ── STICKY NAV ── */
+        #sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-nav);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
         }
 
-        .div-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold));
-        }
-        .div-line.r { background: linear-gradient(to left, transparent, var(--gold)); }
-
-        .div-diamond {
-            width: 7px; height: 7px;
-            background: var(--gold);
-            transform: rotate(45deg);
-            flex-shrink: 0;
-        }
-        .div-dot {
-            width: 3px; height: 3px;
-            background: var(--gold);
-            transform: rotate(45deg);
-            flex-shrink: 0;
-        }
-
-        /* ── SECTIONS ── */
-        section {
-            position: relative;
-            z-index: 1;
-            padding: 0 20px 80px;
-            max-width: 860px;
+        .nav-inner {
+            max-width: 1100px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .sec-label {
+        /* Search */
+        .search-wrap {
+            position: relative;
+        }
+
+        #search {
+            width: 100%;
+            background: rgba(201,168,76,0.05);
+            border: 1px solid var(--border);
+            color: var(--cream);
+            font-family: 'EB Garamond', serif;
+            font-size: 1rem;
+            padding: 9px 16px 9px 36px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #search::placeholder { color: var(--cream-dim); font-style: italic; }
+        #search:focus { border-color: rgba(201,168,76,0.5); }
+
+        .search-icon {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--cream-dim);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tab {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--cream-dim);
+            padding: 6px 14px;
             font-family: 'Cinzel', serif;
             font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            border-color: rgba(201,168,76,0.45);
+            color: var(--cream);
+        }
+
+        .tab.active {
+            background: var(--gold-glow);
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+
+        /* ── MAIN CONTENT ── */
+        #content {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
+        }
+
+        .app-section { display: none; }
+        .app-section.active { display: block; }
+
+        /* App header */
+        .app-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .app-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
             letter-spacing: 0.5em;
             text-transform: uppercase;
             color: var(--gold);
-            text-align: center;
             margin-bottom: 10px;
         }
 
-        .sec-title {
+        .app-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            font-size: clamp(1.5rem, 3.5vw, 2.4rem);
             font-weight: 600;
-            text-align: center;
             color: var(--cream);
-            margin-bottom: 40px;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
         }
 
-        /* ── ABOUT CARD ── */
-        .about-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: clamp(25px, 5vw, 45px);
-            position: relative;
-            font-size: clamp(1rem, 2vw, 1.15rem);
-            line-height: 1.85;
-            color: var(--cream-dim);
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 40px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
+        .div-line  { flex:1; height:1px; background: linear-gradient(to right, transparent, var(--gold)); }
+        .div-line.r{ background: linear-gradient(to left, transparent, var(--gold)); }
+        .div-diamond { width:7px; height:7px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
 
-        .about-card::before, .about-card::after {
-            content: '';
-            position: absolute;
-            width: 18px; height: 18px;
-            border-color: var(--gold);
-            border-style: solid;
-        }
-        .about-card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-        .about-card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-
-        .about-card strong { color: var(--gold-light); font-weight: 500; }
-
-        /* ── TIMELINE ── */
-        .timeline {
-            position: relative;
-            padding-left: clamp(30px, 6vw, 50px);
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 10px;
-            width: 1px;
-            height: calc(100% - 30px);
-            background: linear-gradient(to bottom, var(--gold) 60%, transparent);
-        }
-
-        .tl-item {
-            position: relative;
-            margin-bottom: 48px;
-        }
-
-        .tl-item::before {
-            content: '';
-            position: absolute;
-            left: clamp(-38px, -7vw, -54px);
-            top: 7px;
-            width: 9px; height: 9px;
-            background: var(--bg);
-            border: 1px solid var(--gold);
-            transform: rotate(45deg);
-        }
-
-        .tl-period {
-            font-family: 'Cinzel', serif;
-            font-size: 0.72rem;
-            letter-spacing: 0.25em;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .tl-role {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(0.95rem, 2vw, 1.1rem);
-            color: var(--cream);
-            margin-bottom: 4px;
-            letter-spacing: 0.02em;
-        }
-
-        .tl-company {
-            font-size: 1rem;
-            color: var(--cream-dim);
-            font-style: italic;
-        }
-
-        /* ── EDUCATION GRID ── */
-        .edu-grid {
+        /* Category */
+        .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
-        .edu-card {
+        .category {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 24px 20px;
+            padding: 24px;
             position: relative;
-            transition: border-color 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .edu-card::before {
+        .category::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
             width: 2px; height: 100%;
             background: linear-gradient(to bottom, var(--gold), transparent);
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
-        .edu-card:hover {
-            border-color: rgba(201, 168, 76, 0.55);
-            box-shadow: 0 0 25px rgba(201, 168, 76, 0.07);
-        }
-
-        .edu-degree {
+        .cat-title {
             font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
-            color: var(--cream);
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .edu-detail {
-            font-size: 0.85rem;
-            color: var(--cream-dim);
-            font-style: italic;
-        }
-
-        /* ── SKILLS ── */
-        .skills-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .skill-tag {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--cream-dim);
-            padding: 9px 22px;
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.18em;
+            font-size: 0.72rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            cursor: default;
-            transition: all 0.3s ease;
+            color: var(--gold);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Shortcut item */
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(201,168,76,0.06);
+            transition: background 0.2s ease;
+        }
+
+        .shortcut-item:last-child { border-bottom: none; }
+        .shortcut-item.hidden { display: none; }
+
+        .shortcut-item:hover {
+            background: rgba(201,168,76,0.03);
+            margin: 0 -10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .shortcut-keys {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+            min-width: 130px;
+            flex-wrap: wrap;
+        }
+
+        kbd {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--key-bg);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-bottom: 2px solid rgba(201,168,76,0.45);
+            color: var(--gold-light);
+            padding: 2px 7px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.05em;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        .plus {
+            color: var(--cream-dim);
+            font-size: 0.7rem;
+        }
+
+        .shortcut-desc {
+            font-size: 0.95rem;
+            color: var(--cream-dim);
+            line-height: 1.3;
+        }
+
+        /* Pro Tips */
+        .tips-section {
+            margin-top: 10px;
+        }
+
+        .tips-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 20px;
             position: relative;
             overflow: hidden;
         }
 
-        .skill-tag::before {
+        .tip-card::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background: var(--gold-glow);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            top: 0; right: 0;
+            width: 0; height: 0;
+            border-left: 16px solid transparent;
+            border-top: 16px solid rgba(201,168,76,0.25);
         }
 
-        .skill-tag:hover {
-            border-color: var(--gold);
-            color: var(--gold-light);
+        .tip-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: rgba(201,168,76,0.15);
+            margin-bottom: 8px;
         }
-        .skill-tag:hover::before { opacity: 1; }
+
+        .tip-text {
+            font-size: 0.95rem;
+            color: var(--cream-dim);
+            line-height: 1.65;
+        }
+
+        .tip-text strong { color: var(--gold-light); font-weight: 500; }
+
+        /* No results */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--cream-dim);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
 
         /* ── FOOTER ── */
         footer {
             position: relative;
             z-index: 1;
             text-align: center;
-            padding: 60px 20px 50px;
+            padding: 50px 20px 40px;
             border-top: 1px solid var(--border);
         }
 
-        .footer-name {
+        .footer-text {
             font-family: 'Cinzel', serif;
-            font-size: clamp(1.1rem, 3vw, 1.6rem);
-            color: var(--gold-light);
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px 24px;
-            font-size: 0.92rem;
-            color: var(--cream-dim);
-        }
-
-        .footer-links a {
-            color: var(--cream-dim);
-            text-decoration: none;
-            letter-spacing: 0.04em;
-            transition: color 0.3s ease;
-        }
-        .footer-links a:hover { color: var(--gold-light); }
-
-        .footer-sep { color: var(--border); }
-
-        .footer-year {
-            margin-top: 45px;
-            font-size: 0.7rem;
-            color: var(--cream-dim);
+            font-size: 0.65rem;
             letter-spacing: 0.4em;
             text-transform: uppercase;
+            color: var(--cream-dim);
             opacity: 0.4;
         }
 
-        /* ── KEYFRAMES ── */
+        /* ── ANIMATIONS ── */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(22px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from { opacity:0; transform:translateY(20px); }
+            to   { opacity:1; transform:translateY(0); }
         }
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+            from { opacity:0; }
+            to   { opacity:1; }
         }
         @keyframes pulseDown {
-            0%, 100% { opacity: 1; transform: scaleY(1); }
-            50%       { opacity: 0.35; transform: scaleY(0.85); }
-        }
-
-        /* ── SCROLL REVEAL ── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+            0%,100% { opacity:1; }
+            50%      { opacity:0.3; }
         }
     </style>
 </head>
@@ -417,193 +448,485 @@
 
 <!-- ══ HERO ══ -->
 <div id="hero">
-    <svg class="hero-ornament" width="64" height="44" viewBox="0 0 64 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="hero-ornament" width="64" height="44" viewBox="0 0 64 44" fill="none">
         <polygon points="32,2 62,22 32,42 2,22" stroke="#c9a84c" stroke-width="1" fill="none"/>
-        <polygon points="32,10 54,22 32,34 10,22" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+        <polygon points="32,10 54,22 32,34 10,22" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.5"/>
         <circle cx="32" cy="22" r="3.5" fill="#c9a84c"/>
-        <line x1="2" y1="22" x2="10" y2="22" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
-        <line x1="54" y1="22" x2="62" y2="22" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
     </svg>
 
-    <h1 class="hero-name">Fabian van Caspel</h1>
+    <h1 class="hero-title">The Operator's Codex</h1>
     <div class="hero-line"></div>
-    <p class="hero-subtitle">Technical Engineer &nbsp;·&nbsp; Business Intelligence &nbsp;·&nbsp; ICT Professional</p>
-    <p class="hero-contact">Bocholtz &nbsp;&middot;&nbsp; +31 6 18 22 52 65 &nbsp;&middot;&nbsp; Fvc1994@live.nl</p>
+    <p class="hero-sub">Master your tools &nbsp;·&nbsp; Command your workflow</p>
+    <p class="hero-count"><span>9</span> applicaties &nbsp;·&nbsp; <span>150+</span> shortcuts &nbsp;·&nbsp; <span>27</span> pro tips</p>
 
     <div class="scroll-cue">
-        <span>Scroll</span>
-        <div class="scroll-cue-line"></div>
+        <span>Begin</span>
+        <div class="scroll-line"></div>
     </div>
 </div>
 
-<!-- ══ ABOUT ══ -->
-<section id="about">
-    <div class="divider reveal">
-        <div class="div-line"></div>
-        <div class="div-dot"></div>
-        <div class="div-diamond" style="margin:0 6px;"></div>
-        <div class="div-dot"></div>
-        <div class="div-line r"></div>
+<!-- ══ STICKY NAV ══ -->
+<div id="sticky-nav">
+    <div class="nav-inner">
+        <div class="search-wrap">
+            <span class="search-icon">⌕</span>
+            <input type="text" id="search" placeholder="Zoek een shortcut of tip...">
+        </div>
+        <div class="tabs">
+            <button class="tab active" data-app="windows">Windows</button>
+            <button class="tab" data-app="outlook">Outlook</button>
+            <button class="tab" data-app="vscode">VS Code</button>
+            <button class="tab" data-app="powerbi">Power BI</button>
+            <button class="tab" data-app="chrome">Chrome</button>
+            <button class="tab" data-app="slack">Slack</button>
+            <button class="tab" data-app="powershell">PowerShell</button>
+            <button class="tab" data-app="python">Python</button>
+            <button class="tab" data-app="sql">Azure Data Studio</button>
+        </div>
     </div>
-    <p class="sec-label reveal">Over mij</p>
-    <h2 class="sec-title reveal">Profiel</h2>
-    <div class="about-card reveal">
-        Analytische ICT-professional met ruim <strong>10 jaar ervaring</strong> en een sterke focus op
-        systeemstabiliteit en data-analyse. Ik combineer een ruime ervaring in
-        <strong>24/7 technische omgevingen</strong> (VodafoneZiggo) met een achtergrond in
-        <strong>Business Intelligence</strong>. Vaardig in het gericht zoeken naar data en het
-        herkennen van patronen via het OSI-model.
-    </div>
-</section>
+</div>
 
-<!-- ══ CAREER ══ -->
-<section id="career">
-    <div class="divider reveal">
-        <div class="div-line"></div>
-        <div class="div-diamond"></div>
-        <div class="div-line r"></div>
-    </div>
-    <p class="sec-label reveal">Werkervaring</p>
-    <h2 class="sec-title reveal">Loopbaan</h2>
+<!-- ══ CONTENT ══ -->
+<div id="content">
 
-    <div class="timeline">
-        <div class="tl-item reveal">
-            <p class="tl-period">2024 — Heden</p>
-            <p class="tl-role">IT-Servicedesk &amp; BI Engineer</p>
-            <p class="tl-company">Centraal Bureau voor de Statistiek (CBS)</p>
+    <!-- ── WINDOWS ── -->
+    <div class="app-section active" id="app-windows">
+        <div class="app-header">
+            <p class="app-label">Besturingssysteem</p>
+            <h2 class="app-title">Windows</h2>
         </div>
-        <div class="tl-item reveal">
-            <p class="tl-period">2021 — 2024</p>
-            <p class="tl-role">Technical Engineer &middot; 24/7 Operations</p>
-            <p class="tl-company">VodafoneZiggo</p>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Systeem</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Scherm vergrendelen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>I</kbd></div><span class="shortcut-desc">Instellingen openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>X</kbd></div><span class="shortcut-desc">Snelmenu (Power menu)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Esc</kbd></div><span class="shortcut-desc">Taakbeheer direct openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Pause</kbd></div><span class="shortcut-desc">Systeemeigenschappen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Navigatie & Vensters</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Bureau tonen/verbergen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Verkenner openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Taakweergave</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc">Venster naar rechts snappen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>↑</kbd></div><span class="shortcut-desc">Venster maximaliseren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Wisselen tussen apps</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Nieuw virtueel bureaublad</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Productiviteit</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></div><span class="shortcut-desc">Klembordgeschiedenis</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Screenshot (uitknipsel)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>.</kbd></div><span class="shortcut-desc">Emoji-picker</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc">Spraaktypefunctie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F2</kbd></div><span class="shortcut-desc">Bestandsnaam wijzigen</span></div>
+            </div>
         </div>
-        <div class="tl-item reveal">
-            <p class="tl-period">2020 — 2021</p>
-            <p class="tl-role">ICT-Consultant</p>
-            <p class="tl-company">Data4 &amp; Teqoia</p>
-        </div>
-        <div class="tl-item reveal">
-            <p class="tl-period">2015 — 2016</p>
-            <p class="tl-role">Incidentbeheerder</p>
-            <p class="tl-company">APG</p>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Win + V</strong> is de meest onderschatte shortcut. Kopieer meerdere dingen achter elkaar en plak precies wat je nodig hebt — geen heen-en-weer schakelen meer.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>virtuele bureaubladen</strong> (Win + Ctrl + D) per project. Werk, communicatie en referenties elk op een eigen bureaublad.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>God Mode:</strong> maak een map aan met de naam <strong>GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</strong> voor toegang tot alle instellingen op één plek.</p></div>
+            </div>
         </div>
     </div>
-</section>
 
-<!-- ══ EDUCATION ══ -->
-<section id="education">
-    <div class="divider reveal">
-        <div class="div-line"></div>
-        <div class="div-diamond"></div>
-        <div class="div-line r"></div>
+    <!-- ── OUTLOOK ── -->
+    <div class="app-section" id="app-outlook">
+        <div class="app-header">
+            <p class="app-label">E-mail & Agenda</p>
+            <h2 class="app-title">Outlook</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">E-mail</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>N</kbd></div><span class="shortcut-desc">Nieuw bericht</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Beantwoorden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Allen beantwoorden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Doorsturen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Verzenden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Nieuw bericht (overal)</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Navigatie</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>1</kbd></div><span class="shortcut-desc">Mail</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>2</kbd></div><span class="shortcut-desc">Agenda</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>3</kbd></div><span class="shortcut-desc">Contactpersonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>4</kbd></div><span class="shortcut-desc">Taken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F9</kbd></div><span class="shortcut-desc">Verzenden & ontvangen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Zoeken in mailbox</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Agenda & Taken</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>A</kbd></div><span class="shortcut-desc">Nieuwe afspraak</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Q</kbd></div><span class="shortcut-desc">Nieuw vergaderverzoek</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Nieuwe taak</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Opslaan & sluiten (item)</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>Snelle stappen</strong> (Start → Snelle stappen beheren) om repetitieve acties zoals "Verplaats naar project X en markeer gelezen" met één klik uit te voeren.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Stel <strong>regels</strong> in (Start → Regels) om binnenkomende mail automatisch te sorteren. Combineer met categorieën voor een zero-inbox workflow.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Type <strong>@naam</strong> in de hoofdtekst van een uitnodiging om een contactpersoon automatisch toe te voegen aan de vergadering.</p></div>
+            </div>
+        </div>
     </div>
-    <p class="sec-label reveal">Opleiding</p>
-    <h2 class="sec-title reveal">Educatie</h2>
 
-    <div class="edu-grid">
-        <div class="edu-card reveal">
-            <p class="edu-degree">HBO ICT — Business Intelligence</p>
-            <p class="edu-detail">120 / 240 ECTS</p>
+    <!-- ── VS CODE ── -->
+    <div class="app-section" id="app-vscode">
+        <div class="app-header">
+            <p class="app-label">Code Editor</p>
+            <h2 class="app-title">VS Code</h2>
         </div>
-        <div class="edu-card reveal">
-            <p class="edu-degree">MBO Niveau 4 ICT-Beheerder</p>
-            <p class="edu-detail">Diploma</p>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Command Palette</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Command palette</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Bestand snel openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>`</kbd></div><span class="shortcut-desc">Terminal openen/sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>B</kbd></div><span class="shortcut-desc">Zijbalk tonen/verbergen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Bewerken</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Regel commentaar aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Regel omhoog/omlaag verplaatsen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>↓</kbd></div><span class="shortcut-desc">Regel dupliceren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Volgende overeenkomst selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Alle overeenkomsten selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Huidige regel verwijderen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Navigatie & View</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F12</kbd></div><span class="shortcut-desc">Ga naar definitie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Ga naar regelnummer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Wisselen tussen open bestanden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Verkenner</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken in bestanden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Source control (Git)</span></div>
+            </div>
         </div>
-        <div class="edu-card reveal">
-            <p class="edu-degree">MBO Niveau 3 Medewerker Beheer ICT</p>
-            <p class="edu-detail">Diploma</p>
-        </div>
-        <div class="edu-card reveal">
-            <p class="edu-degree">Microsoft Office Specialist</p>
-            <p class="edu-detail">MOS Gecertificeerd</p>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Multi-cursor:</strong> Houd <strong>Alt</strong> ingedrukt en klik op meerdere plaatsen om tegelijk op meerdere regels te typen. Enorm tijdbesparend bij repetitieve edits.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>Ctrl + Shift + P → "Format Document"</strong> (of Alt + Shift + F) om code automatisch op te maken. Stel Prettier of Black in als default formatter.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Emmet</strong> is ingebouwd: type <strong>div.container>ul>li*5</strong> en druk Tab om direct HTML-structuur te genereren.</p></div>
+            </div>
         </div>
     </div>
-</section>
 
-<!-- ══ SKILLS ══ -->
-<section id="skills">
-    <div class="divider reveal">
-        <div class="div-line"></div>
-        <div class="div-dot"></div>
-        <div class="div-diamond" style="margin:0 6px;"></div>
-        <div class="div-dot"></div>
-        <div class="div-line r"></div>
+    <!-- ── POWER BI ── -->
+    <div class="app-section" id="app-powerbi">
+        <div class="app-header">
+            <p class="app-label">Data Visualisatie</p>
+            <h2 class="app-title">Power BI</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Canvas & Visuals</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></div><span class="shortcut-desc">Ongedaan maken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc">Opnieuw uitvoeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd> / <kbd>V</kbd></div><span class="shortcut-desc">Visual kopiëren/plakken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>A</kbd></div><span class="shortcut-desc">Alle visuals selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Visuals groeperen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Delete</kbd></div><span class="shortcut-desc">Geselecteerde visual verwijderen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">DAX Editor</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Formule bevestigen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Nieuwe regel in formule</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">Autocomplete suggesties</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Escape</kbd></div><span class="shortcut-desc">Formule annuleren</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Algemeen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Data vernieuwen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Opslaan</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Query formatteren (Power Query)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>F4</kbd></div><span class="shortcut-desc">Applicatie sluiten</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>DAX Studio</strong> (gratis) naast Power BI om complexe DAX-queries te testen en te optimaliseren buiten het rapport om.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>Bookmark + Button</strong> combinatie: maak meerdere weergaven van hetzelfde rapport en navigeer er naartoe met knoppen — geeft een app-gevoel aan je dashboard.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Druk <strong>Ctrl</strong> ingedrukt bij het klikken op meerdere visuals om ze samen te selecteren, zodat je ze tegelijk kunt uitlijnen via het Formaat-paneel.</p></div>
+            </div>
+        </div>
     </div>
-    <p class="sec-label reveal">Vaardigheden &amp; Interesses</p>
-    <h2 class="sec-title reveal">Expertise</h2>
 
-    <div class="skills-wrap reveal">
-        <span class="skill-tag">Cybersecurity · SOC</span>
-        <span class="skill-tag">Power BI</span>
-        <span class="skill-tag">MySQL</span>
-        <span class="skill-tag">Netwerkinfrastructuur</span>
-        <span class="skill-tag">CCNA</span>
-        <span class="skill-tag">OSI-model</span>
-        <span class="skill-tag">Data-analyse</span>
-        <span class="skill-tag">Systeemoptimalisatie</span>
-        <span class="skill-tag">24/7 Operations</span>
-        <span class="skill-tag">Incident Management</span>
+    <!-- ── CHROME ── -->
+    <div class="app-section" id="app-chrome">
+        <div class="app-header">
+            <p class="app-label">Webbrowser</p>
+            <h2 class="app-title">Chrome</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Tabbladen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>T</kbd></div><span class="shortcut-desc">Nieuw tabblad</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>W</kbd></div><span class="shortcut-desc">Tabblad sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>T</kbd></div><span class="shortcut-desc">Gesloten tabblad heropenen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Volgend tabblad</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>1–8</kbd></div><span class="shortcut-desc">Naar tabblad N gaan</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>9</kbd></div><span class="shortcut-desc">Laatste tabblad</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Navigatie</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Adresbalk selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>←</kbd></div><span class="shortcut-desc">Terug</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Hard herladen (cache leeg)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Bladwijzer toevoegen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken op pagina</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Developer & Overig</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F12</kbd></div><span class="shortcut-desc">DevTools openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></div><span class="shortcut-desc">Incognito-venster</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Del</kbd></div><span class="shortcut-desc">Browsegegevens wissen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>U</kbd></div><span class="shortcut-desc">Paginabron bekijken</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Type in de adresbalk een <strong>zoekopdracht gevolgd op Tab</strong> als een site als zoekmachine is geregistreerd (bijv. "github.com Tab zoekterm").</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>Tab-groepen</strong> (rechts klik op tabblad → Aan groep toevoegen) om werkprojecten netjes te scheiden.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">In de DevTools: druk <strong>Ctrl + Shift + M</strong> voor de mobiele simulator — handig om layouts snel te testen op verschillende schermformaten.</p></div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <!-- ── SLACK ── -->
+    <div class="app-section" id="app-slack">
+        <div class="app-header">
+            <p class="app-label">Communicatie</p>
+            <h2 class="app-title">Slack</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Navigatie</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Snelle kanaalwisselaar</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Direct messages openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Kanalen navigeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Ongelezen kanalen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Berichten</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>↑</kbd></div><span class="shortcut-desc">Laatste bericht bewerken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Bericht verzenden (multiline)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Nieuwe regel in bericht</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>:</kbd><span class="plus">+</span><kbd>naam</kbd></div><span class="shortcut-desc">Emoji autocomplete</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/remind</kbd></div><span class="shortcut-desc">Herinnering instellen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Weergave</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Activiteit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Alle sneltoetsen tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc">Status instellen</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>/remind</strong> om jezelf herinneringen te sturen. Bijv. <strong>/remind me om 16:00 standup-notities versturen</strong> — Slackbot doet de rest.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Reageer met <strong>+ emoji</strong> op een bericht om een reactie toe te voegen. Gebruik 👀 voor "ik kijk ernaar" en ✅ voor "gedaan" — minder ruis dan een apart bericht.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Maak gebruik van <strong>threads</strong> (Beantwoorden) voor discussies zodat het hoofdkanaal overzichtelijk blijft. Vink "Stuur ook naar kanaal" uit voor interne discussies.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── POWERSHELL ── -->
+    <div class="app-section" id="app-powershell">
+        <div class="app-header">
+            <p class="app-label">Automatisering & Scripting</p>
+            <h2 class="app-title">PowerShell</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Terminal Shortcuts</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Tab</kbd></div><span class="shortcut-desc">Autocomplete commando/pad</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">Suggesties tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Achterwaarts zoeken in geschiedenis</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>↑ / ↓</kbd></div><span class="shortcut-desc">Door geschiedenis bladeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F7</kbd></div><span class="shortcut-desc">Geschiedenis popup (CMD)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc">Lopend commando afbreken</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Essentiële Cmdlets</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Help</kbd></div><span class="shortcut-desc">Help voor een cmdlet</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Command</kbd></div><span class="shortcut-desc">Beschikbare cmdlets zoeken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Alias</kbd></div><span class="shortcut-desc">Alle aliassen tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Member</kbd></div><span class="shortcut-desc">Properties & methods van object</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Select-Object</kbd></div><span class="shortcut-desc">Eigenschappen filteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Where-Object</kbd></div><span class="shortcut-desc">Objecten filteren op conditie</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Handig in de Praktijk</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>$PSVersionTable</kbd></div><span class="shortcut-desc">PS versie-info tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>|</kbd> <kbd>Out-GridView</kbd></div><span class="shortcut-desc">Output in GUI-venster</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>|</kbd> <kbd>Clip</kbd></div><span class="shortcut-desc">Output naar klembord</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Start-Process</kbd></div><span class="shortcut-desc">App/proces starten</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>$PROFILE</strong> om je PowerShell-profiel te openen en functies, aliassen en stijl-instellingen (Oh My Posh) permanent te maken.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Voeg <strong>-WhatIf</strong> toe aan destructieve cmdlets (Remove-Item, Stop-Service) om te zien wat er zou gebeuren zonder het daadwerkelijk uit te voeren.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Pipeline power:</strong> <code>Get-Process | Sort-Object CPU -Desc | Select-Object -First 10 | Out-GridView</code> — top 10 CPU-processen in een GUI in één regel.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PYTHON ── -->
+    <div class="app-section" id="app-python">
+        <div class="app-header">
+            <p class="app-label">Programmeertaal</p>
+            <h2 class="app-title">Python</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Debuggen (VS Code)</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Script uitvoeren (debug)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F5</kbd></div><span class="shortcut-desc">Script uitvoeren (zonder debug)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F9</kbd></div><span class="shortcut-desc">Breakpoint aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F10</kbd></div><span class="shortcut-desc">Stap over (step over)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F11</kbd></div><span class="shortcut-desc">Stap in (step into)</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Ingebouwde Functies</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dir(obj)</kbd></div><span class="shortcut-desc">Alle methoden van object tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>type(obj)</kbd></div><span class="shortcut-desc">Type van object opvragen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>help(obj)</kbd></div><span class="shortcut-desc">Documentatie tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>vars(obj)</kbd></div><span class="shortcut-desc">Attributen als dict tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>enumerate()</kbd></div><span class="shortcut-desc">Index + waarde in loop</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>zip()</kbd></div><span class="shortcut-desc">Twee lijsten combineren</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Handige Patronen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>[x for x in l]</kbd></div><span class="shortcut-desc">List comprehension</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>{k:v for ...}</kbd></div><span class="shortcut-desc">Dict comprehension</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>f"tekst {var}"</kbd></div><span class="shortcut-desc">F-string formatting</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>a if cond else b</kbd></div><span class="shortcut-desc">Ternary operator</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>*args **kwargs</kbd></div><span class="shortcut-desc">Variabele argumenten</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik altijd een <strong>virtuele omgeving</strong>: <code>python -m venv .venv</code> en activeer met <code>.venv\Scripts\activate</code>. Houdt projectafhankelijkheden gescheiden.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>print() debuggen:</strong> gebruik <code>print(f"{variabele=}")</code> (Python 3.8+) om automatisch de naam én waarde te tonen — handig bij snelle debugging.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Installeer <strong>Rich</strong> (<code>pip install rich</code>) voor mooie terminal-output met kleuren, tabellen en progress bars — ideaal voor scripts die je regelmatig uitvoert.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── AZURE DATA STUDIO ── -->
+    <div class="app-section" id="app-sql">
+        <div class="app-header">
+            <p class="app-label">Database & Query</p>
+            <h2 class="app-title">Azure Data Studio · SQL</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="categories">
+            <div class="category">
+                <h3 class="cat-title">Editor Shortcuts</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Query uitvoeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Geselecteerde query uitvoeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Regel commentaar aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc">Blok commentaar toevoegen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">IntelliSense activeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Query formatteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Command palette</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Essentiële SQL Snippets</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SELECT * FROM</kbd></div><span class="shortcut-desc">Alle kolommen selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>TOP 100</kbd></div><span class="shortcut-desc">Resultaat beperken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>WHERE 1=1</kbd></div><span class="shortcut-desc">Dynamische WHERE-basis</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>NOLOCK</kbd></div><span class="shortcut-desc">Lees zonder vergrendeling</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ISNULL(col,0)</kbd></div><span class="shortcut-desc">NULL vervangen door waarde</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CAST / CONVERT</kbd></div><span class="shortcut-desc">Datatype omzetten</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Analyse Queries</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>GROUP BY</kbd></div><span class="shortcut-desc">Aggregatie per categorie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>HAVING</kbd></div><span class="shortcut-desc">Filter na GROUP BY</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>PARTITION BY</kbd></div><span class="shortcut-desc">Window functies</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ROW_NUMBER()</kbd></div><span class="shortcut-desc">Rangnummer per partitie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CTE (WITH ...)</kbd></div><span class="shortcut-desc">Herbruikbare subquery</span></div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Pro Tips</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>CTE's (Common Table Expressions)</strong> in plaats van geneste subqueries. Ze zijn leesbaarder, herbruikbaar binnen dezelfde query, en makkelijker te debuggen.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Voeg altijd <strong>TOP 100</strong> of <strong>WHERE ROWNUM &lt; 100</strong> toe bij verkenning van onbekende tabellen — voorkomt dat je per ongeluk miljoenen rijen ophaalt.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Gebruik de <strong>uitvoeringsplan-knop</strong> (Ctrl + M) om te zien welke onderdelen van je query het zwaarst zijn. Zoek naar "Table Scan" — dat is vaak de bottleneck.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="no-results">Geen shortcuts gevonden voor "<span id="search-term"></span>"</div>
+</div>
 
 <!-- ══ FOOTER ══ -->
 <footer>
-    <div class="divider" style="margin-top:0; margin-bottom:40px;">
-        <div class="div-line"></div>
-        <div class="div-dot"></div>
-        <div class="div-diamond" style="margin:0 6px;"></div>
-        <div class="div-dot"></div>
-        <div class="div-line r"></div>
-    </div>
-
-    <p class="footer-name">Fabian van Caspel</p>
-    <div class="footer-links">
-        <a href="tel:+31618225265">+31 6 18 22 52 65</a>
-        <span class="footer-sep">&middot;</span>
-        <a href="mailto:fvc1994@live.nl">Fvc1994@live.nl</a>
-        <span class="footer-sep">&middot;</span>
-        <span>Bocholtz, Nederland</span>
-    </div>
-    <p class="footer-year">MMXXVI</p>
+    <p class="footer-text">The Operator's Codex &nbsp;·&nbsp; MMXXVI &nbsp;·&nbsp; Fabian van Caspel</p>
 </footer>
 
 <script>
-    /* ── Floating gold particle background ── */
+    /* ── Particle canvas ── */
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     resize();
     window.addEventListener('resize', resize);
 
     class Particle {
         constructor() { this.init(true); }
-
-        init(randomY = false) {
+        init(rnd = false) {
             this.x = Math.random() * canvas.width;
-            this.y = randomY ? Math.random() * canvas.height : canvas.height + 5;
-            this.r = Math.random() * 1.2 + 0.3;
-            this.vx = (Math.random() - 0.5) * 0.25;
-            this.vy = -(Math.random() * 0.4 + 0.1);
-            this.alpha = Math.random() * 0.5 + 0.05;
+            this.y = rnd ? Math.random() * canvas.height : canvas.height + 5;
+            this.r = Math.random() * 1.1 + 0.3;
+            this.vx = (Math.random() - 0.5) * 0.2;
+            this.vy = -(Math.random() * 0.35 + 0.08);
+            this.alpha = Math.random() * 0.45 + 0.05;
             this.life = 0;
             this.maxLife = Math.random() * 400 + 200;
         }
-
         update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.life++;
+            this.x += this.vx; this.y += this.vy; this.life++;
             if (this.life > this.maxLife || this.y < -10) this.init();
         }
-
         draw() {
-            const fade = 1 - this.life / this.maxLife;
             ctx.save();
-            ctx.globalAlpha = this.alpha * fade;
+            ctx.globalAlpha = this.alpha * (1 - this.life / this.maxLife);
             ctx.fillStyle = '#c9a84c';
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
@@ -612,25 +935,85 @@
         }
     }
 
-    const particles = Array.from({ length: 70 }, () => new Particle());
-
+    const particles = Array.from({ length: 60 }, () => new Particle());
     (function loop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(loop);
     })();
 
-    /* ── Scroll reveal (Intersection Observer) ── */
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
+    /* ── Tab switching ── */
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.app-section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('app-' + tab.dataset.app).classList.add('active');
+            document.getElementById('search').value = '';
+            clearSearch();
+        });
+    });
+
+    /* ── Search filter ── */
+    const searchInput = document.getElementById('search');
+    const noResults = document.getElementById('no-results');
+    const searchTerm = document.getElementById('search-term');
+
+    function clearSearch() {
+        document.querySelectorAll('.shortcut-item, .tip-card, .category').forEach(el => {
+            el.classList.remove('hidden');
+            el.style.display = '';
+        });
+        noResults.style.display = 'none';
+    }
+
+    searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+
+        if (!q) { clearSearch(); return; }
+
+        searchTerm.textContent = q;
+        let anyVisible = false;
+
+        /* Search across ALL sections, reveal matching one */
+        document.querySelectorAll('.app-section').forEach(section => {
+            const items = section.querySelectorAll('.shortcut-item');
+            const tips  = section.querySelectorAll('.tip-card');
+            let sectionMatch = false;
+
+            items.forEach(item => {
+                const match = item.textContent.toLowerCase().includes(q);
+                item.style.display = match ? '' : 'none';
+                if (match) sectionMatch = true;
+            });
+
+            tips.forEach(tip => {
+                const match = tip.textContent.toLowerCase().includes(q);
+                tip.style.display = match ? '' : 'none';
+                if (match) sectionMatch = true;
+            });
+
+            /* Show/hide empty categories */
+            section.querySelectorAll('.category').forEach(cat => {
+                const visible = [...cat.querySelectorAll('.shortcut-item')].some(i => i.style.display !== 'none');
+                cat.style.display = visible ? '' : 'none';
+            });
+
+            if (sectionMatch) {
+                sections.forEach(s => s.classList.remove('active'));
+                tabs.forEach(t => t.classList.remove('active'));
+                section.classList.add('active');
+                const id = section.id.replace('app-', '');
+                document.querySelector(`.tab[data-app="${id}"]`)?.classList.add('active');
+                anyVisible = true;
             }
         });
-    }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        noResults.style.display = anyVisible ? 'none' : 'block';
+    });
 </script>
 </body>
 </html>
