@@ -345,37 +345,6 @@ const TOPICS = {
       {q:{en:"CI stands for:",nl:"CI staat voor:"},options:{en:["Cloud Infra","Continuous Integration","Core Interface","Central Index"],nl:["Cloud Infra","Continue Integratie","Kerninterface","Centrale Index"]},answer:1},
     ]
   },
-  "Vibe Coding":{
-    icon:"V", color:"#7c3aed", bg:"#ede9fe", darkColor:"#a78bfa", darkBg:"#2e1065",
-    desc:{en:"AI-Assisted Development",nl:"AI-Ondersteunde Ontwikkeling"},
-    cheatsheet:[
-      {title:{en:"Context is King",nl:"Context is Alles"},content:{en:"Always give the LLM full context: existing code, error messages, constraints, desired output. A bad prompt with great context beats a great prompt with no context.",nl:"Geef de LLM altijd volledige context: bestaande code, foutmeldingen, beperkingen, gewenste output. Een slechte prompt met goede context wint het van een goede prompt zonder context."}},
-      {title:{en:"Role + Task + Format",nl:"Rol + Taak + Formaat"},content:{en:"Structure every prompt: 'You are [ROLE]. [TASK]. Output: [FORMAT].' Example: 'You are a senior Python dev. Refactor this function. Return code only, no explanation.'",nl:"Structureer elke prompt: 'Je bent [ROL]. [TAAK]. Output: [FORMAAT].' Bijv: 'Je bent senior Python dev. Refactor deze functie. Geef alleen code, geen uitleg.'"}},
-      {title:{en:"Anti-Hallucination Rails",nl:"Anti-Hallucinatie"},content:{en:"Add to every prompt: 'If you are unsure or information is missing, ask or state your assumption. Never invent function names, APIs, or facts.'",nl:"Voeg toe aan elke prompt: 'Als je het niet zeker weet of informatie ontbreekt, vraag het of geef je aanname aan. Verzin nooit functienamen, API's of feiten.'"}},
-      {title:{en:"Iterative Refinement",nl:"Iteratief Verfijnen"},content:{en:"Vibe coding is a loop. After each output: run it, check it, give targeted feedback. 'This fails with [ERROR]. Current code: [CODE]. Expected [X], got [Y]. Only fix [PART].'",nl:"Vibe coding is een lus. Na elke output: run, check, geef gerichte feedback. 'Dit faalt met [FOUT]. Huidige code: [CODE]. Verwachtte [X], kreeg [Y]. Pas alleen [DEEL] aan.'"}},
-      {title:{en:"Prompt Templates",nl:"Prompt Templates"},content:{en:"Build reusable templates with [PLACEHOLDERS]. Store them in StudyHub. Fill in variables instead of writing from scratch every time.",nl:"Bouw herbruikbare templates met [INVULVAKKEN]. Sla ze op in StudyHub. Vul alleen variabelen in in plaats van elke keer opnieuw te schrijven."}},
-    ],
-    flashcards:[
-      {q:{en:"What is 'vibe coding'?",nl:"Wat is 'vibe coding'?"},a:{en:"Iterative AI-assisted development: describe intent, review output, refine through conversation.",nl:"Iteratieve AI-ondersteunde ontwikkeling: beschrijf intentie, bekijk output, verfijn via gesprek."}},
-      {q:{en:"What is the context window?",nl:"Wat is het context venster?"},a:{en:"The maximum amount of text (tokens) an LLM can process in one request.",nl:"De maximale hoeveelheid tekst (tokens) die een LLM in één verzoek kan verwerken."}},
-      {q:{en:"What prevents AI hallucination?",nl:"Wat voorkomt AI-hallucinatie?"},a:{en:"Anti-hallucination rails: explicitly instruct the AI to ask or state assumptions when unsure, not invent answers.",nl:"Anti-hallucinatie instructies: instrueer de AI uitdrukkelijk te vragen of aannames te benoemen als het niet zeker is."}},
-      {q:{en:"What is a system prompt?",nl:"Wat is een system prompt?"},a:{en:"Initial instructions defining the AI's role, behavior, and constraints for the entire conversation.",nl:"Begininstructies die de rol, het gedrag en de beperkingen van de AI voor het hele gesprek definiëren."}},
-      {q:{en:"Best structure for a code prompt?",nl:"Beste structuur voor een code prompt?"},a:{en:"Role + Context + Task + Constraints + Output format.",nl:"Rol + Context + Taak + Beperkingen + Outputformaat."}},
-      {q:{en:"What is prompt chaining?",nl:"Wat is prompt chaining?"},a:{en:"Breaking a complex task into sequential prompts where each output feeds into the next.",nl:"Een complexe taak opdelen in opeenvolgende prompts waarbij elke output de volgende prompt voedt."}},
-    ],
-    quiz:[
-      {q:{en:"What should you always include when asking AI to fix a bug?",nl:"Wat moet je altijd meegeven als je AI vraagt een bug te fixen?"},options:{en:["Only the error message","Error + code + expected vs actual behavior","Just the code","The stack trace only"],nl:["Alleen de foutmelding","Fout + code + verwacht vs. werkelijk gedrag","Alleen de code","Alleen de stack trace"]},answer:1},
-      {q:{en:"Anti-hallucination rails instruct the AI to:",nl:"Anti-hallucinatie instructies vertellen de AI om:"},options:{en:["Generate more text","Ask or state assumptions when unsure","Use larger models","Repeat the question"],nl:["Meer tekst te genereren","Te vragen of aannames te benoemen bij twijfel","Grotere modellen te gebruiken","De vraag te herhalen"]},answer:1},
-      {q:{en:"Vibe coding is primarily:",nl:"Vibe coding is primair:"},options:{en:["Writing code manually","Getting final code in one shot","Iterative refinement with AI","Using AI only for documentation"],nl:["Code handmatig schrijven","In één keer eindcode krijgen","Iteratief verfijnen met AI","AI alleen voor documentatie gebruiken"]},answer:2},
-      {q:{en:"A system prompt defines:",nl:"Een system prompt definieert:"},options:{en:["The user's question","AI role, behavior and constraints","The database schema","API endpoints"],nl:["De vraag van de gebruiker","AI-rol, gedrag en beperkingen","Het databaseschema","API-eindpunten"]},answer:1},
-    ]
-  },
-  "Notities":{
-    icon:"N", color:"#0369a1", bg:"#e0f2fe", darkColor:"#38bdf8", darkBg:"#082f49",
-    type:"notes",
-    desc:{en:"Personal Study Notes",nl:"Persoonlijke Studienotities"},
-    cheatsheet:[], flashcards:[], quiz:[]
-  }
 };
 
 const FLOW_NODES = {
@@ -405,14 +374,6 @@ const FLOW_NODES = {
     {id:"db",label:"Data / DB",x:260,y:200,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"Persistence layer. Replicated for HA. RPO = max data loss, RTO = max downtime. CAP Theorem governs distributed DB trade-offs.",nl:"Persistentielaag. Gerepliceerd voor HA. RPO = max gegevensverlies, RTO = max uitvaltijd. CAP-stelling bepaalt afwegingen."}},
     {id:"cicd",label:"CI/CD",x:140,y:290,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"Automates build, test and deploy. CI catches bugs early. CD pushes validated changes to production automatically.",nl:"Automatiseert bouwen, testen en implementeren. CI pakt bugs vroeg op. CD rolt gevalideerde wijzigingen automatisch uit."}},
   ],
-  "Vibe Coding":[
-    {id:"intent",label:"Intent",x:20,y:30,color:"#7c3aed",bg:"#ede9fe",darkBg:"#2e1065",darkColor:"#a78bfa",desc:{en:"<b>Define your goal clearly.</b><br>Describe WHAT you want to achieve, not HOW. Be specific:<br>• What problem are you solving?<br>• What is the input / output?<br>• What are the constraints?<br><br>Vague intent = vague output. The more specific you are here, the less iteration you need later.",nl:"<b>Definieer je doel helder.</b><br>Beschrijf WAT je wilt bereiken, niet HOE. Wees specifiek:<br>• Welk probleem los je op?<br>• Wat is de input / output?<br>• Wat zijn de beperkingen?<br><br>Vage intentie = vage output. Hoe specifieker je hier bent, hoe minder iteraties je later nodig hebt."}},
-    {id:"prompt",label:"Prompt",x:165,y:30,color:"#0369a1",bg:"#e0f2fe",darkBg:"#082f49",darkColor:"#38bdf8",desc:{en:"<b>Prompt Structure:</b><br>• <b>Role:</b> 'You are a senior Python developer'<br>• <b>Context:</b> Paste relevant code, errors, constraints<br>• <b>Task:</b> Concrete and measurable<br>• <b>Output format:</b> 'Code only, no explanation'<br>• <b>Anti-hallucination:</b> 'If unsure, ask or state your assumption'<br><br>Use [PLACEHOLDERS] to build reusable templates.",nl:"<b>Prompt Structuur:</b><br>• <b>Rol:</b> 'Je bent senior Python developer'<br>• <b>Context:</b> Plak relevante code, fouten, beperkingen<br>• <b>Taak:</b> Concreet en meetbaar<br>• <b>Output formaat:</b> 'Alleen code, geen uitleg'<br>• <b>Anti-hallucinatie:</b> 'Als je het niet zeker weet, vraag het of benoem je aanname'<br><br>Gebruik [INVULVAKKEN] voor herbruikbare templates."}},
-    {id:"llm",label:"LLM",x:270,y:130,color:"#0F6E56",bg:"#E1F5EE",darkBg:"#0a1f18",darkColor:"#4ade80",desc:{en:"<b>The Language Model (Claude, GPT…)</b><br>Processes your prompt and generates output based on training patterns.<br><br><b>Key concepts:</b><br>• <b>Context window:</b> Max text the model can process at once<br>• <b>Temperature:</b> Low (0.1) = deterministic; high (1.0) = creative<br>• <b>System prompt:</b> Fixed instructions that steer behavior<br><br>Claude excels at structured tasks with XML tags.",nl:"<b>Het Taalmodel (Claude, GPT…)</b><br>Verwerkt jouw prompt en genereert output op basis van trainingspatronen.<br><br><b>Kernconcepten:</b><br>• <b>Context window:</b> Max tekst dat het model tegelijk verwerkt<br>• <b>Temperature:</b> Laag (0.1) = deterministisch; hoog (1.0) = creatief<br>• <b>System prompt:</b> Vaste instructies die het gedrag sturen<br><br>Claude is sterk in gestructureerde taken met XML-tags."}},
-    {id:"output",label:"Code Output",x:165,y:230,color:"#854F0B",bg:"#FAEEDA",darkBg:"#2a1800",darkColor:"#EF9F27",desc:{en:"<b>Review Before You Use</b><br>Never blindly trust AI output. Always check:<br>• Does the code run syntactically?<br>• Are edge cases handled?<br>• Any security risks? (SQL injection, hardcoded secrets)<br>• Does it match requirements?<br><br>If it fails, copy the exact error message for the next iteration.",nl:"<b>Review Voordat Je Gebruikt</b><br>Vertrouw AI-output nooit blindelings. Check altijd:<br>• Werkt de code syntactisch?<br>• Zijn edge cases afgehandeld?<br>• Security risico's? (SQL injection, hardcoded secrets)<br>• Matcht het met de requirements?<br><br>Als het faalt: kopieer de exacte foutmelding voor de volgende iteratie."}},
-    {id:"test",label:"Test & Review",x:20,y:230,color:"#993C1D",bg:"#FAECE7",darkBg:"#2a1008",darkColor:"#f87171",desc:{en:"<b>Test Systematically:</b><br>1. Happy path — does the normal case work?<br>2. Edge cases — empty input, null, extreme values?<br>3. Security — are inputs validated?<br><br><b>If it fails, give the LLM:</b><br>• Exact error message<br>• Current code<br>• Expected vs actual behavior<br>• Which part to fix specifically",nl:"<b>Test Systematisch:</b><br>1. Happy path — werkt het normaal geval?<br>2. Edge cases — lege input, null, extreme waarden?<br>3. Security — zijn inputs gevalideerd?<br><br><b>Als het faalt, geef de LLM:</b><br>• Exacte foutmelding<br>• Huidige code<br>• Verwacht vs. werkelijk gedrag<br>• Welk deel specifiek te fixen"}},
-    {id:"refine",label:"Iterate",x:270,y:30,color:"#3B6D11",bg:"#EAF3DE",darkBg:"#0d1f06",darkColor:"#97C459",desc:{en:"<b>Iteration is the Core Loop</b><br>Vibe coding is not one-shot — it is a loop.<br><br><b>Effective feedback template:</b><br>'This fails with [ERROR]. Current code: [CODE]. Expected [X], got [Y]. Only change [SPECIFIC PART].'<br><br>Be specific about WHAT to change. Broad requests ('make it better') lead to broad, unfocused changes.",nl:"<b>Iteratie is de Kern</b><br>Vibe coding is geen eenmalige actie — het is een lus.<br><br><b>Effectieve feedback template:</b><br>'Dit faalt met [FOUT]. Huidige code: [CODE]. Verwachtte [X], kreeg [Y]. Pas alleen [SPECIFIEK DEEL] aan.'<br><br>Wees specifiek over WAT te veranderen. Brede verzoeken leiden tot brede, ongerichte wijzigingen."}},
-  ]
 };
 
 const FLOW_EDGES = {
@@ -432,19 +393,12 @@ const FLOW_EDGES = {
     {from:"zerotrust",to:"microservices",label:"enforces"},{from:"microservices",to:"db",label:"reads/writes"},
     {from:"cicd",to:"microservices",label:"deploys"},
   ],
-  "Vibe Coding":[
-    {from:"intent",to:"prompt",label:"define"},
-    {from:"prompt",to:"llm",label:"send"},
-    {from:"llm",to:"output",label:"generates"},
-    {from:"output",to:"test",label:"check"},
-    {from:"test",to:"refine",label:"feedback"},
-    {from:"refine",to:"prompt",label:"refine"},
-  ]
 };
 
 const PROMPTS = [
+  /* ── Prompt-Engineering ── */
+  {tag:"Prompt-Engineering",title:{en:"Improve my prompt",nl:"Prompt verbeteren"},text:"Je bent expert in prompt engineering.\n\nBeoordeel eerst: is de originele prompt al specifiek genoeg?\n- JA → zeg dit en sla stap 1 over.\n- NEE → stel max 3 gerichte vragen (sla al beantwoorde over):\n  1. Wat moet de output zijn? (code, uitleg, e-mail, tabel…)\n  2. Wie gebruikt deze prompt? (jijzelf, collega, geautomatiseerde flow)\n  3. Welk platform? (Claude, Gemini, chatwidget, API)\n\nGeef daarna:\n1. Analyse (3 bullets): wat ontbreekt of is vaag\n2. Verbeterde prompt met [INVULVAKKEN] voor herbruikbaarheid\n3. Anti-hallucinatie rail toegevoegd: \"Als je het niet zeker weet, vraag het of benoem je aanname — verzin geen feiten, API's of syntax.\"\n4. Uitleg per aanpassing (max 5 bullets)\n\nOriginele prompt:\n[PLAK PROMPT HIER]"},
   /* ── Leren ── */
-  {tag:"Leren",title:{en:"Learn any topic",nl:"Onderwerp leren"},text:"Ik wil dit onderwerp leren: [ONDERWERP].\n\nLeg het uit op beginner- tot medior-niveau in duidelijke stappen.\nGebruik:\n- een korte uitleg in simpele taal,\n- de belangrijkste kernbegrippen,\n- 3 praktijkvoorbeelden,\n- 5 controlevragen,\n- een mini-oefening met antwoord,\n- veelgemaakte fouten,\n- en een compacte samenvatting.\n\nHoud rekening met mijn IT-achtergrond."},
   {tag:"Leren",title:{en:"Explain like I'm 10",nl:"Uitleggen voor beginners"},text:"Leg het volgende concept uit alsof ik 10 jaar oud ben.\n\nGebruik: simpele dagelijkse analogieën, korte zinnen, geen jargon.\nEindig met één zin die de kern samenvat.\n\nConcept: [CONCEPT]\nbijv. DNS, JWT tokens, containerization, TCP/IP, zero trust"},
   {tag:"Leren",title:{en:"Socratic tutor",nl:"Socratische tutor"},text:"Rol: Socratische Tutor\nDoel: Verken concept [ONDERWERP]\n\nWerkwijze:\n• Stel mij één voor één open vragen.\n• Geef geen directe antwoorden.\n• Laat me mijn eigen aannames bevragen.\n• Leid me naar de diepere logica.\n\nBegin: wat is volgens mij de kern van [ONDERWERP]?"},
   {tag:"Leren",title:{en:"Study plan (Claude)",nl:"Leerplan (Claude)"},text:`<context>
@@ -638,7 +592,6 @@ Numbered list of unanswered intake questions
   {tag:"IT-Werk",title:{en:"Project plan & breakdown",nl:"Projectplan"},text:"Je bent projectmanager en technisch architect.\n\nMaak een plan voor:\nProject: [BESCHRIJF PROJECT]\nTech stack: [STACK]\nbijv. React, Python, Azure\n\nGeef: projectfases + deliverables, taakverdeling, risico's, tijdsinschatting, MVP-definitie."},
 
   /* ── Prompt-Engineering ── */
-  {tag:"Prompt-Engineering",title:{en:"Improve my prompt",nl:"Prompt verbeteren"},text:"Je bent expert in prompt engineering.\n\nVerbeter de prompt zodat hij:\n- duidelijker en specifieker is,\n- de AI beter aanstuurt,\n- rol, context en output-formaat specificeert.\n\nGeef: analyse van het probleem, verbeterde versie, uitleg per aanpassing.\n\nOriginele prompt:\n[PLAK PROMPT HIER]"},
   {tag:"Prompt-Engineering",title:{en:"Master Prompt Engineer",nl:"Master Prompt Engineer"},text:`You are a Master Prompt Engineer with deep expertise in:
 - IT & servicedesk workflows: incident triage, ticket writing, ITSM/ITIL, end-user communication
 - Software & scripting: Python, PowerShell, SQL, HTML/JS, DevOps
