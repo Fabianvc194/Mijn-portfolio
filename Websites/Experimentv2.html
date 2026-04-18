@@ -3,273 +3,634 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabian van Caspel | CyberOS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Fabian van Caspel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cp-yellow: #FCEE0A;
-            --cp-black: #050505;
-            --cp-dark-gray: #111111;
-            --cp-red: #FF003C;
-            --cp-cyan: #00F0FF;
-            --text-light: #E0E0E0;
-            --matrix-green: #0F0;
+            --bg: #080604;
+            --bg-card: rgba(18, 13, 7, 0.98);
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --gold-glow: rgba(201, 168, 76, 0.15);
+            --cream: #e8d5b0;
+            --cream-dim: #9a8a6a;
+            --border: rgba(201, 168, 76, 0.22);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Share Tech Mono', monospace;
-            background-color: var(--cp-black);
-            color: var(--text-light);
+            font-family: 'EB Garamond', Georgia, serif;
+            background-color: var(--bg);
+            color: var(--cream);
             overflow-x: hidden;
-            line-height: 1.4;
         }
 
-        .screen {
+        /* ── PARTICLE CANVAS ── */
+        #particle-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background-color: var(--cp-black);
-            z-index: 10;
-            transition: opacity 0.8s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HERO ── */
+        #hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1;
             padding: 20px;
         }
 
-        .hidden { opacity: 0; pointer-events: none; }
-
-        /* --- PULSERENDE PUNTJES ANIMATIE --- */
-        .pulse-dots::after {
-            content: ' .';
-            animation: pulse 1.5s steps(3, end) infinite;
-        }
-        @keyframes pulse {
-            0%, 20% { content: ' .'; }
-            40%, 60% { content: ' . .'; }
-            80%, 100% { content: ' . . .'; }
+        .hero-ornament {
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.4s;
         }
 
-        .cp-button {
-            background-color: var(--cp-yellow);
-            color: var(--cp-black);
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.2rem;
+        .hero-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.2rem, 7vw, 5.5rem);
+            font-weight: 700;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            cursor: pointer;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            font-weight: bold;
+            color: var(--gold-light);
+            text-shadow: 0 0 80px rgba(201, 168, 76, 0.35);
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.8s;
         }
 
-        .typewriter-container {
-            font-size: 1.1rem;
-            color: var(--cp-cyan);
-            height: 1.5rem;
-            border-right: 3px solid var(--cp-red);
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            text-align: center;
+        .hero-line {
+            width: clamp(150px, 30vw, 280px);
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 20px auto;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.4s;
         }
-        @media (min-width: 768px) { .typewriter-container { font-size: 2.2rem; height: 3rem; } }
 
-        .terminal-window {
-            width: 95%;
-            max-width: 600px;
-            height: 60vh;
-            background: rgba(0, 10, 0, 0.95);
-            border: 1px solid var(--matrix-green);
-            padding: 15px;
-            font-size: 0.75rem;
-            color: var(--matrix-green);
+        .hero-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1.6s;
+        }
+
+        .hero-contact {
+            margin-top: 14px;
+            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+            color: var(--cream-dim);
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 2s;
+            letter-spacing: 0.04em;
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
-        }
-		
-		/* Standaard voor mobiel */
-		.name-big { 
-			font-size: 1.8rem; 
-		}
-
-		.info-text {
-			font-size: 0.85rem;
-		}
-
-		/* Aanpassing voor tablets en groter */
-		@media (min-width: 768px) {
-			.name-big { font-size: 3.5rem; }
-			.info-text { font-size: 1rem; }
-			.profile-content-container { padding: 50px; }
-		}
-
-		#profile-screen {
-			position: fixed; /* Gebruik fixed zodat het de hele viewport vult */
-			top: 0; left: 0;
-			width: 100%; height: 100%;
-			display: none; /* Wordt 'flex' via JS */
-			justify-content: center; /* Horizontaal centreren */
-			align-items: center;     /* Verticaal centreren */
-			background-image: linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px), 
-							  linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-			background-size: 50px 50px;
-			overflow-y: auto; /* Zorgt dat je kunt scrollen op kleine telefoons */
-			padding: 20px;
-		}
-
-		.profile-content-container {
-			width: 100%;
-			max-width: 800px; /* Breedte op PC */
-			margin: auto;     /* Extra veiligheid voor centrering */
-			border-left: 5px solid var(--cp-yellow);
-			background: rgba(10, 10, 10, 0.95);
-			padding: 30px;
-			opacity: 0;
-			transform: scale(0.95);
-			transition: all 0.5s ease-out;
-		}
-
-        .profile-content-container.active { opacity: 1; transform: scale(1); }
-
-        .name-big { font-size: 2.5rem; color: var(--cp-yellow); text-transform: uppercase; margin-bottom: 5px; }
-        @media (min-width: 768px) { .name-big { font-size: 3.5rem; } }
-
-        .section-title {
-            color: var(--cp-cyan);
-            font-size: 1.1rem;
-            margin-top: 25px;
-            border-bottom: 1px solid var(--cp-red);
-            display: inline-block;
-            padding-right: 20px;
-            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 2.8s;
+            color: var(--cream-dim);
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.35em;
             text-transform: uppercase;
         }
 
-        .info-text { font-size: 0.95rem; color: #ccc; margin-bottom: 10px; }
+        .scroll-cue-line {
+            width: 1px;
+            height: 45px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: pulseDown 2s ease-in-out infinite;
+        }
+
+        /* ── ORNAMENT DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 70px auto 50px;
+            max-width: 340px;
+        }
+
+        .div-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold));
+        }
+        .div-line.r { background: linear-gradient(to left, transparent, var(--gold)); }
+
+        .div-diamond {
+            width: 7px; height: 7px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+        }
+        .div-dot {
+            width: 3px; height: 3px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 0 20px 80px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .sec-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sec-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            font-weight: 600;
+            text-align: center;
+            color: var(--cream);
+            margin-bottom: 40px;
+            letter-spacing: 0.06em;
+        }
+
+        /* ── ABOUT CARD ── */
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: clamp(25px, 5vw, 45px);
+            position: relative;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            line-height: 1.85;
+            color: var(--cream-dim);
+        }
+
+        .about-card::before, .about-card::after {
+            content: '';
+            position: absolute;
+            width: 18px; height: 18px;
+            border-color: var(--gold);
+            border-style: solid;
+        }
+        .about-card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .about-card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        .about-card strong { color: var(--gold-light); font-weight: 500; }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: clamp(30px, 6vw, 50px);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 10px;
+            width: 1px;
+            height: calc(100% - 30px);
+            background: linear-gradient(to bottom, var(--gold) 60%, transparent);
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: clamp(-38px, -7vw, -54px);
+            top: 7px;
+            width: 9px; height: 9px;
+            background: var(--bg);
+            border: 1px solid var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .tl-period {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .tl-role {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--cream);
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .tl-company {
+            font-size: 1rem;
+            color: var(--cream-dim);
+            font-style: italic;
+        }
+
+        /* ── EDUCATION GRID ── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .edu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px 20px;
+            position: relative;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .edu-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            opacity: 0.6;
+        }
+
+        .edu-card:hover {
+            border-color: rgba(201, 168, 76, 0.55);
+            box-shadow: 0 0 25px rgba(201, 168, 76, 0.07);
+        }
+
+        .edu-degree {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--cream);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .edu-detail {
+            font-size: 0.85rem;
+            color: var(--cream-dim);
+            font-style: italic;
+        }
+
+        /* ── SKILLS ── */
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--cream-dim);
+            padding: 9px 22px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: default;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold-glow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+        .skill-tag:hover::before { opacity: 1; }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 20px 50px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            color: var(--gold-light);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px 24px;
+            font-size: 0.92rem;
+            color: var(--cream-dim);
+        }
+
+        .footer-links a {
+            color: var(--cream-dim);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: var(--gold-light); }
+
+        .footer-sep { color: var(--border); }
+
+        .footer-year {
+            margin-top: 45px;
+            font-size: 0.7rem;
+            color: var(--cream-dim);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        /* ── KEYFRAMES ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes pulseDown {
+            0%, 100% { opacity: 1; transform: scaleY(1); }
+            50%       { opacity: 0.35; transform: scaleY(0.85); }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
 
-    <div id="intro-screen" class="screen">
-        <button id="start-btn" class="cp-button">Enter System</button>
-        <p style="margin-top:20px; color:var(--cp-cyan); font-size: 0.8rem;">AWAITING_COMMAND<span class="pulse-dots"></span></p>
-    </div>
+<canvas id="particle-canvas"></canvas>
 
-    <div id="typewriter-screen" class="screen hidden">
-        <div id="typewriter-text" class="typewriter-container"></div>
-        <p id="loading-indicator" style="margin-top:25px; color:var(--cp-red); font-size: 0.8rem; opacity: 0.7;">LOADING_DATA<span class="pulse-dots"></span></p>
-    </div>
+<!-- ══ HERO ══ -->
+<div id="hero">
+    <svg class="hero-ornament" width="64" height="44" viewBox="0 0 64 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="32,2 62,22 32,42 2,22" stroke="#c9a84c" stroke-width="1" fill="none"/>
+        <polygon points="32,10 54,22 32,34 10,22" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+        <circle cx="32" cy="22" r="3.5" fill="#c9a84c"/>
+        <line x1="2" y1="22" x2="10" y2="22" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
+        <line x1="54" y1="22" x2="62" y2="22" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
+    </svg>
 
-    <div id="boot-screen" class="screen hidden">
-        <div class="terminal-window">
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--matrix-green); margin-bottom: 5px;">
-                <span>BOOT_SEQUENCE</span>
-                <span id="percent">0%</span>
-            </div>
-            <div id="boot-log" style="flex-grow:1; overflow:hidden;"></div>
+    <h1 class="hero-name">Fabian van Caspel</h1>
+    <div class="hero-line"></div>
+    <p class="hero-subtitle">Technical Engineer &nbsp;·&nbsp; Business Intelligence &nbsp;·&nbsp; ICT Professional</p>
+    <p class="hero-contact">Bocholtz &nbsp;&middot;&nbsp; +31 6 18 22 52 65 &nbsp;&middot;&nbsp; Fvc1994@live.nl</p>
+
+    <div class="scroll-cue">
+        <span>Scroll</span>
+        <div class="scroll-cue-line"></div>
+    </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+    <div class="divider reveal">
+        <div class="div-line"></div>
+        <div class="div-dot"></div>
+        <div class="div-diamond" style="margin:0 6px;"></div>
+        <div class="div-dot"></div>
+        <div class="div-line r"></div>
+    </div>
+    <p class="sec-label reveal">Over mij</p>
+    <h2 class="sec-title reveal">Profiel</h2>
+    <div class="about-card reveal">
+        Analytische ICT-professional met ruim <strong>10 jaar ervaring</strong> en een sterke focus op
+        systeemstabiliteit en data-analyse. Ik combineer een ruime ervaring in
+        <strong>24/7 technische omgevingen</strong> (VodafoneZiggo) met een achtergrond in
+        <strong>Business Intelligence</strong>. Vaardig in het gericht zoeken naar data en het
+        herkennen van patronen via het OSI-model.
+    </div>
+</section>
+
+<!-- ══ CAREER ══ -->
+<section id="career">
+    <div class="divider reveal">
+        <div class="div-line"></div>
+        <div class="div-diamond"></div>
+        <div class="div-line r"></div>
+    </div>
+    <p class="sec-label reveal">Werkervaring</p>
+    <h2 class="sec-title reveal">Loopbaan</h2>
+
+    <div class="timeline">
+        <div class="tl-item reveal">
+            <p class="tl-period">2024 — Heden</p>
+            <p class="tl-role">IT-Servicedesk &amp; BI Engineer</p>
+            <p class="tl-company">Centraal Bureau voor de Statistiek (CBS)</p>
+        </div>
+        <div class="tl-item reveal">
+            <p class="tl-period">2021 — 2024</p>
+            <p class="tl-role">Technical Engineer &middot; 24/7 Operations</p>
+            <p class="tl-company">VodafoneZiggo</p>
+        </div>
+        <div class="tl-item reveal">
+            <p class="tl-period">2020 — 2021</p>
+            <p class="tl-role">ICT-Consultant</p>
+            <p class="tl-company">Data4 &amp; Teqoia</p>
+        </div>
+        <div class="tl-item reveal">
+            <p class="tl-period">2015 — 2016</p>
+            <p class="tl-role">Incidentbeheerder</p>
+            <p class="tl-company">APG</p>
         </div>
     </div>
+</section>
 
-    <div id="profile-screen">
-        <div class="profile-content-container" id="profile-box">
-            <h1 class="name-big">Fabian van Caspel</h1>
-            <p class="contact-info">Technical Engineer | BI | Bocholtz | +31618225265 | Fvc1994@live.nl</p>
-            
-            <h2 class="section-title">About Me</h2>
-            <p class="info-text">Analytische ICT-professional met ruim 10 jaar ervaring en een sterke focus op systeemstabiliteit en data-analyse. Ik combineer een ruime ervaring in 24/7 technische omgevingen (VodafoneZiggo) met een achtergrond in Business Intelligence. Ik ben vaardig in het gericht zoeken naar data en het herkennen van patronen via het OSI-model.</p>
+<!-- ══ EDUCATION ══ -->
+<section id="education">
+    <div class="divider reveal">
+        <div class="div-line"></div>
+        <div class="div-diamond"></div>
+        <div class="div-line r"></div>
+    </div>
+    <p class="sec-label reveal">Opleiding</p>
+    <h2 class="sec-title reveal">Educatie</h2>
 
-            <h2 class="section-title">Interests</h2>
-            <p class="info-text">Cybersecurity (SOC use cases), Netwerkinfrastructuur (CCNA), Data-analyse (Power BI & MySQL), Systeemoptimalisatie.</p>
-
-            <h2 class="section-title">Career</h2>
-            <p class="info-text">
-                > IT-Servicedesk & BI Engineer | CBS (2024 – Heden)<br>
-                > Technical Engineer (24/7 Operations) | VodafoneZiggo (2021 – 2024)<br>
-                > ICT-Consultant | Data4 & Teqoia (2020 – 2021)<br>
-                > Incidentbeheerder | APG (2015 – 2016)
-            </p>
-
-            <h2 class="section-title">Education</h2>
-            <p class="info-text">
-                > HBO ICT – Business Intelligence (120/240 ECTS)<br>
-                > MBO Niveau 4 ICT-Beheerder (Diploma)<br>
-                > MBO Niveau 3 Medewerker Beheer ICT (Diploma)<br>
-                > Microsoft Office Specialist (MOS) Gecertificeerd
-            </p>
-
-            <div style="margin-top: 40px;">
-                <button onclick="location.reload()" class="cp-button" style="font-size: 0.8rem; padding: 10px 20px;">Reboot</button>
-            </div>
+    <div class="edu-grid">
+        <div class="edu-card reveal">
+            <p class="edu-degree">HBO ICT — Business Intelligence</p>
+            <p class="edu-detail">120 / 240 ECTS</p>
+        </div>
+        <div class="edu-card reveal">
+            <p class="edu-degree">MBO Niveau 4 ICT-Beheerder</p>
+            <p class="edu-detail">Diploma</p>
+        </div>
+        <div class="edu-card reveal">
+            <p class="edu-degree">MBO Niveau 3 Medewerker Beheer ICT</p>
+            <p class="edu-detail">Diploma</p>
+        </div>
+        <div class="edu-card reveal">
+            <p class="edu-degree">Microsoft Office Specialist</p>
+            <p class="edu-detail">MOS Gecertificeerd</p>
         </div>
     </div>
+</section>
 
-    <script>
-        const texts = ["Welcome individual", "This website belongs to me", "My name is Fabian van Caspel"];
-        const bootMessages = ["Kernel_OK", "Network_Connect", "Firewall_Bypass", "User_Verified", "GUI_Render", "Asset_Load"];
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+    <div class="divider reveal">
+        <div class="div-line"></div>
+        <div class="div-dot"></div>
+        <div class="div-diamond" style="margin:0 6px;"></div>
+        <div class="div-dot"></div>
+        <div class="div-line r"></div>
+    </div>
+    <p class="sec-label reveal">Vaardigheden &amp; Interesses</p>
+    <h2 class="sec-title reveal">Expertise</h2>
 
-        const startBtn = document.getElementById('start-btn');
-        const introScreen = document.getElementById('intro-screen');
-        const typewriterScreen = document.getElementById('typewriter-screen');
-        const textElement = document.getElementById('typewriter-text');
-        const bootScreen = document.getElementById('boot-screen');
-        const bootLog = document.getElementById('boot-log');
-        const profileScreen = document.getElementById('profile-screen');
-        const profileBox = document.getElementById('profile-box');
-        const percentLabel = document.getElementById('percent');
+    <div class="skills-wrap reveal">
+        <span class="skill-tag">Cybersecurity · SOC</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Netwerkinfrastructuur</span>
+        <span class="skill-tag">CCNA</span>
+        <span class="skill-tag">OSI-model</span>
+        <span class="skill-tag">Data-analyse</span>
+        <span class="skill-tag">Systeemoptimalisatie</span>
+        <span class="skill-tag">24/7 Operations</span>
+        <span class="skill-tag">Incident Management</span>
+    </div>
+</section>
 
-        async function runTypewriter() {
-            for (const sentence of texts) {
-                // Typen (SNELLER: 100ms per letter)
-                for (let i = 0; i <= sentence.length; i++) {
-                    textElement.style.width = i + "ch";
-                    textElement.textContent = sentence.substring(0, i);
-                    await new Promise(r => setTimeout(r, 100)); 
-                }
-                await new Promise(r => setTimeout(r, 1500)); 
-                // Backspace (40ms)
-                for (let i = sentence.length; i >= 0; i--) {
-                    textElement.style.width = i + "ch";
-                    textElement.textContent = sentence.substring(0, i);
-                    await new Promise(r => setTimeout(r, 40));
-                }
-                await new Promise(r => setTimeout(r, 500));
-            }
+<!-- ══ FOOTER ══ -->
+<footer>
+    <div class="divider" style="margin-top:0; margin-bottom:40px;">
+        <div class="div-line"></div>
+        <div class="div-dot"></div>
+        <div class="div-diamond" style="margin:0 6px;"></div>
+        <div class="div-dot"></div>
+        <div class="div-line r"></div>
+    </div>
+
+    <p class="footer-name">Fabian van Caspel</p>
+    <div class="footer-links">
+        <a href="tel:+31618225265">+31 6 18 22 52 65</a>
+        <span class="footer-sep">&middot;</span>
+        <a href="mailto:fvc1994@live.nl">Fvc1994@live.nl</a>
+        <span class="footer-sep">&middot;</span>
+        <span>Bocholtz, Nederland</span>
+    </div>
+    <p class="footer-year">MMXXVI</p>
+</footer>
+
+<script>
+    /* ── Floating gold particle background ── */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+        constructor() { this.init(true); }
+
+        init(randomY = false) {
+            this.x = Math.random() * canvas.width;
+            this.y = randomY ? Math.random() * canvas.height : canvas.height + 5;
+            this.r = Math.random() * 1.2 + 0.3;
+            this.vx = (Math.random() - 0.5) * 0.25;
+            this.vy = -(Math.random() * 0.4 + 0.1);
+            this.alpha = Math.random() * 0.5 + 0.05;
+            this.life = 0;
+            this.maxLife = Math.random() * 400 + 200;
         }
 
-        async function runBootLog() {
-            bootScreen.classList.remove('hidden');
-            const totalSteps = 60; 
-            for (let i = 0; i < totalSteps; i++) {
-                const line = document.createElement('div');
-                line.textContent = `> ${bootMessages[i % bootMessages.length]} ... [OK]`;
-                bootLog.appendChild(line);
-                if (bootLog.childNodes.length > 15) bootLog.removeChild(bootLog.firstChild);
-                percentLabel.textContent = `${Math.round((i / totalSteps) * 100)}%`;
-                await new Promise(r => setTimeout(r, 100)); 
-            }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life++;
+            if (this.life > this.maxLife || this.y < -10) this.init();
         }
 
-        startBtn.addEventListener('click', async () => {
-            introScreen.classList.add('hidden');
-            await new Promise(r => setTimeout(r, 600));
+        draw() {
+            const fade = 1 - this.life / this.maxLife;
+            ctx.save();
+            ctx.globalAlpha = this.alpha * fade;
+            ctx.fillStyle = '#c9a84c';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
 
-            typewriterScreen.classList.remove('hidden');
-            await runTypewriter();
-            
-            typewriterScreen.classList.add('hidden');
-            await new Promise(r => setTimeout(r, 600));
+    const particles = Array.from({ length: 70 }, () => new Particle());
 
-            await runBootLog();
-            
-            bootScreen.classList.add('hidden');
-            await new Promise(r => setTimeout(r, 400)); 
+    (function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(loop);
+    })();
 
-            profileScreen.style.display = 'flex';
-            setTimeout(() => {
-                profileBox.classList.add('active');
-            }, 50); 
+    /* ── Scroll reveal (Intersection Observer) ── */
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
         });
-    </script>
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
