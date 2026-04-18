@@ -340,9 +340,10 @@
         }
 
         .shortcut-desc {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             color: var(--cream-dim);
-            line-height: 1.3;
+            line-height: 1.4;
+            font-weight: 400;
         }
 
         /* Pro Tips */
@@ -392,9 +393,10 @@
         }
 
         .tip-text {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--cream-dim);
-            line-height: 1.65;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
         .tip-text strong { color: var(--gold-light); font-weight: 500; }
@@ -407,6 +409,130 @@
             color: var(--cream-dim);
             font-style: italic;
             font-size: 1.1rem;
+        }
+
+        /* ── WORKFLOWS ── */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .workflow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            position: relative;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .workflow-card:hover {
+            border-color: rgba(201,168,76,0.5);
+            box-shadow: 0 0 30px rgba(201,168,76,0.05);
+        }
+
+        .workflow-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(to right, var(--gold), transparent);
+            opacity: 0.45;
+        }
+
+        .workflow-apps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .app-badge {
+            background: rgba(201,168,76,0.07);
+            border: 1px solid rgba(201,168,76,0.28);
+            color: var(--gold);
+            padding: 2px 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .workflow-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--cream);
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        .workflow-desc {
+            font-size: 0.85rem;
+            color: var(--cream-dim);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .workflow-steps {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .workflow-steps li {
+            display: flex;
+            gap: 14px;
+            padding: 7px 0;
+            font-size: 0.9rem;
+            color: var(--cream-dim);
+            border-bottom: 1px solid rgba(201,168,76,0.06);
+            line-height: 1.4;
+        }
+
+        .workflow-steps li:last-child { border-bottom: none; }
+
+        .step-num {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            padding-top: 2px;
+            min-width: 18px;
+        }
+
+        .code-block {
+            background: rgba(0,0,0,0.45);
+            border: 1px solid rgba(201,168,76,0.12);
+            border-left: 2px solid rgba(201,168,76,0.5);
+            padding: 14px 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.72rem;
+            color: #b8c98a;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.7;
+        }
+
+        .code-block .cm { color: var(--cream-dim); opacity: 0.55; }
+        .code-block .kw { color: var(--gold-light); }
+        .code-block .st { color: #a8d080; }
+
+        .workflow-impact {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+        }
+
+        .impact-dot {
+            width: 6px; height: 6px;
+            background: var(--gold);
+            transform: rotate(45deg);
         }
 
         /* ── FOOTER ── */
@@ -473,7 +599,8 @@
             <input type="text" id="search" placeholder="Zoek een shortcut of tip...">
         </div>
         <div class="tabs">
-            <button class="tab active" data-app="windows">Windows</button>
+            <button class="tab active" data-app="sql">Azure Data Studio</button>
+            <button class="tab" data-app="windows">Windows</button>
             <button class="tab" data-app="outlook">Outlook</button>
             <button class="tab" data-app="vscode">VS Code</button>
             <button class="tab" data-app="powerbi">Power BI</button>
@@ -481,7 +608,7 @@
             <button class="tab" data-app="slack">Slack</button>
             <button class="tab" data-app="powershell">PowerShell</button>
             <button class="tab" data-app="python">Python</button>
-            <button class="tab" data-app="sql">Azure Data Studio</button>
+            <button class="tab" data-app="workflows">⚡ Workflows</button>
         </div>
     </div>
 </div>
@@ -490,7 +617,7 @@
 <div id="content">
 
     <!-- ── WINDOWS ── -->
-    <div class="app-section active" id="app-windows">
+    <div class="app-section" id="app-windows">
         <div class="app-header">
             <p class="app-label">Besturingssysteem</p>
             <h2 class="app-title">Windows</h2>
@@ -504,16 +631,28 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>X</kbd></div><span class="shortcut-desc">Snelmenu (Power menu)</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Esc</kbd></div><span class="shortcut-desc">Taakbeheer direct openen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Pause</kbd></div><span class="shortcut-desc">Systeemeigenschappen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Uitvoeren-dialoog openen</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Navigatie & Vensters</h3>
+                <h3 class="cat-title">Vensters & Bureaubladen</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Bureau tonen/verbergen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Verkenner openen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Taakweergave</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc">Venster naar rechts snappen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>↑</kbd></div><span class="shortcut-desc">Venster maximaliseren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Wisselen tussen apps</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>→/←</kbd></div><span class="shortcut-desc">Venster links/rechts snappen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>↑</kbd></div><span class="shortcut-desc">Venster maximaliseren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Nieuw virtueel bureaublad</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>→/←</kbd></div><span class="shortcut-desc">Wisselen tussen bureaubladen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F4</kbd></div><span class="shortcut-desc">Huidig bureaublad sluiten</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Verkenner Shortcuts</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Verkenner openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Adresbalk selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑</kbd></div><span class="shortcut-desc">Naar bovenliggende map</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></div><span class="shortcut-desc">Nieuwe map aanmaken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F2</kbd></div><span class="shortcut-desc">Bestandsnaam wijzigen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>W</kbd></div><span class="shortcut-desc">Verkenner-venster sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Eigenschappen van bestand</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Productiviteit</h3>
@@ -521,7 +660,18 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Screenshot (uitknipsel)</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>.</kbd></div><span class="shortcut-desc">Emoji-picker</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc">Spraaktypefunctie</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F2</kbd></div><span class="shortcut-desc">Bestandsnaam wijzigen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></div><span class="shortcut-desc">Ongedaan maken (ook in Verkenner)</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Run-commando's (Win+R)</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>services.msc</kbd></div><span class="shortcut-desc">Windows Services beheren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>eventvwr</kbd></div><span class="shortcut-desc">Logboeken (Event Viewer)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>devmgmt.msc</kbd></div><span class="shortcut-desc">Apparaatbeheer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>diskmgmt.msc</kbd></div><span class="shortcut-desc">Schijfbeheer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ncpa.cpl</kbd></div><span class="shortcut-desc">Netwerkverbindingen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>msconfig</kbd></div><span class="shortcut-desc">Systeemconfiguratie & opstarten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>perfmon</kbd></div><span class="shortcut-desc">Prestatiemeter</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>mstsc</kbd></div><span class="shortcut-desc">Remote Desktop verbinding</span></div>
             </div>
         </div>
         <div class="tips-section">
@@ -529,8 +679,11 @@
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
                 <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Win + V</strong> is de meest onderschatte shortcut. Kopieer meerdere dingen achter elkaar en plak precies wat je nodig hebt — geen heen-en-weer schakelen meer.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>virtuele bureaubladen</strong> (Win + Ctrl + D) per project. Werk, communicatie en referenties elk op een eigen bureaublad.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>God Mode:</strong> maak een map aan met de naam <strong>GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</strong> voor toegang tot alle instellingen op één plek.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>virtuele bureaubladen</strong> per context: bureaublad 1 = werk/tools, bureaublad 2 = communicatie (Outlook + Slack), bureaublad 3 = referentie/documentatie.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>eventvwr</strong> via Win+R is sneller dan zoeken. Filter op "Error" in Windows Logs → Application voor incidentonderzoek — je ziet exact welk proces crashte en wanneer.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>God Mode:</strong> maak een map met naam <strong>GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</strong> voor toegang tot alle 200+ instellingen op één plek — ideaal voor IT-beheer.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Typ in de Verkenner adresbalk <strong>cmd</strong> of <strong>powershell</strong> en druk Enter om direct een terminal te openen in die map — veel sneller dan cd-navigeren.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>Shift + rechtsklik</strong> op een map geeft extra opties zoals "Open PowerShell-venster hier" en "Kopieer als pad" — handig bij scripting.</p></div>
             </div>
         </div>
     </div>
@@ -551,6 +704,9 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Doorsturen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Verzenden</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Nieuw bericht (overal)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Insert</kbd></div><span class="shortcut-desc">Markering toewijzen (vlag)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Q</kbd></div><span class="shortcut-desc">Markeren als gelezen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>U</kbd></div><span class="shortcut-desc">Markeren als ongelezen</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Navigatie</h3>
@@ -560,6 +716,7 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>4</kbd></div><span class="shortcut-desc">Taken</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F9</kbd></div><span class="shortcut-desc">Verzenden & ontvangen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Zoeken in mailbox</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc">Ga naar map</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Agenda & Taken</h3>
@@ -568,14 +725,26 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Nieuwe taak</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Opslaan & sluiten (item)</span></div>
             </div>
+            <div class="category">
+                <h3 class="cat-title">Zoekoperatoren</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>from:naam</kbd></div><span class="shortcut-desc">Berichten van specifieke afzender</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>subject:tekst</kbd></div><span class="shortcut-desc">Zoeken in onderwerpregel</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>hasattachment:ja</kbd></div><span class="shortcut-desc">Berichten met bijlage</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>received:gisteren</kbd></div><span class="shortcut-desc">Ontvangen op datum</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>category:naam</kbd></div><span class="shortcut-desc">Filter op categorie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>to:naam</kbd></div><span class="shortcut-desc">Verzonden naar persoon</span></div>
+            </div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>Snelle stappen</strong> (Start → Snelle stappen beheren) om repetitieve acties zoals "Verplaats naar project X en markeer gelezen" met één klik uit te voeren.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Stel <strong>regels</strong> in (Start → Regels) om binnenkomende mail automatisch te sorteren. Combineer met categorieën voor een zero-inbox workflow.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Type <strong>@naam</strong> in de hoofdtekst van een uitnodiging om een contactpersoon automatisch toe te voegen aan de vergadering.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Snelle stappen</strong> (Start → Snelle stappen beheren) zijn Outlook's macro's. Eén klik doet: verplaatsen + markeren als gelezen + categoriseren. Bouw er één per project.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>Quick Parts</strong> (Invoegen → Snel delen → Selectie opslaan): sla terugkerende antwoorden op als template. Hergebruik via Invoegen → Snel delen → klik. Nooit meer dezelfde tekst opnieuw typen.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Combineer <strong>Regels + Categorieën</strong>: laat mail van monitoring-systemen automatisch naar een map gaan met kleurcategorie "Monitoring". Je ziet het, maar het stoort niet.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>Uitgesteld verzenden:</strong> stel bij het opstellen in via Opties → Uitgesteld bezorgen. Handig om mail buiten kantoortijden klaar te zetten zonder 's nachts te versturen.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Gebruik de zoekoperator <strong>hasattachment:ja received:deze week</strong> om snel bijlagen terug te vinden zonder door honderden mails te scrollen.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>Focused Inbox uitschakelen</strong> als je regels gebruikt — anders splitst Outlook je gesorteerde mail opnieuw op eigen criteria. Beide systemen tegelijk werken tegen elkaar.</p></div>
             </div>
         </div>
     </div>
@@ -589,38 +758,83 @@
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
         <div class="categories">
             <div class="category">
-                <h3 class="cat-title">Command Palette</h3>
+                <h3 class="cat-title">Navigatie & Palette</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Command palette</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Bestand snel openen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>`</kbd></div><span class="shortcut-desc">Terminal openen/sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Ga naar regelnummer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F12</kbd></div><span class="shortcut-desc">Ga naar definitie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>F12</kbd></div><span class="shortcut-desc">Definitie inline bekijken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>F12</kbd></div><span class="shortcut-desc">Alle verwijzingen tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Wisselen tussen open bestanden</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>B</kbd></div><span class="shortcut-desc">Zijbalk tonen/verbergen</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Bewerken</h3>
+                <h3 class="cat-title">Bewerken & Multi-cursor</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Regel commentaar aan/uit</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Regel omhoog/omlaag verplaatsen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>↓</kbd></div><span class="shortcut-desc">Regel dupliceren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Volgende overeenkomst selecteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Alle overeenkomsten selecteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Huidige regel verwijderen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>klik</kbd></div><span class="shortcut-desc">Multi-cursor toevoegen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc">Zoeken & vervangen</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Navigatie & View</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F12</kbd></div><span class="shortcut-desc">Ga naar definitie</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Ga naar regelnummer</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Wisselen tussen open bestanden</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>E</kbd></div><span class="shortcut-desc">Verkenner</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken in bestanden</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Source control (Git)</span></div>
+                <h3 class="cat-title">Terminal & Taken</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>`</kbd></div><span class="shortcut-desc">Terminal openen/sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>`</kbd></div><span class="shortcut-desc">Nieuw terminal-paneel</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>5</kbd></div><span class="shortcut-desc">Terminal splitsen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Debuggen starten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F9</kbd></div><span class="shortcut-desc">Breakpoint aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>B</kbd></div><span class="shortcut-desc">Build-taak uitvoeren</span></div>
             </div>
+            <div class="category">
+                <h3 class="cat-title">Aanbevolen Extensions</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>GitLens</kbd></div><span class="shortcut-desc">Git blame & history inline in code</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Error Lens</kbd></div><span class="shortcut-desc">Fouten direct op de betreffende regel</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Pylance</kbd></div><span class="shortcut-desc">Snelle Python IntelliSense</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>PowerShell</kbd></div><span class="shortcut-desc">PS debugger + IntelliSense</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>REST Client</kbd></div><span class="shortcut-desc">API's testen vanuit .http bestand</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Todo Tree</kbd></div><span class="shortcut-desc">TODO/FIXME-opmerkingen overzicht</span></div>
+            </div>
+        </div>
+        <div style="margin: 10px 0 30px;">
+            <p class="cat-title" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px; padding-left:4px;">USER SNIPPET · POWERSHELL BOILERPLATE</p>
+            <div class="code-block">// Ctrl+Shift+P → "Configure User Snippets" → powershell.json
+{
+  "PS Script Template": {
+    "prefix": "pstemplate",
+    "body": [
+      "[CmdletBinding(SupportsShouldProcess)]",
+      "param(",
+      "    [Parameter(Mandatory)][string]$$${1:InputParam}",
+      ")",
+      "",
+      "Set-StrictMode -Version Latest",
+      "$$ErrorActionPreference = 'Stop'",
+      "",
+      "try {",
+      "    Write-Verbose \"Start: $$${1:InputParam}\"",
+      "    ${2:# logic hier}",
+      "}",
+      "catch {",
+      "    Write-Error \"Fout: $$($_.Exception.Message)\"",
+      "    exit 1",
+      "}"
+    ]
+  }
+}</div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Multi-cursor:</strong> Houd <strong>Alt</strong> ingedrukt en klik op meerdere plaatsen om tegelijk op meerdere regels te typen. Enorm tijdbesparend bij repetitieve edits.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>Ctrl + Shift + P → "Format Document"</strong> (of Alt + Shift + F) om code automatisch op te maken. Stel Prettier of Black in als default formatter.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Emmet</strong> is ingebouwd: type <strong>div.container>ul>li*5</strong> en druk Tab om direct HTML-structuur te genereren.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Multi-cursor met Ctrl+D:</strong> selecteer een woord, druk Ctrl+D herhaaldelijk om steeds de volgende overeenkomst toe te voegen. Verander variabelenamen in bulk zonder Find &amp; Replace.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>GitLens</strong> toont bij elke regel wie het schreef en wanneer. Bij debugging zegt dit direct of iets oud legacy-code is of een recente wijziging — cruciaal bij incidentonderzoek.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Gesplitste terminal:</strong> Ctrl+Shift+5 opent een tweede terminal naast de eerste. Gebruik links voor je script, rechts voor de output of een database-query tegelijk.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>REST Client extension:</strong> maak een <code>requests.http</code> bestand en test API-endpoints direct in VS Code zonder Postman te openen. Sla requests op naast je code in Git.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Gebruik <strong>Workspace Settings</strong> (.vscode/settings.json) per project voor formatter-regels, Python interpreter-pad en linting-config — zodat instellingen meedraaien ongeacht wie het project opent.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>Emmet</strong> is ingebouwd voor HTML/CSS: type <code>table>tr*3>td*4</code> + Tab voor een 3×4 tabel in één keer. Werkt ook in JSX en templating-talen.</p></div>
             </div>
         </div>
     </div>
@@ -639,7 +853,9 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc">Opnieuw uitvoeren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd> / <kbd>V</kbd></div><span class="shortcut-desc">Visual kopiëren/plakken</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>A</kbd></div><span class="shortcut-desc">Alle visuals selecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>klik</kbd></div><span class="shortcut-desc">Meerdere visuals selecteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Visuals groeperen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Tab</kbd></div><span class="shortcut-desc">Volgende visual selecteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Delete</kbd></div><span class="shortcut-desc">Geselecteerde visual verwijderen</span></div>
             </div>
             <div class="category">
@@ -650,20 +866,56 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Escape</kbd></div><span class="shortcut-desc">Formule annuleren</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Algemeen</h3>
+                <h3 class="cat-title">Essentiële DAX Patronen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CALCULATE()</kbd></div><span class="shortcut-desc">Maatstaf met filter-context</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>DIVIDE(a,b,0)</kbd></div><span class="shortcut-desc">Veilig delen (geen fout bij nul)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>TOTALYTD()</kbd></div><span class="shortcut-desc">Jaar-tot-heden berekening</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SAMEPERIODLASTYEAR()</kbd></div><span class="shortcut-desc">Vergelijking met vorig jaar</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>RANKX()</kbd></div><span class="shortcut-desc">Rangschikking binnen tabel</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SELECTEDVALUE()</kbd></div><span class="shortcut-desc">Geselecteerde filterwaarde ophalen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>USERELATIONSHIP()</kbd></div><span class="shortcut-desc">Inactieve relatie activeren</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Algemeen & Power Query</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Data vernieuwen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Opslaan</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Query formatteren (Power Query)</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>F4</kbd></div><span class="shortcut-desc">Applicatie sluiten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Stap invoegen in Power Query</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></div><span class="shortcut-desc">Stap ongedaan maken (Power Query)</span></div>
             </div>
+        </div>
+        <div style="margin: 10px 0 30px;">
+            <p class="cat-title" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px; padding-left:4px;">DAX · VEELGEBRUIKTE MAATREGELEN</p>
+            <div class="code-block">-- % van totaal
+% van Totaal =
+DIVIDE(
+    [Maatstaf],
+    CALCULATE([Maatstaf], ALL(Tabel)),
+    0
+)
+
+-- Jaar-op-jaar groei
+YoY Groei % =
+DIVIDE(
+    [Omzet] - CALCULATE([Omzet], SAMEPERIODLASTYEAR('Datum'[Datum])),
+    CALCULATE([Omzet], SAMEPERIODLASTYEAR('Datum'[Datum])),
+    0
+)
+
+-- Dynamische tekst in visual title
+Titel =
+"Rapport voor: " & SELECTEDVALUE('Afdeling'[Naam], "Alle afdelingen")</div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>DAX Studio</strong> (gratis) naast Power BI om complexe DAX-queries te testen en te optimaliseren buiten het rapport om.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>Bookmark + Button</strong> combinatie: maak meerdere weergaven van hetzelfde rapport en navigeer er naartoe met knoppen — geeft een app-gevoel aan je dashboard.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Druk <strong>Ctrl</strong> ingedrukt bij het klikken op meerdere visuals om ze samen te selecteren, zodat je ze tegelijk kunt uitlijnen via het Formaat-paneel.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>DAX Studio</strong> (gratis) naast Power BI: test zware DAX-formules buiten het rapport, bekijk query-plannen en meet uitvoertijd per maatstaf. Onmisbaar bij trage dashboards.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>DIVIDE(a,b,0)</strong> in plaats van a/b: als de noemer nul is, geeft gewone deling een fout. DIVIDE geeft dan 0 (of wat je kiest). Altijd gebruiken bij berekende percentages.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Bookmark + Button:</strong> maak meerdere canvasweergaven (bijv. per afdeling) en navigeer er naartoe met knoppen. Geeft een echte app-ervaring zonder code.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>Template-bestanden (.pbit):</strong> sla een leeg rapport op als .pbit met parameters voor de databron. Bij elk nieuw project open je de template en vul je alleen de verbinding in.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text"><strong>Performance Analyzer</strong> (Beeld → Performance Analyzer): start opname en refresh visuals. Toont per visual de DAX-querytijd, visuele rendering en overige duur — zo zie je direct welke visual traag is.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text">Maak een aparte <strong>_Maatregelen tabel</strong> (lege tabel zonder rijen) en zet alle maatregelen daarin. Houdt je datamodel overzichtelijk en maatregelen zijn makkelijker terug te vinden.</p></div>
             </div>
         </div>
     </div>
@@ -677,37 +929,51 @@
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
         <div class="categories">
             <div class="category">
-                <h3 class="cat-title">Tabbladen</h3>
+                <h3 class="cat-title">Tabbladen & Vensters</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>T</kbd></div><span class="shortcut-desc">Nieuw tabblad</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>W</kbd></div><span class="shortcut-desc">Tabblad sluiten</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>T</kbd></div><span class="shortcut-desc">Gesloten tabblad heropenen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></div><span class="shortcut-desc">Volgend tabblad</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>1–8</kbd></div><span class="shortcut-desc">Naar tabblad N gaan</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>9</kbd></div><span class="shortcut-desc">Laatste tabblad</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></div><span class="shortcut-desc">Incognito-venster</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Navigatie</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Adresbalk selecteren</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>←</kbd></div><span class="shortcut-desc">Terug</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>←/→</kbd></div><span class="shortcut-desc">Terug / Vooruit</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Hard herladen (cache leeg)</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc">Bladwijzer toevoegen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken op pagina</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>U</kbd></div><span class="shortcut-desc">Paginabron bekijken</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Developer & Overig</h3>
+                <h3 class="cat-title">DevTools</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F12</kbd></div><span class="shortcut-desc">DevTools openen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></div><span class="shortcut-desc">Incognito-venster</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Del</kbd></div><span class="shortcut-desc">Browsegegevens wissen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>U</kbd></div><span class="shortcut-desc">Paginabron bekijken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Mobiele simulator aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc">Element inspecteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>J</kbd></div><span class="shortcut-desc">Console openen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Bestand zoeken in DevTools</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Esc</kbd></div><span class="shortcut-desc">Console-lade tonen/verbergen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Handige chrome:// URLs</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>chrome://flags</kbd></div><span class="shortcut-desc">Experimentele functies</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>chrome://extensions</kbd></div><span class="shortcut-desc">Extensies beheren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>chrome://net-internals</kbd></div><span class="shortcut-desc">Netwerk-diagnostiek</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>chrome://history</kbd></div><span class="shortcut-desc">Volledige geschiedenis</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>chrome://settings/passwords</kbd></div><span class="shortcut-desc">Wachtwoordbeheer</span></div>
             </div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Type in de adresbalk een <strong>zoekopdracht gevolgd op Tab</strong> als een site als zoekmachine is geregistreerd (bijv. "github.com Tab zoekterm").</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>Tab-groepen</strong> (rechts klik op tabblad → Aan groep toevoegen) om werkprojecten netjes te scheiden.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">In de DevTools: druk <strong>Ctrl + Shift + M</strong> voor de mobiele simulator — handig om layouts snel te testen op verschillende schermformaten.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Type in de adresbalk een sitename + <strong>Tab</strong> als die site als zoekmachine is geregistreerd (bijv. "github.com Tab zoekterm"). Chrome zoekt dan direct op die site.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>Tab-groepen</strong>: rechtsklik op een tabblad → Aan groep toevoegen. Kleur + naam per project. Collapse een groep met één klik — houdt 20+ tabbladen beheersbaar.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">In DevTools Console: gebruik <strong>$0</strong> om het laatst geïnspecteerde element te refereren. Typ <code>$0.style.border = '2px solid red'</code> om snel een element te markeren.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>chrome://net-internals/#dns</strong> en klik "Clear host cache" om DNS-cache te legen zonder de browser te herstarten — handig bij netwerkproblemen of DNS-wijzigingen.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Gebruik <strong>werkprofielen</strong> (rechtsboven profielicoon) om werk- en privé-sessies volledig gescheiden te houden — inclusief cookies, geschiedenis en extensies.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text">Sleep een tabblad naar een tweede monitor terwijl je <strong>Shift</strong> inhoudt — het opent als een apart venster op die monitor. Handig voor documentatie naast je werkscherm.</p></div>
             </div>
         </div>
     </div>
@@ -726,30 +992,48 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc">Direct messages openen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Kanalen navigeren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Ongelezen kanalen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Activiteit / mentions</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>S</kbd></div><span class="shortcut-desc">Opgeslagen items</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Berichten</h3>
+                <h3 class="cat-title">Berichten & Opmaak</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>↑</kbd></div><span class="shortcut-desc">Laatste bericht bewerken</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Bericht verzenden (multiline)</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Nieuwe regel in bericht</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>:</kbd><span class="plus">+</span><kbd>naam</kbd></div><span class="shortcut-desc">Emoji autocomplete</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/remind</kbd></div><span class="shortcut-desc">Herinnering instellen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>B</kbd></div><span class="shortcut-desc"><strong>Vet</strong></span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>I</kbd></div><span class="shortcut-desc"><em>Cursief</em></span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>`code`</kbd></div><span class="shortcut-desc">Inline code</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>```code```</kbd></div><span class="shortcut-desc">Codeblok (meerdere regels)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>~tekst~</kbd></div><span class="shortcut-desc">~~Doorgehaald~~</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Weergave</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Activiteit</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Zoeken</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Alle sneltoetsen tonen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc">Status instellen</span></div>
+                <h3 class="cat-title">Slash Commands</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/remind</kbd></div><span class="shortcut-desc">Herinnering instellen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/status</kbd></div><span class="shortcut-desc">Status instellen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/mute</kbd></div><span class="shortcut-desc">Huidig kanaal dempen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/dnd</kbd></div><span class="shortcut-desc">Niet storen instellen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/shortcuts</kbd></div><span class="shortcut-desc">Alle shortcuts tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>/collapse</kbd></div><span class="shortcut-desc">Alle afbeeldingen samenvouwen</span></div>
+            </div>
+            <div class="category">
+                <h3 class="cat-title">Zoekoperatoren</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>from:@naam</kbd></div><span class="shortcut-desc">Berichten van specifieke persoon</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>in:#kanaal</kbd></div><span class="shortcut-desc">Zoeken in specifiek kanaal</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>before:datum</kbd></div><span class="shortcut-desc">Berichten voor een datum</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>after:datum</kbd></div><span class="shortcut-desc">Berichten na een datum</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>has:link</kbd></div><span class="shortcut-desc">Berichten met een URL</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>has:reaction</kbd></div><span class="shortcut-desc">Berichten met reactie-emoji</span></div>
             </div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>/remind</strong> om jezelf herinneringen te sturen. Bijv. <strong>/remind me om 16:00 standup-notities versturen</strong> — Slackbot doet de rest.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Reageer met <strong>+ emoji</strong> op een bericht om een reactie toe te voegen. Gebruik 👀 voor "ik kijk ernaar" en ✅ voor "gedaan" — minder ruis dan een apart bericht.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Maak gebruik van <strong>threads</strong> (Beantwoorden) voor discussies zodat het hoofdkanaal overzichtelijk blijft. Vink "Stuur ook naar kanaal" uit voor interne discussies.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>/remind me in 2 hours standup notities</strong> — gebruik Slackbot als je externe herinnerings-app. Werkt ook voor collega's: <strong>/remind @collega om 9:00 dagrapport</strong>.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Gebruik <strong>```codeblok```</strong> voor PowerShell-commando's of SQL die je deelt. Behoud formatting en leesbaarheid — collega's kunnen het direct kopiëren.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Opgeslagen items</strong> (Ctrl+Shift+S) als vluchtige takenlijst: sla berichten op die je later moet opvolgen. Houd dit lijstje kort — leeg = geen openstaande acties.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>Kanaal dempen</strong> (rechtsklik → Dempen) voor ruis-kanalen. Je mist niets, maar ze knipperen niet meer in de zijbalk. Beter dan kanalen verlaten waar je soms toch iets hoeft te lezen.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Gebruik emoji-reacties als status-protocol met je team: 👀 = ik kijk ernaar, ✅ = gedaan, ⏳ = in behandeling. Minder berichten, zelfde informatiedichtheid.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>Workflow Builder</strong> (linksboven → Meer → Workflows): maak no-code workflows, bijv. een formulier dat bij insturen een bericht naar een kanaal stuurt. Geen developer nodig.</p></div>
             </div>
         </div>
     </div>
@@ -765,36 +1049,82 @@
             <div class="category">
                 <h3 class="cat-title">Terminal Shortcuts</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Tab</kbd></div><span class="shortcut-desc">Autocomplete commando/pad</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">Suggesties tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">Suggesties tonen (PSReadLine)</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>R</kbd></div><span class="shortcut-desc">Achterwaarts zoeken in geschiedenis</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>↑ / ↓</kbd></div><span class="shortcut-desc">Door geschiedenis bladeren</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F7</kbd></div><span class="shortcut-desc">Geschiedenis popup (CMD)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>←/→</kbd></div><span class="shortcut-desc">Woord voor woord navigeren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc">Lopend commando afbreken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Terminal leegmaken (Clear)</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Essentiële Cmdlets</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Help</kbd></div><span class="shortcut-desc">Help voor een cmdlet</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Help -Full</kbd></div><span class="shortcut-desc">Volledige documentatie cmdlet</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Command</kbd></div><span class="shortcut-desc">Beschikbare cmdlets zoeken</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Alias</kbd></div><span class="shortcut-desc">Alle aliassen tonen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Get-Member</kbd></div><span class="shortcut-desc">Properties & methods van object</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Select-Object</kbd></div><span class="shortcut-desc">Eigenschappen filteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Where-Object</kbd></div><span class="shortcut-desc">Objecten filteren op conditie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ForEach-Object</kbd></div><span class="shortcut-desc">Itereren over pipeline-objecten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Sort-Object</kbd></div><span class="shortcut-desc">Resultaten sorteren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Group-Object</kbd></div><span class="shortcut-desc">Groeperen & tellen per waarde</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Handig in de Praktijk</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>$PSVersionTable</kbd></div><span class="shortcut-desc">PS versie-info tonen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>|</kbd> <kbd>Out-GridView</kbd></div><span class="shortcut-desc">Output in GUI-venster</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>|</kbd> <kbd>Clip</kbd></div><span class="shortcut-desc">Output naar klembord</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Start-Process</kbd></div><span class="shortcut-desc">App/proces starten</span></div>
+                <h3 class="cat-title">Output & Diagnose</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Out-GridView</kbd></div><span class="shortcut-desc">Output in GUI-venster (filterbaar)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>| Clip</kbd></div><span class="shortcut-desc">Output naar klembord</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Export-Csv</kbd></div><span class="shortcut-desc">Output naar CSV-bestand</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ConvertTo-Html</kbd></div><span class="shortcut-desc">Output als HTML-tabel</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Tee-Object</kbd></div><span class="shortcut-desc">Output naar scherm én bestand</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Write-Verbose</kbd></div><span class="shortcut-desc">Debug-output bij -Verbose vlag</span></div>
             </div>
+            <div class="category">
+                <h3 class="cat-title">Aanbevolen Modules</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ImportExcel</kbd></div><span class="shortcut-desc">Excel lezen/schrijven zonder Office</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>PSReadLine</kbd></div><span class="shortcut-desc">Betere terminal UX & syntax-kleuring</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Oh My Posh</kbd></div><span class="shortcut-desc">Visuele terminal-prompt met Git-info</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SqlServer</kbd></div><span class="shortcut-desc">Invoke-Sqlcmd voor SQL-queries</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>MicrosoftTeams</kbd></div><span class="shortcut-desc">Teams beheren via PowerShell</span></div>
+            </div>
+        </div>
+        <div style="margin: 10px 0 30px;">
+            <p class="cat-title" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px; padding-left:4px;">SCRIPT BOILERPLATE · DIRECT KOPIEERBAAR</p>
+            <div class="code-block"><span class="cm">#Requires -Version 5.1
+</span>[CmdletBinding(SupportsShouldProcess)]
+param(
+    [Parameter(Mandatory)][string]$InputPath,
+    [string]$LogPath = "$PSScriptRoot\logs\$(Get-Date -Format 'yyyyMMdd').log"
+)
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+<span class="kw">function</span> Write-Log {
+    param([string]$Message, [string]$Level = 'INFO')
+    $line = "$(Get-Date -Format 'HH:mm:ss') [$Level] $Message"
+    Write-Verbose $line
+    Add-Content -Path $LogPath -Value $line
+}
+
+<span class="kw">try</span> {
+    Write-Log "Start verwerking: $InputPath"
+    <span class="cm"># uw logica hier</span>
+    Write-Log "Klaar"
+}
+<span class="kw">catch</span> {
+    Write-Log $_.Exception.Message 'ERROR'
+    Write-Error $_
+    exit 1
+}</div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>$PROFILE</strong> om je PowerShell-profiel te openen en functies, aliassen en stijl-instellingen (Oh My Posh) permanent te maken.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Voeg <strong>-WhatIf</strong> toe aan destructieve cmdlets (Remove-Item, Stop-Service) om te zien wat er zou gebeuren zonder het daadwerkelijk uit te voeren.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Pipeline power:</strong> <code>Get-Process | Sort-Object CPU -Desc | Select-Object -First 10 | Out-GridView</code> — top 10 CPU-processen in een GUI in één regel.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>-WhatIf</strong> op elke destructieve cmdlet (Remove-Item, Stop-Service, Set-ADUser) voordat je uitvoert. Toont exact wat er zou gebeuren — cruciaal in productie-omgevingen.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>ImportExcel</strong> (Install-Module ImportExcel) is de meest onderschatte module. Lees en schrijf Excel zonder dat Office open hoeft — perfect voor geautomatiseerde rapportages.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Tee-Object</strong>: <code>Get-Process | Tee-Object -FilePath log.txt | Out-GridView</code> — stuurt output tegelijk naar een logbestand én je GUI. Geen keuze tussen zien of opslaan.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text">Zet <strong>Set-StrictMode -Version Latest</strong> bovenaan elk script. Dit maakt PowerShell strenger: gebruik van ongedefinieerde variabelen geeft meteen een fout — voorkomt stille bugs.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text"><strong>Group-Object</strong> is de snelste manier om te tellen: <code>Get-EventLog System -Newest 1000 | Group-Object Source | Sort Count -Desc | Select -First 10</code> — top 10 event-bronnen in één pipeline.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text">Gebruik <strong>$PROFILE</strong> om aliassen permanent te maken. Voeg toe: <code>Set-Alias grep Select-String</code>, <code>Set-Alias which Get-Command</code>. Laad je profiel opnieuw met <code>. $PROFILE</code>.</p></div>
             </div>
         </div>
     </div>
@@ -814,6 +1144,7 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F9</kbd></div><span class="shortcut-desc">Breakpoint aan/uit</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F10</kbd></div><span class="shortcut-desc">Stap over (step over)</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>F11</kbd></div><span class="shortcut-desc">Stap in (step into)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>F11</kbd></div><span class="shortcut-desc">Stap uit huidige functie</span></div>
             </div>
             <div class="category">
                 <h3 class="cat-title">Ingebouwde Functies</h3>
@@ -823,71 +1154,489 @@
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>vars(obj)</kbd></div><span class="shortcut-desc">Attributen als dict tonen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>enumerate()</kbd></div><span class="shortcut-desc">Index + waarde in loop</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>zip()</kbd></div><span class="shortcut-desc">Twee lijsten combineren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>any() / all()</kbd></div><span class="shortcut-desc">Condities over een iterabel</span></div>
             </div>
             <div class="category">
-                <h3 class="cat-title">Handige Patronen</h3>
+                <h3 class="cat-title">Patronen & Syntax</h3>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>[x for x in l]</kbd></div><span class="shortcut-desc">List comprehension</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>{k:v for ...}</kbd></div><span class="shortcut-desc">Dict comprehension</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>f"tekst {var}"</kbd></div><span class="shortcut-desc">F-string formatting</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>f"{var=}"</kbd></div><span class="shortcut-desc">Debug: naam én waarde tonen</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>a if cond else b</kbd></div><span class="shortcut-desc">Ternary operator</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>*args **kwargs</kbd></div><span class="shortcut-desc">Variabele argumenten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>with open() as f</kbd></div><span class="shortcut-desc">Context manager (auto-close)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>match / case</kbd></div><span class="shortcut-desc">Pattern matching (Python 3.10+)</span></div>
             </div>
+            <div class="category">
+                <h3 class="cat-title">pandas Patronen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.info()</kbd></div><span class="shortcut-desc">Kolommen, types & null-waarden</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.describe()</kbd></div><span class="shortcut-desc">Statistische samenvatting</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.isnull().sum()</kbd></div><span class="shortcut-desc">NaN-waarden per kolom tellen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.groupby().agg()</kbd></div><span class="shortcut-desc">Groeperen & aggregeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.merge()</kbd></div><span class="shortcut-desc">DataFrames samenvoegen (JOIN)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.query()</kbd></div><span class="shortcut-desc">Filteren met string-expressie</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>df.pivot_table()</kbd></div><span class="shortcut-desc">Draaitabel genereren</span></div>
+            </div>
+        </div>
+        <div style="margin: 10px 0 30px;">
+            <p class="cat-title" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px; padding-left:4px;">DATA ANALYSE BOILERPLATE · DIRECT KOPIEERBAAR</p>
+            <div class="code-block"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">import</span> logging
+
+logging.basicConfig(level=logging.INFO, format=<span class="st">'%(asctime)s %(levelname)s %(message)s'</span>)
+log = logging.getLogger(__name__)
+
+DATA_DIR = Path(__file__).parent / <span class="st">"data"</span>
+
+<span class="kw">def</span> load_data(bestand: str) -> pd.DataFrame:
+    pad = DATA_DIR / bestand
+    log.info(<span class="st">f"Laden: {pad}"</span>)
+    df = pd.read_csv(pad, sep=<span class="st">";"</span>, encoding=<span class="st">"utf-8-sig"</span>)
+    log.info(<span class="st">f"{len(df):,} rijen geladen, {df.isnull().sum().sum()} nulls"</span>)
+    <span class="kw">return</span> df
+
+<span class="kw">def</span> analyseer(df: pd.DataFrame) -> pd.DataFrame:
+    <span class="cm"># Jouw logica hier</span>
+    <span class="kw">return</span> df.groupby(<span class="st">"Categorie"</span>).agg(Totaal=(<span class="st">"Bedrag"</span>, <span class="st">"sum"</span>)).reset_index()
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    df = load_data(<span class="st">"invoer.csv"</span>)
+    resultaat = analyseer(df)
+    resultaat.to_excel(DATA_DIR / <span class="st">"output.xlsx"</span>, index=<span class="kw">False</span>)
+    log.info(<span class="st">"Klaar"</span>)</div>
         </div>
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik altijd een <strong>virtuele omgeving</strong>: <code>python -m venv .venv</code> en activeer met <code>.venv\Scripts\activate</code>. Houdt projectafhankelijkheden gescheiden.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>print() debuggen:</strong> gebruik <code>print(f"{variabele=}")</code> (Python 3.8+) om automatisch de naam én waarde te tonen — handig bij snelle debugging.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Installeer <strong>Rich</strong> (<code>pip install rich</code>) voor mooie terminal-output met kleuren, tabellen en progress bars — ideaal voor scripts die je regelmatig uitvoert.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>pathlib.Path</strong> in plaats van os.path. <code>Path(__file__).parent / "data" / "file.csv"</code> werkt op Windows én Linux zonder backslash-problemen.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>print(f"{variabele=}")</strong> (Python 3.8+) toont automatisch de naam én waarde: <code>x=42</code>. Sneller dan <code>print(f"x: {x}")</code> — gebruik dit bij tijdelijke debug-prints.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>logging</strong> in plaats van print(): configure eenmalig bovenaan je script. Je kunt het niveau aanpassen (DEBUG/INFO/ERROR) zonder prints te verwijderen — en je hebt automatisch timestamps.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>df.query("Kolom > 100 and Status == 'Actief'")</strong> is leesbaarder dan boolean indexing voor complexe filters. Werkt ook met variabelen: <code>df.query("Waarde > @drempel")</code>.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text">Installeer <strong>Rich</strong> (<code>pip install rich</code>) voor kleurrijke terminal-output, mooie tabellen en progress bars. Eén import, directe verbetering van elke CLI-script die je uitvoert.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text">Gebruik altijd een <strong>.venv</strong> per project en sla afhankelijkheden op: <code>pip freeze > requirements.txt</code>. Iedereen (inclusief je toekomstige zelf) kan het project daarna exact reproduceren.</p></div>
             </div>
         </div>
     </div>
 
     <!-- ── AZURE DATA STUDIO ── -->
-    <div class="app-section" id="app-sql">
+    <div class="app-section active" id="app-sql">
         <div class="app-header">
             <p class="app-label">Database & Query</p>
             <h2 class="app-title">Azure Data Studio · SQL</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
         <div class="categories">
+
             <div class="category">
                 <h3 class="cat-title">Editor Shortcuts</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Query uitvoeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>F5</kbd></div><span class="shortcut-desc">Volledige query uitvoeren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc">Geselecteerde query uitvoeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Command palette</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">IntelliSense activeren</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Query automatisch formatteren</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>/</kbd></div><span class="shortcut-desc">Regel commentaar aan/uit</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc">Blok commentaar toevoegen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Space</kbd></div><span class="shortcut-desc">IntelliSense activeren</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc">Query formatteren</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></div><span class="shortcut-desc">Command palette</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd><span class="plus">+</span><kbd>U</kbd></div><span class="shortcut-desc">Blok commentaar verwijderen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc">Zoeken & vervangen in query</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc">Ga naar regelnummer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc">Regel omhoog/omlaag verplaatsen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>]</kbd></div><span class="shortcut-desc">Springt naar bijbehorend haakje</span></div>
             </div>
+
             <div class="category">
-                <h3 class="cat-title">Essentiële SQL Snippets</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SELECT * FROM</kbd></div><span class="shortcut-desc">Alle kolommen selecteren</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>TOP 100</kbd></div><span class="shortcut-desc">Resultaat beperken</span></div>
+                <h3 class="cat-title">Uitvoeringsplan & Performance</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Werkelijk uitvoeringsplan aan/uit</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Geschat uitvoeringsplan tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET STATISTICS TIME ON</kbd></div><span class="shortcut-desc">CPU- en elapsed-tijd meten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET STATISTICS IO ON</kbd></div><span class="shortcut-desc">Logische en fysieke reads meten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET NOCOUNT ON</kbd></div><span class="shortcut-desc">Verberg "rows affected" ruis</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Table Scan</kbd></div><span class="shortcut-desc">⚠ In uitv.plan = ontbrekende index</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Key Lookup</kbd></div><span class="shortcut-desc">⚠ Inefficiënte indexdekking</span></div>
+            </div>
+
+            <div class="category">
+                <h3 class="cat-title">Troubleshooting Queries</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_who2</kbd></div><span class="shortcut-desc">Actieve verbindingen & status</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_helptext</kbd></div><span class="shortcut-desc">Broncode van proc/view tonen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_help</kbd></div><span class="shortcut-desc">Tabelstructuur & kolommen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>DBCC INPUTBUFFER</kbd></div><span class="shortcut-desc">Laatste query van een SPID</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_exec_requests</kbd></div><span class="shortcut-desc">Lopende queries live bekijken</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_exec_query_stats</kbd></div><span class="shortcut-desc">Query-prestaties historisch</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_os_wait_stats</kbd></div><span class="shortcut-desc">Waarop wacht SQL Server?</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_db_missing_index</kbd></div><span class="shortcut-desc">Door SQL aanbevolen indexes</span></div>
+            </div>
+
+            <div class="category">
+                <h3 class="cat-title">SQL Snippets & Patronen</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>TOP 100</kbd></div><span class="shortcut-desc">Resultaat beperken bij verkenning</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>WHERE 1=1</kbd></div><span class="shortcut-desc">Dynamische WHERE-basis</span></div>
                 <div class="shortcut-item"><div class="shortcut-keys"><kbd>NOLOCK</kbd></div><span class="shortcut-desc">Lees zonder vergrendeling</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ISNULL(col,0)</kbd></div><span class="shortcut-desc">NULL vervangen door waarde</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CAST / CONVERT</kbd></div><span class="shortcut-desc">Datatype omzetten</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>TRY_CAST()</kbd></div><span class="shortcut-desc">Veilig type omzetten (geen fout)</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ISNULL / COALESCE</kbd></div><span class="shortcut-desc">NULL-waarden opvangen</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>WITH (CTE)</kbd></div><span class="shortcut-desc">Herbruikbare subquery</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>PARTITION BY</kbd></div><span class="shortcut-desc">Window-functies per groep</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CROSS APPLY</kbd></div><span class="shortcut-desc">Koppel functie aan elke rij</span></div>
             </div>
+
             <div class="category">
-                <h3 class="cat-title">Analyse Queries</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>GROUP BY</kbd></div><span class="shortcut-desc">Aggregatie per categorie</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>HAVING</kbd></div><span class="shortcut-desc">Filter na GROUP BY</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>PARTITION BY</kbd></div><span class="shortcut-desc">Window functies</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>ROW_NUMBER()</kbd></div><span class="shortcut-desc">Rangnummer per partitie</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>CTE (WITH ...)</kbd></div><span class="shortcut-desc">Herbruikbare subquery</span></div>
+                <h3 class="cat-title">Extensions (aanbevolen)</h3>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SQL Server Profiler</kbd></div><span class="shortcut-desc">Live queries tracen op server</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SandDance</kbd></div><span class="shortcut-desc">Visuele dataverkenning vanuit ADS</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Admin Pack</kbd></div><span class="shortcut-desc">Server-dashboards & beheer</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Rainbow CSV</kbd></div><span class="shortcut-desc">CSV-kolommen per kleur zichtbaar</span></div>
+                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Whoisactive</kbd></div><span class="shortcut-desc">sp_WhoIsActive — betere sp_who2</span></div>
             </div>
+
         </div>
+
+        <!-- Blocking query snippet apart getoond -->
+        <div style="margin: 10px 0 30px;">
+            <p class="cat-title" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:14px; padding-left:4px;">BLOKKERING OPSPOREN · DIRECT KOPIEERBAAR</p>
+            <div class="code-block">-- Wie blokkeert wie? (plak dit direct bij een incident)
+SELECT
+    r.session_id        AS [SPID],
+    r.blocking_session_id AS [Geblokkeerd_door],
+    r.wait_type,
+    r.wait_time / 1000  AS [Wacht_sec],
+    DB_NAME(r.database_id) AS [Database],
+    SUBSTRING(t.text, (r.statement_start_offset/2)+1,
+        ((CASE r.statement_end_offset WHEN -1 THEN DATALENGTH(t.text)
+          ELSE r.statement_end_offset END - r.statement_start_offset)/2)+1
+    ) AS [Actieve_Query]
+FROM sys.dm_exec_requests r
+CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) t
+WHERE r.blocking_session_id &gt; 0
+ORDER BY r.wait_time DESC;</div>
+        </div>
+
         <div class="tips-section">
             <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
             <p class="tips-title">Pro Tips</p>
             <div class="tips-grid">
-                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text">Gebruik <strong>CTE's (Common Table Expressions)</strong> in plaats van geneste subqueries. Ze zijn leesbaarder, herbruikbaar binnen dezelfde query, en makkelijker te debuggen.</p></div>
-                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text">Voeg altijd <strong>TOP 100</strong> of <strong>WHERE ROWNUM &lt; 100</strong> toe bij verkenning van onbekende tabellen — voorkomt dat je per ongeluk miljoenen rijen ophaalt.</p></div>
-                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Gebruik de <strong>uitvoeringsplan-knop</strong> (Ctrl + M) om te zien welke onderdelen van je query het zwaarst zijn. Zoek naar "Table Scan" — dat is vaak de bottleneck.</p></div>
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Ctrl + M altijd aan</strong> tijdens performance-onderzoek. Kijk in het uitvoeringsplan naar de dikste pijlen (meeste rijen) en de duurste operaties (% kosten). Table Scan op grote tabel = eerste verdachte.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>SET STATISTICS IO ON</strong> + <strong>SET STATISTICS TIME ON</strong> samen bovenaan je query. Logical reads is de eerlijkste maatstaf voor query-efficiëntie — niet alleen de uitvoertijd.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text">Gebruik <strong>TRY_CAST()</strong> in plaats van CAST(). Als een waarde niet te converteren is, geeft CAST een fout die je script stopt. TRY_CAST geeft NULL terug — veiliger in productie-queries.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>SQL Notebooks</strong> (Ctrl+Shift+P → New Notebook): combineer SQL-cellen met Markdown-uitleg. Sla je incidentonderzoeken op als .ipynb en deel ze via Git. Reproduceerbaar en gedocumenteerd tegelijk.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text"><strong>dm_db_missing_index_details</strong> toont welke indexes SQL Server intern aanbevelenswaardigt. Niet blind volgen, maar bij trage queries is dit de snelste manier om te zien wat er ontbreekt.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>CROSS APPLY sys.dm_exec_sql_text</strong> is de sleutel bij blokkering-analyses. sp_who2 toont de SPID, maar de werkelijke query-tekst haal je op met deze DMV-combinatie — zie het blokkering-snippet hierboven.</p></div>
             </div>
+        </div>
+    </div>
+
+    <!-- ── WORKFLOWS ── -->
+    <div class="app-section" id="app-workflows">
+        <div class="app-header">
+            <p class="app-label">Cross-app automatisering</p>
+            <h2 class="app-title">Workflows</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+
+        <p style="text-align:center; color:var(--cream-dim); font-style:italic; font-size:1rem; margin-bottom:40px; max-width:600px; margin-left:auto; margin-right:auto;">
+            Losse apps zijn tools. Verbonden apps zijn een systeem. Hieronder staan workflows die uren per week besparen door applicaties samen te laten werken.
+        </p>
+
+        <div class="workflow-grid">
+
+            <!-- Workflow 1 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">SQL</span>
+                    <span class="app-badge">Outlook</span>
+                </div>
+                <h3 class="workflow-title">Automatische SQL-rapportage via e-mail</h3>
+                <p class="workflow-desc">Query SQL, formatteer de uitvoer als HTML-tabel en verstuur automatisch elke ochtend via Outlook — zonder dat je iets hoeft te openen.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span>PowerShell maakt verbinding met SQL Server via <strong style="color:var(--cream)">Invoke-Sqlcmd</strong></span></li>
+                    <li><span class="step-num">02</span><span>Resultaat omzetten naar HTML-tabel met <strong style="color:var(--cream)">ConvertTo-Html</strong></span></li>
+                    <li><span class="step-num">03</span><span>Outlook COM-object aanmaken en mail automatisch verzenden</span></li>
+                    <li><span class="step-num">04</span><span>Script inplannen via <strong style="color:var(--cream)">Task Scheduler</strong> op vaste tijd</span></li>
+                </ul>
+                <div class="code-block"><span class="cm"># Dagrapport automatisering</span>
+<span class="kw">$query</span>  = <span class="st">"SELECT Naam, Status, Datum FROM dbo.Incidents WHERE CAST(Datum AS DATE) = CAST(GETDATE() AS DATE)"</span>
+<span class="kw">$data</span>   = Invoke-Sqlcmd -ServerInstance <span class="st">"SERVER\INSTANCE"</span> -Database <span class="st">"DB"</span> -Query <span class="kw">$query</span>
+<span class="kw">$html</span>   = <span class="kw">$data</span> | ConvertTo-Html -Title <span class="st">"Dagrapport"</span> | Out-String
+
+<span class="kw">$ol</span>     = New-Object -ComObject Outlook.Application
+<span class="kw">$mail</span>   = <span class="kw">$ol</span>.CreateItem(0)
+<span class="kw">$mail</span>.To = <span class="st">"team@cbs.nl"</span>
+<span class="kw">$mail</span>.Subject  = <span class="st">"Dagrapport $(Get-Date -Format 'dd-MM-yyyy')"</span>
+<span class="kw">$mail</span>.HTMLBody = <span class="kw">$html</span>
+<span class="kw">$mail</span>.Send()</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Besparing: ~15 min/dag</div>
+            </div>
+
+            <!-- Workflow 2 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">Active Directory</span>
+                </div>
+                <h3 class="workflow-title">Nieuwe medewerker onboarden via AD</h3>
+                <p class="workflow-desc">Account aanmaken, groepen toewijzen en wachtwoord instellen in één script. Geen handmatig klikken in ADUC meer — consistent, herhaalbaar en te loggen.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span>Gegevens ophalen uit onboarding-formulier of CSV</span></li>
+                    <li><span class="step-num">02</span><span><strong style="color:var(--cream)">New-ADUser</strong> met alle attributen in één aanroep</span></li>
+                    <li><span class="step-num">03</span><span>Standaardgroepen toewijzen via <strong style="color:var(--cream)">Add-ADGroupMember</strong></span></li>
+                    <li><span class="step-num">04</span><span>Account activeren en actie loggen naar tekstbestand</span></li>
+                </ul>
+                <div class="code-block"><span class="cm"># Nieuwe medewerker onboarden</span>
+<span class="kw">$user</span> = @{
+    Name              = <span class="st">"Jan Janssen"</span>
+    SamAccountName    = <span class="st">"jjanssen"</span>
+    UserPrincipalName = <span class="st">"jjanssen@organisatie.nl"</span>
+    GivenName         = <span class="st">"Jan"</span>
+    Surname           = <span class="st">"Janssen"</span>
+    Department        = <span class="st">"IT"</span>
+    Path              = <span class="st">"OU=Medewerkers,DC=organisatie,DC=nl"</span>
+    AccountPassword   = (ConvertTo-SecureString <span class="st">"Welkom01!"</span> -AsPlainText -Force)
+    Enabled           = <span class="kw">$true</span>
+}
+New-ADUser @user
+
+<span class="cm"># Standaardgroepen toewijzen</span>
+@(<span class="st">"Alle-Medewerkers"</span>, <span class="st">"VPN-Gebruikers"</span>, <span class="st">"M365-Licentie"</span>) | ForEach-Object {
+    Add-ADGroupMember -Identity <span class="kw">$_</span> -Members <span class="st">"jjanssen"</span>
+}
+Write-Host <span class="st">"✓ Account aangemaakt: jjanssen"</span> -ForegroundColor Green</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Besparing: ~20 min per onboarding</div>
+            </div>
+
+            <!-- Workflow 3 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">TOPdesk</span>
+                </div>
+                <h3 class="workflow-title">TOPdesk ticket aanmaken via REST API</h3>
+                <p class="workflow-desc">Automatisch een incident aanmaken in TOPdesk vanuit een PowerShell-script. Koppel dit aan AD-monitoring of Slack voor een volledig geautomatiseerde meldingsketen.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span>TOPdesk Application Password aanmaken (Instellingen → Applicatiewachtwoorden)</span></li>
+                    <li><span class="step-num">02</span><span>Authenticeren via <strong style="color:var(--cream)">Basic Auth</strong> (operator:apppassword → Base64)</span></li>
+                    <li><span class="step-num">03</span><span>POST naar <strong style="color:var(--cream)">/api/incidents</strong> met JSON-body</span></li>
+                    <li><span class="step-num">04</span><span>Ticketnummer opvangen en loggen of doorsturen via Slack</span></li>
+                </ul>
+                <div class="code-block"><span class="cm"># TOPdesk incident aanmaken via REST API</span>
+<span class="kw">$base</span>  = <span class="st">"https://jouwbedrijf.topdesk.net"</span>
+<span class="kw">$cred</span>  = [Convert]::ToBase64String(
+           [Text.Encoding]::ASCII.GetBytes(<span class="st">"operator:AppPassword123"</span>))
+<span class="kw">$hdrs</span>  = @{ Authorization = <span class="st">"Basic $cred"</span>; "Content-Type" = <span class="st">"application/json"</span> }
+
+<span class="kw">$body</span>  = @{
+    caller           = @{ dynamicName = <span class="st">"Jan Janssen"</span> }
+    briefDescription = <span class="st">"Account vergrendeld - Jan Janssen"</span>
+    request          = <span class="st">"Gebruiker kan niet inloggen. Account vergrendeld."</span>
+    category         = @{ name = <span class="st">"Toegang"</span> }
+    subcategory      = @{ name = <span class="st">"Account"</span> }
+    priority         = @{ name = <span class="st">"P3"</span> }
+} | ConvertTo-Json
+
+<span class="kw">$ticket</span> = Invoke-RestMethod -Uri <span class="st">"$base/api/incidents"</span> -Method POST -Headers <span class="kw">$hdrs</span> -Body <span class="kw">$body</span>
+Write-Host <span class="st">"✓ Ticket aangemaakt: $($ticket.number)"</span> -ForegroundColor Green</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Besparing: handmatig ticket invullen elimineren</div>
+            </div>
+
+            <!-- Workflow 4 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">VS Code</span>
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">Python</span>
+                </div>
+                <h3 class="workflow-title">Custom code snippets instellen</h3>
+                <p class="workflow-desc">Stop met hetzelfde boilerplate steeds opnieuw typen. Sla je meest gebruikte structuren op als snippet — één afkorting + Tab genereert de volledige template.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span><kbd style="background:var(--key-bg);border:1px solid var(--border);color:var(--gold-light);padding:1px 6px;font-size:0.65rem;border-radius:2px;">Ctrl+Shift+P</kbd> → <em>Configure User Snippets</em></span></li>
+                    <li><span class="step-num">02</span><span>Kies taal: <strong style="color:var(--cream)">powershell</strong> of <strong style="color:var(--cream)">python</strong></span></li>
+                    <li><span class="step-num">03</span><span>Definieer snippet met <strong style="color:var(--cream)">prefix</strong> (afkorting) en <strong style="color:var(--cream)">$1, $2</strong> voor tabstops</span></li>
+                </ul>
+                <div class="code-block"><span class="cm">// PowerShell snippet: type "psfunc" + Tab</span>
+{
+  <span class="st">"PS Functie"</span>: {
+    <span class="st">"prefix"</span>: <span class="st">"psfunc"</span>,
+    <span class="st">"body"</span>: [
+      <span class="st">"function ${1:Verb-Noun} {"</span>,
+      <span class="st">"    [CmdletBinding()]"</span>,
+      <span class="st">"    param([string]$${2:Parameter})"</span>,
+      <span class="st">"    try { ${3:# logic} }"</span>,
+      <span class="st">"    catch { Write-Error $_.Exception.Message }"</span>,
+      <span class="st">"}"</span>
+    ]
+  }
+}</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Besparing: ~5 min per script</div>
+            </div>
+
+            <!-- Workflow 5 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">Outlook</span>
+                </div>
+                <h3 class="workflow-title">Zero-inbox systeem met Regels + Quick Parts</h3>
+                <p class="workflow-desc">Combineer automatische sorteerregels met herbruikbare e-mailtemplates (Quick Parts). Inkomende mail wordt direct gesorteerd, uitgaande mail schrijf je in seconden.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span><strong style="color:var(--cream)">Regels instellen</strong>: Start → Regels → Regels beheren. Sorteer op afzender, onderwerp of CC.</span></li>
+                    <li><span class="step-num">02</span><span><strong style="color:var(--cream)">Categorieën</strong> toewijzen met kleurcode per project of prioriteit</span></li>
+                    <li><span class="step-num">03</span><span><strong style="color:var(--cream)">Quick Parts</strong>: schrijf een standaardtekst → selecteer → Invoegen → Snel delen → Opslaan</span></li>
+                    <li><span class="step-num">04</span><span>Hergebruik via Invoegen → Snel delen → klik op template</span></li>
+                    <li><span class="step-num">05</span><span>Inbox verwerken in <strong style="color:var(--cream)">blokken</strong> (niet continu) — zet meldingen uit</span></li>
+                </ul>
+                <div class="workflow-impact"><div class="impact-dot"></div>Besparing: ~20 min/dag aan e-mail overhead</div>
+            </div>
+
+            <!-- Workflow 6 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">Windows</span>
+                    <span class="app-badge">PowerToys</span>
+                </div>
+                <h3 class="workflow-title">PowerToys productiviteitssetup</h3>
+                <p class="workflow-desc">PowerToys is een gratis Microsoft-tool met functies die Windows had moeten inbouwen. Installatie duurt 2 minuten, winst is dagelijks merkbaar.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span><strong style="color:var(--cream)">FancyZones</strong> — definieer vensterindelingen voor je monitor(s). Één toets = apps in vaste positie.</span></li>
+                    <li><span class="step-num">02</span><span><strong style="color:var(--cream)">PowerToys Run</strong> (Alt+Space) — snellere launcher dan Win+R. Opent apps, berekent, zoekt bestanden.</span></li>
+                    <li><span class="step-num">03</span><span><strong style="color:var(--cream)">Peek</strong> — bestanden previeuwen met spatiebalk (zoals macOS Quick Look)</span></li>
+                    <li><span class="step-num">04</span><span><strong style="color:var(--cream)">PowerRename</strong> — bulk bestandsnamen wijzigen met regex, rechtstreeks in Verkenner</span></li>
+                    <li><span class="step-num">05</span><span><strong style="color:var(--cream)">Color Picker</strong> (Win+Shift+C) — kleurcode van elk pixel op scherm kopiëren</span></li>
+                </ul>
+                <div class="workflow-impact"><div class="impact-dot"></div>Installeren via: winget install Microsoft.PowerToys</div>
+            </div>
+
+            <!-- Workflow 7 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">Active Directory</span>
+                    <span class="app-badge">Slack</span>
+                    <span class="app-badge">TOPdesk</span>
+                </div>
+                <h3 class="workflow-title">Vergrendelde accounts — detectie, ticket &amp; melding</h3>
+                <p class="workflow-desc">Één script dat vergrendelde AD-accounts opspoort, automatisch een TOPdesk-ticket aanmaakt en een Slack-melding stuurt naar het servicedesk-kanaal. Volledig handen-vrij.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span><strong style="color:var(--cream)">Search-ADAccount -LockedOut</strong> vindt alle vergrendelde accounts</span></li>
+                    <li><span class="step-num">02</span><span>Per account automatisch een TOPdesk-incident aanmaken via REST API</span></li>
+                    <li><span class="step-num">03</span><span>Slack-webhook stuurt melding naar <strong style="color:var(--cream)">#servicedesk</strong> kanaal</span></li>
+                    <li><span class="step-num">04</span><span>Task Scheduler triggert dit script elke 15 minuten</span></li>
+                </ul>
+                <div class="code-block"><span class="cm"># Vergrendelde accounts → Slack melding</span>
+<span class="kw">$locked</span> = Search-ADAccount -LockedOut | Select-Object Name, SamAccountName, LockedOut
+
+<span class="kw">if</span> (<span class="kw">$locked</span>) {
+    <span class="kw">$tekst</span> = <span class="kw">$locked</span> | ForEach-Object { <span class="st">"• $($_.Name) ($($_.SamAccountName))"</span> }
+
+    <span class="cm"># Slack webhook</span>
+    <span class="kw">$webhook</span> = <span class="st">"https://hooks.slack.com/services/TXXXX/BXXXX/XXXXX"</span>
+    <span class="kw">$bericht</span> = @{
+        text = <span class="st">"⚠️ *Vergrendelde accounts gevonden*`n"</span> + (<span class="kw">$tekst</span> -join <span class="st">"`n"</span>)
+    } | ConvertTo-Json
+    Invoke-RestMethod -Uri <span class="kw">$webhook</span> -Method POST -Body <span class="kw">$bericht</span> -ContentType <span class="st">"application/json"</span>
+
+    <span class="cm"># Optioneel: account direct ontgrendelen</span>
+    <span class="cm"># $locked | ForEach-Object { Unlock-ADAccount -Identity $_.SamAccountName }</span>
+}</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Resultaat: proactief signaleren zonder handmatig controleren</div>
+            </div>
+
+            <!-- Workflow 8 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">PowerShell</span>
+                    <span class="app-badge">Windows</span>
+                </div>
+                <h3 class="workflow-title">Terugkerende taken automatiseren met Task Scheduler</h3>
+                <p class="workflow-desc">Alles wat je meer dan twee keer handmatig doet, hoort in een geplande taak. PowerShell + Task Scheduler = jouw persoonlijke automatiseringsserver.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span>Schrijf je script en test het volledig in PowerShell</span></li>
+                    <li><span class="step-num">02</span><span>Maak taak aan via PowerShell (geen GUI nodig)</span></li>
+                    <li><span class="step-num">03</span><span>Stel trigger in: dagelijks, bij aanmelding, of bij een event</span></li>
+                    <li><span class="step-num">04</span><span>Log uitvoer naar bestand voor controle achteraf</span></li>
+                </ul>
+                <div class="code-block"><span class="cm"># Taak aanmaken via PowerShell</span>
+<span class="kw">$trigger</span> = New-ScheduledTaskTrigger -Daily -At <span class="st">"07:30"</span>
+<span class="kw">$action</span>  = New-ScheduledTaskAction -Execute <span class="st">"pwsh.exe"</span> `
+             -Argument <span class="st">"-File C:\Scripts\dagrapport.ps1"</span>
+
+Register-ScheduledTask `
+  -TaskName <span class="st">"Dagrapport CBS"</span> `
+  -Trigger   <span class="kw">$trigger</span> `
+  -Action    <span class="kw">$action</span> `
+  -RunLevel  Highest</div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Principe: als het herhaalbaar is, automatiseer het</div>
+            </div>
+
+            <!-- Workflow 9 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">Azure Data Studio</span>
+                    <span class="app-badge">Power BI</span>
+                    <span class="app-badge">SQL</span>
+                </div>
+                <h3 class="workflow-title">SQL-analyse naar Power BI — volledige keten</h3>
+                <p class="workflow-desc">Van ruwe data in ADS naar een gepubliceerd Power BI rapport: query bouwen en valideren in ADS, verbinding opzetten in Power BI, en refresh automatiseren. Één keer inrichten, daarna zelfrijdend.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span>Query bouwen en testen in <strong style="color:var(--cream)">ADS</strong> — gebruik SET STATISTICS IO ON om performance te valideren vóór je verbindt</span></li>
+                    <li><span class="step-num">02</span><span>In Power BI: <strong style="color:var(--cream)">Gegevens ophalen → SQL Server</strong> → kies Import of DirectQuery op basis van datavolume</span></li>
+                    <li><span class="step-num">03</span><span>Sla de SQL-query op als <strong style="color:var(--cream)">View</strong> op de server — Power BI koppelt aan de view, niet aan ruwe SQL</span></li>
+                    <li><span class="step-num">04</span><span>Gepubliceerd rapport: in Power BI Service → Dataset → <strong style="color:var(--cream)">Geplande vernieuwing</strong> instellen</span></li>
+                    <li><span class="step-num">05</span><span>Gateway installeren op een machine met netwerktoegang tot SQL Server voor automatische refresh</span></li>
+                </ul>
+                <div class="code-block"><span class="cm">-- Maak een view aan op SQL Server (ADS)</span>
+<span class="cm">-- Power BI koppelt hieraan — query-wijzigingen hoef je niet opnieuw te verbinden</span>
+CREATE OR ALTER VIEW dbo.vw_BI_Incidents AS
+SELECT
+    i.IncidentID,
+    i.Datum,
+    i.Status,
+    i.Prioriteit,
+    m.Naam        AS Medewerker,
+    a.Naam        AS Afdeling,
+    DATEDIFF(HOUR, i.AangemaaktOp, i.GeslotenOp) AS DoorlooptijdUur
+FROM dbo.Incidents   i
+JOIN dbo.Medewerkers m ON i.MedewerkerID = m.ID
+JOIN dbo.Afdelingen  a ON m.AfdelingID   = a.ID
+WHERE i.Datum >= DATEADD(YEAR, -1, GETDATE());
+<span class="cm">
+-- Power BI connectie: Server = SERVER\INSTANCE, Database = DB, View = dbo.vw_BI_Incidents</span></div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Vuistregel: &lt;1M rijen → Import · &gt;1M of real-time → DirectQuery</div>
+            </div>
+
+            <!-- Workflow 10 -->
+            <div class="workflow-card">
+                <div class="workflow-apps">
+                    <span class="app-badge">Azure Data Studio</span>
+                    <span class="app-badge">Power BI</span>
+                </div>
+                <h3 class="workflow-title">ADS Notebooks als BI-analysedossier</h3>
+                <p class="workflow-desc">Gebruik ADS Notebooks om SQL-onderzoeken te documenteren als reproduceerbaar dossier: code, resultaat en uitleg in één bestand. Deelbaar via e-mail of Git, bruikbaar als basis voor Power BI-rapporten.</p>
+                <ul class="workflow-steps">
+                    <li><span class="step-num">01</span><span><kbd style="background:var(--key-bg);border:1px solid var(--border);color:var(--gold-light);padding:1px 6px;font-size:0.65rem;border-radius:2px;">Ctrl+Shift+P</kbd> → <em>New Notebook</em> → kernel: <strong style="color:var(--cream)">SQL</strong></span></li>
+                    <li><span class="step-num">02</span><span>Wissel tussen <strong style="color:var(--cream)">Code-cellen</strong> (SQL) en <strong style="color:var(--cream)">Tekst-cellen</strong> (Markdown) voor context en bevindingen</span></li>
+                    <li><span class="step-num">03</span><span>Voer cellen afzonderlijk uit — resultaten blijven zichtbaar naast de query</span></li>
+                    <li><span class="step-num">04</span><span>Sla op als <strong style="color:var(--cream)">.ipynb</strong> — open het later en alle resultaten zijn nog zichtbaar zonder opnieuw te draaien</span></li>
+                    <li><span class="step-num">05</span><span>Gebruik als <strong style="color:var(--cream)">handover-document</strong> naar collega's of als onderbouwing voor een Power BI-rapport</span></li>
+                </ul>
+                <div class="code-block"><span class="cm">-- Cel 1: Markdown (Tekst-cel)</span>
+<span class="cm">## Analyse: Incidentdoorlooptijd per afdeling — april 2026
+Doel: onderzoeken welke afdelingen buiten SLA vallen (&gt;4 uur P2).
+Bron: dbo.Incidents, peildatum 2026-04-19.</span>
+
+<span class="cm">-- Cel 2: SQL (Code-cel)</span>
+SELECT
+    a.Naam                                        AS Afdeling,
+    COUNT(*)                                      AS Totaal,
+    SUM(CASE WHEN DoorlooptijdUur &gt; 4 THEN 1 ELSE 0 END) AS BuitenSLA,
+    CAST(SUM(CASE WHEN DoorlooptijdUur &gt; 4 THEN 1.0 ELSE 0 END)
+         / COUNT(*) * 100 AS DECIMAL(5,1))        AS [SLA-breuk %]
+FROM dbo.vw_BI_Incidents
+GROUP BY a.Naam
+ORDER BY [SLA-breuk %] DESC;
+
+<span class="cm">-- Cel 3: Markdown
+## Bevinding
+Afdeling X heeft 34% SLA-breuk. Aanbeveling: escaleren naar teamlead.</span></div>
+                <div class="workflow-impact"><div class="impact-dot"></div>Resultaat: analyse is herhaalbaar, deelbaar en direct als BI-bron bruikbaar</div>
+            </div>
+
         </div>
     </div>
 
