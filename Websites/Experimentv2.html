@@ -553,6 +553,72 @@
             opacity: 0.4;
         }
 
+        /* ── TIER TOGGLE ── */
+        .tier-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: -10px 0 44px;
+        }
+
+        .tier-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .tier-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--cream-dim);
+            padding: 6px 22px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .tier-btn:not(:first-child) { border-left: none; }
+
+        .tier-btn:hover {
+            color: var(--cream);
+            background: rgba(201,168,76,0.05);
+        }
+
+        .tier-btn.active {
+            background: var(--gold-glow);
+            border-color: var(--gold);
+            color: var(--gold-light);
+            z-index: 1;
+        }
+
+        .tier-btn.active + .tier-btn { border-left-color: transparent; }
+
+        .tier-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.56rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            text-align: center;
+            order: -1;
+        }
+
+        /* Tier dot indicator on shortcut items */
+        .tier-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-right: 5px;
+            display: inline-block;
+        }
+        .tier-dot.core     { background: #6aab6a; }
+        .tier-dot.advanced { background: var(--gold); }
+
         /* ── ANIMATIONS ── */
         @keyframes fadeUp {
             from { opacity:0; transform:translateY(20px); }
@@ -583,7 +649,7 @@
     <h1 class="hero-title">The Operator's Codex</h1>
     <div class="hero-line"></div>
     <p class="hero-sub">Master your tools &nbsp;·&nbsp; Command your workflow</p>
-    <p class="hero-count"><span>9</span> applicaties &nbsp;·&nbsp; <span>150+</span> shortcuts &nbsp;·&nbsp; <span>27</span> pro tips</p>
+    <p class="hero-count"><span>10</span> applicaties &nbsp;·&nbsp; <span>200+</span> shortcuts &nbsp;·&nbsp; <span>27</span> pro tips</p>
 
     <div class="scroll-cue">
         <span>Begin</span>
@@ -599,7 +665,7 @@
             <input type="text" id="search" placeholder="Zoek een shortcut of tip...">
         </div>
         <div class="tabs">
-            <button class="tab active" data-app="sql">Azure Data Studio</button>
+            <button class="tab active" data-app="textediting">✦ Text Editing</button>
             <button class="tab" data-app="windows">Windows</button>
             <button class="tab" data-app="outlook">Outlook</button>
             <button class="tab" data-app="vscode">VS Code</button>
@@ -608,6 +674,7 @@
             <button class="tab" data-app="slack">Slack</button>
             <button class="tab" data-app="powershell">PowerShell</button>
             <button class="tab" data-app="python">Python</button>
+            <button class="tab" data-app="sql">Azure Data Studio</button>
             <button class="tab" data-app="workflows">⚡ Workflows</button>
         </div>
     </div>
@@ -616,6 +683,110 @@
 <!-- ══ CONTENT ══ -->
 <div id="content">
 
+    <!-- ── TEXT EDITING ── -->
+    <div class="app-section active" id="app-textediting">
+        <div class="app-header">
+            <p class="app-label">Universal Mastery</p>
+            <h2 class="app-title">Text Editing & Selection</h2>
+        </div>
+        <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+
+        <div class="categories">
+            <!-- CURSOR MOVEMENT -->
+            <div class="category">
+                <h3 class="cat-title">Cursor Movement</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Home</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Begin van de regel</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>End</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Einde van de regel</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Home</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Begin van document</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>End</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Einde van document</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Woord naar rechts springen</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>←</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Woord naar links springen</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Alinea omhoog/omlaag springen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Ga naar regelnummer (ADS/VSCode)</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>←/→</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Navigatiepunt voor/achteruit (VSCode)</span></div>
+            </div>
+
+            <!-- TEXT SELECTION -->
+            <div class="category">
+                <h3 class="cat-title">Text Selection</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>→/←</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer karakter voor karakter</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Home/End</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer tot begin/einde van regel</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>A</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Alles selecteren</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer woord voor woord naar rechts</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>←</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer woord voor woord naar links</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Home</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer alles boven cursor</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>End</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer alles onder cursor</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Selecteer volledige regel omhoog/omlaag</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Selecteer alle identieke matches (VSCode/ADS)</span></div>
+            </div>
+
+            <!-- WORD & LINE OPERATIONS -->
+            <div class="category">
+                <h3 class="cat-title">Word & Line Operations</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Kopieer (zonder selectie = volledige regel in VSCode)</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>X</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Knip (zonder selectie = volledige regel)</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Backspace</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Verwijder heel woord links van cursor</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Delete</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Verwijder heel woord rechts van cursor</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Verplaats regel omhoog/omlaag (VSCode/ADS)</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>K</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Verwijder volledige regel (VSCode)</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>↓</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Dupliceer regel naar beneden (VSCode/ADS)</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Commentaar toevoegen aan selectie (VSCode)</span></div>
+            </div>
+
+            <!-- FIND & REPLACE -->
+            <div class="category">
+                <h3 class="cat-title">Find, Replace & Navigate</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Zoeken in bestand</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>F3</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Volgende overeenkomst</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>F3</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Vorige overeenkomst</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Zoeken & vervangen</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer volgende match (VSCode/ADS)</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>H</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Vervangen in alle bestanden (VSCode)</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Selecteer alle matches in zoekbalk</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Zoeken in alle bestanden (workspace)</span></div>
+            </div>
+
+            <!-- SQL-SPECIFIC TEXT POWER -->
+            <div class="category">
+                <h3 class="cat-title">SQL Code Editing Power</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer kolomnaam of alias woord voor woord</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Home</kbd> → <kbd>Shift</kbd><span class="plus">+</span><kbd>End</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer hele SQL-regel in één beweging</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer meerdere regels (JOIN-blokken)</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd> ×n</div><span class="shortcut-desc"><span class="tier-dot core"></span>Selecteer herhaalde kolomnaam, hernoem in bulk</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>klik</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Kolomselectie (box select) voor meerdere regels</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Alle tabelaliassen tegelijk hernoemen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>↑/↓</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Multi-cursor verticaal — voeg prefix toe aan meerdere kolommen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>→</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Selectie uitbreiden op woordgrens (smart expand)</span></div>
+            </div>
+
+            <!-- CLIPBOARD & UNDO STACK -->
+            <div class="category">
+                <h3 class="cat-title">Clipboard & Undo Stack</h3>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Ongedaan maken</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Y</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Opnieuw uitvoeren</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Plakken</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Klembordgeschiedenis — plak eerder gekopieerde SQL</span></div>
+                <div class="shortcut-item" data-tier="core"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>V</kbd></div><span class="shortcut-desc"><span class="tier-dot core"></span>Plakken zonder opmaak (plain text)</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd> ×n</div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Meerdere stappen terug — herstel vorig query-blok</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>K</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></div><span class="shortcut-desc"><span class="tier-dot advanced"></span>Cursor-selectie undo (VSCode)</span></div>
+            </div>
+        </div>
+
+        <!-- Pro Tips for Text Editing -->
+        <div class="tips-section">
+            <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+            <p class="tips-title">Operator Tactics</p>
+            <div class="tips-grid">
+                <div class="tip-card"><div class="tip-number">01</div><p class="tip-text"><strong>Ctrl+Shift+→ is je SQL-mes:</strong> in een SELECT-lijst navigeer je razendsnel tussen kolomnamen, aliassen en functies zonder de muis aan te raken. Combineer met Shift voor directe selectie.</p></div>
+                <div class="tip-card"><div class="tip-number">02</div><p class="tip-text"><strong>Box select (Alt+Shift+klik)</strong> is goud voor kolom-prefixing: zet cursor boven de eerste JOIN, trek een kolom naar beneden en type een alias — alle regels krijgen tegelijk hetzelfde prefix.</p></div>
+                <div class="tip-card"><div class="tip-number">03</div><p class="tip-text"><strong>Ctrl+D op tabelaliassen:</strong> selecteer "tbl1", druk Ctrl+D tot alle matches geselecteerd zijn, hernoem in één keer. Geen Find &amp; Replace-dialoog nodig — nul context-switch.</p></div>
+                <div class="tip-card"><div class="tip-number">04</div><p class="tip-text"><strong>Home → Shift+End → Ctrl+X</strong> is de snelste manier om een SQL-regel te verplaatsen. Knip de hele regel, positioneer cursor en plak. Sneller dan Alt+↑/↓ voor grotere afstanden.</p></div>
+                <div class="tip-card"><div class="tip-number">05</div><p class="tip-text"><strong>Win+V (klembordgeschiedenis)</strong> is essentieel bij query-iteratie: kopieer meerdere query-varianten, dan kies je precies de juiste versie terug — geen ctrl+z-roulette meer.</p></div>
+                <div class="tip-card"><div class="tip-number">06</div><p class="tip-text"><strong>Ctrl+Alt+↓ (multi-cursor)</strong> gecombineerd met Ctrl+Shift+→ selecteert exact dezelfde positie op meerdere regels. Gebruik dit om bij meerdere SELECT-kolommen dezelfde aanpassing te doen.</p></div>
+            </div>
+        </div>
+    </div>
+
     <!-- ── WINDOWS ── -->
     <div class="app-section" id="app-windows">
         <div class="app-header">
@@ -623,6 +794,13 @@
             <h2 class="app-title">Windows</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Systeem</h3>
@@ -695,6 +873,13 @@
             <h2 class="app-title">Outlook</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">E-mail</h3>
@@ -756,6 +941,13 @@
             <h2 class="app-title">VS Code</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Navigatie & Palette</h3>
@@ -846,6 +1038,13 @@
             <h2 class="app-title">Power BI</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Canvas & Visuals</h3>
@@ -927,6 +1126,13 @@ Titel =
             <h2 class="app-title">Chrome</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Tabbladen & Vensters</h3>
@@ -985,6 +1191,13 @@ Titel =
             <h2 class="app-title">Slack</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Navigatie</h3>
@@ -1045,6 +1258,13 @@ Titel =
             <h2 class="app-title">PowerShell</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Terminal Shortcuts</h3>
@@ -1136,6 +1356,13 @@ $ErrorActionPreference = 'Stop'
             <h2 class="app-title">Python</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn active" data-tier="core">Core</button>
+                <button class="tier-btn" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
             <div class="category">
                 <h3 class="cat-title">Debuggen (VS Code)</h3>
@@ -1218,13 +1445,21 @@ DATA_DIR = Path(__file__).parent / <span class="st">"data"</span>
         </div>
     </div>
 
+
     <!-- ── AZURE DATA STUDIO ── -->
-    <div class="app-section active" id="app-sql">
+    <div class="app-section" id="app-sql">
         <div class="app-header">
             <p class="app-label">Database & Query</p>
             <h2 class="app-title">Azure Data Studio · SQL</h2>
         </div>
         <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line r"></div></div>
+        <div class="tier-bar">
+            <span class="tier-label" id="tier-label-text">&#9632; Core &mdash; Essential shortcuts</span>
+            <div class="tier-toggle">
+                <button class="tier-btn Core" data-tier="core">Core</button>
+                <button class="tier-btn Advanced" data-tier="advanced">Advanced</button>
+            </div>
+        </div>
         <div class="categories">
 
             <div class="category">
@@ -1245,25 +1480,25 @@ DATA_DIR = Path(__file__).parent / <span class="st">"data"</span>
 
             <div class="category">
                 <h3 class="cat-title">Uitvoeringsplan & Performance</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Werkelijk uitvoeringsplan aan/uit</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Geschat uitvoeringsplan tonen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET STATISTICS TIME ON</kbd></div><span class="shortcut-desc">CPU- en elapsed-tijd meten</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET STATISTICS IO ON</kbd></div><span class="shortcut-desc">Logische en fysieke reads meten</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SET NOCOUNT ON</kbd></div><span class="shortcut-desc">Verberg "rows affected" ruis</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Table Scan</kbd></div><span class="shortcut-desc">⚠ In uitv.plan = ontbrekende index</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Key Lookup</kbd></div><span class="shortcut-desc">⚠ Inefficiënte indexdekking</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>M</kbd></div><span class="shortcut-desc">Werkelijk uitvoeringsplan aan/uit</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></div><span class="shortcut-desc">Geschat uitvoeringsplan tonen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>SET STATISTICS TIME ON</kbd></div><span class="shortcut-desc">CPU- en elapsed-tijd meten</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>SET STATISTICS IO ON</kbd></div><span class="shortcut-desc">Logische en fysieke reads meten</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>SET NOCOUNT ON</kbd></div><span class="shortcut-desc">Verberg "rows affected" ruis</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Table Scan</kbd></div><span class="shortcut-desc">⚠ In uitv.plan = ontbrekende index</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Key Lookup</kbd></div><span class="shortcut-desc">⚠ Inefficiënte indexdekking</span></div>
             </div>
 
             <div class="category">
                 <h3 class="cat-title">Troubleshooting Queries</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_who2</kbd></div><span class="shortcut-desc">Actieve verbindingen & status</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_helptext</kbd></div><span class="shortcut-desc">Broncode van proc/view tonen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>sp_help</kbd></div><span class="shortcut-desc">Tabelstructuur & kolommen</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>DBCC INPUTBUFFER</kbd></div><span class="shortcut-desc">Laatste query van een SPID</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_exec_requests</kbd></div><span class="shortcut-desc">Lopende queries live bekijken</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_exec_query_stats</kbd></div><span class="shortcut-desc">Query-prestaties historisch</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_os_wait_stats</kbd></div><span class="shortcut-desc">Waarop wacht SQL Server?</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>dm_db_missing_index</kbd></div><span class="shortcut-desc">Door SQL aanbevolen indexes</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>sp_who2</kbd></div><span class="shortcut-desc">Actieve verbindingen & status</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>sp_helptext</kbd></div><span class="shortcut-desc">Broncode van proc/view tonen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>sp_help</kbd></div><span class="shortcut-desc">Tabelstructuur & kolommen</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>DBCC INPUTBUFFER</kbd></div><span class="shortcut-desc">Laatste query van een SPID</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>dm_exec_requests</kbd></div><span class="shortcut-desc">Lopende queries live bekijken</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>dm_exec_query_stats</kbd></div><span class="shortcut-desc">Query-prestaties historisch</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>dm_os_wait_stats</kbd></div><span class="shortcut-desc">Waarop wacht SQL Server?</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>dm_db_missing_index</kbd></div><span class="shortcut-desc">Door SQL aanbevolen indexes</span></div>
             </div>
 
             <div class="category">
@@ -1280,11 +1515,11 @@ DATA_DIR = Path(__file__).parent / <span class="st">"data"</span>
 
             <div class="category">
                 <h3 class="cat-title">Extensions (aanbevolen)</h3>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SQL Server Profiler</kbd></div><span class="shortcut-desc">Live queries tracen op server</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>SandDance</kbd></div><span class="shortcut-desc">Visuele dataverkenning vanuit ADS</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Admin Pack</kbd></div><span class="shortcut-desc">Server-dashboards & beheer</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Rainbow CSV</kbd></div><span class="shortcut-desc">CSV-kolommen per kleur zichtbaar</span></div>
-                <div class="shortcut-item"><div class="shortcut-keys"><kbd>Whoisactive</kbd></div><span class="shortcut-desc">sp_WhoIsActive — betere sp_who2</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>SQL Server Profiler</kbd></div><span class="shortcut-desc">Live queries tracen op server</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>SandDance</kbd></div><span class="shortcut-desc">Visuele dataverkenning vanuit ADS</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Admin Pack</kbd></div><span class="shortcut-desc">Server-dashboards & beheer</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Rainbow CSV</kbd></div><span class="shortcut-desc">CSV-kolommen per kleur zichtbaar</span></div>
+                <div class="shortcut-item" data-tier="advanced"><div class="shortcut-keys"><kbd>Whoisactive</kbd></div><span class="shortcut-desc">sp_WhoIsActive — betere sp_who2</span></div>
             </div>
 
         </div>
@@ -1322,6 +1557,7 @@ ORDER BY r.wait_time DESC;</div>
             </div>
         </div>
     </div>
+
 
     <!-- ── WORKFLOWS ── -->
     <div class="app-section" id="app-workflows">
@@ -1691,6 +1927,63 @@ Afdeling X heeft 34% SLA-breuk. Aanbeveling: escaleren naar teamlead.</span></di
         requestAnimationFrame(loop);
     })();
 
+    /* ── Assign default tier to untagged shortcut-items ── */
+    document.querySelectorAll('.shortcut-item:not([data-tier])').forEach(el => {
+        el.setAttribute('data-tier', 'core');
+    });
+
+    /* ── Tier switching ── */
+    // 'core' shows only core items; 'advanced' shows all (core + advanced)
+    const TIER_ORDER = ['core', 'advanced'];
+    let activeTier = 'core'; // default: show only beginner
+
+    // Sync all tier-btn groups to the default state
+    document.querySelectorAll('.tier-btn[data-tier="advanced"]').forEach(b => b.classList.add('active'));
+    document.querySelectorAll('.tier-btn[data-tier="core"]').forEach(b => b.classList.remove('active'));
+
+    const TIER_LABELS = {
+        core:     '&#9632; Core — Essential shortcuts',
+        advanced: '&#9670; Advanced — Power moves'
+    };
+
+    function updateTierLabels() {
+        document.querySelectorAll('.tier-label').forEach(el => {
+            el.innerHTML = TIER_LABELS[activeTier];
+        });
+    }
+
+    document.querySelectorAll('.tier-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            activeTier = btn.dataset.tier;
+            document.querySelectorAll('.tier-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.tier === activeTier);
+            });
+            updateTierLabels();
+            applyTierVisibility();
+        });
+    });
+
+    updateTierLabels();
+
+    function applyTierVisibility() {
+        document.querySelectorAll('.shortcut-item[data-tier]').forEach(item => {
+            const t = item.dataset.tier || 'core';
+            if (activeTier === 'core') {
+                // Core mode: show only core items
+                item.style.display = (t === 'core') ? '' : 'none';
+            } else {
+                // Advanced mode: show ONLY advanced items, hide core
+                item.style.display = (t === 'advanced') ? '' : 'none';
+            }
+        });
+        document.querySelectorAll('.category').forEach(cat => {
+            const anyVisible = [...cat.querySelectorAll('.shortcut-item')].some(i => i.style.display !== 'none');
+            cat.style.display = anyVisible ? '' : 'none';
+        });
+    }
+
+    applyTierVisibility();
+
     /* ── Tab switching ── */
     const tabs = document.querySelectorAll('.tab');
     const sections = document.querySelectorAll('.app-section');
@@ -1716,6 +2009,8 @@ Afdeling X heeft 34% SLA-breuk. Aanbeveling: escaleren naar teamlead.</span></di
             el.classList.remove('hidden');
             el.style.display = '';
         });
+        // Re-apply tier visibility after clearing search
+        applyTierVisibility();
         noResults.style.display = 'none';
     }
 
@@ -1734,9 +2029,12 @@ Afdeling X heeft 34% SLA-breuk. Aanbeveling: escaleren naar teamlead.</span></di
             let sectionMatch = false;
 
             items.forEach(item => {
-                const match = item.textContent.toLowerCase().includes(q);
-                item.style.display = match ? '' : 'none';
-                if (match) sectionMatch = true;
+                const t = item.dataset.tier || 'core';
+                const tierOk = activeTier === 'core' ? (t === 'core') : (t === 'advanced');
+                const textMatch = item.textContent.toLowerCase().includes(q);
+                const show = tierOk && textMatch;
+                item.style.display = show ? '' : 'none';
+                if (show) sectionMatch = true;
             });
 
             tips.forEach(tip => {
