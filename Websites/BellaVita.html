@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Vita — Ristorante Bocholtz</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --terra:#8B3A2A; --terra-light:#C4622D; --cream:#F5EDD8; --dark:#1C1008; --gold:#B8860B; --text-body:#3D2B1A; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Lato',sans-serif; background-color:var(--cream); color:var(--text-body); }
+
+  nav { position:fixed; top:0; width:100%; z-index:100; background:rgba(28,16,8,0.96); backdrop-filter:blur(8px); border-bottom:1px solid rgba(184,134,11,0.25); }
+  .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:68px; }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--cream); letter-spacing:0.02em; text-decoration:none; }
+  .nav-logo span { color:var(--terra-light); font-style:italic; }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a { font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(245,237,216,0.75); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--cream); }
+  .nav-cta { background:var(--terra); color:var(--cream) !important; padding:0.5rem 1.2rem; border-radius:2px; font-weight:700 !important; }
+  .nav-cta:hover { background:var(--terra-light) !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+  .hamburger span { width:24px; height:2px; background:var(--cream); display:block; }
+  #mobile-menu { display:none; background:rgba(28,16,8,0.98); padding:1.5rem 2rem; }
+  #mobile-menu a { display:block; padding:0.75rem 0; color:var(--cream); text-decoration:none; border-bottom:1px solid rgba(245,237,216,0.1); font-size:1rem; }
+
+  .info-ribbon { background:#F0E6B8; border-top:1px solid #D9CC8A; border-bottom:1px solid #D9CC8A; padding:0.6rem 1.5rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
+  .info-ribbon-item { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:700; color:#3D2B1A; white-space:nowrap; }
+  .info-ribbon-dot { width:5px; height:5px; background:#B8860B; border-radius:50%; opacity:0.7; }
+
+  .hero { min-height:100vh; background:linear-gradient(rgba(28,16,8,0.55),rgba(28,16,8,0.72)),url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80') center/cover no-repeat; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 1.5rem; }
+  .hero-content { max-width:700px; }
+  .hero-eyebrow { font-size:0.75rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+  .hero-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem,9vw,6.5rem); font-weight:700; color:var(--cream); line-height:1.0; margin-bottom:0.4rem; }
+  .hero-subtitle { font-family:'Playfair Display',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-style:italic; color:rgba(245,237,216,0.75); margin-bottom:2.5rem; }
+  .hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--terra); color:var(--cream); padding:0.85rem 2.2rem; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; font-weight:700; text-decoration:none; border-radius:2px; transition:background 0.2s,transform 0.2s; display:inline-block; }
+  .btn-primary:hover { background:var(--terra-light); transform:translateY(-1px); }
+  .btn-outline { border:1.5px solid rgba(245,237,216,0.5); color:var(--cream); padding:0.85rem 2.2rem; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; font-weight:700; text-decoration:none; border-radius:2px; transition:border-color 0.2s,background 0.2s; }
+  .btn-outline:hover { border-color:var(--cream); background:rgba(245,237,216,0.08); }
+
+  section { scroll-margin-top:68px; }
+  .section-label { font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--terra); margin-bottom:0.8rem; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; color:var(--dark); line-height:1.2; }
+  .divider { width:48px; height:2px; background:var(--terra); margin:1.2rem auto 0; }
+  .divider-left { margin:1.2rem 0 0; }
+
+  #openingstijden { background:var(--dark); padding:5rem 1.5rem; }
+  .ot-inner { max-width:1100px; margin:0 auto; }
+  .ot-header { text-align:center; margin-bottom:3rem; }
+  .ot-header .section-title { color:var(--cream); }
+  .ot-header .section-label { color:var(--terra-light); }
+  .ot-header .divider { background:var(--terra-light); }
+  .ot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; align-items:start; }
+  .ot-card { background:rgba(245,237,216,0.05); border:1px solid rgba(245,237,216,0.1); border-radius:4px; padding:2rem; }
+  .ot-card-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--terra-light); margin-bottom:1.5rem; font-style:italic; }
+  .ot-row { display:flex; justify-content:space-between; align-items:center; padding:0.55rem 0; border-bottom:1px solid rgba(245,237,216,0.08); }
+  .ot-row:last-child { border-bottom:none; }
+  .ot-day { font-size:0.9rem; color:rgba(245,237,216,0.6); }
+  .ot-time { font-size:0.9rem; color:var(--cream); }
+  .ot-time.closed { color:var(--terra-light); font-style:italic; }
+  .ot-note { background:rgba(139,58,42,0.2); border-left:3px solid var(--terra); padding:1.2rem 1.5rem; border-radius:0 4px 4px 0; }
+  .ot-note-title { font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--terra-light); margin-bottom:0.8rem; font-weight:700; }
+  .ot-note p { font-size:0.88rem; color:rgba(245,237,216,0.75); line-height:1.7; margin-bottom:0.6rem; }
+  .ot-note p:last-child { margin-bottom:0; }
+  .ot-note strong { color:var(--cream); }
+  .map-frame { width:100%; height:220px; background:rgba(245,237,216,0.05); border:1px solid rgba(245,237,216,0.1); border-radius:4px; overflow:hidden; }
+  .map-frame iframe { width:100%; height:100%; border:none; filter:grayscale(1) invert(0.9) contrast(0.9); }
+
+  #menu { background:var(--cream); padding:5rem 1.5rem; }
+  .menu-inner { max-width:1100px; margin:0 auto; }
+  .menu-header { margin-bottom:3rem; }
+  .menu-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+  .menu-tab { padding:0.6rem 1.4rem; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; cursor:pointer; color:rgba(61,43,26,0.5); border:1.5px solid rgba(61,43,26,0.18); border-radius:2px; transition:all 0.2s; background:none; font-family:'Lato',sans-serif; }
+  .menu-tab:hover { color:var(--terra); border-color:var(--terra); }
+  .menu-tab.active { color:var(--cream); background:var(--terra); border-color:var(--terra); }
+  .menu-panel { display:none; }
+  .menu-panel.active { display:block; }
+
+  .menu-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:0; column-gap:3rem; }
+  .menu-item { display:flex; justify-content:space-between; align-items:flex-start; padding:1.1rem 0; border-bottom:1px solid rgba(61,43,26,0.1); gap:2rem; }
+  .menu-item-info { flex:1; min-width:0; }
+  .menu-item-name { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; color:var(--dark); margin-bottom:0.25rem; }
+  .menu-item-desc { font-size:0.82rem; color:rgba(61,43,26,0.55); line-height:1.5; }
+  .menu-item-price { font-size:0.95rem; font-weight:700; color:var(--terra); white-space:nowrap; min-width:56px; text-align:right; padding-top:0.1rem; flex-shrink:0; }
+
+  .menu-cat-title { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--terra); margin-top:2.5rem; margin-bottom:0.2rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(139,58,42,0.2); font-style:italic; }
+  .menu-cat-title:first-child { margin-top:0; }
+  .menu-section-divider { width:100%; height:1px; background:rgba(61,43,26,0.1); margin:2.5rem 0; }
+  .menu-subtabs { display:flex; gap:0; flex-wrap:wrap; margin-bottom:2rem; border-bottom:1.5px solid rgba(61,43,26,0.12); padding-top:1rem; }
+  .menu-subtab { padding:0.6rem 1.1rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; cursor:pointer; color:rgba(61,43,26,0.4); border-bottom:2px solid transparent; margin-bottom:-1.5px; transition:color 0.2s,border-color 0.2s; background:none; border-top:none; border-left:none; border-right:none; font-family:'Lato',sans-serif; }
+  .menu-subtab:hover { color:var(--text-body); }
+  .menu-subtab.active { color:var(--terra); border-bottom-color:var(--terra); }
+  .menu-subpanel { display:none; }
+  .menu-subpanel.active { display:block; }
+
+  .veg-badge { display:inline-block; font-size:0.6rem; letter-spacing:0.08em; padding:1px 5px; border:1px solid rgba(60,140,60,0.45); color:rgba(40,120,40,0.8); text-transform:uppercase; margin-left:0.4rem; vertical-align:middle; font-family:'Lato',sans-serif; font-weight:700; }
+  .menu-note { font-size:0.78rem; color:rgba(61,43,26,0.45); font-style:italic; line-height:1.6; }
+
+  .bv-special-card { border:1px solid rgba(139,58,42,0.3); border-left:3px solid var(--terra); background:rgba(139,58,42,0.04); padding:1.5rem; border-radius:0 4px 4px 0; margin-bottom:2rem; }
+  .bv-special-price { font-family:'Playfair Display',serif; font-size:2rem; color:var(--terra); line-height:1; margin:0.5rem 0 0.8rem; }
+  .bv-gang-row { display:flex; justify-content:space-between; align-items:flex-start; padding:0.7rem 0; border-bottom:1px solid rgba(61,43,26,0.08); gap:1rem; }
+  .bv-gang-row:last-child { border-bottom:none; }
+  .bv-gang-label { font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(61,43,26,0.4); white-space:nowrap; flex-shrink:0; margin-top:0.2rem; }
+
+  #reserveren { background:linear-gradient(rgba(28,16,8,0.80),rgba(28,16,8,0.88)),url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80') center/cover no-repeat; padding:6rem 1.5rem; text-align:center; }
+  .res-inner { max-width:640px; margin:0 auto; }
+  .res-inner .section-label { color:var(--terra-light); }
+  .res-inner .section-title { color:var(--cream); margin-bottom:1.2rem; }
+  .res-inner .divider { background:var(--terra-light); }
+  .res-body { color:rgba(245,237,216,0.7); font-size:1rem; line-height:1.8; margin:1.8rem 0 2.5rem; }
+  .res-contacts { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-bottom:2.5rem; }
+  .res-contact-pill { background:rgba(245,237,216,0.08); border:1px solid rgba(245,237,216,0.2); border-radius:2px; padding:0.6rem 1.4rem; display:flex; align-items:center; gap:0.6rem; text-decoration:none; color:var(--cream); font-size:0.9rem; transition:background 0.2s; }
+  .res-contact-pill:hover { background:rgba(245,237,216,0.14); }
+  .res-divider { font-size:0.75rem; color:rgba(245,237,216,0.3); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2rem; }
+
+  footer { background:#120C05; padding:4rem 1.5rem 2rem; border-top:1px solid rgba(184,134,11,0.2); }
+  .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(245,237,216,0.08); }
+  .footer-brand .logo { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--cream); margin-bottom:0.8rem; }
+  .footer-brand .logo span { color:var(--terra-light); font-style:italic; }
+  .footer-brand p { font-size:0.85rem; color:rgba(245,237,216,0.45); line-height:1.7; }
+  .footer-col-title { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--terra-light); margin-bottom:1.2rem; font-weight:700; }
+  .footer-col a,.footer-col p { display:block; font-size:0.88rem; color:rgba(245,237,216,0.6); text-decoration:none; margin-bottom:0.6rem; line-height:1.6; transition:color 0.2s; }
+  .footer-col a:hover { color:var(--cream); }
+  .footer-bottom { max-width:1100px; margin:2rem auto 0; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; align-items:center; font-size:0.78rem; color:rgba(245,237,216,0.3); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.8s ease forwards; opacity:0; }
+  .fade-up-2 { animation-delay:0.15s; }
+  .fade-up-3 { animation-delay:0.3s; }
+  .fade-up-4 { animation-delay:0.45s; }
+
+  @media(max-width:768px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .menu-tab { padding:0.65rem 0.9rem; font-size:0.7rem; }
+    .menu-items { grid-template-columns:1fr; }
+    .res-contacts { flex-direction:column; align-items:center; }
+    .footer-inner { grid-template-columns:1fr; gap:2rem; }
+    .info-ribbon { gap:1rem; padding:0.5rem 1rem; }
+    .info-ribbon-dot { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">Bella <span>Vita</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#openingstijden">Openingstijden</a></li>
+      <li><a href="#reserveren" class="nav-cta">Reserveren &amp; Bestellen</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+  <div id="mobile-menu">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#menu" onclick="toggleMenu()">Menu</a>
+    <a href="#openingstijden" onclick="toggleMenu()">Openingstijden</a>
+    <a href="#reserveren" onclick="toggleMenu()">Reserveren &amp; Bestellen</a>
+  </div>
+</nav>
+
+<section id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-up">Ristorante · Bocholtz · Limburgse hartelijkheid</p>
+      <h1 class="hero-title fade-up fade-up-2">Bella<br>Vita</h1>
+      <p class="hero-subtitle fade-up fade-up-3">Lekker leven</p>
+      <div class="hero-btns fade-up fade-up-4">
+        <a href="#menu" class="btn-primary">Bekijk het menu</a>
+        <a href="#reserveren" class="btn-outline">Reserveren &amp; Bestellen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="info-ribbon">
+  <span class="info-ribbon-item">Keuken 16:00–21:00</span>
+  <span class="info-ribbon-dot"></span>
+  <span class="info-ribbon-item">Gesloten donderdag</span>
+  <span class="info-ribbon-dot"></span>
+  <span class="info-ribbon-item">Bezorging ma–wo</span>
+  <span class="info-ribbon-dot"></span>
+  <span class="info-ribbon-item">Wilhelminastraat 6A, Bocholtz</span>
+</div>
+
+<section id="openingstijden">
+  <div class="ot-inner">
+    <div class="ot-header">
+      <p class="section-label">Wanneer wij voor u klaar staan</p>
+      <h2 class="section-title">Openingstijden</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="ot-grid">
+      <div class="ot-card">
+        <p class="ot-card-title">Keuken — openingstijden</p>
+        <div class="ot-row"><span class="ot-day">Maandag</span><span class="ot-time">16:00 – 21:00</span></div>
+        <div class="ot-row"><span class="ot-day">Dinsdag</span><span class="ot-time">16:00 – 21:00</span></div>
+        <div class="ot-row"><span class="ot-day">Woensdag</span><span class="ot-time">16:00 – 21:00</span></div>
+        <div class="ot-row"><span class="ot-day">Donderdag</span><span class="ot-time closed">Gesloten</span></div>
+        <div class="ot-row"><span class="ot-day">Vrijdag</span><span class="ot-time">16:00 – 21:00</span></div>
+        <div class="ot-row"><span class="ot-day">Zaterdag</span><span class="ot-time">16:00 – 21:00</span></div>
+        <div class="ot-row"><span class="ot-day">Zondag</span><span class="ot-time">16:00 – 21:00</span></div>
+      </div>
+      <div>
+        <div class="ot-note" style="margin-bottom:1.5rem">
+          <p class="ot-note-title">Bezorging — let op</p>
+          <p>Wij bezorgen uitsluitend in de <strong>gemeente Simpelveld</strong>.</p>
+          <p>Minimum bestelbedrag: <strong>€ 25,00</strong></p>
+          <p>Bestellingen <strong>onder € 50</strong>: bezorgkosten gelden.<br>&nbsp;&nbsp;→ Bocholtz: <strong>€ 2,50</strong><br>&nbsp;&nbsp;→ Simpelveld: <strong>€ 4,50</strong></p>
+          <p>Bestellingen <strong>boven € 50</strong>: gratis bezorgd.</p>
+          <p>Verpakkingsmateriaal: <strong>€ 0,35</strong> per stuk.</p>
+          <p style="color:rgba(196,98,45,0.9);font-weight:700;margin-top:0.5rem">Geen bezorging op vrijdag, zaterdag &amp; zondag. Afhalen altijd mogelijk.</p>
+        </div>
+        <div class="map-frame">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=5.979,50.853,5.993,50.863&layer=mapnik&marker=50.858,5.986" loading="lazy" title="Locatie Bella Vita Bocholtz"></iframe>
+        </div>
+        <p style="font-size:0.78rem;color:rgba(245,237,216,0.35);margin-top:0.5rem;text-align:center">Wilhelminastraat 6A, 6351 GN Bocholtz</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MENU ══ -->
+<section id="menu">
+  <div class="menu-inner">
+    <div class="menu-header">
+      <p class="section-label">Verse, Italiaanse smaken</p>
+      <h2 class="section-title">Ons Menu</h2>
+      <div class="divider divider-left"></div>
+    </div>
+
+    <div class="menu-tabs" role="tablist">
+      <button class="menu-tab active" onclick="switchTab('lunchdiner')" role="tab">Lunch &amp; Diner</button>
+      <button class="menu-tab" onclick="switchTab('bellavita')" role="tab">Bella Vita Menu</button>
+      <button class="menu-tab" onclick="switchTab('dranken')" role="tab">Dranken</button>
+      <button class="menu-tab" onclick="switchTab('wijn')" role="tab">Wijn &amp; Likeur</button>
+    </div>
+
+    <!-- LUNCH & DINER -->
+    <div class="menu-panel active" id="panel-lunchdiner">
+      <p class="menu-note" style="margin-bottom:0.5rem">✦ Gerechten gemarkeerd met <span class="veg-badge" style="vertical-align:baseline">V</span> zijn vegetarisch.</p>
+
+      <!-- Subtab navigatie -->
+      <div class="menu-subtabs" role="tablist">
+        <button class="menu-subtab active" onclick="switchSub('lunchkaart')" role="tab">Lunchkaart</button>
+        <button class="menu-subtab" onclick="switchSub('antipasti')" role="tab">Voorgerechten</button>
+        <button class="menu-subtab" onclick="switchSub('pizze')" role="tab">Pizza's</button>
+        <button class="menu-subtab" onclick="switchSub('pasta')" role="tab">Pasta</button>
+        <button class="menu-subtab" onclick="switchSub('bambini')" role="tab">Kindermenu</button>
+        <button class="menu-subtab" onclick="switchSub('dolci')" role="tab">Desserts</button>
+      </div>
+
+      <!-- LUNCHKAART subpanel -->
+      <div class="menu-subpanel active" id="sub-lunchkaart">
+      <p class="menu-cat-title" style="margin-top:0">Lunchkaart <span style="font-size:0.8rem;font-style:normal;color:rgba(61,43,26,0.45);font-family:'Lato',sans-serif;font-weight:300">— tot 18:00</span></p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruschetta al Pomodoro <span class="veg-badge">V</span></p><p class="menu-item-desc">Geroosterd brood, knoflook, tomaat, basilicum, olijfolie, Parmezaan</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruschetta Parma</p><p class="menu-item-desc">Geroosterd brood, Parmaham, olijven, rucola</p></div><span class="menu-item-price">€ 6,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Insalata Caprese <span class="veg-badge">V</span></p><p class="menu-item-desc">Mozzarella, tomaten, olijven, rucola, olijfolie, balsamico</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Carpaccio</p><p class="menu-item-desc">Rauw rundvlees, pijnboompitten, rucola, Parmezaan, balsamico, pizzabroodjes, kruidenboter</p></div><span class="menu-item-price">€ 14,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Antipasta Misti</p><p class="menu-item-desc">Gorgonzola, mozzarella, salame Napoli, Parmaham, olijven, pizzabroodjes</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Scampi's sott'olio (7 st.)</p><p class="menu-item-desc">In olijfolie, trostomaten, salade, pizzabroodjes</p></div><span class="menu-item-price">€ 15,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Zuppa di Pomodori <span class="veg-badge">V</span></p><p class="menu-item-desc">Tomatensoep met pizzabroodjes</p></div><span class="menu-item-price">€ 6,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Spaghetti Aglio e Olio <span class="veg-badge">V</span></p><p class="menu-item-desc">Olijfolie, knoflook, Spaanse pepertjes</p></div><span class="menu-item-price">€ 12,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Spaghetti Arrabiata <span class="veg-badge">V</span></p><p class="menu-item-desc">Tomatensaus, pepertjes, Parmezaan</p></div><span class="menu-item-price">€ 11,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tagliatelle Scampi's (7 st.)</p><p class="menu-item-desc">In room met scampi's en tomatensaus</p></div><span class="menu-item-price">€ 19,50</span></div>
+      </div>
+
+      </div><!-- /sub-lunchkaart -->
+
+      <!-- ANTIPASTI subpanel -->
+      <div class="menu-subpanel" id="sub-antipasti">
+      <p class="menu-cat-title" style="margin-top:0">Antipasti</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Piccoli <span class="veg-badge">V</span></p><p class="menu-item-desc">Pizzabrood, kruidenboter, olijven</p></div><span class="menu-item-price">€ 5,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruschetta al Pomodoro <span class="veg-badge">V</span></p><p class="menu-item-desc">Knoflook, tomaat, basilicum, olijfolie, Parmezaan</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruschetta Parma</p><p class="menu-item-desc">Parmaham, olijven, rucola</p></div><span class="menu-item-price">€ 6,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Gehaktballetjes in Tomatensaus</p></div><span class="menu-item-price">€ 7,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Calamari à la Romana</p><p class="menu-item-desc">Met chilisaus</p></div><span class="menu-item-price">€ 7,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Insalata Caprese <span class="veg-badge">V</span></p><p class="menu-item-desc">Mozzarella, tomaat, olijven, basilicum, olijfolie</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Insalata Italia <span class="veg-badge">V</span></p><p class="menu-item-desc">Gemengde salade</p></div><span class="menu-item-price">€ 7,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Sardine XL</p><p class="menu-item-desc">Sardines gebakken in knoflookolijfolie</p></div><span class="menu-item-price">€ 10,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Carpaccio</p><p class="menu-item-desc">Rauw rundvlees, pijnboompitten, rucola, Parmezaan, pizzabroodjes, kruidenboter</p></div><span class="menu-item-price">€ 14,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Antipasta Misti</p><p class="menu-item-desc">Gorgonzola, mozzarella, salame Napoli, Parmaham, olijven, pizzabroodjes</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Scampi Sott'olio (7 st.)</p><p class="menu-item-desc">In olijfolie, salade, ovenbrood</p></div><span class="menu-item-price">€ 15,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Italiaans Kaasplankje <span class="veg-badge">V</span></p><p class="menu-item-desc">Gorgonzola, Parmigiano, Pecorino Romano, pizzabroodjes</p></div><span class="menu-item-price">€ 9,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bella Vita Plankje</p><p class="menu-item-desc">Inktvisringen, salami Napoli &amp; Calabria, Parmaham, gorgonzola, mozzarella, olijven, gedroogde tomaatjes, artisjokken, pizzabroodjes</p></div><span class="menu-item-price">€ 22,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Zuppa di Pomodoro <span class="veg-badge">V</span></p><p class="menu-item-desc">Tomatensoep met ovenbrood</p></div><span class="menu-item-price">€ 6,95</span></div>
+      </div>
+
+      </div><!-- /sub-antipasti -->
+
+      <!-- PIZZE subpanel -->
+      <div class="menu-subpanel" id="sub-pizze">
+      <p class="menu-cat-title" style="margin-top:0">Pizze</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Margherita <span class="veg-badge">V</span></p><p class="menu-item-desc">Mozzarella, oregano</p></div><span class="menu-item-price">€ 9,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Salami</p><p class="menu-item-desc">Mozzarella, salami, oregano</p></div><span class="menu-item-price">€ 11,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Funghi <span class="veg-badge">V</span></p><p class="menu-item-desc">Mozzarella, champignons, oregano</p></div><span class="menu-item-price">€ 11,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bolognese</p><p class="menu-item-desc">Mozzarella, bolognese, champignons, paprika</p></div><span class="menu-item-price">€ 13,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tonno</p><p class="menu-item-desc">Mozzarella, tonijn, uien, oregano</p></div><span class="menu-item-price">€ 13,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Diavola</p><p class="menu-item-desc">Mozzarella, peperoni, pepertjes, oregano</p></div><span class="menu-item-price">€ 13,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Vegetariana <span class="veg-badge">V</span></p><p class="menu-item-desc">Mozzarella, diverse groenten, oregano</p></div><span class="menu-item-price">€ 13,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Hawaii</p><p class="menu-item-desc">Mozzarella, ham, ananas, oregano</p></div><span class="menu-item-price">€ 12,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Quattro Formaggi <span class="veg-badge">V</span></p><p class="menu-item-desc">Vier soorten kaas, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Frutti di Mare</p><p class="menu-item-desc">Mozzarella, zeevruchten</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Quattro Stagioni</p><p class="menu-item-desc">Mozzarella, ham, champignons, olijven, artisjokken</p></div><span class="menu-item-price">€ 13,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Taco</p><p class="menu-item-desc">Mozzarella, gehakt, ijsbergsalade, knoflooksaus, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Frankotti</p><p class="menu-item-desc">Mozzarella, ham, salami, olijven, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Pizza Nutella <span class="veg-badge">V</span></p><p class="menu-item-desc">Nutella met walnoten</p></div><span class="menu-item-price">€ 9,95</span></div>
+      </div>
+
+      <p class="menu-cat-title">Pizze Speciali</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bella Vita</p><p class="menu-item-desc">Twee soorten mozzarella, scherpe salami, paprika, champignons, olijven, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Siciliana</p><p class="menu-item-desc">Mozzarella, ansjovis, knoflook, olijven, paprika, rucola, Parmezaan, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Toscana</p><p class="menu-item-desc">Mozzarella, Parmaham, ansjovis, knoflook, Parmezaan, rucola, oregano</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Pulled Chicken</p><p class="menu-item-desc">Mozzarella, pulled chicken, kappertjes, sweet chili saus</p></div><span class="menu-item-price">€ 14,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Italia</p><p class="menu-item-desc">Mozzarella, prosciutto, cherrytomaatjes, rucola, balsamico, burrata</p></div><span class="menu-item-price">€ 14,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bresaola</p><p class="menu-item-desc">Mozzarella, Bresaola, Parmezaan, rucola, oregano</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Don</p><p class="menu-item-desc">Mozzarella, kalfsfilet, champignons, trostomaten, chilipeper, knoflooksaus, oregano</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Calabria</p><p class="menu-item-desc">Mozzarella, scherpe salami, ham, ansjovis, champignons, rucola, olijven, oregano</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Con Pollo</p><p class="menu-item-desc">Mozzarella, paprika, olijven, kipfilet, knoflooksaus, oregano</p></div><span class="menu-item-price">€ 15,95</span></div>
+      </div>
+
+      </div><!-- /sub-pizze -->
+
+      <!-- PASTA subpanel -->
+      <div class="menu-subpanel" id="sub-pasta">
+      <p class="menu-cat-title" style="margin-top:0">Pasta</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Aglio Olio <span class="veg-badge">V</span></p><p class="menu-item-desc">Spaghetti, knoflook, olijfolie, Spaanse pepertjes, Parmezaan</p></div><span class="menu-item-price">€ 12,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Vegetariana <span class="veg-badge">V</span></p><p class="menu-item-desc">Ravioli, verse groenten, Parmezaan</p></div><span class="menu-item-price">€ 14,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bolognese Ragù</p><p class="menu-item-desc">Spaghetti, huisgemaakte bolognesesaus, Parmezaan</p></div><span class="menu-item-price">€ 14,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Cappelacci alla Boscaiolla</p><p class="menu-item-desc">Tortellini in room, champignons, spek, basilicum</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Diavola</p><p class="menu-item-desc">Penne, Parmaham, Spaanse peper, knoflook, verse groenten, basilicum</p></div><span class="menu-item-price">€ 15,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Frutti di Mare</p><p class="menu-item-desc">Tagliatelle in romige tomatensaus met zeevruchten</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Carbonara</p><p class="menu-item-desc">Spaghetti, guanciale, ei, peper, Parmezaan</p></div><span class="menu-item-price">€ 15,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bella Vita Ovenschotel</p><p class="menu-item-desc">Penne bolognese, pepertjes, champignons, mozzarella — uit de oven</p></div><span class="menu-item-price">€ 17,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Scampi (7 st.)</p><p class="menu-item-desc">Spaghetti, scampi's, trostomaten, olijfolie, basilicum</p></div><span class="menu-item-price">€ 17,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Con Pollo</p><p class="menu-item-desc">Tagliatelle in room, kipfilet, gedroogde tomaatjes, knoflook, basilicum</p></div><span class="menu-item-price">€ 17,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Con Carne</p><p class="menu-item-desc">Macaroni, kalfsvlees, romige tomatensaus, Parmezaan</p></div><span class="menu-item-price">€ 19,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tagliatelle Scampi's (7 st.)</p><p class="menu-item-desc">In room met scampi's en tomatensaus</p></div><span class="menu-item-price">€ 19,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Rigatoni al Tartufo</p><p class="menu-item-desc">Room en truffelolie, ossenhaaspuntjes, champignons, cherrytomaatjes, Parmezaan</p></div><span class="menu-item-price">€ 22,50</span></div>
+      </div>
+
+      <p class="menu-cat-title">Risotto</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Funghi <span class="veg-badge">V</span></p><p class="menu-item-desc">Risotto, paddenstoelen, Parmezaan</p></div><span class="menu-item-price">€ 12,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Quattro Formaggi <span class="veg-badge">V</span></p><p class="menu-item-desc">Risotto met vier soorten kaas</p></div><span class="menu-item-price">€ 13,95</span></div>
+      </div>
+
+      </div><!-- /sub-pasta -->
+
+      <!-- BAMBINI subpanel -->
+      <div class="menu-subpanel" id="sub-bambini">
+      <p class="menu-cat-title" style="margin-top:0">Per i Bambini</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Pizza Margherita</p></div><span class="menu-item-price">€ 6,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Pizza Salami / Funghi</p></div><span class="menu-item-price">€ 7,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Pasta Bolognese</p></div><span class="menu-item-price">€ 7,95</span></div>
+      </div>
+
+      </div><!-- /sub-bambini -->
+
+      <!-- DOLCI subpanel -->
+      <div class="menu-subpanel" id="sub-dolci">
+      <p class="menu-cat-title" style="margin-top:0">Dolci</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tiramisù</p><p class="menu-item-desc">Huisgemaakt met slagroom — niet om mee te nemen</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Coupe Dame Blanche</p><p class="menu-item-desc">Vanille roomijs, slagroom, chocolade — niet om mee te nemen</p></div><span class="menu-item-price">€ 7,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Crème Brûlée</p><p class="menu-item-desc">Met vanille-ijs en slagroom — niet om mee te nemen</p></div><span class="menu-item-price">€ 9,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Italiaans Kaasplankje <span class="veg-badge">V</span></p><p class="menu-item-desc">Pecorino Romano, Gorgonzola, Parmezaan</p></div><span class="menu-item-price">€ 9,95</span></div>
+      </div>
+      </div><!-- /sub-dolci -->
+
+    </div><!-- /lunchdiner -->
+
+    <!-- BELLA VITA MENU -->
+    <div class="menu-panel" id="panel-bellavita">
+      <div class="bv-special-card">
+        <p class="menu-cat-title" style="margin-top:0;border:none;padding:0;margin-bottom:0.3rem">3-gangen Menu della Casa</p>
+        <div class="bv-special-price">€ 32,50</div>
+        <p style="font-size:0.85rem;color:rgba(61,43,26,0.55);margin-bottom:1.2rem">Een complete Italiaanse ervaring. Al deze gerechten zijn ook los te bestellen.</p>
+        <div class="bv-gang-row"><div><p class="menu-item-name">Italiaanse Tomatensoep</p><p class="menu-item-desc">Met huisgemaakte broodjes</p></div><span class="bv-gang-label">1e gang</span></div>
+        <div class="bv-gang-row">
+          <div>
+            <p class="menu-item-name">Gegrilde Entrecôte 250g</p><p class="menu-item-desc">Met kruidenboter, salade en friet</p>
+            <p style="color:rgba(61,43,26,0.35);font-style:italic;font-size:0.85rem;margin:0.5rem 0 0.25rem">— of —</p>
+            <p class="menu-item-name">Gegrilde Zalm</p><p class="menu-item-desc">Met vissaus, salade en friet</p>
+          </div>
+          <span class="bv-gang-label">2e gang</span>
+        </div>
+        <div class="bv-gang-row"><div><p class="menu-item-name">Huisgemaakte Tiramisù</p></div><span class="bv-gang-label">3e gang</span></div>
+      </div>
+
+      <p class="menu-cat-title">À la Carte Specials</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tagliata di Manzo</p><p class="menu-item-desc">Biefstukreepjes in knoflook en tijm op rucola, Grana Padano en geroosterd brood</p></div><span class="menu-item-price">€ 22,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Italiaans Stoofpotje</p><p class="menu-item-desc">Met salade en frietjes</p></div><span class="menu-item-price">€ 18,95</span></div>
+      </div>
+    </div><!-- /bellavita -->
+
+    <!-- DRANKEN -->
+    <div class="menu-panel" id="panel-dranken">
+      <p class="menu-cat-title" style="margin-top:0">Frisdranken</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruisend water 0,25l</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Water naturel 0,25l</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bruisend water 1l</p></div><span class="menu-item-price">€ 9,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Water naturel 1l</p></div><span class="menu-item-price">€ 9,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Coca-Cola</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Coca-Cola Zero</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Fanta</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Bitter Lemon</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tonic</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Rivella</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Cassis</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Appelsap</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Jus d'Orange</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Sprite</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Red Bull</p></div><span class="menu-item-price">€ 4,50</span></div>
+      </div>
+
+      <p class="menu-cat-title">Warme Dranken</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Koffie / Thee / Espresso</p></div><span class="menu-item-price">€ 2,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Cappuccino</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Latte Macchiato</p></div><span class="menu-item-price">€ 3,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Irish Coffee</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Italian Coffee</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Spanish Coffee</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">French Coffee</p></div><span class="menu-item-price">€ 7,95</span></div>
+      </div>
+
+      <p class="menu-cat-title">Bieren</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Peroni Nastro Azzurro fust 0,2l</p></div><span class="menu-item-price">€ 3,00</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Peroni Nastro Azzurro fust 0,5l</p></div><span class="menu-item-price">€ 6,60</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Peroni Chill Lemon</p></div><span class="menu-item-price">€ 3,75</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Peroni 0,0% alc.</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grolsch Weizen fust 0,5l</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grimbergen Brune fust 0,25l</p></div><span class="menu-item-price">€ 5,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grimbergen Blond</p></div><span class="menu-item-price">€ 5,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grimbergen Tripel</p></div><span class="menu-item-price">€ 5,75</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Paix Dieu Tripel</p><p class="menu-item-desc">Alleen gebrouwen bij volle maan</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Liefmans Fruitesse</p></div><span class="menu-item-price">€ 4,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Liefmans Fruitesse 0,0% alc.</p></div><span class="menu-item-price">€ 4,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Liefmans Kriek</p></div><span class="menu-item-price">€ 6,50</span></div>
+      </div>
+    </div><!-- /dranken -->
+
+    <!-- WIJN & LIKEUR -->
+    <div class="menu-panel" id="panel-wijn">
+      <p class="menu-cat-title" style="margin-top:0">Wijnen</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Sorelle Pinot Grigio</p><p class="menu-item-desc">Droog, fris en fruitig — aroma's van perzik en peer</p></div><span class="menu-item-price">€ 5,25</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Culemborg Moscato</p><p class="menu-item-desc">Zacht, zoet — rijp tropisch fruit met muscaattonen</p></div><span class="menu-item-price">€ 4,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">La Grassa Rosso</p><p class="menu-item-desc">Heldere rode kleur — aroma's van kersen en viooltjes</p></div><span class="menu-item-price">€ 5,45</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Fratelli Zuliano Rosé</p><p class="menu-item-desc">Licht zalmroze — wilde aardbeien, limoen en citroen</p></div><span class="menu-item-price">€ 4,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Fratelli Zuliani Spumante</p><p class="menu-item-desc">Groene appels, fris en bloemig</p></div><span class="menu-item-price">€ 6,50</span></div>
+      </div>
+
+      <p class="menu-cat-title">Cocktails &amp; Mix</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Limoncello Spritz</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Aperol Spritz</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Gin Tonic</p></div><span class="menu-item-price">€ 7,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Virgin Tonic 0,0%</p></div><span class="menu-item-price">€ 7,95</span></div>
+      </div>
+
+      <p class="menu-cat-title">Likeuren &amp; Sterke Dranken</p>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Amaretto</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grand Marnier</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Baileys</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Sambuca</p></div><span class="menu-item-price">€ 4,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Drambuie</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Likeur 43</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Grappa</p></div><span class="menu-item-price">€ 4,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Limoncello</p></div><span class="menu-item-price">€ 3,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Jameson Irish Whisky</p></div><span class="menu-item-price">€ 5,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Chivas Regal 12 years</p></div><span class="menu-item-price">€ 5,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Rémy Martin VSOP</p></div><span class="menu-item-price">€ 5,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Jonge / Oude Jenever</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Apfelkorn</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Jägermeister</p></div><span class="menu-item-price">€ 3,10</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Martini Bianco / Rosso</p></div><span class="menu-item-price">€ 3,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Port Rood / Wit</p></div><span class="menu-item-price">€ 3,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Sherry Dry / Medium</p></div><span class="menu-item-price">€ 3,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Campari</p></div><span class="menu-item-price">€ 3,95</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Gin</p></div><span class="menu-item-price">€ 4,50</span></div>
+        <div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">VirGin 0,0% alc.</p></div><span class="menu-item-price">€ 4,50</span></div>
+      </div>
+    </div><!-- /wijn -->
+
+  </div>
+</section>
+
+<!-- RESERVEREN -->
+<section id="reserveren">
+  <div class="res-inner">
+    <p class="section-label">Tafel, afhalen of bezorging</p>
+    <h2 class="section-title">Reserveren, Bestellen<br>&amp; Afhalen</h2>
+    <div class="divider"></div>
+    <p class="res-body">Wilt u een tafel reserveren, een bestelling plaatsen of iets afhalen? Neem contact op via telefoon, e-mail of reserveer en bestel direct online. Wij kijken ernaar uit u te verwelkomen — aan tafel of aan de deur.</p>
+    <div class="res-contacts">
+      <a href="tel:0457853486" class="res-contact-pill"><span>📞</span> 0457 – 853 486</a>
+      <a href="tel:0642901301" class="res-contact-pill"><span>📱</span> 06 – 42 901 301</a>
+      <a href="mailto:bellavitabocholtz@outlook.com" class="res-contact-pill"><span>✉</span> bellavitabocholtz@outlook.com</a>
+    </div>
+    <p class="res-divider">of reserveer en bestel direct online</p>
+    <a href="https://reservation.dish.co/landingPage/hydra-0655fc3d-2991-4d5d-9212-56d08aaaac33" target="_blank" class="btn-primary">Online Reserveren &amp; Bestellen →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="logo">Bella <span>Vita</span></p>
+      <p>Italiaans restaurant in het hart van Bocholtz.<br>Lekker leven — elke dag van 16:00 tot 21:00.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Bezoek ons</p>
+      <p>Wilhelminastraat 6A</p>
+      <p>6351 GN, Bocholtz</p>
+      <a href="tel:0457853486">0457 – 853 486</a>
+      <a href="tel:0642901301">06 – 42 901 301</a>
+      <a href="mailto:bellavitabocholtz@outlook.com">bellavitabocholtz@outlook.com</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Openingstijden keuken</p>
+      <p>Ma – Wo: 16:00 – 21:00</p>
+      <p>Do: Gesloten</p>
+      <p>Vr – Zo: 16:00 – 21:00</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Navigeer</p>
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#openingstijden">Openingstijden</a>
+      <a href="#reserveren">Reserveren &amp; Bestellen</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 Ristorante Bella Vita, Bocholtz</span>
+    <span>Wilhelminastraat 6A · 6351 GN Bocholtz</span>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const m = document.getElementById('mobile-menu');
+    m.style.display = m.style.display === 'block' ? 'none' : 'block';
+  }
+  function switchTab(name) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+  function switchSub(name) {
+    document.querySelectorAll('.menu-subtab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.menu-subpanel').forEach(p => p.classList.remove('active'));
+    document.getElementById('sub-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'rgba(245,237,216,1)' : 'rgba(245,237,216,0.75)';
+    });
+  });
+</script>
+</body>
+</html>
