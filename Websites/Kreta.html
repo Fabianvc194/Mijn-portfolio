@@ -288,6 +288,37 @@
   }
   .menu-card-body { padding: 1.5rem 2rem; }
 
+  /* ─── SUB TABS ─── */
+  .main-menu-section { display: none; }
+  .main-menu-section.active { display: block; }
+  .sub-menu-section { display: none; }
+  .sub-menu-section.active { display: block; }
+  .sub-menu-tabs {
+    display: flex; flex-wrap: wrap; gap: 0.35rem;
+    justify-content: center; margin-bottom: 2rem;
+    padding: 1rem 0.5rem;
+    background: var(--cream);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .sub-menu-tab {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid rgba(26,58,92,0.15);
+    color: var(--blue);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sub-menu-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .sub-menu-tab.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--blue-dark);
+    font-weight: 600;
+  }
+
   /* ─── SPECIALS ─── */
   #specials { background: var(--blue-dark); }
   .special-card {
@@ -544,226 +575,228 @@
 
     <!-- Tab Navigation -->
     <div class="menu-tabs">
-      <button class="menu-tab active" onclick="showTab('koude-voor')">Koude Voorgerechten</button>
-      <button class="menu-tab" onclick="showTab('warme-voor')">Warme Voorgerechten</button>
-      <button class="menu-tab" onclick="showTab('salades')">Salades</button>
-      <button class="menu-tab" onclick="showTab('grill')">Van de Grill</button>
-      <button class="menu-tab" onclick="showTab('oven')">Ovengerechten</button>
-      <button class="menu-tab" onclick="showTab('vis')">Visgerechten</button>
-      <button class="menu-tab" onclick="showTab('pitas')">Pita's</button>
-      <button class="menu-tab" onclick="showTab('pasta')">Pasta</button>
-      <button class="menu-tab" onclick="showTab('snacks')">Snacks</button>
-      <button class="menu-tab" onclick="showTab('kinderen')">Kindermenu</button>
-      <button class="menu-tab" onclick="showTab('extra')">Extra</button>
-      <button class="menu-tab" onclick="showTab('dranken')">Dranken</button>
-      <button class="menu-tab" onclick="showTab('dessert')">Dessert</button>
+      <button class="menu-tab active" onclick="showMainTab('voorgerechten', this)">Voorgerechten</button>
+      <button class="menu-tab" onclick="showMainTab('hoofdgerechten', this)">Hoofdgerechten</button>
+      <button class="menu-tab" onclick="showMainTab('pitas-snacks', this)">Pita's &amp; Snacks</button>
+      <button class="menu-tab" onclick="showMainTab('kinderen', this)">Kindermenu</button>
+      <button class="menu-tab" onclick="showMainTab('extra', this)">Extra</button>
+      <button class="menu-tab" onclick="showMainTab('dranken-dessert', this)">Dranken &amp; Dessert</button>
     </div>
 
-    <!-- KOUDE VOORGERECHTEN -->
-    <div id="tab-koude-voor" class="menu-section active">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA KRIA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Koude Voorgerechten</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-grid">
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Tzatziki</span><span class="menu-item-desc">romige kwark met komkommer, knoflook en kruiden</span></div><span class="menu-item-price">€ 5,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Tarama</span><span class="menu-item-desc">Griekse viskuitsalade</span></div><span class="menu-item-price">€ 5,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Elies</span><span class="menu-item-desc">olijven</span></div><span class="menu-item-price">€ 5,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Piperies</span><span class="menu-item-desc">peperoni</span></div><span class="menu-item-price">€ 5,75</span></div>
-            </div>
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Feta</span><span class="menu-item-desc">Griekse schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Gtipiti</span><span class="menu-item-desc">geklopte pikante schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Dolmadakia</span><span class="menu-item-desc">wijnbladeren gevuld met rijst</span></div><span class="menu-item-price">€ 7,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Pikilia</span><span class="menu-item-desc">samengestelde schotel uit diverse koude gerechten (v.a. 1 pers.)</span></div><span class="menu-item-price">€ 15,00</span></div>
-            </div>
+    <!-- VOORGERECHTEN -->
+    <div id="main-voorgerechten" class="main-menu-section active">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('voorgerechten', 'koud', this)">Koude Voorgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'warm', this)">Warme Voorgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'salades', this)">Salades</button>
+      </div>
+      <div id="sub-voorgerechten-koud" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA KRIA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Koude Voorgerechten</h3>
           </div>
-          <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- WARME VOORGERECHTEN -->
-    <div id="tab-warme-voor" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA ZESTA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Warme Voorgerechten</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-grid">
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Keftedakia se Saltsa</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus</span></div><span class="menu-item-price">€ 9,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Feta Saganaki</span><span class="menu-item-desc">gebakken schapenkaas met een krokant laagje</span></div><span class="menu-item-price">€ 9,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Manitaria Jemista</span><span class="menu-item-desc">champignons in de oven gevuld met gehakt, overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 10,50</span></div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Tzatziki</span><span class="menu-item-desc">romige kwark met komkommer, knoflook en kruiden</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Tarama</span><span class="menu-item-desc">Griekse viskuitsalade</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Elies</span><span class="menu-item-desc">olijven</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Piperies</span><span class="menu-item-desc">peperoni</span></div><span class="menu-item-price">€ 5,75</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Feta</span><span class="menu-item-desc">Griekse schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gtipiti</span><span class="menu-item-desc">geklopte pikante schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Dolmadakia</span><span class="menu-item-desc">wijnbladeren gevuld met rijst</span></div><span class="menu-item-price">€ 7,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Pikilia</span><span class="menu-item-desc">samengestelde schotel uit diverse koude gerechten (v.a. 1 pers.)</span></div><span class="menu-item-price">€ 15,00</span></div>
+              </div>
             </div>
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 10,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Gevulde Aubergine</span><span class="menu-item-desc">met feta, overdekt met rode en witte saus en met kaas overbakken</span></div><span class="menu-item-price">€ 13,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Mosselen</span><span class="menu-item-desc">gebakken mosselen</span></div><span class="menu-item-price">€ 10,50</span></div>
-            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
           </div>
-          <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
         </div>
       </div>
-    </div>
-
-    <!-- SALADES -->
-    <div id="tab-salades" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SALATES</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Salades</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Choriatiki (1 persoon)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 7,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Choriatiki (2 personen)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 14,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pikantikh</span><span class="menu-item-desc">pikante salade (witte koolsalade)</span></div><span class="menu-item-price">€ 6,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Angouri-Domata</span><span class="menu-item-desc">tomatenkomkommersalade</span></div><span class="menu-item-price">€ 7,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Tonosalata</span><span class="menu-item-desc">tonijnsalade</span></div><span class="menu-item-price">€ 8,50</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GRILL -->
-    <div id="tab-grill" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">TIS SKARAS</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Van de Grill</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-grid">
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Gyros Schotel</span><span class="menu-item-desc">gesneden varkensvlees</span></div><span class="menu-item-price">€ 17,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Gyros me Souvlaki</span><span class="menu-item-desc">gesneden varkensvlees met 2 stokjes souvlaki</span></div><span class="menu-item-price">€ 18,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Souvlaki Schotel</span><span class="menu-item-desc">vlees aan het spies</span></div><span class="menu-item-price">€ 18,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Paidakia</span><span class="menu-item-desc">lamskoteletten</span></div><span class="menu-item-price">€ 22,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met pittige tomatensaus en groenten</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Kreta Schotel</span><span class="menu-item-desc">gyros, 2 souvlaki's, 2 steaks, 2 keftedakia, 2 lamskoteletten, Griekse salade, witte koolsalade, tzatziki en Griekse mayonaise (v.a. 2 pers.)</span></div><span class="menu-item-price">€ 50,00</span></div>
-            </div>
-            <div>
-              <div class="menu-item"><div><span class="menu-item-name">Plaka Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 steak</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Thessaloniki Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki en 1 keftedakia</span></div><span class="menu-item-price">€ 18,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Athena Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 lamskotelet</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Santorini Schotel</span><span class="menu-item-desc">gyros en 2 keftedakia</span></div><span class="menu-item-price">€ 18,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Christina Schotel</span><span class="menu-item-desc">kipfilet met chilisaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Comadaria</span><span class="menu-item-desc">varkenssteak met zoete rode wijn in champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Toula Schotel</span><span class="menu-item-desc">kipfilet met zoete rode wijn in champignonroomsaus met spekjes</span></div><span class="menu-item-price">€ 19,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Bifteki</span><span class="menu-item-desc">gevuld gehakt met feta</span></div><span class="menu-item-price">€ 21,00</span></div>
-            </div>
+      <div id="sub-voorgerechten-warm" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA ZESTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Warme Voorgerechten</h3>
           </div>
-          <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Keftedakia se Saltsa</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus</span></div><span class="menu-item-price">€ 9,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Feta Saganaki</span><span class="menu-item-desc">gebakken schapenkaas met een krokant laagje</span></div><span class="menu-item-price">€ 9,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Manitaria Jemista</span><span class="menu-item-desc">champignons in de oven gevuld met gehakt, overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 10,50</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 10,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gevulde Aubergine</span><span class="menu-item-desc">met feta, overdekt met rode en witte saus en met kaas overbakken</span></div><span class="menu-item-price">€ 13,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mosselen</span><span class="menu-item-desc">gebakken mosselen</span></div><span class="menu-item-price">€ 10,50</span></div>
+              </div>
+            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-voorgerechten-salades" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SALATES</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Salades</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Choriatiki (1 persoon)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 7,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Choriatiki (2 personen)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pikantikh</span><span class="menu-item-desc">pikante salade (witte koolsalade)</span></div><span class="menu-item-price">€ 6,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Angouri-Domata</span><span class="menu-item-desc">tomatenkomkommersalade</span></div><span class="menu-item-price">€ 7,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Tonosalata</span><span class="menu-item-desc">tonijnsalade</span></div><span class="menu-item-price">€ 8,50</span></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- OVEN -->
-    <div id="tab-oven" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">FOURNOU</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Ovengerechten</h3>
+    <!-- HOOFDGERECHTEN -->
+    <div id="main-hoofdgerechten" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('hoofdgerechten', 'grill', this)">Van de Grill</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'oven', this)">Ovengerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'vis', this)">Visgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'pasta', this)">Pasta</button>
+      </div>
+      <div id="sub-hoofdgerechten-grill" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">TIS SKARAS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Van de Grill</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Gyros Schotel</span><span class="menu-item-desc">gesneden varkensvlees</span></div><span class="menu-item-price">€ 17,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gyros me Souvlaki</span><span class="menu-item-desc">gesneden varkensvlees met 2 stokjes souvlaki</span></div><span class="menu-item-price">€ 18,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Schotel</span><span class="menu-item-desc">vlees aan het spies</span></div><span class="menu-item-price">€ 18,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Paidakia</span><span class="menu-item-desc">lamskoteletten</span></div><span class="menu-item-price">€ 22,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met pittige tomatensaus en groenten</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Kreta Schotel</span><span class="menu-item-desc">gyros, 2 souvlaki's, 2 steaks, 2 keftedakia, 2 lamskoteletten, Griekse salade, witte koolsalade, tzatziki en Griekse mayonaise (v.a. 2 pers.)</span></div><span class="menu-item-price">€ 50,00</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Plaka Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 steak</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Thessaloniki Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki en 1 keftedakia</span></div><span class="menu-item-price">€ 18,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Athena Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 lamskotelet</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Santorini Schotel</span><span class="menu-item-desc">gyros en 2 keftedakia</span></div><span class="menu-item-price">€ 18,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Christina Schotel</span><span class="menu-item-desc">kipfilet met chilisaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Comadaria</span><span class="menu-item-desc">varkenssteak met zoete rode wijn in champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Toula Schotel</span><span class="menu-item-desc">kipfilet met zoete rode wijn in champignonroomsaus met spekjes</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Bifteki</span><span class="menu-item-desc">gevuld gehakt met feta</span></div><span class="menu-item-price">€ 21,00</span></div>
+              </div>
+            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+          </div>
         </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Mousaka</span><span class="menu-item-desc">gebakken aubergine met schijfjes aardappelen, gekruid gehakt, romige bechamelsaus en een stukje schapenkaas</span></div><span class="menu-item-price">€ 19,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Jemistes Piperies</span><span class="menu-item-desc">paprika's gevuld met gehakt en feta in rode en witte saus en geraspte kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Kalè Schotel</span><span class="menu-item-desc">gyros met groenten, rode saus, witte saus, metaxa en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 19,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Kapsalon</span><span class="menu-item-desc">frieten met gyros en gegrilde kaas overdekt</span></div><span class="menu-item-price">€ 12,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Lydia</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus met groenten, witte saus en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 14,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Nefeli</span><span class="menu-item-desc">pannenkoeken gevuld met gehakt en feta overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 14,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Vegetarische Schotel</span><span class="menu-item-desc">van de dag</span></div><span class="menu-item-price">€ 18,50</span></div>
+      </div>
+      <div id="sub-hoofdgerechten-oven" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">FOURNOU</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Ovengerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Mousaka</span><span class="menu-item-desc">gebakken aubergine met schijfjes aardappelen, gekruid gehakt, romige bechamelsaus en een stukje schapenkaas</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Jemistes Piperies</span><span class="menu-item-desc">paprika's gevuld met gehakt en feta in rode en witte saus en geraspte kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kalè Schotel</span><span class="menu-item-desc">gyros met groenten, rode saus, witte saus, metaxa en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kapsalon</span><span class="menu-item-desc">frieten met gyros en gegrilde kaas overdekt</span></div><span class="menu-item-price">€ 12,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Lydia</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus met groenten, witte saus en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Nefeli</span><span class="menu-item-desc">pannenkoeken gevuld met gehakt en feta overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Vegetarische Schotel</span><span class="menu-item-desc">van de dag</span></div><span class="menu-item-price">€ 18,50</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="sub-hoofdgerechten-vis" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PSARIA THALASINA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Visgerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Garides</span><span class="menu-item-desc">gebakken garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 20,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 20,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Fileto Solomo</span><span class="menu-item-desc">gebakken zalmfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bakaliaro Fileto</span><span class="menu-item-desc">gebakken kabeljauwfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Schotel Psaria</span><span class="menu-item-desc">mix van diverse vissoorten voor 1 persoon</span></div><span class="menu-item-price">€ 32,50</span></div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-hoofdgerechten-pasta" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PASTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pasta's</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus</span></div><span class="menu-item-price">€ 17,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met scampi's in tomatensaus</span></div><span class="menu-item-price">€ 22,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gyros en groenten, rode saus, witte saus, Metaxa, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met tonijn, groenten, rode saus, witte saus, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- VIS -->
-    <div id="tab-vis" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PSARIA THALASINA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Visgerechten</h3>
+    <!-- PITA'S & SNACKS -->
+    <div id="main-pitas-snacks" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('pitas-snacks', 'pitas', this)">Pita's</button>
+        <button class="sub-menu-tab" onclick="showSubTab('pitas-snacks', 'snacks', this)">Snacks</button>
+      </div>
+      <div id="sub-pitas-snacks-pitas" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PITAS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pita's</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">met groente</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">extra vlees</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Souvlaki</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita</span><span class="menu-item-desc">met extra souvlaki</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Keftedakia</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Fileto</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Kotopoulo</span><span class="menu-item-desc">kip</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris Speciaal</span></div><span class="menu-item-price">€ 10,00</span></div>
+          </div>
         </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Garides</span><span class="menu-item-desc">gebakken garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 20,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 20,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Fileto Solomo</span><span class="menu-item-desc">gebakken zalmfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Bakaliaro Fileto</span><span class="menu-item-desc">gebakken kabeljauwfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Schotel Psaria</span><span class="menu-item-desc">mix van diverse vissoorten voor 1 persoon</span></div><span class="menu-item-price">€ 32,50</span></div>
-          <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+      </div>
+      <div id="sub-pitas-snacks-snacks" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SNACKS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Snacks</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Frieten</span></div><span class="menu-item-price">€ 4,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Speciaal</span></div><span class="menu-item-price">€ 5,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Tzatziki</span></div><span class="menu-item-price">€ 6,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Griekse Mayonaise</span></div><span class="menu-item-price">€ 6,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Frikandel</span></div><span class="menu-item-price">€ 2,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Frikandel Speciaal</span></div><span class="menu-item-price">€ 3,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bamiblok</span></div><span class="menu-item-price">€ 3,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kipnuggets</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bitterballen</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- PITAS -->
-    <div id="tab-pitas" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PITAS</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pita's</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span></div><span class="menu-item-price">€ 8,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">met groente</span></div><span class="menu-item-price">€ 10,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">extra vlees</span></div><span class="menu-item-price">€ 10,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Souvlaki</span></div><span class="menu-item-price">€ 8,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita</span><span class="menu-item-desc">met extra souvlaki</span></div><span class="menu-item-price">€ 10,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Keftedakia</span></div><span class="menu-item-price">€ 8,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Fileto</span></div><span class="menu-item-price">€ 10,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Kotopoulo</span><span class="menu-item-desc">kip</span></div><span class="menu-item-price">€ 10,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris</span></div><span class="menu-item-price">€ 8,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris Speciaal</span></div><span class="menu-item-price">€ 10,00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PASTA -->
-    <div id="tab-pasta" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PASTA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pasta's</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus</span></div><span class="menu-item-price">€ 17,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met scampi's in tomatensaus</span></div><span class="menu-item-price">€ 22,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gyros en groenten, rode saus, witte saus, Metaxa, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met tonijn, groenten, rode saus, witte saus, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SNACKS -->
-    <div id="tab-snacks" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SNACKS</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Snacks</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Frieten</span></div><span class="menu-item-price">€ 4,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Friet Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Friet Speciaal</span></div><span class="menu-item-price">€ 5,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Friet Tzatziki</span></div><span class="menu-item-price">€ 6,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Friet Griekse Mayonaise</span></div><span class="menu-item-price">€ 6,00</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Frikandel</span></div><span class="menu-item-price">€ 2,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Frikandel Speciaal</span></div><span class="menu-item-price">€ 3,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Bamiblok</span></div><span class="menu-item-price">€ 3,75</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Kipnuggets</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Bitterballen</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- KINDEREN -->
-    <div id="tab-kinderen" class="menu-section">
+    <!-- KINDERMENU -->
+    <div id="main-kinderen" class="main-menu-section">
       <div class="menu-card">
         <div class="menu-category-header">
           <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PEKIDA FAGITA</p>
@@ -780,7 +813,7 @@
     </div>
 
     <!-- EXTRA -->
-    <div id="tab-extra" class="menu-section">
+    <div id="main-extra" class="main-menu-section">
       <div class="menu-card">
         <div class="menu-category-header">
           <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">EKSTRA KREATA</p>
@@ -801,56 +834,59 @@
       </div>
     </div>
 
-    <!-- DRANKEN -->
-    <div id="tab-dranken" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">POTA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dranken</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-grid">
-            <div>
-              <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">KOFFIE &amp; THEE</p>
-              <div class="menu-item"><div><span class="menu-item-name">Koffie</span></div><span class="menu-item-price">€ 2,95</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Koffie met Slagroom</span></div><span class="menu-item-price">€ 3,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Griekse Koffie</span></div><span class="menu-item-price">€ 4,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Thee</span></div><span class="menu-item-price">€ 2,95</span></div>
-
-              <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin: 1.5rem 0 0.75rem;">FRISDRANKEN &amp; SAP</p>
-              <div class="menu-item"><div><span class="menu-item-name">Frisdranken</span><span class="menu-item-desc">Cola, Cola light, Fanta, 7-up, Spa rood, Spa blauw</span></div><span class="menu-item-price">€ 2,95</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Vruchtendranken</span><span class="menu-item-desc">Appelsap, Cassis, Lipton ice</span></div><span class="menu-item-price">€ 3,00</span></div>
-            </div>
-            <div>
-              <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">ALCOHOLISCHE DRANKEN</p>
-              <div class="menu-item"><div><span class="menu-item-name">Irish Coffee</span></div><span class="menu-item-price">€ 9,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Bier</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 2,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Mythos</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 3,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Rode Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Witte Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">½ Liter Wijn</span><span class="menu-item-desc">wit of rood</span></div><span class="menu-item-price">€ 11,00</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Ouzo</span></div><span class="menu-item-price">€ 3,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Griekse Likeur</span></div><span class="menu-item-price">€ 4,95</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Metaxa</span></div><span class="menu-item-price">€ 4,50</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Jägermeister</span></div><span class="menu-item-price">€ 3,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Samos</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 5,75</span></div>
-              <div class="menu-item"><div><span class="menu-item-name">Mavrodafni</span></div><span class="menu-item-price">€ 5,75</span></div>
+    <!-- DRANKEN & DESSERT -->
+    <div id="main-dranken-dessert" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('dranken-dessert', 'dranken', this)">Dranken</button>
+        <button class="sub-menu-tab" onclick="showSubTab('dranken-dessert', 'dessert', this)">Dessert</button>
+      </div>
+      <div id="sub-dranken-dessert-dranken" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">POTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dranken</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">KOFFIE &amp; THEE</p>
+                <div class="menu-item"><div><span class="menu-item-name">Koffie</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Koffie met Slagroom</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Griekse Koffie</span></div><span class="menu-item-price">€ 4,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Thee</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin: 1.5rem 0 0.75rem;">FRISDRANKEN &amp; SAP</p>
+                <div class="menu-item"><div><span class="menu-item-name">Frisdranken</span><span class="menu-item-desc">Cola, Cola light, Fanta, 7-up, Spa rood, Spa blauw</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Vruchtendranken</span><span class="menu-item-desc">Appelsap, Cassis, Lipton ice</span></div><span class="menu-item-price">€ 3,00</span></div>
+              </div>
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">ALCOHOLISCHE DRANKEN</p>
+                <div class="menu-item"><div><span class="menu-item-name">Irish Coffee</span></div><span class="menu-item-price">€ 9,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Bier</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 2,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mythos</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 3,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Rode Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Witte Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">½ Liter Wijn</span><span class="menu-item-desc">wit of rood</span></div><span class="menu-item-price">€ 11,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Ouzo</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Griekse Likeur</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Metaxa</span></div><span class="menu-item-price">€ 4,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Jägermeister</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Samos</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mavrodafni</span></div><span class="menu-item-price">€ 5,75</span></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- DESSERT -->
-    <div id="tab-dessert" class="menu-section">
-      <div class="menu-card">
-        <div class="menu-category-header">
-          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PAGOTO / GLYKISMATA</p>
-          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dessert</h3>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-item"><div><span class="menu-item-name">Griekse Zoete Gebakjes</span><span class="menu-item-desc">traditioneel Grieks gebak</span></div><span class="menu-item-price">€ 8,50</span></div>
-          <div class="menu-item"><div><span class="menu-item-name">Fantasy IJs</span><span class="menu-item-desc">ijsverrassing van de kok</span></div><span class="menu-item-price">€ 8,50</span></div>
+      <div id="sub-dranken-dessert-dessert" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PAGOTO / GLYKISMATA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dessert</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Griekse Zoete Gebakjes</span><span class="menu-item-desc">traditioneel Grieks gebak</span></div><span class="menu-item-price">€ 8,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Fantasy IJs</span><span class="menu-item-desc">ijsverrassing van de kok</span></div><span class="menu-item-price">€ 8,50</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -985,14 +1021,19 @@
   }
 
   // ─── Menu tabs ───
-  function showTab(tabId) {
-    // Hide all sections
-    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+  function showMainTab(tabId, btn) {
+    document.querySelectorAll('.main-menu-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('main-' + tabId).classList.add('active');
+    btn.classList.add('active');
+  }
 
-    // Show selected
-    document.getElementById('tab-' + tabId).classList.add('active');
-    event.target.classList.add('active');
+  function showSubTab(mainId, subId, btn) {
+    const mainSection = document.getElementById('main-' + mainId);
+    mainSection.querySelectorAll('.sub-menu-section').forEach(s => s.classList.remove('active'));
+    mainSection.querySelectorAll('.sub-menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('sub-' + mainId + '-' + subId).classList.add('active');
+    btn.classList.add('active');
   }
 
   // ─── Highlight today in hours table ───

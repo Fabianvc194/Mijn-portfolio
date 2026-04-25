@@ -301,57 +301,55 @@
     #over-ons { background: var(--green-dark); }
     #over-ons .section-title { color: var(--cream); }
     #over-ons p { color: rgba(245,237,214,0.85); font-size: 1.05rem; line-height: 1.8; }
-    .over-ons-grid {
+
+    .over-ons-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
     }
-    @media (max-width: 768px) { .over-ons-grid { grid-template-columns: 1fr; gap: 2rem; } }
-    .over-ons-img {
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+    @media (max-width: 768px) {
+      .over-ons-cards { grid-template-columns: repeat(2, 1fr); }
     }
-    .over-ons-img img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      object-position: center 20%;
-      display: block;
-      border-radius: 4px;
+    @media (max-width: 420px) {
+      .over-ons-cards { grid-template-columns: 1fr; }
     }
-    .over-ons-img::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 2px solid var(--gold);
-      border-radius: 4px;
-      pointer-events: none;
-      opacity: 0.4;
-      transform: translate(8px, 8px);
-    }
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 1.5rem 0 0;
+    .over-ons-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,136,42,0.2);
+      border-radius: 6px;
+      padding: 1.5rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-    }
-    .feature-list li {
-      color: rgba(245,237,214,0.85);
-      font-size: 1rem;
-      display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      text-decoration: none;
+      cursor: pointer;
     }
-    .feature-list li::before {
-      content: '✦';
+    .over-ons-card:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .over-ons-card-icon {
       color: var(--gold);
-      font-size: 0.7rem;
-      flex-shrink: 0;
+      margin-bottom: 0.25rem;
     }
+    .over-ons-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+    }
+    .over-ons-card-text {
+      font-size: 0.88rem;
+      color: rgba(245,237,214,0.65);
+      line-height: 1.6;
+      text-align: center;
+    }
+
 
     /* ─── MENU SECTIE ────────────────────────────────────────── */
     #menu { background: var(--stone); }
@@ -835,35 +833,53 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <section id="over-ons">
   <div class="section-inner">
-    <div class="over-ons-grid">
-      <div>
+    <div style="max-width:860px;margin:0 auto;text-align:center;">
         <span class="section-label">Welkom</span>
         <h2 class="section-title" style="color:var(--cream);">Brasserie Shoko</h2>
         <div class="divider">
           <div class="divider-line"></div>
-          <div class="divider-icon">✦</div>
+          <div class="divider-icon">&#10022;</div>
           <div class="divider-line"></div>
         </div>
-        <p>Bij ons bent u aan het juiste adres voor een rijkelijke keuze aan heerlijke gerechten en dranken, de hele dag en avond door. Van een kopje koffie 's ochtends tot een volledig diner 's avonds — Shoko staat voor kwaliteit en gezelligheid.</p>
-        <p style="margin-top:1rem;">Of u nu komt voor een spontane lunch, een feestelijk arrangement, een High Tea met vrienden of een zakendiner — bij Brasserie Shoko bent u van harte welkom.</p>
-        <ul class="feature-list">
-          <li>Dagelijks geopend vanaf 10:00 (gesloten op dinsdag)</li>
-          <li>Keuken open tot 20:00, brasserie tot 22:00</li>
-          <li>Telefonisch bestellen & reserveren: <a href="tel:+31457510553" style="color:var(--gold);text-decoration:none;">045 751 05 53</a></li>
-          <li>Maandelijks wisselende menukaart</li>
-          <li>Arrangementen en High Tea op aanvraag</li>
-          <li>Cadeaubonnen beschikbaar</li>
-        </ul>
-      </div>
-      <div class="over-ons-img">
-        <img
-          src="https://static.wixstatic.com/media/41815b_e610130781c743ecb90fa2c9e75ce477~mv2.jpg"
-          alt="High Tea bij Brasserie Shoko Simpelveld"
-          loading="lazy"
-          width="600"
-          height="380"
-        />
-      </div>
+        <p>Bij ons bent u aan het juiste adres voor een rijkelijke keuze aan heerlijke gerechten en dranken, de hele dag en avond door. Van een kopje koffie 's ochtends tot een volledig diner 's avonds &mdash; Shoko staat voor kwaliteit en gezelligheid.</p>
+        <p style="margin-top:1rem;">Of u nu komt voor een spontane lunch, een feestelijk arrangement, een High Tea met vrienden of een zakendiner &mdash; bij Brasserie Shoko bent u van harte welkom.</p>
+
+        <!-- Info-blokjes -->
+        <div class="over-ons-cards">
+
+          <a class="over-ons-card" href="#openingstijden">
+            <div class="over-ons-card-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="over-ons-card-title">Openingstijden</div>
+            <div class="over-ons-card-text">Ma &amp; Wo–Zo 10:00–22:00<br>Dinsdag gesloten</div>
+          </a>
+
+          <a class="over-ons-card" href="tel:+31457510553">
+            <div class="over-ons-card-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.47 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="over-ons-card-title">Reserveren</div>
+            <div class="over-ons-card-text">045 751 05 53<br>Bel of kom langs</div>
+          </a>
+
+          <a class="over-ons-card" href="#menu">
+            <div class="over-ons-card-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 2h18v6H3zM3 10h18v6H3zM3 18h18v4H3z"/><path d="M3 8h18M3 16h18"/></svg>
+            </div>
+            <div class="over-ons-card-title">Keuken &amp; Menu</div>
+            <div class="over-ons-card-text">Open tot 20:00<br>Maandelijks wisselend</div>
+          </a>
+
+          <a class="over-ons-card" href="#contact">
+            <div class="over-ons-card-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </div>
+            <div class="over-ons-card-title">Cadeaubon</div>
+            <div class="over-ons-card-text">Verkrijgbaar in de zaak<br>Arrangementen op maat</div>
+          </a>
+
+        </div>
     </div>
   </div>
 </section>
@@ -885,422 +901,534 @@
       <strong>Maandelijks wisselende kaart.</strong> Bekijk ons <a href="https://www.facebook.com/Shoko-Simpelveld-894484367254331" target="_blank" rel="noopener" style="color:var(--gold);">Facebookpagina</a> voor de meest actuele aanbiedingen en seizoenssuggesties. &nbsp;|&nbsp; <strong>PDF downloaden:</strong> <a href="https://www.shokosimpelveld.nl/_files/ugd/41815b_6c412c76eb5542df9c767916637f05af.pdf" target="_blank" rel="noopener" style="color:var(--gold);">Volledige menukaart (PDF)</a>
     </div>
 
-    <!-- Tabbladen -->
-    <div class="menu-tabs" role="tablist">
-      <button class="menu-tab active" data-target="tab-koffie" role="tab" aria-selected="true">Koffie & Dranken</button>
-      <button class="menu-tab" data-target="tab-borrelhapjes" role="tab">Borrelhapjes</button>
-      <button class="menu-tab" data-target="tab-broodjes" role="tab">Broodjes & Tosti's</button>
-      <button class="menu-tab" data-target="tab-soepen" role="tab">Soepen</button>
-      <button class="menu-tab" data-target="tab-voorgerechten" role="tab">Voorgerechten</button>
-      <button class="menu-tab" data-target="tab-salades" role="tab">Salades</button>
-      <button class="menu-tab" data-target="tab-pasta" role="tab">Pasta's</button>
-      <button class="menu-tab" data-target="tab-lunch" role="tab">Lunch</button>
-      <button class="menu-tab" data-target="tab-hoofd" role="tab">Hoofdgerechten</button>
-      <button class="menu-tab" data-target="tab-desserts" role="tab">Desserts & Coupes</button>
+    <!-- ═══════════════════════════════════════════
+         TWEENIVEAU MENU-STRUCTUUR
+         Niveau 1: .menu-tab  (hoofdtabs)
+         Niveau 2: .sub-menu-tab (subtabs binnen hoofdtab)
+    ═══════════════════════════════════════════ -->
+
+    <!-- CSS voor sub-tabs (inline zodat alles in 1 bestand blijft) -->
+    <style>
+      .sub-menu-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin: 0 0 1.75rem;
+        padding: 0.6rem 0.75rem;
+        background: rgba(44,74,62,0.07);
+        border-radius: 4px;
+        border-left: 3px solid var(--gold);
+      }
+      .sub-menu-tab {
+        background: transparent;
+        border: 1px solid rgba(44,74,62,0.3);
+        color: var(--text-light);
+        font-family: 'Lato', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.85rem;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+      .sub-menu-tab:hover {
+        background: var(--green);
+        color: var(--cream);
+        border-color: var(--green);
+      }
+      .sub-menu-tab.active {
+        background: var(--green);
+        color: var(--cream);
+        border-color: var(--green);
+      }
+      .sub-section { display: none; }
+      .sub-section.active { display: block; }
+
+    /* ─── LIGHTBOX ───────────────────────────────────────────── */
+    .lightbox-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.85rem;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s, opacity 0.2s;
+    }
+    .lightbox-link:hover { color: var(--gold-light); }
+
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(15, 22, 18, 0.88);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .lightbox-overlay.open {
+      display: flex;
+    }
+    .lightbox-box {
+      position: relative;
+      max-width: 820px;
+      width: 100%;
+      background: var(--green-dark);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(201,136,42,0.3);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      animation: lbSlideUp 0.25s ease;
+    }
+    @keyframes lbSlideUp {
+      from { transform: translateY(18px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .lightbox-img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: cover;
+      object-position: center 25%;
+      display: block;
+    }
+    .lightbox-caption {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.92rem;
+      color: rgba(245,237,214,0.78);
+      text-align: center;
+      padding: 0.85rem 1.5rem 1rem;
+      margin: 0;
+      line-height: 1.5;
+      border-top: 1px solid rgba(201,136,42,0.2);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(15,22,18,0.65);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s;
+      z-index: 10;
+    }
+    .lightbox-close:hover {
+      background: var(--gold);
+      color: var(--green-dark);
+      transform: scale(1.08);
+    }
+    </style>
+
+    <!-- NIVEAU 1: Hoofdtabs -->
+    <div class="menu-tabs" role="tablist" id="main-tabs">
+      <button class="menu-tab active" onclick="showMainTab('main-dranken', this)" role="tab" aria-selected="true">Dranken</button>
+      <button class="menu-tab" onclick="showMainTab('main-snacks', this)" role="tab">Snacks & Starters</button>
+      <button class="menu-tab" onclick="showMainTab('main-lunch', this)" role="tab">Lunch</button>
+      <button class="menu-tab" onclick="showMainTab('main-avond', this)" role="tab">Avondeten</button>
+      <button class="menu-tab" onclick="showMainTab('main-desserts', this)" role="tab">Desserts</button>
     </div>
 
-    <!-- ── KOFFIE & DRANKEN ─────────────────────────────── -->
-    <div class="menu-section active" id="tab-koffie">
+    <!-- ═══════════════════════════════════════════════
+         HOOFDTAB 1: DRANKEN
+    ═══════════════════════════════════════════════ -->
+    <div class="menu-section active" id="main-dranken">
 
-      <p class="menu-category-title">Regulars</p>
-      <div class="menu-grid">
-        <!-- MENU-ITEM TOEVOEGEN: kopieer een van de blokken hieronder -->
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Koffie / Espresso</span>
-          </div>
-          <span class="menu-item-price">€ 3,00</span>
+      <!-- Niveau 2: Subtabs Dranken -->
+      <div class="sub-menu-bar" role="tablist">
+        <button class="sub-menu-tab active" onclick="showSubTab('main-dranken', 'sub-koffie', this)" role="tab">Koffie & Thee</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-dranken', 'sub-creations', this)" role="tab">Shoko Creations</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-dranken', 'sub-fris', this)" role="tab">Frisdranken</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-dranken', 'sub-bier', this)" role="tab">Bier</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-dranken', 'sub-cocktails', this)" role="tab">Gin & Cocktails</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-dranken', 'sub-wijn', this)" role="tab">Wijn</button>
+      </div>
+
+      <!-- SUB: Koffie & Thee -->
+      <div class="sub-section active" id="sub-koffie">
+        <p class="menu-category-title">Koffie & Thee</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Koffie / Espresso</span></div><span class="menu-item-price">€ 3,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Cappuccino</span></div><span class="menu-item-price">€ 3,30</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Latte macchiato</span></div><span class="menu-item-price">€ 3,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Doppio</span></div><span class="menu-item-price">€ 4,40</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Matcha latte</span></div><span class="menu-item-price">€ 4,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chai latte</span></div><span class="menu-item-price">€ 4,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Flat white</span></div><span class="menu-item-price">€ 4,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Thee (diverse smaken)</span></div><span class="menu-item-price">€ 3,10</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Verse muntthee met honing</span></div><span class="menu-item-price">€ 3,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Gemberthee met sinaasappel</span></div><span class="menu-item-price">€ 3,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Warme Chocomel met slagroom</span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Deca variant</span><span class="menu-item-desc">Toeslag op elk koffiedrankje</span></div><span class="menu-item-price">+ € 0,30</span></div>
         </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Cappuccino</span>
-          </div>
-          <span class="menu-item-price">€ 3,30</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Latte macchiato</span>
-          </div>
-          <span class="menu-item-price">€ 3,70</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Doppio</span>
-          </div>
-          <span class="menu-item-price">€ 4,40</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Matcha latte</span>
-          </div>
-          <span class="menu-item-price">€ 4,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Chai latte</span>
-          </div>
-          <span class="menu-item-price">€ 4,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Flat white</span>
-          </div>
-          <span class="menu-item-price">€ 4,70</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Thee (diverse smaken)</span>
-          </div>
-          <span class="menu-item-price">€ 3,10</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Verse muntthee met honing</span>
-          </div>
-          <span class="menu-item-price">€ 3,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Gemberthee met sinaasappel</span>
-          </div>
-          <span class="menu-item-price">€ 3,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Warme Chocomel met slagroom</span>
-          </div>
-          <span class="menu-item-price">€ 4,50</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Deca variant</span>
-            <span class="menu-item-desc">Toeslag op elk koffiedrankje</span>
-          </div>
-          <span class="menu-item-price">+ € 0,30</span>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Strong Coffee Creations</p>
+        <p class="menu-category-sub">Met alcohol — alle varianten € 8,70</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Irish Coffee</span><span class="menu-item-desc">Irish whisky</span></div><span class="menu-item-price">€ 8,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Italian Coffee</span><span class="menu-item-desc">Amaretto di Saronno</span></div><span class="menu-item-price">€ 8,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Spanish Coffee</span><span class="menu-item-desc">Tia Maria</span></div><span class="menu-item-price">€ 8,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Baileys Coffee</span><span class="menu-item-desc">Baileys</span></div><span class="menu-item-price">€ 8,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">43 Coffee</span><span class="menu-item-desc">Licor 43</span></div><span class="menu-item-price">€ 8,70</span></div>
         </div>
       </div>
 
-      <p class="menu-category-title">Strong Creations</p>
-      <p class="menu-category-sub">Met alcohol — alle varianten € 8,70</p>
-      <div class="menu-grid">
-        <div class="menu-item">
-          <div class="menu-item-left"><span class="menu-item-name">Irish Coffee</span><span class="menu-item-desc">Irish whisky</span></div>
-          <span class="menu-item-price">€ 8,70</span>
+      <!-- SUB: Shoko Creations -->
+      <div class="sub-section" id="sub-creations">
+        <p class="menu-category-title">Shoko Cream Creations</p>
+        <p class="menu-category-sub">Koffie met siroop, slagroom en topping — € 5,50</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">White Chocolate Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hot Hazelnut Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tiramisu Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caramel Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chocolate Chips Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Marshmallow Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
         </div>
-        <div class="menu-item">
-          <div class="menu-item-left"><span class="menu-item-name">Italian Coffee</span><span class="menu-item-desc">Amaretto di Saronno</span></div>
-          <span class="menu-item-price">€ 8,70</span>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Shoko Latte Creations</p>
+        <p class="menu-category-sub">Espresso met siroop, melkschuim en topping — € 5,00</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">White Chocolate Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hot Hazelnut Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tiramisu Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caramel Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vanille Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
         </div>
-        <div class="menu-item">
-          <div class="menu-item-left"><span class="menu-item-name">Spanish Coffee</span><span class="menu-item-desc">Tia Maria</span></div>
-          <span class="menu-item-price">€ 8,70</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left"><span class="menu-item-name">Baileys Coffee</span><span class="menu-item-desc">Baileys</span></div>
-          <span class="menu-item-price">€ 8,70</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left"><span class="menu-item-name">43 Coffee</span><span class="menu-item-desc">Licor 43</span></div>
-          <span class="menu-item-price">€ 8,70</span>
-        </div>
-      </div>
-
-      <p class="menu-category-title">Shoko Cream Creations</p>
-      <p class="menu-category-sub">Koffie met siroop, slagroom en topping — € 5,50</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">White Chocolate Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hot Hazelnut Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tiramisu Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caramel Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chocolate Chips Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Marshmallow Cream</span></div><span class="menu-item-price">€ 5,50</span></div>
-      </div>
-
-      <p class="menu-category-title">Shoko Latte Creations</p>
-      <p class="menu-category-sub">Espresso met siroop, melkschuim en topping — € 5,00</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">White Chocolate Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hot Hazelnut Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tiramisu Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caramel Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vanille Latte</span></div><span class="menu-item-price">€ 5,00</span></div>
-      </div>
-
-      <p class="menu-category-title">Cold Coffee Creations</p>
-      <p class="menu-category-sub">Koude koffie met een bol ijs, saus en slagroom</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vanilla</span></div><span class="menu-item-price">€ 6,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chocolate</span></div><span class="menu-item-price">€ 6,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mocca</span></div><span class="menu-item-price">€ 6,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bueno</span></div><span class="menu-item-price">€ 7,70</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Marshmallow</span></div><span class="menu-item-price">€ 7,70</span></div>
-      </div>
-
-      <p class="menu-category-title">Frisdranken</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chaudfontaine (blauw/rood)</span></div><span class="menu-item-price">€ 3,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coca-Cola / Zero / Fanta / Sprite</span></div><span class="menu-item-price">€ 3,20</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tonic / Bitter Lemon</span></div><span class="menu-item-price">€ 3,20</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lipton Iced Tea / Green Tea</span></div><span class="menu-item-price">€ 3,30</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lychee soda</span></div><span class="menu-item-price">€ 4,80</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Verse Jus d'orange (0,33 l)</span></div><span class="menu-item-price">€ 4,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">San Pellegrino 0,75 l (bruisend)</span></div><span class="menu-item-price">€ 7,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Panna 0,75 l (naturel)</span></div><span class="menu-item-price">€ 7,50</span></div>
-      </div>
-
-      <p class="menu-category-title">Bierkaart — Van het vat</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Brand pilsner</span></div><span class="menu-item-price">€ 3,30</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem dubbel</span></div><span class="menu-item-price">€ 4,80</span></div>
-      </div>
-
-      <p class="menu-category-title">Bierkaart — Op fles</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Amstel Radler</span></div><span class="menu-item-price">€ 3,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mort Subite kriek</span></div><span class="menu-item-price">€ 4,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Paulaner Weizen</span></div><span class="menu-item-price">€ 4,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem blond</span></div><span class="menu-item-price">€ 4,70</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Desperados</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem Triple</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">La Chouffe</span></div><span class="menu-item-price">€ 5,70</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Amstel Radler 0%</span></div><span class="menu-item-price">€ 3,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem 0%</span></div><span class="menu-item-price">€ 4,40</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Paulaner 0%</span></div><span class="menu-item-price">€ 4,40</span></div>
-      </div>
-
-      <p class="menu-category-title">Gin Tonics</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bottega Gin Tonic</span><span class="menu-item-desc">Fever Tree orange tonic, sinaasappel, jeneverbes en munt</span></div><span class="menu-item-price">€ 12,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hendricks Gin Tonic</span><span class="menu-item-desc">Fever Tree blue tonic, grapefruit, blauwe bes en munt</span></div><span class="menu-item-price">€ 12,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Gordon 0% Gin Tonic</span><span class="menu-item-desc">Royal Bliss tonic, citrus en munt</span></div><span class="menu-item-price">€ 10,00</span></div>
-      </div>
-
-      <p class="menu-category-title">Mixers & Cocktails</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Aperol Spritz</span></div><span class="menu-item-price">€ 8,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limoncello Spritz</span></div><span class="menu-item-price">€ 8,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mojito</span></div><span class="menu-item-price">€ 11,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pornstar Martini</span></div><span class="menu-item-price">€ 11,50</span></div>
-      </div>
-
-      <p class="menu-category-title">Wijn — per glas / per fles</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Cabernet Sauvignon (rood)</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Primitivo (rood)</span></div><span class="menu-item-price">€ 5,80 / € 26</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Sauvignon Blanc (wit)</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pinot Grigio (wit)</span></div><span class="menu-item-price">€ 5,80 / € 26</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zoet wit</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Rosé</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Prosecco</span></div><span class="menu-item-price">€ 6,20 / € 29</span></div>
-      </div>
-    </div>
-
-    <!-- ── BORRELHAPJES ──────────────────────────────────── -->
-    <div class="menu-section" id="tab-borrelhapjes">
-      <div class="menu-grid">
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Bitterballen (15 st.)</span>
-            <span class="menu-item-desc">Met mosterd</span>
-          </div>
-          <span class="menu-item-price">€ 9,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Tortillachips</span>
-            <span class="menu-item-desc">Overbakken met kaas, geserveerd met guacamole en dipsaus</span>
-          </div>
-          <span class="menu-item-price">€ 11,50</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Borrelmix (15 st.)</span>
-            <span class="menu-item-desc">Met mayonaise en chilisaus</span>
-          </div>
-          <span class="menu-item-price">€ 11,90</span>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-left">
-            <span class="menu-item-name">Crispy Shoko Plate</span>
-            <span class="menu-item-desc">Gefrituurde kipstrips, jalapeño poppers, gyoza, guacamole bites, kroketjes, loempia, torpedo garnalen, uienringen en tortillachips met sausjes</span>
-          </div>
-          <span class="menu-item-price">€ 26,90</span>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Cold Coffee Creations</p>
+        <p class="menu-category-sub">Koude koffie met een bol ijs, saus en slagroom</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vanilla</span></div><span class="menu-item-price">€ 6,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chocolate</span></div><span class="menu-item-price">€ 6,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mocca</span></div><span class="menu-item-price">€ 6,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bueno</span></div><span class="menu-item-price">€ 7,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Marshmallow</span></div><span class="menu-item-price">€ 7,70</span></div>
         </div>
       </div>
-    </div>
 
-    <!-- ── BROODJES & TOSTI'S ────────────────────────────── -->
-    <div class="menu-section" id="tab-broodjes">
-      <p class="menu-category-title">Broodjes</p>
-      <p class="menu-category-sub">Witte bol of sneden bruin brood</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje brie</span><span class="menu-item-desc">Met komkommer en honing</span></div><span class="menu-item-price">€ 9,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje huisgemaakte tonijnsalade</span></div><span class="menu-item-price">€ 11,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje kip in pikante saus</span><span class="menu-item-desc">Met cashewnoten en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 11,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia Limburgs gehakt</span><span class="menu-item-desc">Met truffelmayonaise</span></div><span class="menu-item-price">€ 13,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia burrata & bacon</span><span class="menu-item-desc">Met rucola, artisjok, komkommer</span></div><span class="menu-item-price">€ 14,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia rundercarpaccio</span><span class="menu-item-desc">Met truffelmayonaise, kaas en rucola</span></div><span class="menu-item-price">€ 15,50</span></div>
+      <!-- SUB: Frisdranken -->
+      <div class="sub-section" id="sub-fris">
+        <p class="menu-category-title">Frisdranken</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chaudfontaine (blauw/rood)</span></div><span class="menu-item-price">€ 3,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coca-Cola / Zero / Fanta / Sprite</span></div><span class="menu-item-price">€ 3,20</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tonic / Bitter Lemon</span></div><span class="menu-item-price">€ 3,20</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lipton Iced Tea / Green Tea</span></div><span class="menu-item-price">€ 3,30</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lychee soda</span></div><span class="menu-item-price">€ 4,80</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Verse Jus d'orange (0,33 l)</span></div><span class="menu-item-price">€ 4,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">San Pellegrino 0,75 l (bruisend)</span></div><span class="menu-item-price">€ 7,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Panna 0,75 l (naturel)</span></div><span class="menu-item-price">€ 7,50</span></div>
+        </div>
       </div>
 
-      <p class="menu-category-title">Tosti's</p>
-      <p class="menu-category-sub">Van Italiaans witbrood — uit de oven</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Ham en kaas</span></div><span class="menu-item-price">€ 10,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hawaï</span></div><span class="menu-item-price">€ 12,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mozzarella, tomaat en pesto</span></div><span class="menu-item-price">€ 12,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tonijnsalade en kaas</span></div><span class="menu-item-price">€ 12,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Brie, bacon en honing</span></div><span class="menu-item-price">€ 12,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Gyros en kaas met tzatziki</span></div><span class="menu-item-price">€ 13,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pikante kip, kaas en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 13,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Club Shoko</span><span class="menu-item-desc">Ham, kaas, kipfilet en bacon</span></div><span class="menu-item-price">€ 15,50</span></div>
+      <!-- SUB: Bier -->
+      <div class="sub-section" id="sub-bier">
+        <p class="menu-category-title">Van het vat</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Brand pilsner</span></div><span class="menu-item-price">€ 3,30</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem dubbel</span></div><span class="menu-item-price">€ 4,80</span></div>
+        </div>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Op fles</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Amstel Radler</span></div><span class="menu-item-price">€ 3,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mort Subite kriek</span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Paulaner Weizen</span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem blond</span></div><span class="menu-item-price">€ 4,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Desperados</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem Triple</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">La Chouffe</span></div><span class="menu-item-price">€ 5,70</span></div>
+        </div>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Alcoholvrij bier</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Amstel Radler 0%</span></div><span class="menu-item-price">€ 3,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Affligem 0%</span></div><span class="menu-item-price">€ 4,40</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Paulaner 0%</span></div><span class="menu-item-price">€ 4,40</span></div>
+        </div>
       </div>
 
-      <p class="menu-category-title">Bagels & Soup</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel tonijnsalade</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 11,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel tomaat & mozzarella</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 11,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel kipcocktail</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 12,50</span></div>
+      <!-- SUB: Gin & Cocktails -->
+      <div class="sub-section" id="sub-cocktails">
+        <p class="menu-category-title">Gin Tonics</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bottega Gin Tonic</span><span class="menu-item-desc">Fever Tree orange tonic, sinaasappel, jeneverbes en munt</span></div><span class="menu-item-price">€ 12,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hendricks Gin Tonic</span><span class="menu-item-desc">Fever Tree blue tonic, grapefruit, blauwe bes en munt</span></div><span class="menu-item-price">€ 12,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Gordon 0% Gin Tonic</span><span class="menu-item-desc">Royal Bliss tonic, citrus en munt</span></div><span class="menu-item-price">€ 10,00</span></div>
+        </div>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Cocktails & Mixers</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Aperol Spritz</span></div><span class="menu-item-price">€ 8,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limoncello Spritz</span></div><span class="menu-item-price">€ 8,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mojito</span></div><span class="menu-item-price">€ 11,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pornstar Martini</span></div><span class="menu-item-price">€ 11,50</span></div>
+        </div>
       </div>
-    </div>
 
-    <!-- ── SOEPEN ─────────────────────────────────────────── -->
-    <div class="menu-section" id="tab-soepen">
-      <p class="menu-category-sub">Alle soepen geserveerd met brood</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tomatensoep</span></div><span class="menu-item-price">€ 6,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lente-ui roomsoep</span></div><span class="menu-item-price">€ 7,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Milde Thaise currysoep</span><span class="menu-item-desc">Gevuld met verse kip en groenten</span></div><span class="menu-item-price">€ 8,70</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Uiensoep</span><span class="menu-item-desc">Gegratineerd met kaas</span></div><span class="menu-item-price">€ 9,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vissoep</span><span class="menu-item-desc">Roomsoep gevuld met zeevruchten en scampi</span></div><span class="menu-item-price">€ 12,90</span></div>
-      </div>
-    </div>
-
-    <!-- ── VOORGERECHTEN ─────────────────────────────────── -->
-    <div class="menu-section" id="tab-voorgerechten">
-      <p class="menu-category-sub">Alle voorgerechten geserveerd met brood</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodplank</span><span class="menu-item-desc">Met olijven en dips</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bruschetta</span><span class="menu-item-desc">Focaccia met tomaat uit de oven, overbakken met parmezaanse kaas</span></div><span class="menu-item-price">€ 9,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Calamares met tzatziki</span></div><span class="menu-item-price">€ 10,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipcocktail</span><span class="menu-item-desc">Met lente-ui roomsoep</span></div><span class="menu-item-price">€ 12,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Burrata</span><span class="menu-item-desc">Romige mozzarella met tomaat, rucola en olijven</span></div><span class="menu-item-price">€ 14,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Carpaccio van rund</span><span class="menu-item-desc">Met parmezaanse kaas, truffelmayonaise en rucola</span></div><span class="menu-item-price">€ 14,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi op Oosterse wijze</span><span class="menu-item-desc">Met gember, babymaïs en groene asperges</span></div><span class="menu-item-price">€ 14,90</span></div>
+      <!-- SUB: Wijn -->
+      <div class="sub-section" id="sub-wijn">
+        <p class="menu-category-title">Wijn — per glas / per fles</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Cabernet Sauvignon (rood)</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Primitivo (rood)</span></div><span class="menu-item-price">€ 5,80 / € 26</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Sauvignon Blanc (wit)</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pinot Grigio (wit)</span></div><span class="menu-item-price">€ 5,80 / € 26</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zoet wit</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Rosé</span></div><span class="menu-item-price">€ 4,80 / € 22</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Prosecco</span></div><span class="menu-item-price">€ 6,20 / € 29</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- ── SALADES ────────────────────────────────────────── -->
-    <div class="menu-section" id="tab-salades">
-      <p class="menu-category-sub">Alle salades geserveerd met brood</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipfilet met pikante saus</span><span class="menu-item-desc">Cashewnoten en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 18,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caesar</span><span class="menu-item-desc">Kip, spek, ei, Romeinse sla en parmezaanse kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chicken Tender</span><span class="menu-item-desc">Krokante kip met limoen aioli</span></div><span class="menu-item-price">€ 20,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Burrata</span><span class="menu-item-desc">Romige mozzarella, artisjok en geroosterde paprika</span></div><span class="menu-item-price">€ 21,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Biefstuk</span><span class="menu-item-desc">Sesamsaus, rode ui en paprika</span></div><span class="menu-item-price">€ 22,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi</span><span class="menu-item-desc">6 scampi in licht pikante marinade gebakken en 6 torpedo garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
-      </div>
-      <div class="menu-grid" style="margin-top:1rem;">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Extra friet</span></div><span class="menu-item-price">€ 2,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Friet i.p.v. brood</span></div><span class="menu-item-price">€ 2,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mayonaise</span></div><span class="menu-item-price">€ 0,90</span></div>
-      </div>
-    </div>
+    <!-- ═══════════════════════════════════════════════
+         HOOFDTAB 2: SNACKS & STARTERS
+    ═══════════════════════════════════════════════ -->
+    <div class="menu-section" id="main-snacks">
 
-    <!-- ── PASTA'S ────────────────────────────────────────── -->
-    <div class="menu-section" id="tab-pasta">
-      <p class="menu-category-sub">Alle pasta's geserveerd met brood</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Arrabiata</span><span class="menu-item-desc">Groentenmix in pikante tomatensaus</span></div><span class="menu-item-price">€ 15,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Spaghetti Carbonara</span><span class="menu-item-desc">Spekjes, room, parmezaanse kaas</span></div><span class="menu-item-price">€ 18,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Salmone</span><span class="menu-item-desc">Zalm, room, groene asperges, spinazie en tomaat</span></div><span class="menu-item-price">€ 19,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Burrata</span><span class="menu-item-desc">Tomatensaus, room, artisjok, olijven, sugar snaps, tomaat en burrata</span></div><span class="menu-item-price">€ 20,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Shoko</span><span class="menu-item-desc">Scampi, bacon, tomaatjes en spinazie</span></div><span class="menu-item-price">€ 21,90</span></div>
-      </div>
-      <div class="menu-note" style="margin-top:1.5rem;">
-        <strong>Extras:</strong> Grozette strooikaas + € 0,80 &nbsp;|&nbsp; Verse parmezaanse kaas + € 1,30
-      </div>
-    </div>
-
-    <!-- ── LUNCH ──────────────────────────────────────────── -->
-    <div class="menu-section" id="tab-lunch">
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">2 Rundvleeskroketten met brood</span></div><span class="menu-item-price">€ 9,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pasteitje met brood</span></div><span class="menu-item-price">€ 12,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Omelet Shoko</span><span class="menu-item-desc">Champignons, paprika, rode ui, ham en kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crispy Chicken Burger</span><span class="menu-item-desc">Krokante kip, koolsla en krulfrietjes</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 16,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Omelet scampi</span><span class="menu-item-desc">Scampi, tomaat, rode ui, spinazie en kaas</span></div><span class="menu-item-price">€ 15,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">American Beef Burger</span><span class="menu-item-desc">Rundvlees, bacon, kaas, koolsla en krulfrietjes</span></div><span class="menu-item-price">€ 18,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Huisgemaakt stoofpotje</span><span class="menu-item-desc">Van hert en bospaddenstoelen met frites en sla</span></div><span class="menu-item-price">€ 19,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chicken yellow curry wok</span><span class="menu-item-desc">Kipfilet, babymaïs, groenten en rijst</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 19,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Saté van verse kipfilet</span><span class="menu-item-desc">Met frisse sla, kroepoek, atjar, krokante uitjes, keuze uit frites of brood</span></div><span class="menu-item-price">€ 21,50</span></div>
-      </div>
-    </div>
-
-    <!-- ── HOOFDGERECHTEN ─────────────────────────────────── -->
-    <div class="menu-section" id="tab-hoofd">
-      <div class="menu-note">Alle hoofdgerechten worden geserveerd met een groentengarnituur en frites.</div>
-
-      <p class="menu-category-title">Vlees</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Schnitzel</span><span class="menu-item-desc">Met stroganoffsaus</span><span class="menu-item-extra">+ € 1,50 voor vegan Schnitzel</span></div><span class="menu-item-price">€ 20,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipfilet</span><span class="menu-item-desc">Met champignonsaus</span></div><span class="menu-item-price">€ 21,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Varkenshaas</span><span class="menu-item-desc">Met champignonsaus</span></div><span class="menu-item-price">€ 23,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Eendenborst</span><span class="menu-item-desc">Met rode portsaus</span></div><span class="menu-item-price">€ 24,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Biefstukspiesjes (ossenhaas)</span><span class="menu-item-desc">Met pepersaus</span></div><span class="menu-item-price">€ 25,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mixed Grill</span><span class="menu-item-desc">Kipfilet, varkenshaas en biefstukspiesje, met uienringen en saus naar keuze</span></div><span class="menu-item-price">€ 27,50</span></div>
+      <div class="sub-menu-bar" role="tablist">
+        <button class="sub-menu-tab active" onclick="showSubTab('main-snacks', 'sub-borrelhapjes', this)" role="tab">Borrelhapjes</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-snacks', 'sub-soepen', this)" role="tab">Soepen</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-snacks', 'sub-voorgerechten', this)" role="tab">Voorgerechten</button>
       </div>
 
-      <p class="menu-category-title">Vis</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zalmfilet</span><span class="menu-item-desc">Met dilleroomsaus</span></div><span class="menu-item-price">€ 24,90</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Koolvis</span><span class="menu-item-desc">Met limoen aioli</span></div><span class="menu-item-price">€ 25,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi (10 st.)</span><span class="menu-item-desc">Met knoflookolie en citroen</span></div><span class="menu-item-price">€ 26,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zeebaarsfilet</span><span class="menu-item-desc">Met gemarineerde cherrytomaatjes en kappertjes</span></div><span class="menu-item-price">€ 27,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vismix Shoko</span><span class="menu-item-desc">Zalmfilet, pangasius, victoriabaars, scampi en calamares, met dille roomsaus</span></div><span class="menu-item-price">€ 27,50</span></div>
+      <!-- SUB: Borrelhapjes -->
+      <div class="sub-section active" id="sub-borrelhapjes">
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bitterballen (15 st.)</span><span class="menu-item-desc">Met mosterd</span></div><span class="menu-item-price">€ 9,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tortillachips</span><span class="menu-item-desc">Overbakken met kaas, geserveerd met guacamole en dipsaus</span></div><span class="menu-item-price">€ 11,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Borrelmix (15 st.)</span><span class="menu-item-desc">Met mayonaise en chilisaus</span></div><span class="menu-item-price">€ 11,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crispy Shoko Plate</span><span class="menu-item-desc">Gefrituurde kipstrips, jalapeño poppers, gyoza, guacamole bites, kroketjes, loempia, torpedo garnalen, uienringen en tortillachips met sausjes</span></div><span class="menu-item-price">€ 26,90</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Soepen -->
+      <div class="sub-section" id="sub-soepen">
+        <p class="menu-category-sub">Alle soepen geserveerd met brood</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tomatensoep</span></div><span class="menu-item-price">€ 6,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Lente-ui roomsoep</span></div><span class="menu-item-price">€ 7,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Milde Thaise currysoep</span><span class="menu-item-desc">Gevuld met verse kip en groenten</span></div><span class="menu-item-price">€ 8,70</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Uiensoep</span><span class="menu-item-desc">Gegratineerd met kaas</span></div><span class="menu-item-price">€ 9,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vissoep</span><span class="menu-item-desc">Roomsoep gevuld met zeevruchten en scampi</span></div><span class="menu-item-price">€ 12,90</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Voorgerechten -->
+      <div class="sub-section" id="sub-voorgerechten">
+        <p class="menu-category-sub">Alle voorgerechten geserveerd met brood</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodplank</span><span class="menu-item-desc">Met olijven en dips</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bruschetta</span><span class="menu-item-desc">Focaccia met tomaat uit de oven, overbakken met parmezaanse kaas</span></div><span class="menu-item-price">€ 9,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Calamares met tzatziki</span></div><span class="menu-item-price">€ 10,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipcocktail</span><span class="menu-item-desc">Met lente-ui roomsoep</span></div><span class="menu-item-price">€ 12,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Burrata</span><span class="menu-item-desc">Romige mozzarella met tomaat, rucola en olijven</span></div><span class="menu-item-price">€ 14,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Carpaccio van rund</span><span class="menu-item-desc">Met parmezaanse kaas, truffelmayonaise en rucola</span></div><span class="menu-item-price">€ 14,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi op Oosterse wijze</span><span class="menu-item-desc">Met gember, babymaïs en groene asperges</span></div><span class="menu-item-price">€ 14,90</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- ── DESSERTS & COUPES ──────────────────────────────── -->
-    <div class="menu-section" id="tab-desserts">
+    <!-- ═══════════════════════════════════════════════
+         HOOFDTAB 3: LUNCH
+    ═══════════════════════════════════════════════ -->
+    <div class="menu-section" id="main-lunch">
 
-      <p class="menu-category-title">Gebak</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limburgse vlaai</span></div><span class="menu-item-price">€ 4,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limburgse vlaai met slagroom</span></div><span class="menu-item-price">€ 5,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Warme appeltaart</span><span class="menu-item-desc">Ijs, vanillesaus, slagroom</span></div><span class="menu-item-price">€ 5,20</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">New York lemon cheesecake</span><span class="menu-item-desc">Met lemoncurd en frambozensorbet</span></div><span class="menu-item-price">€ 5,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Ambachtelijke brownie</span><span class="menu-item-desc">Met slagroom</span></div><span class="menu-item-price">€ 5,70</span></div>
+      <div class="sub-menu-bar" role="tablist">
+        <button class="sub-menu-tab active" onclick="showSubTab('main-lunch', 'sub-broodjes', this)" role="tab">Broodjes & Focaccia</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-lunch', 'sub-tostis', this)" role="tab">Tosti's & Bagels</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-lunch', 'sub-lunchgerechten', this)" role="tab">Lunchgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-lunch', 'sub-salades', this)" role="tab">Salades</button>
       </div>
 
-      <p class="menu-category-title">Shoko Menu Desserts</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Huisgemaakte tiramisu</span><span class="menu-item-desc">Met mokka-ijs</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zachte chocolademousse</span><span class="menu-item-desc">Met romig vanille-ijs</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crème brûlée</span><span class="menu-item-desc">Met frambozensorbet</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Monchoutaartje</span><span class="menu-item-desc">Met kersen en yoghurt-bosvruchtenijs</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crunchy Caramel</span><span class="menu-item-desc">Parfait van caramel en hazelnoten, met caramel-ijs en popcorn</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Menu Peach and Passion</span><span class="menu-item-desc">Passievrucht-mangosorbet, vanille-ijs, perzik en verse passievrucht</span></div><span class="menu-item-price">€ 8,20</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Menu Dame Blanche</span></div><span class="menu-item-price">€ 7,20</span></div>
+      <!-- SUB: Broodjes & Focaccia -->
+      <div class="sub-section active" id="sub-broodjes">
+        <p class="menu-category-sub">Witte bol of sneden bruin brood</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje brie</span><span class="menu-item-desc">Met komkommer en honing</span></div><span class="menu-item-price">€ 9,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje huisgemaakte tonijnsalade</span></div><span class="menu-item-price">€ 11,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Broodje kip in pikante saus</span><span class="menu-item-desc">Met cashewnoten en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 11,90</span></div>
+        </div>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Focaccia</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia Limburgs gehakt</span><span class="menu-item-desc">Met truffelmayonaise</span></div><span class="menu-item-price">€ 13,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia burrata & bacon</span><span class="menu-item-desc">Met rucola, artisjok, komkommer</span></div><span class="menu-item-price">€ 14,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Focaccia rundercarpaccio</span><span class="menu-item-desc">Met truffelmayonaise, kaas en rucola</span></div><span class="menu-item-price">€ 15,50</span></div>
+        </div>
       </div>
 
-      <p class="menu-category-title">Coupes</p>
-      <div class="menu-grid">
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Schatkistje</span><span class="menu-item-desc">Vanille- en chocolade-ijs, slagroom, smarties en een spekje <em>(voor kinderen)</em></span></div><span class="menu-item-price">€ 4,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Dame Blanche</span><span class="menu-item-desc">4 bollen vanille-ijs met chocoladesaus</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Advocaat</span><span class="menu-item-desc">4 bollen vanille-ijs met advocaat</span></div><span class="menu-item-price">€ 8,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Mokka</span><span class="menu-item-desc">4 bollen mokka-ijs met koffiebonen en caramelsaus</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Koempel</span><span class="menu-item-desc">4 bollen chocolade-ijs met nootjes en advocaat</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Banaan</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen chocolade-ijs met banaan en chocoladesaus</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe White Chocolate</span><span class="menu-item-desc">4 bollen vanille-ijs met witte chocolade en vanillesaus</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Chocolate Chips</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen chocolade-ijs met chocolate chips</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Bresilienne</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen mokka-ijs met nootjes en caramelsaus</span></div><span class="menu-item-price">€ 9,00</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Peach and Passion</span><span class="menu-item-desc">2 bollen passievrucht-mangosorbet, 2 bollen vanille-ijs, perzik en verse passievrucht</span></div><span class="menu-item-price">€ 9,50</span></div>
-        <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Slagroom</span></div><span class="menu-item-price">€ 1,50</span></div>
+      <!-- SUB: Tosti's & Bagels -->
+      <div class="sub-section" id="sub-tostis">
+        <p class="menu-category-title">Tosti's</p>
+        <p class="menu-category-sub">Van Italiaans witbrood — uit de oven</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Ham en kaas</span></div><span class="menu-item-price">€ 10,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Hawaï</span></div><span class="menu-item-price">€ 12,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mozzarella, tomaat en pesto</span></div><span class="menu-item-price">€ 12,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Tonijnsalade en kaas</span></div><span class="menu-item-price">€ 12,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Brie, bacon en honing</span></div><span class="menu-item-price">€ 12,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Gyros en kaas met tzatziki</span></div><span class="menu-item-price">€ 13,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pikante kip, kaas en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 13,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Club Shoko</span><span class="menu-item-desc">Ham, kaas, kipfilet en bacon</span></div><span class="menu-item-price">€ 15,50</span></div>
+        </div>
+        <p class="menu-category-title" style="margin-top:1.75rem;">Bagels & Soup</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel tonijnsalade</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 11,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel tomaat & mozzarella</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 11,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Bagel kipcocktail</span><span class="menu-item-desc">Met tomatensoepje</span></div><span class="menu-item-price">€ 12,50</span></div>
+        </div>
       </div>
 
-      <div class="menu-note" style="margin-top:1.5rem;">
-        <strong>Allergenen?</strong> Aarzel niet om onze medewerkers te raadplegen. We doen ons best om uw wensen in te vullen. Receptuur kan veranderen.
+      <!-- SUB: Lunchgerechten -->
+      <div class="sub-section" id="sub-lunchgerechten">
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">2 Rundvleeskroketten met brood</span></div><span class="menu-item-price">€ 9,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Pasteitje met brood</span></div><span class="menu-item-price">€ 12,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Omelet Shoko</span><span class="menu-item-desc">Champignons, paprika, rode ui, ham en kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Omelet scampi</span><span class="menu-item-desc">Scampi, tomaat, rode ui, spinazie en kaas</span></div><span class="menu-item-price">€ 15,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crispy Chicken Burger</span><span class="menu-item-desc">Krokante kip, koolsla en krulfrietjes</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 16,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">American Beef Burger</span><span class="menu-item-desc">Rundvlees, bacon, kaas, koolsla en krulfrietjes</span></div><span class="menu-item-price">€ 18,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Huisgemaakt stoofpotje</span><span class="menu-item-desc">Van hert en bospaddenstoelen met frites en sla</span></div><span class="menu-item-price">€ 19,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chicken yellow curry wok</span><span class="menu-item-desc">Kipfilet, babymaïs, groenten en rijst</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 19,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Saté van verse kipfilet</span><span class="menu-item-desc">Met frisse sla, kroepoek, atjar, krokante uitjes, keuze uit frites of brood</span></div><span class="menu-item-price">€ 21,50</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Salades -->
+      <div class="sub-section" id="sub-salades">
+        <p class="menu-category-sub">Alle salades geserveerd met brood</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipfilet met pikante saus</span><span class="menu-item-desc">Cashewnoten en ananas</span><span class="menu-item-extra">+ € 1,50 voor vegan kip</span></div><span class="menu-item-price">€ 18,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Caesar</span><span class="menu-item-desc">Kip, spek, ei, Romeinse sla en parmezaanse kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Chicken Tender</span><span class="menu-item-desc">Krokante kip met limoen aioli</span></div><span class="menu-item-price">€ 20,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Burrata</span><span class="menu-item-desc">Romige mozzarella, artisjok en geroosterde paprika</span></div><span class="menu-item-price">€ 21,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Biefstuk</span><span class="menu-item-desc">Sesamsaus, rode ui en paprika</span></div><span class="menu-item-price">€ 22,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi</span><span class="menu-item-desc">6 scampi in licht pikante marinade en 6 torpedo garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
+        </div>
+        <div class="menu-note" style="margin-top:1rem;">
+          <strong>Extras:</strong> Extra friet + € 2,50 &nbsp;|&nbsp; Friet i.p.v. brood + € 2,00 &nbsp;|&nbsp; Mayonaise + € 0,90
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         HOOFDTAB 4: AVONDETEN
+    ═══════════════════════════════════════════════ -->
+    <div class="menu-section" id="main-avond">
+
+      <div class="sub-menu-bar" role="tablist">
+        <button class="sub-menu-tab active" onclick="showSubTab('main-avond', 'sub-pasta', this)" role="tab">Pasta's</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-avond', 'sub-vlees', this)" role="tab">Vlees</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-avond', 'sub-vis', this)" role="tab">Vis</button>
+      </div>
+
+      <!-- SUB: Pasta's -->
+      <div class="sub-section active" id="sub-pasta">
+        <p class="menu-category-sub">Alle pasta's geserveerd met brood</p>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Arrabiata</span><span class="menu-item-desc">Groentenmix in pikante tomatensaus</span></div><span class="menu-item-price">€ 15,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Spaghetti Carbonara</span><span class="menu-item-desc">Spekjes, room, parmezaanse kaas</span></div><span class="menu-item-price">€ 18,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Salmone</span><span class="menu-item-desc">Zalm, room, groene asperges, spinazie en tomaat</span></div><span class="menu-item-price">€ 19,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Burrata</span><span class="menu-item-desc">Tomatensaus, room, artisjok, olijven, sugar snaps, tomaat en burrata</span></div><span class="menu-item-price">€ 20,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Penne Shoko</span><span class="menu-item-desc">Scampi, bacon, tomaatjes en spinazie</span></div><span class="menu-item-price">€ 21,90</span></div>
+        </div>
+        <div class="menu-note" style="margin-top:1rem;">
+          <strong>Extras:</strong> Grozette strooikaas + € 0,80 &nbsp;|&nbsp; Verse parmezaanse kaas + € 1,30
+        </div>
+      </div>
+
+      <!-- SUB: Vlees -->
+      <div class="sub-section" id="sub-vlees">
+        <div class="menu-note">Alle vleesgerechten worden geserveerd met een groentengarnituur en frites.</div>
+        <div class="menu-grid" style="margin-top:1rem;">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Schnitzel</span><span class="menu-item-desc">Met stroganoffsaus</span><span class="menu-item-extra">+ € 1,50 voor vegan Schnitzel</span></div><span class="menu-item-price">€ 20,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Kipfilet</span><span class="menu-item-desc">Met champignonsaus</span></div><span class="menu-item-price">€ 21,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Varkenshaas</span><span class="menu-item-desc">Met champignonsaus</span></div><span class="menu-item-price">€ 23,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Eendenborst</span><span class="menu-item-desc">Met rode portsaus</span></div><span class="menu-item-price">€ 24,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Biefstukspiesjes (ossenhaas)</span><span class="menu-item-desc">Met pepersaus</span></div><span class="menu-item-price">€ 25,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Mixed Grill</span><span class="menu-item-desc">Kipfilet, varkenshaas en biefstukspiesje, met uienringen en saus naar keuze</span></div><span class="menu-item-price">€ 27,50</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Vis -->
+      <div class="sub-section" id="sub-vis">
+        <div class="menu-note">Alle visgerechten worden geserveerd met een groentengarnituur en frites.</div>
+        <div class="menu-grid" style="margin-top:1rem;">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zalmfilet</span><span class="menu-item-desc">Met dilleroomsaus</span></div><span class="menu-item-price">€ 24,90</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Koolvis</span><span class="menu-item-desc">Met limoen aioli</span></div><span class="menu-item-price">€ 25,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Scampi (10 st.)</span><span class="menu-item-desc">Met knoflookolie en citroen</span></div><span class="menu-item-price">€ 26,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zeebaarsfilet</span><span class="menu-item-desc">Met gemarineerde cherrytomaatjes en kappertjes</span></div><span class="menu-item-price">€ 27,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Vismix Shoko</span><span class="menu-item-desc">Zalmfilet, pangasius, victoriabaars, scampi en calamares, met dille roomsaus</span></div><span class="menu-item-price">€ 27,50</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         HOOFDTAB 5: DESSERTS
+    ═══════════════════════════════════════════════ -->
+    <div class="menu-section" id="main-desserts">
+
+      <div class="sub-menu-bar" role="tablist">
+        <button class="sub-menu-tab active" onclick="showSubTab('main-desserts', 'sub-gebak', this)" role="tab">Gebak</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-desserts', 'sub-menudesserts', this)" role="tab">Desserts</button>
+        <button class="sub-menu-tab" onclick="showSubTab('main-desserts', 'sub-coupes', this)" role="tab">Coupes</button>
+      </div>
+
+      <!-- SUB: Gebak -->
+      <div class="sub-section active" id="sub-gebak">
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limburgse vlaai</span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Limburgse vlaai met slagroom</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Warme appeltaart</span><span class="menu-item-desc">Ijs, vanillesaus, slagroom</span></div><span class="menu-item-price">€ 5,20</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">New York lemon cheesecake</span><span class="menu-item-desc">Met lemoncurd en frambozensorbet</span></div><span class="menu-item-price">€ 5,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Ambachtelijke brownie</span><span class="menu-item-desc">Met slagroom</span></div><span class="menu-item-price">€ 5,70</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Desserts -->
+      <div class="sub-section" id="sub-menudesserts">
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Huisgemaakte tiramisu</span><span class="menu-item-desc">Met mokka-ijs</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Zachte chocolademousse</span><span class="menu-item-desc">Met romig vanille-ijs</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crème brûlée</span><span class="menu-item-desc">Met frambozensorbet</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Monchoutaartje</span><span class="menu-item-desc">Met kersen en yoghurt-bosvruchtenijs</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Crunchy Caramel</span><span class="menu-item-desc">Parfait van caramel en hazelnoten, met caramel-ijs en popcorn</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Peach and Passion</span><span class="menu-item-desc">Passievrucht-mangosorbet, vanille-ijs, perzik en verse passievrucht</span></div><span class="menu-item-price">€ 8,20</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Dame Blanche</span></div><span class="menu-item-price">€ 7,20</span></div>
+        </div>
+      </div>
+
+      <!-- SUB: Coupes -->
+      <div class="sub-section" id="sub-coupes">
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Schatkistje</span><span class="menu-item-desc">Vanille- en chocolade-ijs, slagroom, smarties en een spekje <em>(voor kinderen)</em></span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Dame Blanche</span><span class="menu-item-desc">4 bollen vanille-ijs met chocoladesaus</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Advocaat</span><span class="menu-item-desc">4 bollen vanille-ijs met advocaat</span></div><span class="menu-item-price">€ 8,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Mokka</span><span class="menu-item-desc">4 bollen mokka-ijs met koffiebonen en caramelsaus</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Koempel</span><span class="menu-item-desc">4 bollen chocolade-ijs met nootjes en advocaat</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Banaan</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen chocolade-ijs met banaan en chocoladesaus</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe White Chocolate</span><span class="menu-item-desc">4 bollen vanille-ijs met witte chocolade en vanillesaus</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Chocolate Chips</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen chocolade-ijs met chocolate chips</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Bresilienne</span><span class="menu-item-desc">2 bollen vanille-ijs, 2 bollen mokka-ijs met nootjes en caramelsaus</span></div><span class="menu-item-price">€ 9,00</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Coupe Peach and Passion</span><span class="menu-item-desc">2 bollen passievrucht-mangosorbet, 2 bollen vanille-ijs, perzik en verse passievrucht</span></div><span class="menu-item-price">€ 9,50</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-name">Extra slagroom</span></div><span class="menu-item-price">€ 1,50</span></div>
+        </div>
+        <div class="menu-note" style="margin-top:1.5rem;">
+          <strong>Allergenen?</strong> Aarzel niet om onze medewerkers te raadplegen. We doen ons best om uw wensen in te vullen. Receptuur kan veranderen.
+        </div>
       </div>
     </div>
 
@@ -1330,7 +1458,11 @@
         <div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.5rem;">☕</div>
         <h4>Shoko Ontbijt</h4>
         <div class="arrangement-price">€ 19,– <span style="font-size:0.95rem;font-weight:400;color:rgba(245,237,214,0.7)">p.p.</span></div>
-        <p>Van 10:00 tot 11:30 | Vanaf 2 personen | Indien mogelijk<br><br>Een heerlijk uitgebreid ontbijt — een prachtige start van de dag. Bekijk het ontbijtmenu via de afbeelding op onze menukaartpagina.</p>
+        <p>Van 10:00 tot 11:30 | Vanaf 2 personen | Indien mogelijk<br><br>Een heerlijk uitgebreid ontbijt — een prachtige start van de dag.</p>
+        <button class="lightbox-link" onclick="openLightbox('lb-ontbijt')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Klik hier om het ontbijt te bekijken
+        </button>
       </div>
 
       <div class="arrangement-card">
@@ -1338,6 +1470,10 @@
         <h4>SHOKO High Tea</h4>
         <div class="arrangement-price">€ 29,50 <span style="font-size:0.95rem;font-weight:400;color:rgba(245,237,214,0.7)">p.p.</span></div>
         <p>Van 10:00 tot 15:00 | Vanaf 2 personen | Indien mogelijk<br><br>Bij een High Tea voor 8 personen gelieve aanpassingen in aantal, allergieën of voorkeuren van tevoren door te geven — onze keuken bereidt uw reservering voor.</p>
+        <button class="lightbox-link" onclick="openLightbox('lb-hightea')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Klik hier om de High Tea te bekijken
+        </button>
       </div>
 
       <div class="arrangement-card">
@@ -1517,13 +1653,26 @@
       </div>
 
       <div>
-        <img
-          src="https://static.wixstatic.com/media/41815b_eac19d956243464a838eab16e723e038~mv2.jpg"
-          alt="Ontbijt bij Brasserie Shoko Simpelveld"
-          loading="lazy"
-          style="width:100%;border-radius:6px;object-fit:cover;object-position:center 30%;height:360px;display:block;"
-        />
-        <p style="font-size:0.88rem;color:var(--text-light);margin-top:0.5rem;text-align:center;font-style:italic;">Ons heerlijke Shoko Ontbijt — dagelijks van 10:00 tot 11:30</p>
+        <div style="background:var(--green-dark);border-radius:6px;padding:2rem;border:1px solid rgba(201,136,42,0.25);height:100%;display:flex;flex-direction:column;justify-content:center;gap:1.5rem;">
+          <div>
+            <div style="font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--gold);margin-bottom:0.3rem;">Bijzondere momenten</div>
+            <h3 style="font-family:'Playfair Display',serif;color:var(--cream);font-size:1.35rem;margin:0 0 0.6rem;">Ontbijt & High Tea</h3>
+            <p style="font-size:0.93rem;color:rgba(245,237,214,0.75);line-height:1.65;margin:0;">Benieuwd hoe ons uitgebreide ontbijt of onze feestelijke High Tea eruitziet? Bekijk de sfeerbeelden hieronder.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <button class="lightbox-link" onclick="openLightbox('lb-ontbijt')" style="justify-content:flex-start;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Bekijk het Shoko Ontbijt
+            </button>
+            <button class="lightbox-link" onclick="openLightbox('lb-hightea')" style="justify-content:flex-start;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Bekijk de Shoko High Tea
+            </button>
+          </div>
+          <a href="#arrangementen" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--gold);color:var(--green-dark);font-weight:700;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.7rem 1.4rem;border-radius:3px;text-decoration:none;transition:background 0.2s;width:fit-content;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">
+            Alle arrangementen bekijken
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -1624,20 +1773,71 @@
 
   sections.forEach(s => observer.observe(s));
 
-  // ── MENU TABS ─────────────────────────────────────────────
-  const tabs = document.querySelectorAll('.menu-tab');
-  const sections2 = document.querySelectorAll('.menu-section');
+  // ── MENU TABS: tweeniveau-structuur ──────────────────────
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      sections2.forEach(s => s.classList.remove('active'));
-
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      const target = document.getElementById(tab.dataset.target);
-      if (target) target.classList.add('active');
+  // Niveau 1: schakel tussen hoofdtabs
+  function showMainTab(tabId, btn) {
+    // Deactiveer alle hoofdtabs en secties
+    document.querySelectorAll('.menu-tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
     });
+    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+
+    // Activeer de gekozen hoofdtab
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const section = document.getElementById(tabId);
+    if (section) section.classList.add('active');
+  }
+
+  // Niveau 2: schakel tussen sub-tabs binnen een hoofdtab
+  function showSubTab(mainId, subId, btn) {
+    const mainSection = document.getElementById(mainId);
+    if (!mainSection) return;
+
+    // Deactiveer alle sub-tabs en sub-secties binnen de hoofdtab
+    mainSection.querySelectorAll('.sub-menu-tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    mainSection.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+
+    // Activeer de gekozen sub-tab
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const subSection = document.getElementById(subId);
+    if (subSection) subSection.classList.add('active');
+  }
+
+
+  // ── LIGHTBOX ──────────────────────────────────────────────
+  function openLightbox(id) {
+    const lb = document.getElementById(id);
+    if (!lb) return;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lb.querySelector('.lightbox-close').focus();
+  }
+
+  function closeLightbox(id) {
+    const lb = document.getElementById(id);
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxIfOverlay(event, id) {
+    if (event.target === event.currentTarget) closeLightbox(id);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.lightbox-overlay.open').forEach(lb => {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
   });
 
   // ── OPENINGSTIJDEN: huidig dag markeren ──────────────────
@@ -1656,6 +1856,43 @@
     }
   });
 </script>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LIGHTBOX MODALS                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<!-- Lightbox: Shoko Ontbijt -->
+<div class="lightbox-overlay" id="lb-ontbijt" onclick="closeLightboxIfOverlay(event, 'lb-ontbijt')" role="dialog" aria-modal="true" aria-label="Shoko Ontbijt">
+  <div class="lightbox-box">
+    <button class="lightbox-close" onclick="closeLightbox('lb-ontbijt')" aria-label="Sluiten">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img
+      src="https://static.wixstatic.com/media/41815b_eac19d956243464a838eab16e723e038~mv2.jpg"
+      alt="Shoko Ontbijt"
+      class="lightbox-img"
+      loading="lazy"
+    />
+    <p class="lightbox-caption">Ons heerlijke Shoko Ontbijt — dagelijks van 10:00 tot 11:30 | € 19,– p.p. | Vanaf 2 personen</p>
+  </div>
+</div>
+
+<!-- Lightbox: Shoko High Tea -->
+<div class="lightbox-overlay" id="lb-hightea" onclick="closeLightboxIfOverlay(event, 'lb-hightea')" role="dialog" aria-modal="true" aria-label="Shoko High Tea">
+  <div class="lightbox-box">
+    <button class="lightbox-close" onclick="closeLightbox('lb-hightea')" aria-label="Sluiten">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img
+      src="https://static.wixstatic.com/media/41815b_e610130781c743ecb90fa2c9e75ce477~mv2.jpg"
+      alt="Shoko High Tea"
+      class="lightbox-img"
+      loading="lazy"
+    />
+    <p class="lightbox-caption">SHOKO High Tea — dagelijks van 10:00 tot 15:00 | € 29,50 p.p. | Vanaf 2 personen</p>
+  </div>
+</div>
+
 
 </body>
 </html>
