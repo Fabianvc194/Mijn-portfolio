@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="nl">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Griekse Taverna Kreta – Bocholtz</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Cinzel:wght@400;600&amp;family=Raleway:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root {
@@ -433,546 +432,583 @@
 </style>
 </head>
 <body>
+
 <!-- ═══ NAVIGATION ═══ -->
-<nav class="py-4 px-6" id="navbar">
-<div class="max-w-6xl mx-auto flex items-center justify-between">
-<a class="flex items-center gap-3 text-white no-underline" href="#hero">
-<div style="color: var(--gold); font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.1em;">KRETA</div>
-<div style="width: 1px; height: 24px; background: rgba(201,168,76,0.4);"></div>
-<div style="font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Griekse Taverna</div>
-</a>
-<div class="hidden md:flex items-center gap-8">
-<a class="nav-link" href="#over-ons">Over Ons</a>
-<a class="nav-link" href="#menu">Menu</a>
-<a class="nav-link" href="#openingstijden">Openingstijden</a>
-<a class="nav-link" href="#contact">Contact</a>
-<a class="btn-primary" href="tel:0455445658" style="font-size:0.7rem; padding: 0.6rem 1.5rem;">☎ 045-5445658</a>
-</div>
-<button class="md:hidden text-white flex flex-col gap-1.5 p-2" id="hamburger" onclick="toggleMenu()">
-<span class="block w-6 h-0.5 bg-current"></span>
-<span class="block w-6 h-0.5 bg-current"></span>
-<span class="block w-4 h-0.5 bg-current"></span>
-</button>
-</div>
+<nav id="navbar" class="py-4 px-6">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 text-white no-underline">
+      <div style="color: var(--gold); font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.1em;">KRETA</div>
+      <div style="width: 1px; height: 24px; background: rgba(201,168,76,0.4);"></div>
+      <div style="font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Griekse Taverna</div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#over-ons" class="nav-link">Over Ons</a>
+      <a href="#menu" class="nav-link">Menu</a>
+      <a href="#openingstijden" class="nav-link">Openingstijden</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="tel:0455445658" class="btn-primary" style="font-size:0.7rem; padding: 0.6rem 1.5rem;">☎ 045-5445658</a>
+    </div>
+
+    <button id="hamburger" class="md:hidden text-white flex flex-col gap-1.5 p-2" onclick="toggleMenu()">
+      <span class="block w-6 h-0.5 bg-current"></span>
+      <span class="block w-6 h-0.5 bg-current"></span>
+      <span class="block w-4 h-0.5 bg-current"></span>
+    </button>
+  </div>
 </nav>
+
 <!-- ═══ MOBILE MENU ═══ -->
 <div id="mobile-menu">
-<button onclick="toggleMenu()" style="position:absolute;top:1.5rem;right:1.5rem;color:white;font-size:1.5rem;background:none;border:none;cursor:pointer;">✕</button>
-<a class="mobile-nav-link" href="#over-ons" onclick="toggleMenu()">Over Ons</a>
-<div class="greek-line"></div>
-<a class="mobile-nav-link" href="#menu" onclick="toggleMenu()">Menu</a>
-<div class="greek-line"></div>
-<a class="mobile-nav-link" href="#specials" onclick="toggleMenu()">Specials</a>
-<div class="greek-line"></div>
-<a class="mobile-nav-link" href="#openingstijden" onclick="toggleMenu()">Openingstijden</a>
-<div class="greek-line"></div>
-<a class="mobile-nav-link" href="#contact" onclick="toggleMenu()">Contact</a>
-<a class="btn-primary mt-4" href="tel:0455445658">☎ 045-5445658</a>
+  <button onclick="toggleMenu()" style="position:absolute;top:1.5rem;right:1.5rem;color:white;font-size:1.5rem;background:none;border:none;cursor:pointer;">✕</button>
+  <a href="#over-ons" class="mobile-nav-link" onclick="toggleMenu()">Over Ons</a>
+  <div class="greek-line"></div>
+  <a href="#menu" class="mobile-nav-link" onclick="toggleMenu()">Menu</a>
+  <div class="greek-line"></div>
+  <a href="#specials" class="mobile-nav-link" onclick="toggleMenu()">Specials</a>
+  <div class="greek-line"></div>
+  <a href="#openingstijden" class="mobile-nav-link" onclick="toggleMenu()">Openingstijden</a>
+  <div class="greek-line"></div>
+  <a href="#contact" class="mobile-nav-link" onclick="toggleMenu()">Contact</a>
+  <a href="tel:0455445658" class="btn-primary mt-4">☎ 045-5445658</a>
 </div>
+
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-<div class="hero-bg"></div>
-<div class="hero-overlay"></div>
-<div class="hero-pattern"></div>
-<div class="hero-content">
-<p class="hero-subtitle mb-4">Καλωσήλθατε — Welkom</p>
-<div class="greek-line"></div>
-<h1 class="hero-title my-3">Taverna <span>Kreta</span></h1>
-<div class="greek-line"></div>
-<p class="hero-location mt-4 mb-6">Bocholtz, Limburg</p>
-<p class="hero-desc mb-4">Authentieke Griekse smaken, bereid met passie en traditie. Welkom aan onze tafel — als thuis in Griekenland.</p>
-<p style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.2em; color:var(--gold-light); opacity:0; animation: fadeUp 0.8s 1.2s forwards; margin-bottom:2rem;">Κάλη Ορέξη — Eet Smakelijk</p>
-<div class="flex flex-wrap gap-4 justify-center" style="opacity:0; animation: fadeUp 0.8s 1.3s forwards;">
-<a class="btn-primary" href="#menu">Bekijk Menu</a>
-<a class="btn-outline" href="#openingstijden">Openingstijden</a>
-</div>
-</div>
-<div class="scroll-indicator">
-<span style="font-family:'Cinzel',serif;">scroll</span>
-<svg fill="none" height="24" viewbox="0 0 16 24" width="16"><rect height="8" rx="2" stroke="currentColor" stroke-width="1.5" width="4" x="6" y="1"></rect><line stroke="currentColor" stroke-width="1.5" x1="8" x2="8" y1="13" y2="22"></line><path d="M4 19 L8 23 L12 19" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
-</div>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-pattern"></div>
+
+  <div class="hero-content">
+    <p class="hero-subtitle mb-4">Καλωσήλθατε — Welkom</p>
+    <div class="greek-line"></div>
+    <h1 class="hero-title my-3">Taverna <span>Kreta</span></h1>
+    <div class="greek-line"></div>
+    <p class="hero-location mt-4 mb-6">Bocholtz, Limburg</p>
+    <p class="hero-desc mb-4">Authentieke Griekse smaken, bereid met passie en traditie. Welkom aan onze tafel — als thuis in Griekenland.</p>
+    <p style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.2em; color:var(--gold-light); opacity:0; animation: fadeUp 0.8s 1.2s forwards; margin-bottom:2rem;">Κάλη Ορέξη — Eet Smakelijk</p>
+    <div class="flex flex-wrap gap-4 justify-center" style="opacity:0; animation: fadeUp 0.8s 1.3s forwards;">
+      <a href="#menu" class="btn-primary">Bekijk Menu</a>
+      <a href="#openingstijden" class="btn-outline">Openingstijden</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span style="font-family:'Cinzel',serif;">scroll</span>
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><rect x="6" y="1" width="4" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="13" x2="8" y2="22" stroke="currentColor" stroke-width="1.5"/><path d="M4 19 L8 23 L12 19" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+  </div>
 </section>
+
 <!-- ═══ OVER ONS ═══ -->
-<section class="py-24 px-6" id="over-ons">
-<div class="max-w-6xl mx-auto">
-<div class="grid md:grid-cols-2 gap-16 items-center">
-<div>
-<p class="section-label mb-3">Onze Verhaal</p>
-<h2 class="section-title mb-2">Authentiek Grieks<br/><em style="font-family:'Cormorant Garamond',serif; color: var(--gold);">hart van Bocholtz</em></h2>
-<div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;">
-<div style="width:60px; height:1px; background:var(--gold);"></div>
-<span style="color:var(--gold);">✦</span>
-</div>
-<p class="mb-6 leading-relaxed" style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#444; line-height:1.9;">
+<section id="over-ons" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="section-label mb-3">Onze Verhaal</p>
+        <h2 class="section-title mb-2">Authentiek Grieks<br><em style="font-family:'Cormorant Garamond',serif; color: var(--gold);">hart van Bocholtz</em></h2>
+        <div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;">
+          <div style="width:60px; height:1px; background:var(--gold);"></div>
+          <span style="color:var(--gold);">✦</span>
+        </div>
+        <p class="mb-6 leading-relaxed" style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#444; line-height:1.9;">
           Bij Griekse Taverna Kreta staat gastvrijheid centraal. We serveren authentieke Griekse gerechten bereid met de beste ingrediënten — van verse vis en gegrild vlees tot traditionele mezedes en huisgemaakte sauzen.
         </p>
-<p class="mb-8 leading-relaxed" style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#444; line-height:1.9;">
+        <p class="mb-8 leading-relaxed" style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#444; line-height:1.9;">
           Wilt u een speciaal moment vieren? Op <strong>woensdagen</strong> bieden wij exclusief een Griekse Meze-avond aan — een uitgelezen tapas-ervaring voor groepen vanaf 10 personen.
         </p>
-<!-- Vacature banner -->
-<div class="vacature-banner">
-<div style="font-size:1.5rem;">👨‍🍳</div>
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.15em; color:var(--gold-light); margin-bottom:0.25rem;">VACATURE</p>
-<p style="color:rgba(255,255,255,0.8); font-size:0.9rem;">Wij zoeken enthousiaste medewerkers! Bel <a href="tel:0455445658" style="color:var(--gold-light);">045-5445658</a> of loop gerust binnen.</p>
-</div>
-</div>
-</div>
-<div class="relative">
-<img alt="Griekse taverna sfeer" class="about-image w-full object-cover" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&amp;q=80" style="height:480px;"/>
-<div class="hidden md:flex" style="position:absolute; bottom:-1.5rem; right:-1.5rem; width:140px; height:140px; background:var(--gold); display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem;">
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--blue-dark);">SEIT</p>
-<p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--blue-dark); line-height:1;">Kreta</p>
-<p style="font-family:'Cinzel',serif; font-size:0.65rem; color:var(--blue-dark);">BOCHOLTZ</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Feature cards -->
-<div class="grid md:grid-cols-3 gap-6 mt-20">
-<div class="feature-card">
-<div class="feature-icon">🫒</div>
-<h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">AUTHENTIEK GRIEKS</h3>
-<p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Traditionele recepten met verse ingrediënten, bereid zoals in Griekenland.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon">🐟</div>
-<h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">VERS VAN DE GRILL</h3>
-<p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Van lamskoteletten tot verse vis — dagelijks vers bereid op onze grill.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon">🍷</div>
-<h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">MEZE AVONDEN</h3>
-<p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Elke woensdag: Griekse Meze voor groepen v.a. 10 personen. Reserveer!.</p>
-</div>
-</div>
-</div>
+
+        <!-- Vacature banner -->
+        <div class="vacature-banner">
+          <div style="font-size:1.5rem;">👨‍🍳</div>
+          <div>
+            <p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.15em; color:var(--gold-light); margin-bottom:0.25rem;">VACATURE</p>
+            <p style="color:rgba(255,255,255,0.8); font-size:0.9rem;">Wij zoeken enthousiaste medewerkers! Bel <a href="tel:0455445658" style="color:var(--gold-light);">045-5445658</a> of loop gerust binnen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80"
+             alt="Griekse taverna sfeer"
+             class="about-image w-full object-cover"
+             style="height:480px;">
+        <div style="position:absolute; bottom:-1.5rem; right:-1.5rem; width:140px; height:140px; background:var(--gold); display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem;" class="hidden md:flex">
+          <div>
+            <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--blue-dark);">SEIT</p>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--blue-dark); line-height:1;">Kreta</p>
+            <p style="font-family:'Cinzel',serif; font-size:0.65rem; color:var(--blue-dark);">BOCHOLTZ</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="grid md:grid-cols-3 gap-6 mt-20">
+      <div class="feature-card">
+        <div class="feature-icon">🫒</div>
+        <h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">AUTHENTIEK GRIEKS</h3>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Traditionele recepten met verse ingrediënten, bereid zoals in Griekenland.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🐟</div>
+        <h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">VERS VAN DE GRILL</h3>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Van lamskoteletten tot verse vis — dagelijks vers bereid op onze grill.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍷</div>
+        <h3 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue-dark); margin-bottom:0.5rem;">MEZE AVONDEN</h3>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#666; line-height:1.7;">Elke woensdag: Griekse Meze voor groepen v.a. 10 personen. Reserveer!.</p>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- ═══ MENU ═══ -->
-<section class="py-24 px-6" id="menu">
-<div class="max-w-5xl mx-auto">
-<div class="text-center mb-12">
-<p class="section-label mb-3">Κατάλογος</p>
-<h2 class="section-title">Ons Menu</h2>
-<div class="divider"><span class="divider-icon">✦</span></div>
-<p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#666; font-size:1.1rem;">Januari 2026</p>
-</div>
-<!-- Tab Navigation -->
-<div class="menu-tabs">
-<button class="menu-tab active" onclick="showMainTab('voorgerechten', this)">Voorgerechten</button>
-<button class="menu-tab" onclick="showMainTab('hoofdgerechten', this)">Hoofdgerechten</button>
-<button class="menu-tab" onclick="showMainTab('pitas-snacks', this)">Pita's &amp; Snacks</button>
-<button class="menu-tab" onclick="showMainTab('kinderen', this)">Kindermenu</button>
-<button class="menu-tab" onclick="showMainTab('extra', this)">Extra</button>
-<button class="menu-tab" onclick="showMainTab('dranken-dessert', this)">Dranken &amp; Dessert</button>
-</div>
-<!-- VOORGERECHTEN -->
-<div class="main-menu-section active" id="main-voorgerechten">
-<div class="sub-menu-tabs">
-<button class="sub-menu-tab active" onclick="showSubTab('voorgerechten', 'koud', this)">Koude Voorgerechten</button>
-<button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'warm', this)">Warme Voorgerechten</button>
-<button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'salades', this)">Salades</button>
-</div>
-<div class="sub-menu-section active" id="sub-voorgerechten-koud">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA KRIA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Koude Voorgerechten</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-grid">
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Tarama</span><span class="menu-item-desc">Griekse viskuitsalade</span></div><span class="menu-item-price">€ 5,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Elies</span><span class="menu-item-desc">olijven</span></div><span class="menu-item-price">€ 5,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Piperies</span><span class="menu-item-desc">peperoni</span></div><span class="menu-item-price">€ 5,75</span></div>
-<div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">LOOOOL</p><p class="menu-item-desc">lol</p></div><span class="menu-item-price">1200,00</span></div><div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Test</p><p class="menu-item-desc">Test</p></div><span class="menu-item-price">1200</span></div></div>
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Feta</span><span class="menu-item-desc">Griekse schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Gtipiti</span><span class="menu-item-desc">geklopte pikante schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Dolmadakia</span><span class="menu-item-desc">wijnbladeren gevuld met rijst</span></div><span class="menu-item-price">€ 7,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pikilia</span><span class="menu-item-desc">samengestelde schotel uit diverse koude gerechten (v.a. 1 pers.)</span></div><span class="menu-item-price">€ 15,00</span></div>
-</div>
-</div>
-<p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
-<div class="menu-item"><div class="menu-item-info"><p class="menu-item-name">Tzaziki LOOL</p><p class="menu-item-desc">LOOOL</p></div><span class="menu-item-price">12,50</span></div></div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-voorgerechten-warm">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA ZESTA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Warme Voorgerechten</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-grid">
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Keftedakia se Saltsa</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus</span></div><span class="menu-item-price">€ 9,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Feta Saganaki</span><span class="menu-item-desc">gebakken schapenkaas met een krokant laagje</span></div><span class="menu-item-price">€ 9,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Manitaria Jemista</span><span class="menu-item-desc">champignons in de oven gevuld met gehakt, overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 10,50</span></div>
-</div>
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 10,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Gevulde Aubergine</span><span class="menu-item-desc">met feta, overdekt met rode en witte saus en met kaas overbakken</span></div><span class="menu-item-price">€ 13,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Mosselen</span><span class="menu-item-desc">gebakken mosselen</span></div><span class="menu-item-price">€ 10,50</span></div>
-</div>
-</div>
-<p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-voorgerechten-salades">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SALATES</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Salades</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Choriatiki (1 persoon)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 7,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Choriatiki (2 personen)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 14,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pikantikh</span><span class="menu-item-desc">pikante salade (witte koolsalade)</span></div><span class="menu-item-price">€ 6,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Angouri-Domata</span><span class="menu-item-desc">tomatenkomkommersalade</span></div><span class="menu-item-price">€ 7,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Tonosalata</span><span class="menu-item-desc">tonijnsalade</span></div><span class="menu-item-price">€ 8,50</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- HOOFDGERECHTEN -->
-<div class="main-menu-section" id="main-hoofdgerechten">
-<div class="sub-menu-tabs">
-<button class="sub-menu-tab active" onclick="showSubTab('hoofdgerechten', 'grill', this)">Van de Grill</button>
-<button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'oven', this)">Ovengerechten</button>
-<button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'vis', this)">Visgerechten</button>
-<button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'pasta', this)">Pasta</button>
-</div>
-<div class="sub-menu-section active" id="sub-hoofdgerechten-grill">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">TIS SKARAS</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Van de Grill</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-grid">
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Gyros Schotel</span><span class="menu-item-desc">gesneden varkensvlees</span></div><span class="menu-item-price">€ 17,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Gyros me Souvlaki</span><span class="menu-item-desc">gesneden varkensvlees met 2 stokjes souvlaki</span></div><span class="menu-item-price">€ 18,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Souvlaki Schotel</span><span class="menu-item-desc">vlees aan het spies</span></div><span class="menu-item-price">€ 18,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Paidakia</span><span class="menu-item-desc">lamskoteletten</span></div><span class="menu-item-price">€ 22,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met pittige tomatensaus en groenten</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kreta Schotel</span><span class="menu-item-desc">gyros, 2 souvlaki's, 2 steaks, 2 keftedakia, 2 lamskoteletten, Griekse salade, witte koolsalade, tzatziki en Griekse mayonaise (v.a. 2 pers.)</span></div><span class="menu-item-price">€ 50,00</span></div>
-</div>
-<div>
-<div class="menu-item"><div><span class="menu-item-name">Plaka Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 steak</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Thessaloniki Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki en 1 keftedakia</span></div><span class="menu-item-price">€ 18,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Athena Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 lamskotelet</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Santorini Schotel</span><span class="menu-item-desc">gyros en 2 keftedakia</span></div><span class="menu-item-price">€ 18,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Christina Schotel</span><span class="menu-item-desc">kipfilet met chilisaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Comadaria</span><span class="menu-item-desc">varkenssteak met zoete rode wijn in champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Toula Schotel</span><span class="menu-item-desc">kipfilet met zoete rode wijn in champignonroomsaus met spekjes</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Bifteki</span><span class="menu-item-desc">gevuld gehakt met feta</span></div><span class="menu-item-price">€ 21,00</span></div>
-</div>
-</div>
-<p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-hoofdgerechten-oven">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">FOURNOU</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Ovengerechten</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Mousaka</span><span class="menu-item-desc">gebakken aubergine met schijfjes aardappelen, gekruid gehakt, romige bechamelsaus en een stukje schapenkaas</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Jemistes Piperies</span><span class="menu-item-desc">paprika's gevuld met gehakt en feta in rode en witte saus en geraspte kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kalè Schotel</span><span class="menu-item-desc">gyros met groenten, rode saus, witte saus, metaxa en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 19,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kapsalon</span><span class="menu-item-desc">frieten met gyros en gegrilde kaas overdekt</span></div><span class="menu-item-price">€ 12,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Lydia</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus met groenten, witte saus en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 14,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Nefeli</span><span class="menu-item-desc">pannenkoeken gevuld met gehakt en feta overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 14,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Vegetarische Schotel</span><span class="menu-item-desc">van de dag</span></div><span class="menu-item-price">€ 18,50</span></div>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-hoofdgerechten-vis">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PSARIA THALASINA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Visgerechten</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Garides</span><span class="menu-item-desc">gebakken garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 20,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 20,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Fileto Solomo</span><span class="menu-item-desc">gebakken zalmfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Bakaliaro Fileto</span><span class="menu-item-desc">gebakken kabeljauwfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Schotel Psaria</span><span class="menu-item-desc">mix van diverse vissoorten voor 1 persoon</span></div><span class="menu-item-price">€ 32,50</span></div>
-<p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-hoofdgerechten-pasta">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PASTA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pasta's</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus</span></div><span class="menu-item-price">€ 17,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met scampi's in tomatensaus</span></div><span class="menu-item-price">€ 22,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gyros en groenten, rode saus, witte saus, Metaxa, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met tonijn, groenten, rode saus, witte saus, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- PITA'S & SNACKS -->
-<div class="main-menu-section" id="main-pitas-snacks">
-<div class="sub-menu-tabs">
-<button class="sub-menu-tab active" onclick="showSubTab('pitas-snacks', 'pitas', this)">Pita's</button>
-<button class="sub-menu-tab" onclick="showSubTab('pitas-snacks', 'snacks', this)">Snacks</button>
-</div>
-<div class="sub-menu-section active" id="sub-pitas-snacks-pitas">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PITAS</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pita's</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span></div><span class="menu-item-price">€ 8,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">met groente</span></div><span class="menu-item-price">€ 10,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">extra vlees</span></div><span class="menu-item-price">€ 10,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Souvlaki</span></div><span class="menu-item-price">€ 8,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita</span><span class="menu-item-desc">met extra souvlaki</span></div><span class="menu-item-price">€ 10,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Keftedakia</span></div><span class="menu-item-price">€ 8,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Fileto</span></div><span class="menu-item-price">€ 10,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Kotopoulo</span><span class="menu-item-desc">kip</span></div><span class="menu-item-price">€ 10,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris</span></div><span class="menu-item-price">€ 8,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris Speciaal</span></div><span class="menu-item-price">€ 10,00</span></div>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-pitas-snacks-snacks">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SNACKS</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Snacks</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Frieten</span></div><span class="menu-item-price">€ 4,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Friet Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Friet Speciaal</span></div><span class="menu-item-price">€ 5,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Friet Tzatziki</span></div><span class="menu-item-price">€ 6,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Friet Griekse Mayonaise</span></div><span class="menu-item-price">€ 6,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Frikandel</span></div><span class="menu-item-price">€ 2,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Frikandel Speciaal</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Bamiblok</span></div><span class="menu-item-price">€ 3,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kipnuggets</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Bitterballen</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- KINDERMENU -->
-<div class="main-menu-section" id="main-kinderen">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PEKIDA FAGITA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Kindermenu's</h3>
-</div>
-<div class="menu-card-body">
-<p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#666; margin-bottom:1rem;">Inclusief frietjes, appelmoes en mayonaise</p>
-<div class="menu-item"><div><span class="menu-item-name">Souvlaki</span><span class="menu-item-desc">varkensvlees aan 't spies</span></div><span class="menu-item-price">€ 11,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Keftedaki</span><span class="menu-item-desc">Grieks gehakt</span></div><span class="menu-item-price">€ 11,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Giros</span><span class="menu-item-desc">varkensvlees</span></div><span class="menu-item-price">€ 11,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kipfilet</span></div><span class="menu-item-price">€ 11,00</span></div>
-</div>
-</div>
-</div>
-<!-- EXTRA -->
-<div class="main-menu-section" id="main-extra">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">EKSTRA KREATA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Extra Vlees &amp; Sauzen</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Souvlaki</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Keftedakia</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Lamskotelet</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 4,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Steak</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Kipfilet</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Pitabrood</span></div><span class="menu-item-price">€ 1,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Tzatziki Klein</span></div><span class="menu-item-price">€ 3,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Griekse Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Griekse Mayonaise Klein</span></div><span class="menu-item-price">€ 3,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Mayonaise / Curry / Ketchup / Knoflooksaus / Cocktailsaus</span></div><span class="menu-item-price">€ 0,90</span></div>
-</div>
-</div>
-</div>
-<!-- DRANKEN & DESSERT -->
-<div class="main-menu-section" id="main-dranken-dessert">
-<div class="sub-menu-tabs">
-<button class="sub-menu-tab active" onclick="showSubTab('dranken-dessert', 'dranken', this)">Dranken</button>
-<button class="sub-menu-tab" onclick="showSubTab('dranken-dessert', 'dessert', this)">Dessert</button>
-</div>
-<div class="sub-menu-section active" id="sub-dranken-dessert-dranken">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">POTA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dranken</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-grid">
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">KOFFIE &amp; THEE</p>
-<div class="menu-item"><div><span class="menu-item-name">Koffie</span></div><span class="menu-item-price">€ 2,95</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Koffie met Slagroom</span></div><span class="menu-item-price">€ 3,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Griekse Koffie</span></div><span class="menu-item-price">€ 4,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Thee</span></div><span class="menu-item-price">€ 2,95</span></div>
-<p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin: 1.5rem 0 0.75rem;">FRISDRANKEN &amp; SAP</p>
-<div class="menu-item"><div><span class="menu-item-name">Frisdranken</span><span class="menu-item-desc">Cola, Cola light, Fanta, 7-up, Spa rood, Spa blauw</span></div><span class="menu-item-price">€ 2,95</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Vruchtendranken</span><span class="menu-item-desc">Appelsap, Cassis, Lipton ice</span></div><span class="menu-item-price">€ 3,00</span></div>
-</div>
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">ALCOHOLISCHE DRANKEN</p>
-<div class="menu-item"><div><span class="menu-item-name">Irish Coffee</span></div><span class="menu-item-price">€ 9,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Bier</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 2,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Mythos</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 3,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Rode Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Witte Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
-<div class="menu-item"><div><span class="menu-item-name">½ Liter Wijn</span><span class="menu-item-desc">wit of rood</span></div><span class="menu-item-price">€ 11,00</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Ouzo</span></div><span class="menu-item-price">€ 3,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Griekse Likeur</span></div><span class="menu-item-price">€ 4,95</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Metaxa</span></div><span class="menu-item-price">€ 4,50</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Jägermeister</span></div><span class="menu-item-price">€ 3,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Samos</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 5,75</span></div>
-<div class="menu-item"><div><span class="menu-item-name">Mavrodafni</span></div><span class="menu-item-price">€ 5,75</span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sub-menu-section" id="sub-dranken-dessert-dessert">
-<div class="menu-card">
-<div class="menu-category-header">
-<p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PAGOTO / GLYKISMATA</p>
-<h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dessert</h3>
-</div>
-<div class="menu-card-body">
-<div class="menu-item"><div><span class="menu-item-name">Fantasy IJs</span><span class="menu-item-desc">ijsverrassing van de kok</span></div><span class="menu-item-price">€ 8,50</span></div>
-</div>
-</div>
-</div>
-</div>
-</div><!-- /max-w-5xl -->
+<section id="menu" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-3">Κατάλογος</p>
+      <h2 class="section-title">Ons Menu</h2>
+      <div class="divider"><span class="divider-icon">✦</span></div>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#666; font-size:1.1rem;">Januari 2026</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="showMainTab('voorgerechten', this)">Voorgerechten</button>
+      <button class="menu-tab" onclick="showMainTab('hoofdgerechten', this)">Hoofdgerechten</button>
+      <button class="menu-tab" onclick="showMainTab('pitas-snacks', this)">Pita's &amp; Snacks</button>
+      <button class="menu-tab" onclick="showMainTab('kinderen', this)">Kindermenu</button>
+      <button class="menu-tab" onclick="showMainTab('extra', this)">Extra</button>
+      <button class="menu-tab" onclick="showMainTab('dranken-dessert', this)">Dranken &amp; Dessert</button>
+    </div>
+
+    <!-- VOORGERECHTEN -->
+    <div id="main-voorgerechten" class="main-menu-section active">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('voorgerechten', 'koud', this)">Koude Voorgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'warm', this)">Warme Voorgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('voorgerechten', 'salades', this)">Salades</button>
+      </div>
+      <div id="sub-voorgerechten-koud" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA KRIA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Koude Voorgerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Tzatziki</span><span class="menu-item-desc">romige kwark met komkommer, knoflook en kruiden</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Tarama</span><span class="menu-item-desc">Griekse viskuitsalade</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Elies</span><span class="menu-item-desc">olijven</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Piperies</span><span class="menu-item-desc">peperoni</span></div><span class="menu-item-price">€ 5,75</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Feta</span><span class="menu-item-desc">Griekse schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gtipiti</span><span class="menu-item-desc">geklopte pikante schapenkaas</span></div><span class="menu-item-price">€ 7,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Dolmadakia</span><span class="menu-item-desc">wijnbladeren gevuld met rijst</span></div><span class="menu-item-price">€ 7,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Pikilia</span><span class="menu-item-desc">samengestelde schotel uit diverse koude gerechten (v.a. 1 pers.)</span></div><span class="menu-item-price">€ 15,00</span></div>
+              </div>
+            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-voorgerechten-warm" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">OREKTIKA ZESTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Warme Voorgerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Keftedakia se Saltsa</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus</span></div><span class="menu-item-price">€ 9,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Feta Saganaki</span><span class="menu-item-desc">gebakken schapenkaas met een krokant laagje</span></div><span class="menu-item-price">€ 9,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Manitaria Jemista</span><span class="menu-item-desc">champignons in de oven gevuld met gehakt, overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 13,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 10,50</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 10,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gevulde Aubergine</span><span class="menu-item-desc">met feta, overdekt met rode en witte saus en met kaas overbakken</span></div><span class="menu-item-price">€ 13,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mosselen</span><span class="menu-item-desc">gebakken mosselen</span></div><span class="menu-item-price">€ 10,50</span></div>
+              </div>
+            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief pitabrood</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-voorgerechten-salades" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SALATES</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Salades</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Choriatiki (1 persoon)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 7,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Choriatiki (2 personen)</span><span class="menu-item-desc">de bekende boerensalade met feta</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pikantikh</span><span class="menu-item-desc">pikante salade (witte koolsalade)</span></div><span class="menu-item-price">€ 6,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Angouri-Domata</span><span class="menu-item-desc">tomatenkomkommersalade</span></div><span class="menu-item-price">€ 7,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Tonosalata</span><span class="menu-item-desc">tonijnsalade</span></div><span class="menu-item-price">€ 8,50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOOFDGERECHTEN -->
+    <div id="main-hoofdgerechten" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('hoofdgerechten', 'grill', this)">Van de Grill</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'oven', this)">Ovengerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'vis', this)">Visgerechten</button>
+        <button class="sub-menu-tab" onclick="showSubTab('hoofdgerechten', 'pasta', this)">Pasta</button>
+      </div>
+      <div id="sub-hoofdgerechten-grill" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">TIS SKARAS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Van de Grill</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Gyros Schotel</span><span class="menu-item-desc">gesneden varkensvlees</span></div><span class="menu-item-price">€ 17,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Gyros me Souvlaki</span><span class="menu-item-desc">gesneden varkensvlees met 2 stokjes souvlaki</span></div><span class="menu-item-price">€ 18,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Schotel</span><span class="menu-item-desc">vlees aan het spies</span></div><span class="menu-item-price">€ 18,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Paidakia</span><span class="menu-item-desc">lamskoteletten</span></div><span class="menu-item-price">€ 22,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Souvlaki Special</span><span class="menu-item-desc">vlees aan het spies met pittige tomatensaus en groenten</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Kreta Schotel</span><span class="menu-item-desc">gyros, 2 souvlaki's, 2 steaks, 2 keftedakia, 2 lamskoteletten, Griekse salade, witte koolsalade, tzatziki en Griekse mayonaise (v.a. 2 pers.)</span></div><span class="menu-item-price">€ 50,00</span></div>
+              </div>
+              <div>
+                <div class="menu-item"><div><span class="menu-item-name">Plaka Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 steak</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Thessaloniki Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki en 1 keftedakia</span></div><span class="menu-item-price">€ 18,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Athena Schotel</span><span class="menu-item-desc">gyros, 1 souvlaki, 1 keftedakia en 1 lamskotelet</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Santorini Schotel</span><span class="menu-item-desc">gyros en 2 keftedakia</span></div><span class="menu-item-price">€ 18,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Christina Schotel</span><span class="menu-item-desc">kipfilet met chilisaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Comadaria</span><span class="menu-item-desc">varkenssteak met zoete rode wijn in champignonroomsaus</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Toula Schotel</span><span class="menu-item-desc">kipfilet met zoete rode wijn in champignonroomsaus met spekjes</span></div><span class="menu-item-price">€ 19,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Bifteki</span><span class="menu-item-desc">gevuld gehakt met feta</span></div><span class="menu-item-price">€ 21,00</span></div>
+              </div>
+            </div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-hoofdgerechten-oven" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">FOURNOU</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Ovengerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Mousaka</span><span class="menu-item-desc">gebakken aubergine met schijfjes aardappelen, gekruid gehakt, romige bechamelsaus en een stukje schapenkaas</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Jemistes Piperies</span><span class="menu-item-desc">paprika's gevuld met gehakt en feta in rode en witte saus en geraspte kaas</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kalè Schotel</span><span class="menu-item-desc">gyros met groenten, rode saus, witte saus, metaxa en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 19,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kapsalon</span><span class="menu-item-desc">frieten met gyros en gegrilde kaas overdekt</span></div><span class="menu-item-price">€ 12,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Lydia</span><span class="menu-item-desc">gehaktballetjes in pittige tomatensaus met groenten, witte saus en romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Nefeli</span><span class="menu-item-desc">pannenkoeken gevuld met gehakt en feta overdekt met 2 sauzen en geraspte kaas</span></div><span class="menu-item-price">€ 14,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Vegetarische Schotel</span><span class="menu-item-desc">van de dag</span></div><span class="menu-item-price">€ 18,50</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="sub-hoofdgerechten-vis" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PSARIA THALASINA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Visgerechten</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Garides</span><span class="menu-item-desc">gebakken garnalen</span></div><span class="menu-item-price">€ 22,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kalamaria</span><span class="menu-item-desc">gebakken inktvisringetjes</span></div><span class="menu-item-price">€ 20,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Sardelles</span><span class="menu-item-desc">gebakken sardientjes</span></div><span class="menu-item-price">€ 20,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Fileto Solomo</span><span class="menu-item-desc">gebakken zalmfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bakaliaro Fileto</span><span class="menu-item-desc">gebakken kabeljauwfilet</span></div><span class="menu-item-price">€ 23,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Schotel Psaria</span><span class="menu-item-desc">mix van diverse vissoorten voor 1 persoon</span></div><span class="menu-item-price">€ 32,50</span></div>
+            <p class="menu-note">✦ Al deze gerechten zijn inclusief salade en frieten</p>
+          </div>
+        </div>
+      </div>
+      <div id="sub-hoofdgerechten-pasta" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PASTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pasta's</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus</span></div><span class="menu-item-price">€ 17,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met scampi's in tomatensaus</span></div><span class="menu-item-price">€ 22,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gyros en groenten, rode saus, witte saus, Metaxa, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met tonijn, groenten, rode saus, witte saus, romige bechamelsaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Spaghetti</span><span class="menu-item-desc">met gehakt in tomatensaus en met kaas overbakken</span></div><span class="menu-item-price">€ 18,00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PITA'S & SNACKS -->
+    <div id="main-pitas-snacks" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('pitas-snacks', 'pitas', this)">Pita's</button>
+        <button class="sub-menu-tab" onclick="showSubTab('pitas-snacks', 'snacks', this)">Snacks</button>
+      </div>
+      <div id="sub-pitas-snacks-pitas" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PITAS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Pita's</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">met groente</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Gyros</span><span class="menu-item-desc">extra vlees</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Souvlaki</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita</span><span class="menu-item-desc">met extra souvlaki</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Keftedakia</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Fileto</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Kotopoulo</span><span class="menu-item-desc">kip</span></div><span class="menu-item-price">€ 10,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris</span></div><span class="menu-item-price">€ 8,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Pita Vegetaris Speciaal</span></div><span class="menu-item-price">€ 10,00</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="sub-pitas-snacks-snacks" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">SNACKS</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Snacks</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Frieten</span></div><span class="menu-item-price">€ 4,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Speciaal</span></div><span class="menu-item-price">€ 5,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Tzatziki</span></div><span class="menu-item-price">€ 6,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Friet Griekse Mayonaise</span></div><span class="menu-item-price">€ 6,00</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Frikandel</span></div><span class="menu-item-price">€ 2,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Frikandel Speciaal</span></div><span class="menu-item-price">€ 3,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bamiblok</span></div><span class="menu-item-price">€ 3,75</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Kipnuggets</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Bitterballen</span><span class="menu-item-desc">6 stuks</span></div><span class="menu-item-price">€ 5,50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KINDERMENU -->
+    <div id="main-kinderen" class="main-menu-section">
+      <div class="menu-card">
+        <div class="menu-category-header">
+          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PEKIDA FAGITA</p>
+          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Kindermenu's</h3>
+        </div>
+        <div class="menu-card-body">
+          <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#666; margin-bottom:1rem;">Inclusief frietjes, appelmoes en mayonaise</p>
+          <div class="menu-item"><div><span class="menu-item-name">Souvlaki</span><span class="menu-item-desc">varkensvlees aan 't spies</span></div><span class="menu-item-price">€ 11,00</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Keftedaki</span><span class="menu-item-desc">Grieks gehakt</span></div><span class="menu-item-price">€ 11,00</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Giros</span><span class="menu-item-desc">varkensvlees</span></div><span class="menu-item-price">€ 11,00</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Kipfilet</span></div><span class="menu-item-price">€ 11,00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXTRA -->
+    <div id="main-extra" class="main-menu-section">
+      <div class="menu-card">
+        <div class="menu-category-header">
+          <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">EKSTRA KREATA</p>
+          <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Extra Vlees &amp; Sauzen</h3>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-item"><div><span class="menu-item-name">Souvlaki</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Keftedakia</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Lamskotelet</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 4,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Steak</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Kipfilet</span><span class="menu-item-desc">per stuk</span></div><span class="menu-item-price">€ 3,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Pitabrood</span></div><span class="menu-item-price">€ 1,75</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Tzatziki Klein</span></div><span class="menu-item-price">€ 3,75</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Griekse Mayonaise</span></div><span class="menu-item-price">€ 5,00</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Griekse Mayonaise Klein</span></div><span class="menu-item-price">€ 3,50</span></div>
+          <div class="menu-item"><div><span class="menu-item-name">Mayonaise / Curry / Ketchup / Knoflooksaus / Cocktailsaus</span></div><span class="menu-item-price">€ 0,90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRANKEN & DESSERT -->
+    <div id="main-dranken-dessert" class="main-menu-section">
+      <div class="sub-menu-tabs">
+        <button class="sub-menu-tab active" onclick="showSubTab('dranken-dessert', 'dranken', this)">Dranken</button>
+        <button class="sub-menu-tab" onclick="showSubTab('dranken-dessert', 'dessert', this)">Dessert</button>
+      </div>
+      <div id="sub-dranken-dessert-dranken" class="sub-menu-section active">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">POTA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dranken</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-grid">
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">KOFFIE &amp; THEE</p>
+                <div class="menu-item"><div><span class="menu-item-name">Koffie</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Koffie met Slagroom</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Griekse Koffie</span></div><span class="menu-item-price">€ 4,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Thee</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin: 1.5rem 0 0.75rem;">FRISDRANKEN &amp; SAP</p>
+                <div class="menu-item"><div><span class="menu-item-name">Frisdranken</span><span class="menu-item-desc">Cola, Cola light, Fanta, 7-up, Spa rood, Spa blauw</span></div><span class="menu-item-price">€ 2,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Vruchtendranken</span><span class="menu-item-desc">Appelsap, Cassis, Lipton ice</span></div><span class="menu-item-price">€ 3,00</span></div>
+              </div>
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-bottom:0.75rem;">ALCOHOLISCHE DRANKEN</p>
+                <div class="menu-item"><div><span class="menu-item-name">Irish Coffee</span></div><span class="menu-item-price">€ 9,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Bier</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 2,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mythos</span><span class="menu-item-desc">fles</span></div><span class="menu-item-price">€ 3,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Rode Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Witte Wijn</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">½ Liter Wijn</span><span class="menu-item-desc">wit of rood</span></div><span class="menu-item-price">€ 11,00</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Ouzo</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Griekse Likeur</span></div><span class="menu-item-price">€ 4,95</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Metaxa</span></div><span class="menu-item-price">€ 4,50</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Jägermeister</span></div><span class="menu-item-price">€ 3,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Samos</span><span class="menu-item-desc">glas</span></div><span class="menu-item-price">€ 5,75</span></div>
+                <div class="menu-item"><div><span class="menu-item-name">Mavrodafni</span></div><span class="menu-item-price">€ 5,75</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="sub-dranken-dessert-dessert" class="sub-menu-section">
+        <div class="menu-card">
+          <div class="menu-category-header">
+            <p class="greek" style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em;">PAGOTO / GLYKISMATA</p>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.4rem; color:white; margin-top:0.25rem;">Dessert</h3>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item"><div><span class="menu-item-name">Griekse Zoete Gebakjes</span><span class="menu-item-desc">traditioneel Grieks gebak</span></div><span class="menu-item-price">€ 8,50</span></div>
+            <div class="menu-item"><div><span class="menu-item-name">Fantasy IJs</span><span class="menu-item-desc">ijsverrassing van de kok</span></div><span class="menu-item-price">€ 8,50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /max-w-5xl -->
 </section>
+
 <!-- ═══ SPECIALS BANNER ═══ -->
-<section class="py-20 px-6" id="specials">
-<div class="max-w-5xl mx-auto">
-<div class="text-center mb-12">
-<p class="section-label mb-3" style="color: var(--gold-light);">Bijzondere Momenten</p>
-<h2 class="section-title" style="color: white;">Speciale Arrangementen</h2>
-<div class="divider"><span style="color:var(--gold);">✦</span></div>
-</div>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="special-card">
-<div style="font-size:2.5rem; margin-bottom:1rem;">🥂</div>
-<h3 style="font-family:'Cinzel',serif; color:var(--gold-light); font-size:1.1rem; letter-spacing:0.1em; margin-bottom:0.75rem;">GRIEKSE MEZE AVOND</h3>
-<p style="font-family:'Cormorant Garamond',serif; color:rgba(255,255,255,0.75); font-size:1.1rem; line-height:1.8;">Elke <strong style="color:white;">woensdag</strong> organiseert Taverna Kreta een sfeervolle Meze-avond — de Griekse versie van tapas. Geniet samen van meerdere kleine, heerlijke gerechten.</p>
-<p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-top:1rem;">GROEPEN VANAF 10 PERSONEN</p>
-</div>
-<div class="special-card">
-<div style="font-size:2.5rem; margin-bottom:1rem;">🎉</div>
-<h3 style="font-family:'Cinzel',serif; color:var(--gold-light); font-size:1.1rem; letter-spacing:0.1em; margin-bottom:0.75rem;">FEEST &amp; VERJAARDAGEN</h3>
-<p style="font-family:'Cormorant Garamond',serif; color:rgba(255,255,255,0.75); font-size:1.1rem; line-height:1.8;">Vier uw speciale momenten bij ons. Of het nu een verjaardag, jubileum of besloten diner betreft — wij zorgen voor een onvergetelijke Griekse avond.</p>
-<p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-top:1rem;">BEL VOOR RESERVERING: 045-5445658</p>
-</div>
-</div>
-</div>
+<section id="specials" class="py-20 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-3" style="color: var(--gold-light);">Bijzondere Momenten</p>
+      <h2 class="section-title" style="color: white;">Speciale Arrangementen</h2>
+      <div class="divider"><span style="color:var(--gold);">✦</span></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="special-card">
+        <div style="font-size:2.5rem; margin-bottom:1rem;">🥂</div>
+        <h3 style="font-family:'Cinzel',serif; color:var(--gold-light); font-size:1.1rem; letter-spacing:0.1em; margin-bottom:0.75rem;">GRIEKSE MEZE AVOND</h3>
+        <p style="font-family:'Cormorant Garamond',serif; color:rgba(255,255,255,0.75); font-size:1.1rem; line-height:1.8;">Elke <strong style="color:white;">woensdag</strong> organiseert Taverna Kreta een sfeervolle Meze-avond — de Griekse versie van tapas. Geniet samen van meerdere kleine, heerlijke gerechten.</p>
+        <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-top:1rem;">GROEPEN VANAF 10 PERSONEN</p>
+      </div>
+      <div class="special-card">
+        <div style="font-size:2.5rem; margin-bottom:1rem;">🎉</div>
+        <h3 style="font-family:'Cinzel',serif; color:var(--gold-light); font-size:1.1rem; letter-spacing:0.1em; margin-bottom:0.75rem;">FEEST &amp; VERJAARDAGEN</h3>
+        <p style="font-family:'Cormorant Garamond',serif; color:rgba(255,255,255,0.75); font-size:1.1rem; line-height:1.8;">Vier uw speciale momenten bij ons. Of het nu een verjaardag, jubileum of besloten diner betreft — wij zorgen voor een onvergetelijke Griekse avond.</p>
+        <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--gold); margin-top:1rem;">BEL VOOR RESERVERING: 045-5445658</p>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- ═══ OPENINGSTIJDEN + CONTACT ═══ -->
-<section class="py-24 px-6" id="openingstijden">
-<div class="max-w-5xl mx-auto">
-<div class="grid md:grid-cols-2 gap-16 items-start">
-<!-- Openingstijden -->
-<div>
-<p class="section-label mb-3">Wanneer</p>
-<h2 class="section-title mb-2">Openingstijden</h2>
-<div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;"><div style="width:60px;height:1px;background:var(--gold);"></div><span style="color:var(--gold);">✦</span></div>
-<div class="hours-table">
-<div class="hours-row"><span class="hours-day">Maandag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
-<div class="hours-row"><span class="hours-day">Dinsdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
-<div class="hours-row"><span class="hours-day">Woensdag</span><span class="hours-time hours-closed">Gesloten</span></div>
-<div class="hours-row"><span class="hours-day">Donderdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
-<div class="hours-row"><span class="hours-day">Vrijdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
-<div class="hours-row"><span class="hours-day">Zaterdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
-<div class="hours-row"><span class="hours-day">Zondag</span><span class="hours-time">13:30 – 22:00 uur</span></div>
-</div>
-<div class="info-badge mt-6">
+<section id="openingstijden" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+
+      <!-- Openingstijden -->
+      <div>
+        <p class="section-label mb-3">Wanneer</p>
+        <h2 class="section-title mb-2">Openingstijden</h2>
+        <div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;"><div style="width:60px;height:1px;background:var(--gold);"></div><span style="color:var(--gold);">✦</span></div>
+
+        <div class="hours-table">
+          <div class="hours-row"><span class="hours-day">Maandag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
+          <div class="hours-row"><span class="hours-day">Dinsdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
+          <div class="hours-row"><span class="hours-day">Woensdag</span><span class="hours-time hours-closed">Gesloten</span></div>
+          <div class="hours-row"><span class="hours-day">Donderdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
+          <div class="hours-row"><span class="hours-day">Vrijdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
+          <div class="hours-row"><span class="hours-day">Zaterdag</span><span class="hours-time">15:00 – 22:00 uur</span></div>
+          <div class="hours-row"><span class="hours-day">Zondag</span><span class="hours-time">13:30 – 22:00 uur</span></div>
+        </div>
+
+        <div class="info-badge mt-6">
           ✦ Afhalen van bestellingen mogelijk tijdens openingstijden
         </div>
-</div>
-<!-- Contact -->
-<div id="contact">
-<p class="section-label mb-3">Bereikbaarheid</p>
-<h2 class="section-title mb-2">Contact &amp; Route</h2>
-<div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;"><div style="width:60px;height:1px;background:var(--gold);"></div><span style="color:var(--gold);">✦</span></div>
-<div class="mb-6">
-<div>
-<div class="flex items-start gap-4 mb-5">
-<span style="font-size:1.5rem;">📞</span>
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">TELEFOON</p>
-<a href="tel:0455445658" style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--blue-dark); text-decoration:none;">045-5445658</a>
-</div>
-</div>
-<div class="flex items-start gap-4 mb-5">
-<span style="font-size:1.5rem;">📍</span>
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">ADRES</p>
-<p style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--text); line-height:1.6;">Doctor Nolensstraat 1<br/>6351 GL Bocholtz</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<span style="font-size:1.5rem;">🏛️</span>
-<div>
-<p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">BEDRIJFSGEGEVENS</p>
-<p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:rgba(44,44,44,0.6); line-height:1.6;">KVK: 14062388<br/>BTW: NL002267192B71</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Map placeholder -->
-<div class="map-placeholder" style="border: 2px solid rgba(201,168,76,0.3);">
-<img alt="kaart" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&amp;q=60"/>
-<div class="map-overlay">
-<p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-light); margin-bottom:0.5rem;">ROUTE PLANNEN</p>
-<a class="btn-primary" href="https://maps.google.com/?q=Doctor+Nolensstraat+1+Bocholtz" rel="noopener" style="font-size:0.7rem; padding:0.6rem 1.5rem;" target="_blank">Open in Maps</a>
-</div>
-</div>
-</div>
-</div>
-</div>
+      </div>
+
+      <!-- Contact -->
+      <div id="contact">
+        <p class="section-label mb-3">Bereikbaarheid</p>
+        <h2 class="section-title mb-2">Contact &amp; Route</h2>
+        <div class="divider" style="justify-content:flex-start; margin: 1.5rem 0;"><div style="width:60px;height:1px;background:var(--gold);"></div><span style="color:var(--gold);">✦</span></div>
+
+        <div class="mb-6">
+          <div>
+            <div class="flex items-start gap-4 mb-5">
+              <span style="font-size:1.5rem;">📞</span>
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">TELEFOON</p>
+                <a href="tel:0455445658" style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--blue-dark); text-decoration:none;">045-5445658</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 mb-5">
+              <span style="font-size:1.5rem;">📍</span>
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">ADRES</p>
+                <p style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--text); line-height:1.6;">Doctor Nolensstraat 1<br>6351 GL Bocholtz</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span style="font-size:1.5rem;">🏛️</span>
+              <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.25rem;">BEDRIJFSGEGEVENS</p>
+                <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:rgba(44,44,44,0.6); line-height:1.6;">KVK: 14062388<br>BTW: NL002267192B71</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="map-placeholder" style="border: 2px solid rgba(201,168,76,0.3);">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=60" alt="kaart">
+          <div class="map-overlay">
+            <p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-light); margin-bottom:0.5rem;">ROUTE PLANNEN</p>
+            <a href="https://maps.google.com/?q=Doctor+Nolensstraat+1+Bocholtz" target="_blank" rel="noopener" class="btn-primary" style="font-size:0.7rem; padding:0.6rem 1.5rem;">Open in Maps</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
+
 <!-- ═══ GALLERY STRIP ═══ -->
 <div style="display:grid; grid-template-columns:repeat(4,1fr); height:220px; overflow:hidden;">
-<img alt="Grill" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&amp;q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);"/>
-<img alt="Greek food" src="https://images.unsplash.com/photo-1559054663-e8d23213f55c?w=400&amp;q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);"/>
-<img alt="Mezze" src="https://images.unsplash.com/photo-1481931715705-36f5122a6e3c?w=400&amp;q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);"/>
-<img alt="Restaurant sfeer" src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&amp;q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);"/>
+  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" alt="Grill">
+  <img src="https://images.unsplash.com/photo-1559054663-e8d23213f55c?w=400&q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" alt="Greek food">
+  <img src="https://images.unsplash.com/photo-1481931715705-36f5122a6e3c?w=400&q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" alt="Mezze">
+  <img src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&q=70" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" alt="Restaurant sfeer">
 </div>
+
 <!-- ═══ FOOTER ═══ -->
 <footer>
-<div style="max-width:600px; margin:0 auto;">
-<p style="font-family:'Cinzel',serif; font-size:1rem; color:rgba(201,168,76,0.7); letter-spacing:0.15em; margin-bottom:0.5rem;">GRIEKSE TAVERNA KRETA</p>
-<p style="margin-bottom:1rem;">Doctor Nolensstraat 1 · 6351 GL Bocholtz · <a href="tel:0455445658">045-5445658</a></p>
-<p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(255,255,255,0.3); margin-bottom:1rem;">Κάλη Ορέξη — Eet Smakelijk</p>
-<p style="font-size:0.75rem;">© Griekse Taverna Kreta · Menu: januari 2026</p>
-</div>
+  <div style="max-width:600px; margin:0 auto;">
+    <p style="font-family:'Cinzel',serif; font-size:1rem; color:rgba(201,168,76,0.7); letter-spacing:0.15em; margin-bottom:0.5rem;">GRIEKSE TAVERNA KRETA</p>
+    <p style="margin-bottom:1rem;">Doctor Nolensstraat 1 · 6351 GL Bocholtz · <a href="tel:0455445658">045-5445658</a></p>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(255,255,255,0.3); margin-bottom:1rem;">Κάλη Ορέξη — Eet Smakelijk</p>
+    <p style="font-size:0.75rem;">© Griekse Taverna Kreta · Menu: januari 2026</p>
+  </div>
 </footer>
+
 <script>
   // ─── Navbar scroll effect ───
   window.addEventListener('scroll', () => {
