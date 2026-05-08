@@ -906,7 +906,7 @@ footer{
     </button>
 
     <div class="nav-links" id="nav-links">
-      <button class="nav-link active" data-section="hero" onclick="goTo('utopia')">Utopia</button>
+      <button class="nav-link" data-section="utopia" onclick="goTo('utopia')">Utopia</button>
       <button class="nav-link" data-section="dystopia" onclick="goTo('dystopia')">Dystopia</button>
       <button class="nav-link" data-section="future" onclick="goTo('future')">Expected</button>
       <button class="nav-link" data-section="cyber" onclick="goTo('cyber')">Cyberpunk</button>
@@ -2542,12 +2542,18 @@ const observer = new IntersectionObserver(entries => {
     if (entry.isIntersecting && id) {
       // Sectie actief markeren
       if (sections.includes(id)) {
-        dots.forEach(d => d.classList.toggle('active', d.getAttribute('data-target') === id));
+        const colors = { utopia:'#2dd4bf', dystopia:'#ff2244', future:'#00f5ff', cyber:'#ff00aa', hero:'#ffffff' };
+        const activeColor = colors[id] || '#00f5ff';
+        dots.forEach(d => {
+          const isActive = d.getAttribute('data-target') === id;
+          d.classList.toggle('active', isActive);
+          d.style.background = isActive ? activeColor : '';
+          d.style.boxShadow = isActive ? `0 0 8px ${activeColor}` : '';
+        });
         navLinks.forEach(l => {
           const sec = l.getAttribute('data-section');
-          const colors = { utopia:'#2dd4bf', dystopia:'#ff2244', future:'#00f5ff', cyber:'#ff00aa', hero:'#00f5ff' };
           l.classList.toggle('active', sec === id);
-          l.style.color = sec === id ? (colors[id] || '#00f5ff') : 'rgba(232,244,248,.4)';
+          l.style.color = sec === id ? activeColor : 'rgba(232,244,248,.4)';
         });
       }
     }
